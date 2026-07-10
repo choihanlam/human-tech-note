@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>정보보호 R&amp;D 투자 동향 — NTIS 데이터로 본 흐름 · Human Tech Note</title><meta name="description" content="산학 연구(NTIS)"/>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style type="text/tailwindcss">
+@theme{
+--color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,0.05);
+--color-hair:rgba(255,255,255,0.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
+--radius-pill:100px;--radius-feat:32px;
+--font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
+}
+</style>
+<style>
+body{background:#08090a}
+.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
+radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
+radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
+radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
+#07080a}
+</style>
+<style>
+.pb h3{font-size:24px;font-weight:500;letter-spacing:-.4px;margin:36px 0 10px;color:#f1f3ef}
+.pb p{font-size:18px;line-height:1.75;margin:0 0 18px;letter-spacing:-.2px}
+.pb ul{font-size:18px;line-height:1.7;padding-left:22px;margin:0 0 20px}
+.pb li{margin-bottom:7px}
+.pb strong{color:#fff;font-weight:700}
+.callout{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:32px;padding:26px 30px;margin:30px 0;font-size:16px;line-height:1.65;color:#e7e9e4}
+.callout .l{color:#ff8256;font-weight:700;font-size:13px;margin-bottom:8px;display:flex;gap:7px;align-items:center}
+</style>
+</head><body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em"><div class="bgfx"></div>
+<nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair">
+<div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
+<a class="font-bold text-lg flex items-center gap-2" href="../index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a>
+<span class="ml-auto"></span>
+<a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive"><i class="ti ti-arrow-left"></i> 포트폴리오</a>
+</div></nav>
+<article class="max-w-[760px] mx-auto px-6 pt-14 pb-28">
+<span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-ink text-white mb-6"><i class="ti ti-pencil"></i> 실제 원고 (샘플 공개본)</span>
+<div><span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#FBEAF1;color:#98305C"><i class="ti ti-microscope"></i> 연구·종합</span></div>
+<h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3"><i class="ti ti-star text-cobalt"></i> 정보보호 R&amp;D 투자 동향 — NTIS 데이터로 본 흐름</h1>
+<div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
+<span><i class="ti ti-calendar align-[-2px]"></i> 2026년 12월 7일 (월)</span><span><i class="ti ti-clock align-[-2px]"></i> 약 6분</span><span>#64 / 75</span></div>
+<div class="pb">
+
+<h3>&ldquo;정보보호 투자, 우리는 잘 하고 있는 걸까?&rdquo;</h3>
+<p>실무에서 늘 부딪히는 질문이 있다. &lsquo;우리 조직의 정보보호 투자는 적정한가?&rsquo; 답하기 어려운 이유는, 비교할 기준이 마땅치 않기 때문이다. 대학원 산학협력 프로젝트에서 나는 이 질문을 데이터로 풀어보기로 했다. 개인의 감이 아니라, 국가 R&amp;D 데이터라는 객관적 렌즈로.</p>
+<h3>NTIS 데이터에 BERTopic을 얹다</h3>
+<p>국가과학기술지식정보서비스(NTIS)의 국가 R&amp;D 데이터를 활용해 국내 정보보호 연구개발 투자 동향을 분석했다. 수천 건의 과제 텍스트를 사람이 일일이 분류하는 것은 불가능하다. 그래서 BERTopic 기반의 토픽 모델링으로 기술을 자동 분류하고, 정부출연금 흐름과 연결해 기술별 변화 추세를 도출했다.</p>
+<ul><li>NTIS 국가 R&amp;D 과제 데이터 수집·정제</li><li>BERTopic 기반 기술 분류(토픽 모델링)</li><li>정부출연금 분석을 통한 기술 변화 추세 도출</li><li>기업 내부 정보보호 운영 수준과 외부 투자 수준을 연계한 분석 모델 구축</li></ul>
+<div class="callout"><div class="l"><i class="ti ti-bulb"></i> 핵심 시사점</div>투자 &lsquo;규모&rsquo;보다 &lsquo;방향&rsquo;이 중요합니다. 내부 운영 수준과 외부 R&amp;D 투자 흐름을 겹쳐 보면, 어떤 영역에 선제적으로 자원을 배분해야 하는지 &mdash; 특히 AI·거버넌스 관점의 우선순위가 &mdash; 데이터로 드러납니다.</div>
+<h3>실무와 연구가 만나는 지점</h3>
+<p>이 연구가 특별했던 이유는, 내가 현장에서 다뤄온 &lsquo;정보보호 예산 수립&rsquo;과 &lsquo;투자 효율성 관리&rsquo;라는 실무 문제를, 국가 단위 데이터로 다시 바라볼 수 있었다는 점이다. 실무자는 조직 안을 보고, 연구자는 산업 전체를 본다. 두 시야가 겹치는 곳에서 더 나은 의사결정이 나온다.</p>
+<h3>배운 것</h3>
+<p>정보보호는 이제 &lsquo;막는 일&rsquo;을 넘어 &lsquo;어디에 얼마나 투자할지 판단하는 일&rsquo;이 되고 있다. 데이터는 그 판단에 근거를 준다. 나는 이 연구를 통해 정보보호·기술경영·데이터 분석이 하나의 흐름으로 이어질 수 있다는 확신을 얻었고, 그것이 지금 내가 그리는 커리어의 방향이다.</p>
+
+</div>
+
+<div class="flex flex-wrap gap-2.5 my-8"><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#NTIS</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#R&D 투자 분석</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#BERTopic</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#AI 거버넌스</span></div>
+<div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7"><a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[#e9edf2] transition" href="post-63.html"><div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 글</div><div class="font-bold mt-1 text-[15px]">CISO/CPO의 고민 — AI 시대의 보안 리더십</div></a><a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[#e9edf2] transition" href="post-65.html"><div class="text-[13px] text-mut font-medium">다음 글 <i class="ti ti-arrow-right"></i></div><div class="font-bold mt-1 text-[15px]">BERTopic으로 기술 트렌드 읽기</div></a></div>
+</article>
+</body></html>

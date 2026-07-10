@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>[회고] 무중단 운영을 위한 변화관리 — 인프라 개선 · Human Tech Note</title><meta name="description" content="무중단 전환 프로젝트"/>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style type="text/tailwindcss">
+@theme{
+--color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,0.05);
+--color-hair:rgba(255,255,255,0.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
+--radius-pill:100px;--radius-feat:32px;
+--font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
+}
+</style>
+<style>
+body{background:#08090a}
+.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
+radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
+radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
+radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
+#07080a}
+</style>
+<style>
+.pb h3{font-size:24px;font-weight:500;letter-spacing:-.4px;margin:36px 0 10px;color:#f1f3ef}
+.pb p{font-size:18px;line-height:1.75;margin:0 0 18px;letter-spacing:-.2px}
+.pb ul{font-size:18px;line-height:1.7;padding-left:22px;margin:0 0 20px}
+.pb li{margin-bottom:7px}
+.pb strong{color:#fff;font-weight:700}
+.callout{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:32px;padding:26px 30px;margin:30px 0;font-size:16px;line-height:1.65;color:#e7e9e4}
+.callout .l{color:#ff8256;font-weight:700;font-size:13px;margin-bottom:8px;display:flex;gap:7px;align-items:center}
+</style>
+</head><body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em"><div class="bgfx"></div>
+<nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair">
+<div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
+<a class="font-bold text-lg flex items-center gap-2" href="../index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a>
+<span class="ml-auto"></span>
+<a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive"><i class="ti ti-arrow-left"></i> 포트폴리오</a>
+</div></nav>
+<article class="max-w-[760px] mx-auto px-6 pt-14 pb-28">
+<span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-ink text-white mb-6"><i class="ti ti-pencil"></i> 실제 원고 (샘플 공개본)</span>
+<div><span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#FBEBE4;color:#9A4222"><i class="ti ti-sitemap"></i> IT거버넌스/PMO</span></div>
+<h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3"><i class="ti ti-star text-cobalt"></i> [회고] 무중단 운영을 위한 변화관리 — 인프라 개선</h1>
+<div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
+<span><i class="ti ti-calendar align-[-2px]"></i> 2026년 10월 2일 (금)</span><span><i class="ti ti-clock align-[-2px]"></i> 약 6분</span><span>#36 / 75</span></div>
+<div class="pb">
+
+<h3>출근 시간마다 무너지던 서비스</h3>
+<p>2018년, 음원 플랫폼에는 매일 같은 시간에 긴장이 흘렀다. 출근 시간대, 그리고 대형 아티스트의 앨범이 발매되는 순간이다. 트래픽이 평소의 몇 배로 치솟으면 접속 장애가 발생했고, 그때마다 사용자 경험과 신뢰가 함께 흔들렸다. &lsquo;더 큰 서버&rsquo;로는 풀리지 않는 문제였다. 구조 자체를 바꿔야 했다.</p>
+<h3>구조를 다시 그리다</h3>
+<p>핵심은 두 가지였다. 첫째, 트래픽을 한 곳에 몰지 않는 것. 둘째, 특정 구간의 장애가 전체로 번지지 않게 하는 것. 우리는 KTDS 및 주요 벤더와 함께 다음을 단계적으로 추진했다.</p>
+<ul><li>트래픽 분산 시스템 구축 및 데이터 이관·이원화</li><li>Monolithic 구조를 MSA 기반 분산 구조로 개선 &mdash; 확장성과 처리 성능 확보</li><li>DB 처리 용량을 기존 대비 3배 이상 확장하여 병목 구간 해소</li><li>서비스 부하 분산 센터 구축으로 2,000만 곡 이상 콘텐츠의 안정적 제공 기반 마련</li><li>GSLB 기반 센터 간 자동 절체로 장애 시 무중단 운영 환경 구축</li></ul>
+<div class="callout"><div class="l"><i class="ti ti-chart-line"></i> 개선 성과</div>조치 이후 접속자 수 50% 증가, 스트리밍 20% 증가 상황에서도 안정적 운영을 유지했고, BTS 등 대형 아티스트 앨범 발매 시 최대 3배 이상의 트래픽에도 무중단 서비스를 제공했습니다.</div>
+<h3>기술보다 어려웠던 것 — 변화관리</h3>
+<p>아키텍처 변경은 도표 위에서는 깔끔하지만, 현실에서는 서버·DB·네트워크·보안·외부 벤더가 얽힌 거대한 변경이다. 나는 이 과정을 &lsquo;공사&rsquo;가 아니라 &lsquo;변화관리&rsquo;로 접근했다. 각 공정의 순서와 롤백 지점을 정의하고, 유관부서·KTDS·외부 벤더 간의 공정 관리와 협업 체계를 표준화했다. 무중단이라는 목표는 기술 설계만으로 달성되지 않는다. &lsquo;누가, 언제, 무엇을, 되돌릴 수 있게&rsquo; 바꾸는지를 합의하는 데서 만들어진다.</p>
+<h3>배운 것</h3>
+<p>대규모 전환에서 가장 위험한 것은 기술적 난이도가 아니라, 변경이 통제 밖으로 벗어나는 순간이다. 이 프로젝트는 내게 &lsquo;안정성은 설계가 아니라 운영과 변화관리의 산물&rsquo;이라는 사실을 각인시켰다. 이후 나의 모든 인프라·보안 과제는 이 관점 위에서 진행됐다.</p>
+
+</div>
+
+<div class="flex flex-wrap gap-2.5 my-8"><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#무중단 전환</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#MSA</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#변화관리</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#트래픽 대응</span></div>
+<div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7"><a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[#e9edf2] transition" href="post-35.html"><div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 글</div><div class="font-bold mt-1 text-[15px]">IT 자산·예산 관리, 거버넌스의 중요한 축</div></a><a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[#e9edf2] transition" href="post-37.html"><div class="text-[13px] text-mut font-medium">다음 글 <i class="ti ti-arrow-right"></i></div><div class="font-bold mt-1 text-[15px]">DX, 유행어를 넘어 실행 로드맵으로</div></a></div>
+</article>
+</body></html>

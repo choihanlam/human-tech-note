@@ -1,46 +1,62 @@
-# Human Tech Note — 포트폴리오
+# Human Tech Note 
 
-최한람 · 정보보호 PMO / IT Governance / 기술경영(MOT) / AI
+최한람 · 정보보호 PMO / IT Governance / 기술경영(MOT) / AI·AX
 
-정보보호·IT 거버넌스 실무 9년을 바탕으로 2026년 7월~12월 매주 3편, 총 75편을 연재하는
-기술 블로그 **Human Tech Note**의 포트폴리오 사이트입니다.
+Human Tech Note는 IT 인프라, IT기획, DX, 정보보호 실무 경험을 바탕으로  
+**AI·AX·보안·MOT를 사람의 언어로 풀어내는 기술 블로그이자 포트폴리오**입니다.
 
-## 구성
+2026년 7월부터 12월까지 주 3회, 총 75편의 콘텐츠 발행을 목표로 합니다.  
+실무 사례, 프로젝트 회고, 산업 이슈, 논문과 연구를 연결하여  
+기술이 조직에서 어떻게 도입·운영·통제되는지를 기록합니다.
 
+
+## 주요 주제
+
+- AI·AX와 AI 거버넌스
+- 정보보호·개인정보보호·보안 운영
+- IT 거버넌스·PMO·내부통제·리스크 관리
+- 기술경영(MOT)·기술혁신·데이터 기반 의사결정
+
+## 콘텐츠 구성
+
+- **실무 사례**: 정보보호 운영, 보안사고 대응, 내부통제
+- **프로젝트 회고**: IT 인프라 개선, 무중단 전환, DX 과제관리
+- **산업 분석**: AI Agent, RAG, 온톨로지, 데이터·AI 거버넌스
+- **논문·연구**: 기술경영, 정보보호 R&D 투자, XAI와 AI 의사결정
+- **커리어 기록**: 정보보호·IT기획·DX·MOT 경험의 연결
+
+## 저장소 구조
+
+```text
+human-tech-note/
+├── index.html          # 포트폴리오 메인 화면
+│                       # 소개·경력·수상·대표작·연재 아카이브
+│
+├── posts/              # 기술 블로그 게시글
+│   ├── post-01.html
+│   ├── post-02.html
+│   ├── ...
+│   └── post-75.html
+│
+├── .nojekyll           # GitHub Pages 정적 파일 배포 설정
+└── README.md           # 프로젝트 소개와 운영 기준
 ```
-HumanTechNote_portfolio/
-├─ index.html          # 포트폴리오 메인 (소개·경력·수상·대표작·연재 아카이브·진행률 대시보드)
-├─ posts/              # 글 75편 (post-01.html ~ post-75.html)
-│                      #  - 대표작 4편(16·36·48·64)은 실제 원고, 나머지는 데모용 더미
-├─ .nojekyll           # GitHub Pages에서 그대로 서빙하도록 지정
-└─ README.md
-```
 
-- 모든 파일은 **자체 완결형**입니다. 스타일(Tailwind CSS)·폰트(Pretendard)·아이콘(Tabler)은 CDN으로 로드되며 별도 빌드가 필요 없습니다.
-- 진행률(예정/작성중/발행완료) 상태는 브라우저 `localStorage`에 저장됩니다.
+## 현재 콘텐츠 상태
 
-## GitHub Pages 배포 방법
+- `post-16.html`: 악성코드 감염 대응 사례
+- `post-36.html`: 무중단 인프라 개선과 변화관리
+- `post-48.html`: DX 협의체 운영 사례
+- `post-64.html`: 정보보호 R&D 투자 분석
+- 나머지 게시글은 향후 실제 원고로 교체할 게시용 템플릿입니다.
 
-1. GitHub에서 새 저장소 생성 (예: `human-tech-note`)
-2. 이 폴더의 **내용물 전체**를 저장소 루트에 업로드
-   - 웹 업로드: 저장소 → **Add file → Upload files** → 폴더 안 파일/폴더를 드래그
-   - 또는 Git:
-     ```bash
-     git init
-     git add .
-     git commit -m "Add Human Tech Note portfolio"
-     git branch -M main
-     git remote add origin https://github.com/<아이디>/human-tech-note.git
-     git push -u origin main
-     ```
-3. 저장소 **Settings → Pages** → Source: `Deploy from a branch` → Branch: `main` / `/(root)` → Save
-4. 잠시 후 `https://<아이디>.github.io/human-tech-note/` 에서 공개됩니다.
+## 운영 원칙
 
-## 배포 전 수정할 곳 (index.html)
+1. 실무 경험은 공개 가능한 범위에서 비식별화·일반화합니다.
+2. 논문, 공식 보고서, 산업 자료의 출처를 명확하게 표시합니다.
+3. 기술을 단순히 요약하지 않고 조직의 의사결정과 운영 관점에서 해석합니다.
+4. 과장된 성과보다 실제 역할, 판단 과정, 협업과 개선 결과를 중심으로 기록합니다.
 
-- 상단 `연락하기` 버튼의 이메일: `mailto:your.email@example.com` → 실제 이메일
-- 필요 시 대표작 외 더미 글 본문을 실제 원고로 교체
+---
 
-## 라이선스
-
-© 2026 최한람 · Human Tech Note
+© 2026 Human Tech Note · 최한람

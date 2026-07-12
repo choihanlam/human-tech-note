@@ -2,7 +2,7 @@
 
 최한람 · 정보보호 PMO / IT Governance / 기술경영(MOT) / AI·AX
 
-Human Tech Note는 IT 인프라, IT기획, DX, 정보보호 실무 경험을 바탕으로  
+Human Tech Note는 IT기획, DX, 정보보호 실무 경험을 바탕으로  
 **AI·AX·보안·MOT를 사람의 언어로 풀어내는 기술 블로그이자 포트폴리오**입니다.
 
 2026년 7월부터 12월까지 주 3회, 총 75편의 콘텐츠 발행을 목표로 합니다.  

@@ -1,59 +1,593 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>BERTopic으로 기술 트렌드 읽기 · Human Tech Note</title><meta name="description" content="텍스트 분석 역량"/>
+
+<title>2024년 기술경영경제학회 연구노트 · Human Tech Note</title>
+<meta
+  name="description"
+  content="2024 기술경영경제학회 하계학술대회 주제와 서강MOT, AI·텍스트마이닝·정보보호·IT 거버넌스 관련 초록을 정리한 연구노트"
+/>
+
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"
+/>
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
 <style type="text/tailwindcss">
 @theme{
---color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,0.05);
---color-hair:rgba(255,255,255,0.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
---radius-pill:100px;--radius-feat:32px;
---font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
+  --color-ink:#ff4e1c;
+  --color-cobalt:#ff8256;
+  --color-warn:#e8b45a;
+  --color-soft:rgba(255,255,255,0.05);
+  --color-hair:rgba(255,255,255,0.11);
+  --color-tx:#f1f3ef;
+  --color-mut:#a6aca4;
+  --color-hint:#767b73;
+  --radius-pill:100px;
+  --radius-feat:32px;
+  --font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
 }
 </style>
+
 <style>
-body{background:#08090a}
-.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
-radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
-radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
-radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
-radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
-#07080a}
+body{
+  background:#08090a;
+}
+
+.bgfx{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
+    radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
+    radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
+    radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
+    #07080a;
+}
+
+.pb h2{
+  font-size:30px;
+  font-weight:650;
+  letter-spacing:-.7px;
+  line-height:1.35;
+  margin:52px 0 18px;
+  color:#f1f3ef;
+}
+
+.pb h3{
+  font-size:23px;
+  font-weight:600;
+  letter-spacing:-.4px;
+  line-height:1.45;
+  margin:38px 0 12px;
+  color:#f1f3ef;
+}
+
+.pb p{
+  font-size:18px;
+  line-height:1.78;
+  margin:0 0 18px;
+  letter-spacing:-.2px;
+  color:#d9ddd7;
+}
+
+.pb ul{
+  font-size:18px;
+  line-height:1.72;
+  padding-left:22px;
+  margin:0 0 22px;
+  color:#d9ddd7;
+}
+
+.pb li{
+  margin-bottom:8px;
+}
+
+.pb strong{
+  color:#fff;
+  font-weight:700;
+}
+
+.callout{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.10);
+  border-radius:28px;
+  padding:25px 28px;
+  margin:28px 0;
+  font-size:16px;
+  line-height:1.7;
+  color:#e7e9e4;
+}
+
+.callout .l{
+  color:#ff8256;
+  font-weight:700;
+  font-size:13px;
+  margin-bottom:9px;
+  display:flex;
+  gap:7px;
+  align-items:center;
+}
+
+.paper-group{
+  margin:22px 0 34px;
+}
+
+.paper-card{
+  background:rgba(255,255,255,0.045);
+  border:1px solid rgba(255,255,255,0.10);
+  border-radius:22px;
+  padding:22px 24px;
+  margin-bottom:14px;
+}
+
+.paper-number{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background:rgba(255,130,86,.15);
+  color:#ff9a76;
+  font-size:13px;
+  font-weight:800;
+  margin-bottom:12px;
+}
+
+.paper-title{
+  font-size:19px;
+  line-height:1.55;
+  font-weight:700;
+  color:#fff;
+  letter-spacing:-.25px;
+  margin-bottom:9px;
+}
+
+.paper-note{
+  font-size:16px;
+  line-height:1.68;
+  color:#b9beb7;
+}
+
+.checklist{
+  list-style:none;
+  padding-left:0 !important;
+  margin-top:16px !important;
+}
+
+.checklist li{
+  position:relative;
+  padding-left:30px;
+  margin-bottom:11px;
+}
+
+.checklist li::before{
+  content:"□";
+  position:absolute;
+  left:2px;
+  top:0;
+  color:#ff8256;
+  font-weight:700;
+}
+
+.source-note{
+  font-size:14px;
+  line-height:1.7;
+  color:#8e958c;
+  border-top:1px solid rgba(255,255,255,0.10);
+  margin-top:48px;
+  padding-top:22px;
+}
 </style>
-<style>
-.pb h3{font-size:24px;font-weight:500;letter-spacing:-.4px;margin:36px 0 10px;color:#f1f3ef}
-.pb p{font-size:18px;line-height:1.75;margin:0 0 18px;letter-spacing:-.2px}
-.pb ul{font-size:18px;line-height:1.7;padding-left:22px;margin:0 0 20px}
-.pb li{margin-bottom:7px}
-.pb strong{color:#fff;font-weight:700}
-.callout{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:32px;padding:26px 30px;margin:30px 0;font-size:16px;line-height:1.65;color:#e7e9e4}
-.callout .l{color:#ff8256;font-weight:700;font-size:13px;margin-bottom:8px;display:flex;gap:7px;align-items:center}
-</style>
-</head><body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em"><div class="bgfx"></div>
+</head>
+
+<body
+  class="font-sans text-tx antialiased"
+  style="letter-spacing:-0.01em"
+>
+
+<div class="bgfx"></div>
+
 <nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair">
-<div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
-<a class="font-bold text-lg flex items-center gap-2" href="../index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a>
-<span class="ml-auto"></span>
-<a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive"><i class="ti ti-arrow-left"></i> 포트폴리오</a>
-</div></nav>
+  <div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
+
+    <a
+      class="font-bold text-lg flex items-center gap-2"
+      href="../index.html"
+    >
+      <i class="ti ti-book-2"></i>
+      Human Tech Note
+      <span class="font-normal text-mut text-[13px]">by 최한람</span>
+    </a>
+
+    <span class="ml-auto"></span>
+
+    <a
+      class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition"
+      href="../index.html#archive"
+    >
+      <i class="ti ti-arrow-left"></i>
+      포트폴리오
+    </a>
+
+  </div>
+</nav>
+
 <article class="max-w-[760px] mx-auto px-6 pt-14 pb-28">
-<span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6"><i class="ti ti-flask"></i> 포트폴리오 데모용 더미 콘텐츠</span>
-<div><span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#FBEAF1;color:#98305C"><i class="ti ti-microscope"></i> 연구·종합</span></div>
-<h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">BERTopic으로 기술 트렌드 읽기</h1>
-<div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
-<span><i class="ti ti-calendar align-[-2px]"></i> 2026년 12월 9일 (수)</span><span><i class="ti ti-clock align-[-2px]"></i> 약 8분</span><span>#65 / 75</span></div>
-<div class="pb">
-<h3>들어가며</h3>
-<p>데이터 분석과 연구 경험을 바탕으로 산업의 큰 흐름과 시사점을 정리한다. 이번 글은 <strong>텍스트 분석 역량</strong>을(를) 중심으로, 개념 설명에 그치지 않고 실제 판단의 맥락을 함께 담으려 했다.</p>
-<p>많은 조직이 같은 문제를 겪지만, 정답은 조직의 규모·문화·서비스 특성에 따라 달라진다. 그래서 '무엇을 했는가'보다 '왜 그렇게 판단했는가'에 무게를 두었다.</p>
-<h3>문제 정의</h3><p>먼저 상황을 명확히 규정하는 것이 중요하다. 문제를 좁게 정의할수록 해결책은 선명해지고, 이해관계자 사이의 합의도 빨라진다.</p>
-<h3>접근 방법</h3><p>실무에서는 이상적인 방법론보다 '지속 가능한 운영'이 우선한다. 한 번의 조치로 끝나는 일은 거의 없고, 대부분은 정책·프로세스·사람이 맞물려야 유지된다.</p>
-<h3>정리하며</h3><p>결국 남는 것은 기록과 반복 가능한 체계다. 텍스트 분석 역량에서 얻은 교훈은 다른 영역에도 그대로 적용된다.</p>
-</div>
-<div class="callout"><div class="l"><i class="ti ti-link"></i> 이 글과 연결된 실무 역량</div>텍스트 분석 역량 — 이력서·경력기술서의 실제 수행 경험과 직접 연결되는 주제입니다.</div>
-<div class="flex flex-wrap gap-2.5 my-8"><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#연구·종합</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#텍스트 분석 역량</span></div>
-<div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7"><a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[#e9edf2] transition" href="post-64.html"><div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 글</div><div class="font-bold mt-1 text-[15px]">정보보호 R&amp;D 투자 동향 — NTIS 데이터로 본 흐름</div></a><a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[#e9edf2] transition" href="post-66.html"><div class="text-[13px] text-mut font-medium">다음 글 <i class="ti ti-arrow-right"></i></div><div class="font-bold mt-1 text-[15px]">정보보호 투자, 기업은 얼마나 어디에 쓰는가</div></a></div>
+
+  <span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6">
+    <i class="ti ti-notebook"></i>
+    MOT Research Note · 2024
+  </span>
+
+  <div>
+    <span
+      class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill"
+      style="background:#FBEAF1;color:#98305C"
+    >
+      <i class="ti ti-microscope"></i>
+      연구·종합
+    </span>
+  </div>
+
+  <h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">
+    2024 기술경영경제학회 연구노트
+  </h1>
+
+  <p class="text-[20px] md:text-[22px] leading-relaxed text-mut mb-5">
+    기술패권시대 글로벌 과학기술협력과 나의 관심 연구
+  </p>
+
+  <div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
+    <span>
+      <i class="ti ti-calendar align-[-2px]"></i>
+      2026년 7월 13일 (월)
+    </span>
+
+    <span>
+      <i class="ti ti-clock align-[-2px]"></i>
+      약 6분
+    </span>
+
+    <span>#65 / 75</span>
+  </div>
+
+  <div class="pb">
+
+    <h2>들어가며</h2>
+
+    <p>
+      기술경영을 공부하면서 학회 초록집을 살펴보는 일은 단순히 여러 논문의 제목을
+      확인하는 것 이상의 의미가 있다. 같은 시기에 연구자들이 어떤 기술과 산업을
+      주목했는지 살펴보면, 기술경영 분야에서 논의되는 문제와 연구 방법의 흐름을
+      함께 확인할 수 있기 때문이다.
+    </p>
+
+    <p>
+      이번 연구노트에서는 <strong>2024 기술경영경제학회 하계학술대회</strong>의
+      전체 주제를 먼저 살펴보고, 서강대학교 기술경영전문대학원 특별세션을 포함한
+      발표 가운데 나의 실무 경험과 대학원 연구에 연결되는 초록을 선별해 기록했다.
+    </p>
+
+    <div class="callout">
+      <div class="l">
+        <i class="ti ti-info-circle"></i>
+        연구노트 작성 기준
+      </div>
+
+      이 글은 학술대회 초록집을 바탕으로 관심 연구를 선별한 1차 기록이다.
+      초록만으로 연구 결과를 단정하지 않으며, 정식 논문이나 발표자료를 확보한 후
+      연구 질문, 데이터, 분석 방법과 한계를 추가로 검토할 예정이다.
+    </div>
+
+    <h2>1. 2024년 학술대회 주제</h2>
+
+    <h3>기술패권시대 글로벌 과학기술협력</h3>
+
+    <p>
+      2024년 하계학술대회의 주제는
+      <strong>‘기술패권시대 글로벌 과학기술협력’</strong>이었다.
+      국가 간 기술 경쟁이 심화되는 상황에서 과학기술 협력, 전략기술 확보,
+      글로벌 연구개발, 산업혁신을 어떻게 함께 추진할 것인가가 주요 문제로
+      제시되었다.
+    </p>
+
+    <p>
+      기술패권은 단순히 우수한 기술을 먼저 확보하는 경쟁만을 의미하지 않는다.
+      핵심기술을 누가 개발하고, 지식과 인력이 어떤 경로로 이동하며, 연구개발
+      성과가 어떻게 산업과 기업의 역량으로 연결되는지를 함께 다루는 문제다.
+    </p>
+
+    <div class="callout">
+      <div class="l">
+        <i class="ti ti-bulb"></i>
+        한 문장으로 정리
+      </div>
+
+      2024년 학술대회는 기술 경쟁이 심화되는 환경에서 국가와 기업이 기술,
+      데이터, 지식과 협력 관계를 어떻게 전략적으로 관리해야 하는지를 질문했다.
+    </div>
+
+    <h2>2. 관심 있게 본 초록</h2>
+
+    <p>
+      전체 발표 가운데 현재의 관심 분야와 연결되는 연구를 여섯 편으로 좁혔다.
+      데이터와 텍스트를 활용해 산업과 기술의 변화를 분석한 연구, 그리고
+      정보보호·IT 리스크·개인정보 권리를 다룬 연구로 구분할 수 있었다.
+    </p>
+
+    <h3>데이터·텍스트 분석과 기술전략</h3>
+
+    <div class="paper-group">
+
+      <div class="paper-card">
+        <div class="paper-number">01</div>
+
+        <div class="paper-title">
+          뉴스 데이터를 통한 감성분석과 전략적 변천:
+          빅히트에서 하이브로
+        </div>
+
+        <div class="paper-note">
+          뉴스 데이터를 활용해 기업을 둘러싼 감성과 전략적 변화의 흐름을
+          분석한 연구다. 비정형 데이터를 통해 기업의 성장 과정과 시장의
+          인식을 해석한다는 점에서 관심이 갔다.
+        </div>
+      </div>
+
+      <div class="paper-card">
+        <div class="paper-number">02</div>
+
+        <div class="paper-title">
+          텍스트 마이닝 분석을 통한 화장품 천연소재 분석
+        </div>
+
+        <div class="paper-note">
+          텍스트 마이닝을 활용해 특정 산업의 소재와 기술 동향을 탐색한
+          연구다. 대규모 문헌이나 기술 데이터를 분류하고 산업의 주요
+          흐름을 발견하는 연구방법과 연결된다.
+        </div>
+      </div>
+
+      <div class="paper-card">
+        <div class="paper-number">03</div>
+
+        <div class="paper-title">
+          BERTopic 모델과 특허 네트워크 분석을 통한
+          AI 기술 융합 및 혁신 연구
+        </div>
+
+        <div class="paper-note">
+          BERTopic과 특허 네트워크 분석을 결합해 AI 기술의 융합 구조와
+          혁신 흐름을 분석한 연구다. 산학연계프로젝트에서 수행한
+          정보보호 R&amp;D 데이터 분류와 기술 포트폴리오 분석 경험에
+          가장 직접적으로 연결되는 발표다.
+        </div>
+      </div>
+
+    </div>
+
+    <h3>정보보호·IT 거버넌스·개인정보</h3>
+
+    <div class="paper-group">
+
+      <div class="paper-card">
+        <div class="paper-number">04</div>
+
+        <div class="paper-title">
+          중소기업은 어떻게 기술 유출을 방지할 수 있는가:
+          자동차 산업을 중심으로
+        </div>
+
+        <div class="paper-note">
+          중소기업의 기술 유출 방지 문제를 자동차 산업의 구조와 연결해
+          살펴본 연구다. 정보보호를 보안솔루션의 문제가 아니라 산업구조,
+          협력사 관계, 핵심기술 관리와 내부통제의 문제로 바라본다는 점에서
+          의미가 있다.
+        </div>
+      </div>
+
+      <div class="paper-card">
+        <div class="paper-number">05</div>
+
+        <div class="paper-title">
+          회귀분석을 활용한 ERM 기반 IT 변경작업의
+          IT시스템 장애예방모델:
+          IT 변경작업으로 인한 장애 발생확률을 중심으로
+        </div>
+
+        <div class="paper-note">
+          IT 변경작업과 시스템 장애 발생 가능성을 데이터 기반으로
+          분석하고, 이를 전사적 위험관리 관점에서 예방하려는 연구다.
+          IT기획, 시스템 운영, 변경관리, 서비스 연속성과 리스크 관리
+          경험에 직접 연결된다.
+        </div>
+      </div>
+
+      <div class="paper-card">
+        <div class="paper-number">06</div>
+
+        <div class="paper-title">
+          마이데이터 권리 보장을 위한 설명 가능한
+          사용자 개인정보 가치 예측 모델에 관한 연구
+        </div>
+
+        <div class="paper-note">
+          개인정보의 가치를 예측하는 과정에서 사용자의 권리와 설명 가능성을
+          함께 다룬 연구다. 개인정보 활용을 확대하면서도 정보주체가 결과와
+          근거를 이해할 수 있도록 해야 한다는 점에서 개인정보보호와
+          AI 거버넌스의 접점을 보여준다.
+        </div>
+      </div>
+
+    </div>
+
+    <h2>3. 왜 나와 관련 있는가</h2>
+
+    <p>
+      이번에 선택한 연구들은 서로 다른 산업과 분석 대상을 다루지만,
+      <strong>데이터를 활용해 기술과 조직의 문제를 구조화한다</strong>는
+      공통점을 가지고 있다.
+    </p>
+
+    <p>
+      첫 번째 축은 텍스트 데이터, 뉴스, 특허와 산업자료를 활용해 기술의
+      흐름을 파악하는 연구다. 이는 NTIS 정보보호 연구개발 과제를
+      BERTopic으로 분류하고, 투자 수준과 기업 내부 역량을 함께 비교했던
+      산학연계프로젝트의 연구 방향과 연결된다.
+    </p>
+
+    <p>
+      두 번째 축은 정보보호와 IT 거버넌스다. 기술 유출, IT 변경작업,
+      시스템 장애, 개인정보 가치와 설명 가능성은 각각 다른 주제처럼
+      보이지만, 결국 기업이 기술과 데이터를 활용하는 과정에서
+      <strong>위험·권한·책임·통제체계를 어떻게 설계할 것인가</strong>라는
+      문제로 이어진다.
+    </p>
+
+    <p>
+      KT 지니뮤직에서 경험한 IT기획, DX 과제관리, 정보보호 운영 업무 역시
+      기술을 도입하는 것만으로 끝나지 않았다. 요구사항, 변경작업,
+      접근권한, 로그, 장애 대응, 내부통제와 이해관계자의 역할을 함께
+      관리해야 실제 운영 가능한 체계가 만들어졌다.
+    </p>
+
+    <div class="callout">
+      <div class="l">
+        <i class="ti ti-link"></i>
+        나의 경험과 연결되는 세 가지 축
+      </div>
+
+      <strong>데이터 분석</strong> — NTIS·BERTopic·기술 포트폴리오 분석<br/>
+      <strong>IT 거버넌스</strong> — 변경관리·장애예방·ERM·서비스 연속성<br/>
+      <strong>정보보호</strong> — 기술유출 방지·개인정보 권리·AI 설명 가능성
+    </div>
+
+    <h2>4. 추후 논문 검토</h2>
+
+    <p>
+      현재는 학술대회 초록을 기준으로 연구의 문제의식과 나와의 연결점을
+      확인한 단계다. 이후 정식 논문이나 발표자료를 확보할 수 있는 연구부터
+      순차적으로 검토할 예정이다.
+    </p>
+
+    <ul class="checklist">
+      <li>정식 학술지 게재 또는 학위논문 수록 여부 확인</li>
+      <li>연구질문과 선행연구의 이론적 배경 검토</li>
+      <li>활용한 데이터의 출처와 전처리 방법 확인</li>
+      <li>감성분석·텍스트 마이닝·BERTopic·회귀분석 방법 비교</li>
+      <li>연구 결과와 분석모형의 한계 확인</li>
+      <li>산학연계프로젝트 및 실무 경험과의 차이 정리</li>
+      <li>별도의 심층 논문 리뷰 작성 여부 결정</li>
+    </ul>
+
+    <h2>정리하며</h2>
+
+    <p>
+      2024년 학술대회 초록을 살펴보면서 기술경영 연구가 기술 자체의
+      우수성만을 평가하는 분야가 아니라는 점을 다시 확인했다.
+      기술과 데이터가 산업과 조직에 적용되기 위해서는 전략, 운영,
+      위험관리와 사용자 권리가 함께 고려되어야 한다.
+    </p>
+
+    <p>
+      이번 글은 여섯 편의 연구를 깊이 분석한 결과물이 아니라,
+      앞으로 읽어볼 연구를 선별한 첫 번째 연구노트다.
+      정식 논문을 확인한 이후에는 연구방법과 결과, 실무 적용 가능성을
+      중심으로 별도의 리뷰를 이어가고자 한다.
+    </p>
+
+    <div class="source-note">
+      <strong>출처 및 작성 기준</strong><br/>
+      2024 기술경영경제학회 하계학술대회 초록집을 바탕으로 작성했다.
+      본문은 초록집에서 관심 연구를 선별한 개인 연구노트이며,
+      정식 학술지 게재논문이나 최종 연구 결과와 일부 내용이 다를 수 있다.
+    </div>
+
+  </div>
+
+  <div class="callout">
+    <div class="l">
+      <i class="ti ti-link"></i>
+      이 글과 연결된 실무·연구 역량
+    </div>
+
+    텍스트 마이닝과 BERTopic 기반 기술분석, 정보보호 R&amp;D 투자 흐름,
+    IT 변경관리, 시스템 장애 예방, 개인정보보호 및 AI 거버넌스
+  </div>
+
+  <div class="flex flex-wrap gap-2.5 my-8">
+
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">
+      #기술경영
+    </span>
+
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">
+      #서강MOT
+    </span>
+
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">
+      #BERTopic
+    </span>
+
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">
+      #텍스트마이닝
+    </span>
+
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">
+      #정보보호
+    </span>
+
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">
+      #IT거버넌스
+    </span>
+
+  </div>
+
+  <div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7">
+
+    <a
+      class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[rgba(255,255,255,.09)] transition"
+      href="post-64.html"
+    >
+      <div class="text-[13px] text-mut font-medium">
+        <i class="ti ti-arrow-left"></i>
+        이전 글
+      </div>
+
+      <div class="font-bold mt-1 text-[15px]">
+        정보보호 R&amp;D 투자 동향 — NTIS 데이터로 본 흐름
+      </div>
+    </a>
+
+    <a
+      class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[rgba(255,255,255,.09)] transition"
+      href="post-66.html"
+    >
+      <div class="text-[13px] text-mut font-medium">
+        다음 글
+        <i class="ti ti-arrow-right"></i>
+      </div>
+
+      <div class="font-bold mt-1 text-[15px]">
+        2025 기술경영경제학회 연구노트
+      </div>
+    </a>
+
+  </div>
+
 </article>
-</body></html>
+
+</body>
+</html>

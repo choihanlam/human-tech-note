@@ -1,59 +1,80 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>LLM 업무 도입 시 보안 체크리스트 · Human Tech Note</title><meta name="description" content="AI 보안 실무화"/>
+<title>데이터를 많이 모으는 시대에서, 안전하게 연결하는 시대로 · Human Tech Note</title>
+<meta name="description" content="2024 데이터경제 컨퍼런스를 통해 생성형 AI, 데이터 활용과 보호, 데이터 기반 서비스와 산업경쟁의 변화를 정리합니다."/>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<style type="text/tailwindcss">
-@theme{
---color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,0.05);
---color-hair:rgba(255,255,255,0.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
---radius-pill:100px;--radius-feat:32px;
---font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
-}
-</style>
+<style type="text/tailwindcss">@theme{--color-ink:#708dff;--color-cobalt:#91a7ff;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,0.05);--color-hair:rgba(255,255,255,0.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;--radius-pill:100px;--radius-feat:32px;--font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;}</style>
 <style>
-body{background:#08090a}
-.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
-radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
-radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
-radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
-radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
-#07080a}
+body{background:#08090a}.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(55% 45% at 16% 20%,rgba(70,100,210,.34),transparent 66%),radial-gradient(48% 52% at 84% 52%,rgba(25,145,125,.28),transparent 70%),radial-gradient(42% 40% at 60% 8%,rgba(100,130,230,.16),transparent 70%),radial-gradient(70% 60% at 50% 108%,rgba(20,80,72,.26),transparent 72%),#07080a}.pb h2{font-size:30px;font-weight:650;letter-spacing:-.7px;line-height:1.35;margin:52px 0 18px;color:#f1f3ef}.pb h3{font-size:23px;font-weight:600;letter-spacing:-.4px;line-height:1.45;margin:36px 0 12px;color:#f1f3ef}.pb p{font-size:18px;line-height:1.78;margin:0 0 18px;letter-spacing:-.2px;color:#d9ddd7}.pb ul{font-size:18px;line-height:1.72;padding-left:22px;margin:0 0 22px;color:#d9ddd7}.pb li{margin-bottom:9px}.pb strong{color:#fff;font-weight:700}.callout{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:28px;padding:25px 28px;margin:28px 0;font-size:16px;line-height:1.72;color:#e7e9e4}.callout .l{color:#9eb4ff;font-weight:700;font-size:13px;margin-bottom:9px;display:flex;gap:7px;align-items:center}.quote{border-left:3px solid #8fa7ff;padding:4px 0 4px 22px;margin:26px 0 30px;font-size:21px;line-height:1.65;color:#fff;font-weight:600;letter-spacing:-.35px}.table-wrap{width:100%;overflow-x:auto;margin:25px 0 34px;border:1px solid rgba(255,255,255,.10);border-radius:22px}.compare-table{width:100%;min-width:720px;border-collapse:collapse;background:rgba(255,255,255,.035)}.compare-table th,.compare-table td{padding:16px 18px;text-align:left;vertical-align:top;border-bottom:1px solid rgba(255,255,255,.09);font-size:15px;line-height:1.65}.compare-table th{color:#fff;font-weight:700;background:rgba(255,255,255,.05)}.compare-table td{color:#c8cdc6}.compare-table tr:last-child td{border-bottom:0}.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:26px 0 34px}.flow-item{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:18px;padding:18px 13px;text-align:center;font-size:14px;line-height:1.55;color:#e7e9e4}.flow-item strong{display:block;margin-bottom:4px;font-size:14px}.question-list{list-style:none;padding-left:0!important;margin-top:20px!important}.question-list li{position:relative;padding:16px 18px 16px 48px;margin-bottom:11px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);border-radius:18px}.question-list li::before{content:"?";position:absolute;left:17px;top:15px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(143,167,255,.16);color:#b7c5ff;font-weight:800;font-size:13px}.review-step{margin:24px 0 38px}.review-card{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:22px 24px;margin-bottom:13px}.review-card .step{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;padding:0 9px;border-radius:100px;background:rgba(143,167,255,.15);color:#b7c5ff;font-size:12px;font-weight:800;margin-bottom:10px}.review-card h4{font-size:18px;line-height:1.5;color:#fff;font-weight:700;margin:0 0 8px}.review-card p{font-size:16px;line-height:1.7;color:#b9beb7;margin:0}.source-note{font-size:14px;line-height:1.8;color:#9ba299;border-top:1px solid rgba(255,255,255,.10);margin-top:48px;padding-top:22px}.source-note a{color:#b7c5ff;text-decoration:underline;text-underline-offset:3px}.year-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:26px 0 34px}.year-card{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);border-radius:21px;padding:22px}.year-card .eyebrow{font-size:12px;color:#aebdff;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin-bottom:9px}.year-card h4{font-size:18px;color:#fff;font-weight:700;line-height:1.5;margin-bottom:7px}.year-card p{font-size:15px;line-height:1.7;color:#b9beb7;margin:0}.mini-tag{display:inline-flex;align-items:center;border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:5px 10px;font-size:12px;color:#b9beb7;margin:4px 5px 0 0}@media(max-width:760px){.flow{grid-template-columns:1fr}.year-grid{grid-template-columns:1fr}}
 </style>
-<style>
-.pb h3{font-size:24px;font-weight:500;letter-spacing:-.4px;margin:36px 0 10px;color:#f1f3ef}
-.pb p{font-size:18px;line-height:1.75;margin:0 0 18px;letter-spacing:-.2px}
-.pb ul{font-size:18px;line-height:1.7;padding-left:22px;margin:0 0 20px}
-.pb li{margin-bottom:7px}
-.pb strong{color:#fff;font-weight:700}
-.callout{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:32px;padding:26px 30px;margin:30px 0;font-size:16px;line-height:1.65;color:#e7e9e4}
-.callout .l{color:#ff8256;font-weight:700;font-size:13px;margin-bottom:8px;display:flex;gap:7px;align-items:center}
-</style>
-</head><body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em"><div class="bgfx"></div>
+</head>
+<body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em">
+<div class="bgfx"></div>
 <nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair">
-<div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
-<a class="font-bold text-lg flex items-center gap-2" href="../index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a>
-<span class="ml-auto"></span>
-<a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive"><i class="ti ti-arrow-left"></i> 포트폴리오</a>
-</div></nav>
+  <div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
+    <a class="font-bold text-lg flex items-center gap-2" href="../index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a>
+    <span class="ml-auto"></span>
+    <a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive"><i class="ti ti-arrow-left"></i>포트폴리오</a>
+  </div>
+</nav>
 <article class="max-w-[760px] mx-auto px-6 pt-14 pb-28">
-<span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6"><i class="ti ti-flask"></i> 포트폴리오 데모용 더미 콘텐츠</span>
-<div><span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#EDEBFB;color:#3E2FA6"><i class="ti ti-cpu"></i> AI·AX</span></div>
-<h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">LLM 업무 도입 시 보안 체크리스트</h1>
-<div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
-<span><i class="ti ti-calendar align-[-2px]"></i> 2026년 11월 6일 (금)</span><span><i class="ti ti-clock align-[-2px]"></i> 약 8분</span><span>#51 / 75</span></div>
-<div class="pb">
-<h3>들어가며</h3>
-<p>AI가 바꾸는 업무와 보안의 지형을 실무자의 시각에서 짚어본다. 이번 글은 <strong>AI 보안 실무화</strong>을(를) 중심으로, 개념 설명에 그치지 않고 실제 판단의 맥락을 함께 담으려 했다.</p>
-<p>많은 조직이 같은 문제를 겪지만, 정답은 조직의 규모·문화·서비스 특성에 따라 달라진다. 그래서 '무엇을 했는가'보다 '왜 그렇게 판단했는가'에 무게를 두었다.</p>
-<h3>문제 정의</h3><p>먼저 상황을 명확히 규정하는 것이 중요하다. 문제를 좁게 정의할수록 해결책은 선명해지고, 이해관계자 사이의 합의도 빨라진다.</p>
-<h3>접근 방법</h3><p>실무에서는 이상적인 방법론보다 '지속 가능한 운영'이 우선한다. 한 번의 조치로 끝나는 일은 거의 없고, 대부분은 정책·프로세스·사람이 맞물려야 유지된다.</p>
-<h3>정리하며</h3><p>결국 남는 것은 기록과 반복 가능한 체계다. AI 보안 실무화에서 얻은 교훈은 다른 영역에도 그대로 적용된다.</p>
+  <span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6"><i class="ti ti-chart-dots-3"></i>Data Economy Series</span>
+  <div><span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#E8ECFF;color:#354794"><i class="ti ti-building-bank"></i>기술경영·MOT</span></div>
+  <h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">데이터를 많이 모으는 시대에서, 안전하게 연결하는 시대로</h1>
+  <p class="text-[20px] md:text-[22px] leading-relaxed text-mut mb-5">2024 데이터경제 컨퍼런스로 읽는 데이터 활용·보호·서비스 경쟁</p>
+  <div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
+    <span><i class="ti ti-calendar align-[-2px]"></i>2026년 7월 13일 (월)</span><span><i class="ti ti-clock align-[-2px]"></i>약 11분</span><span>#50 / 75</span>
+  </div>
+  <div class="pb">
+<h2>들어가며</h2>
+<p>생성형 AI가 빠르게 확산되면서 기업은 모델의 성능과 업무 적용 가능성에 주목했다. 그러나 실제 서비스를 구축하는 단계에서는 모델보다 먼저 데이터의 품질, 권리, 공유 범위와 책임 문제가 드러났다.</p>
+<div class="quote">2024년 데이터 경제의 핵심 질문은 “데이터를 보유하고 있는가”에서 “데이터를 신뢰할 수 있는 방식으로 연결하고 활용할 수 있는가”로 이동했다.</div>
+<p>2024년 1월 제4회 데이터 경제 컨퍼런스는 생성형 AI와 데이터 기반 혁신의 기회·위험을 다뤘다. 같은 해 12월 제5회 컨퍼런스는 전자상거래, 금융, 에너지와 헬스케어에서 데이터가 서비스와 경쟁의 자원으로 전환되는 현상을 논의했다.</p>
+<div class="flow"><div class="flow-item"><strong>01</strong>데이터 확보</div><div class="flow-item"><strong>02</strong>품질·권리 확인</div><div class="flow-item"><strong>03</strong>안전한 공유</div><div class="flow-item"><strong>04</strong>서비스 적용</div><div class="flow-item"><strong>05</strong>가치·책임 배분</div></div>
+<h2>1. 2024년 1월: 생성형 AI의 기회와 위험</h2>
+<p>제4회 컨퍼런스의 주제는 <strong>「혁신, 시장과 데이터: 사회 발전의 동력」</strong>이었다. 생성형 AI, 빅데이터와 머신러닝, 정밀의료, 공공·시장 데이터 기반과 데이터 활용·보호가 주요 의제로 제시됐다.</p>
+<p>이 시기의 논의는 AI를 도입할 것인지 여부를 넘어, AI가 사용하는 데이터의 출처와 품질을 어떻게 확인하고 개인정보·저작권·기밀정보의 위험을 어떻게 관리할 것인지에 초점을 맞췄다.</p>
+<div class="review-step"><div class="review-card"><div class="step">Source</div><h4>데이터 출처와 신뢰성</h4><p>AI가 참고한 데이터와 문서의 출처를 확인할 수 있어야 결과의 신뢰성을 평가할 수 있다.</p></div><div class="review-card"><div class="step">Quality</div><h4>데이터 품질과 최신성</h4><p>중복되거나 오래된 데이터, 부서마다 다른 정의는 AI의 분석과 답변을 불안정하게 만든다.</p></div><div class="review-card"><div class="step">Rights</div><h4>활용 권리와 동의 범위</h4><p>데이터에 접근할 수 있다는 사실과 이를 AI 학습·분석·외부 서비스에 사용할 수 있다는 것은 다른 문제다.</p></div><div class="review-card"><div class="step">Accountability</div><h4>결과와 책임</h4><p>AI 결과가 잘못됐을 때 개발자, 운영기관, 데이터 제공자와 최종 의사결정자의 책임을 구분해야 한다.</p></div></div>
+<h2>2. 2024년 12월: 데이터 거래와 서비스 경쟁</h2>
+<p>제5회 컨퍼런스의 주제는 <strong>「데이터 기반 서비스 산업: 데이터 거래와 경쟁」</strong>이었다. 논의의 중심은 데이터 활용의 원칙에서 실제 산업과 비즈니스 모델로 이동했다.</p>
+<div class="table-wrap"><table class="compare-table"><thead><tr><th>산업</th><th>데이터 활용 방향</th><th>핵심 쟁점</th></tr></thead><tbody><tr><td><strong>전자상거래</strong></td><td>검색·구매·결제·후기 데이터를 추천, 광고와 상품운영에 활용</td><td>플랫폼 데이터 집중, 입점업체와의 공정한 경쟁</td></tr><tr><td><strong>금융</strong></td><td>임베디드 금융, Banking-as-a-Service, 기술평가정보</td><td>개인신용정보, API 보안, 사고 발생 시 책임</td></tr><tr><td><strong>에너지</strong></td><td>수요 예측, 설비 운영, 에너지 절감 서비스</td><td>데이터 표준과 실시간 품질, 기관 간 연계</td></tr><tr><td><strong>헬스케어</strong></td><td>임상·유전체·건강 데이터를 활용한 개인화 서비스</td><td>민감정보, 연구윤리, 품질과 설명 가능성</td></tr></tbody></table></div>
+<p>데이터는 더 이상 내부 보고서를 만드는 보조자료에 머물지 않는다. 상품 추천과 가격, 금융 기능, 건강관리와 산업 운영을 구성하는 생산요소가 됐다. 동시에 데이터를 많이 보유한 플랫폼의 우위가 시장의 진입장벽이 될 수 있다는 경쟁정책의 문제도 커졌다.</p>
+<h2>3. 2024년 데이터 경제의 세 가지 변화</h2>
+<h3>첫째, 모델 중심에서 데이터 기반 중심으로</h3>
+<p>AI 모델을 도입하는 것만으로는 경쟁력이 만들어지지 않는다. 조직이 보유한 데이터를 찾고, 의미와 품질을 표준화하고, 사용할 수 있는 권리와 보안조건을 명확히 해야 AI가 실제 업무에 적용될 수 있다.</p>
+<h3>둘째, 보호에서 ‘안전한 활용’로</h3>
+<p>데이터 보호는 여전히 필수적이지만, 활용을 완전히 차단해서는 데이터의 경제적·사회적 가치가 발생하지 않는다. 필요한 주체가 정해진 목적과 권한 안에서 데이터를 사용할 수 있도록 설계하는 것이 중요해졌다.</p>
+<div class="callout"><div class="l"><i class="ti ti-shield-check"></i>활용과 보호의 관계</div><strong>보호되지 않는 데이터는 신뢰를 얻기 어렵고, 활용되지 않는 데이터는 가치를 만들기 어렵다.</strong></div>
+<h3>셋째, 데이터가 시장경쟁의 조건으로</h3>
+<p>데이터가 축적될수록 서비스가 개선되고, 개선된 서비스가 다시 이용자와 데이터를 끌어오는 순환구조가 형성된다. 따라서 데이터 접근권과 공유조건, 가치배분은 개인정보보호만의 문제가 아니라 산업경쟁과 혁신정책의 문제로 확대됐다.</p>
+<h2>4. 데이터 거버넌스를 쉽게 설명하면</h2>
+<p>데이터 거버넌스는 데이터를 한곳에 저장하는 시스템이 아니다. 조직이 데이터를 활용하기 위해 필요한 의사결정권, 역할, 기준과 책임을 정하는 운영체계다.</p>
+<div class="quote">누가 어떤 데이터를 관리하고, 어떤 목적으로 사용할 수 있으며, 품질과 활용 결과에 누가 책임질 것인가?</div>
+<div class="review-step"><div class="review-card"><div class="step">Owner</div><h4>소유와 책임</h4><p>데이터를 생성·관리·활용하는 조직의 역할과 최종 책임자를 구분한다.</p></div><div class="review-card"><div class="step">Classify</div><h4>분류와 위험도</h4><p>개인정보, 민감정보, 영업비밀, 공개정보 등 특성과 위험 수준에 따라 기준을 달리한다.</p></div><div class="review-card"><div class="step">Access</div><h4>접근과 활용권한</h4><p>조회 권한과 분석·결합·AI 학습에 사용할 수 있는 권한을 구분한다.</p></div><div class="review-card"><div class="step">Share</div><h4>공유와 거래</h4><p>외부 제공 시 목적, 범위, 기간, 품질, 보안조치와 사고책임을 계약과 절차로 정의한다.</p></div><div class="review-card"><div class="step">Trace</div><h4>기록과 추적</h4><p>누가 언제 어떤 데이터를 사용했고 어떤 결과를 만들었는지 로그와 증적으로 남긴다.</p></div></div>
+<h2>5. 기업이 점검해야 할 질문</h2>
+<ul class="question-list"><li>우리 조직의 핵심 데이터가 어디에 있고 누가 책임지는가?</li><li>데이터의 의미와 품질 기준이 부서와 시스템 사이에서 일치하는가?</li><li>해당 데이터를 분석, AI 학습과 외부 서비스에 사용할 권리가 있는가?</li><li>협력사나 플랫폼과 공유할 때 목적·기간·재사용·폐기 기준이 정의돼 있는가?</li><li>데이터 활용의 성과뿐 아니라 개인정보 침해, 편향과 보안위험도 측정하는가?</li></ul>
+<h2>마치며</h2>
+<p>2024년 두 차례 컨퍼런스는 데이터 경제의 논의가 <strong>생성형 AI의 가능성과 위험</strong>에서 <strong>데이터 기반 서비스와 산업경쟁</strong>으로 구체화되는 과정을 보여줬다.</p>
+<p>데이터 경제의 경쟁력은 가장 많은 데이터를 가진 조직에만 주어지지 않는다. 데이터의 의미와 품질을 관리하고, 권한과 책임을 명확히 하며, 외부와 안전하게 연결할 수 있는 조직이 데이터를 실제 가치로 전환할 수 있다.</p>
+<div class="quote">2024년은 데이터를 많이 모으는 경쟁에서, 데이터를 안전하게 연결하고 서비스의 가치로 전환하는 경쟁으로 이동한 시기였다.</div>
+<p>그리고 다음 질문이 남는다. 데이터를 안전하게 활용할 기반을 마련했다면, AI는 연구와 혁신의 방식 자체를 어떻게 바꾸고 있으며 그 성과는 어떻게 측정해야 할까?</p>
+<div class="source-note"><strong>주요 자료</strong><br>· <a href="https://sgmot.sogang.ac.kr/front/cmsboardview.do?bbsConfigFK=6756&currentPage=1&pkid=903137&searchField=ALL&searchLowItem=ALL&searchValue=&siteId=sogangmot" target="_blank" rel="noopener">제4회 데이터 경제 컨퍼런스 공식 안내</a><br>· <a href="https://sgmot.sogang.ac.kr/sogangmot/newsletter/mot-newsletter-40.html" target="_blank" rel="noopener">서강MOT 뉴스레터 제40호: 제5회 데이터 경제 컨퍼런스</a></div>
 </div>
-<div class="callout"><div class="l"><i class="ti ti-link"></i> 이 글과 연결된 실무 역량</div>AI 보안 실무화 — 이력서·경력기술서의 실제 수행 경험과 직접 연결되는 주제입니다.</div>
-<div class="flex flex-wrap gap-2.5 my-8"><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#AI·AX</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#AI 보안 실무화</span></div>
-<div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7"><a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[#e9edf2] transition" href="post-50.html"><div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 글</div><div class="font-bold mt-1 text-[15px]">AI 보안 위협 지도 — 프롬프트 인젝션부터 유출까지</div></a><a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[#e9edf2] transition" href="post-52.html"><div class="text-[13px] text-mut font-medium">다음 글 <i class="ti ti-arrow-right"></i></div><div class="font-bold mt-1 text-[15px]">AI 거버넌스 — 규제와 활용 사이의 균형</div></a></div>
+  <div class="flex flex-wrap gap-2.5 my-8"><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#데이터경제</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#데이터거버넌스</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#생성형AI</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#데이터보호</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#데이터서비스</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#기술경영</span></div>
+  <div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7">
+    <a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[rgba(255,255,255,.09)] transition" href="post-49.html"><div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 글</div><div class="font-bold mt-1 text-[15px]">AI 보안의 본질은 ‘차단’이 아니라 ‘신뢰의 구조’다</div></a>
+    
+    <a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[rgba(255,255,255,.09)] transition" href="post-51.html">
+      <div class="text-[13px] text-mut font-medium">다음 글 <i class="ti ti-arrow-right"></i></div>
+      <div class="font-bold mt-1 text-[15px]">AI는 과학연구와 혁신의 방식을 어떻게 바꾸는가</div>
+    </a>
+  </div>
 </article>
-</body></html>
+</body>
+</html>

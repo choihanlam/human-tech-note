@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>데이터는 많은데 왜 산업성과로 이어지지 않을까 · Human Tech Note</title>
+<meta name="description" content="2026 데이터경제 컨퍼런스를 통해 데이터 패러독스, 대학 기술사업화, 바이오헬스 데이터 거버넌스의 조건을 정리합니다."/>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style type="text/tailwindcss">@theme{--color-ink:#708dff;--color-cobalt:#91a7ff;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,0.05);--color-hair:rgba(255,255,255,0.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;--radius-pill:100px;--radius-feat:32px;--font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;}</style>
+<style>
+body{background:#08090a}.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(55% 45% at 16% 20%,rgba(70,100,210,.34),transparent 66%),radial-gradient(48% 52% at 84% 52%,rgba(25,145,125,.28),transparent 70%),radial-gradient(42% 40% at 60% 8%,rgba(100,130,230,.16),transparent 70%),radial-gradient(70% 60% at 50% 108%,rgba(20,80,72,.26),transparent 72%),#07080a}.pb h2{font-size:30px;font-weight:650;letter-spacing:-.7px;line-height:1.35;margin:52px 0 18px;color:#f1f3ef}.pb h3{font-size:23px;font-weight:600;letter-spacing:-.4px;line-height:1.45;margin:36px 0 12px;color:#f1f3ef}.pb p{font-size:18px;line-height:1.78;margin:0 0 18px;letter-spacing:-.2px;color:#d9ddd7}.pb ul{font-size:18px;line-height:1.72;padding-left:22px;margin:0 0 22px;color:#d9ddd7}.pb li{margin-bottom:9px}.pb strong{color:#fff;font-weight:700}.callout{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:28px;padding:25px 28px;margin:28px 0;font-size:16px;line-height:1.72;color:#e7e9e4}.callout .l{color:#9eb4ff;font-weight:700;font-size:13px;margin-bottom:9px;display:flex;gap:7px;align-items:center}.quote{border-left:3px solid #8fa7ff;padding:4px 0 4px 22px;margin:26px 0 30px;font-size:21px;line-height:1.65;color:#fff;font-weight:600;letter-spacing:-.35px}.table-wrap{width:100%;overflow-x:auto;margin:25px 0 34px;border:1px solid rgba(255,255,255,.10);border-radius:22px}.compare-table{width:100%;min-width:720px;border-collapse:collapse;background:rgba(255,255,255,.035)}.compare-table th,.compare-table td{padding:16px 18px;text-align:left;vertical-align:top;border-bottom:1px solid rgba(255,255,255,.09);font-size:15px;line-height:1.65}.compare-table th{color:#fff;font-weight:700;background:rgba(255,255,255,.05)}.compare-table td{color:#c8cdc6}.compare-table tr:last-child td{border-bottom:0}.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:26px 0 34px}.flow-item{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:18px;padding:18px 13px;text-align:center;font-size:14px;line-height:1.55;color:#e7e9e4}.flow-item strong{display:block;margin-bottom:4px;font-size:14px}.question-list{list-style:none;padding-left:0!important;margin-top:20px!important}.question-list li{position:relative;padding:16px 18px 16px 48px;margin-bottom:11px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);border-radius:18px}.question-list li::before{content:"?";position:absolute;left:17px;top:15px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(143,167,255,.16);color:#b7c5ff;font-weight:800;font-size:13px}.review-step{margin:24px 0 38px}.review-card{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:22px 24px;margin-bottom:13px}.review-card .step{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;padding:0 9px;border-radius:100px;background:rgba(143,167,255,.15);color:#b7c5ff;font-size:12px;font-weight:800;margin-bottom:10px}.review-card h4{font-size:18px;line-height:1.5;color:#fff;font-weight:700;margin:0 0 8px}.review-card p{font-size:16px;line-height:1.7;color:#b9beb7;margin:0}.source-note{font-size:14px;line-height:1.8;color:#9ba299;border-top:1px solid rgba(255,255,255,.10);margin-top:48px;padding-top:22px}.source-note a{color:#b7c5ff;text-decoration:underline;text-underline-offset:3px}.year-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:26px 0 34px}.year-card{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);border-radius:21px;padding:22px}.year-card .eyebrow{font-size:12px;color:#aebdff;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin-bottom:9px}.year-card h4{font-size:18px;color:#fff;font-weight:700;line-height:1.5;margin-bottom:7px}.year-card p{font-size:15px;line-height:1.7;color:#b9beb7;margin:0}.mini-tag{display:inline-flex;align-items:center;border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:5px 10px;font-size:12px;color:#b9beb7;margin:4px 5px 0 0}@media(max-width:760px){.flow{grid-template-columns:1fr}.year-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em">
+<div class="bgfx"></div>
+<nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair">
+  <div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
+    <a class="font-bold text-lg flex items-center gap-2" href="../index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a>
+    <span class="ml-auto"></span>
+    <a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive"><i class="ti ti-arrow-left"></i>포트폴리오</a>
+  </div>
+</nav>
+<article class="max-w-[760px] mx-auto px-6 pt-14 pb-28">
+  <span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6"><i class="ti ti-transfer-in"></i>Data Economy Series</span>
+  <div><span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#E8ECFF;color:#354794"><i class="ti ti-building-bank"></i>기술경영·MOT</span></div>
+  <h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">데이터는 많은데 왜 산업성과로 이어지지 않을까</h1>
+  <p class="text-[20px] md:text-[22px] leading-relaxed text-mut mb-5">2026 데이터경제 컨퍼런스로 읽는 기술사업화와 데이터 거버넌스</p>
+  <div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
+    <span><i class="ti ti-calendar align-[-2px]"></i>2026년 7월 15일 (수)</span><span><i class="ti ti-clock align-[-2px]"></i>약 11분</span><span>#52 / 75</span>
+  </div>
+  <div class="pb">
+<h2>들어가며</h2>
+<p>대학과 연구기관에는 논문, 특허, 임상정보, 연구데이터와 알고리즘이 축적돼 있다. 하지만 많은 데이터와 연구성과가 존재한다는 사실이 곧바로 신제품, 서비스와 산업혁신을 의미하지는 않는다.</p>
+<div class="quote">2026년 데이터 경제의 질문은 “데이터가 있는가”가 아니라 “데이터와 연구성과를 실제 산업가치로 전환할 구조가 있는가”였다.</div>
+<p>2026년 제7차 데이터 경제 컨퍼런스는 <strong>「데이터가 여는 미래 의료: 대학 과학기술사업화의 전략과 과제」</strong>를 주제로 열렸다. 대학과 대학병원이 보유한 연구·의료 데이터를 AI 바이오헬스 산업과 기술사업화로 연결하는 방안이 핵심 의제로 다뤄졌다.</p>
+<h2>1. 데이터 패러독스: 많지만 활용되지 않는 데이터</h2>
+<p>데이터 패러독스는 데이터와 연구투자는 충분하지만 이를 활용할 제도, 조직, 권리체계와 사업모델이 부족해 산업성과로 전환되지 못하는 현상을 의미한다.</p>
+<div class="flow"><div class="flow-item"><strong>01</strong>연구데이터 축적</div><div class="flow-item"><strong>02</strong>품질·표준 정비</div><div class="flow-item"><strong>03</strong>권리·보안 설계</div><div class="flow-item"><strong>04</strong>기업 적용·검증</div><div class="flow-item"><strong>05</strong>사업화·확산</div></div>
+<p>데이터가 많아도 기관별로 형식과 품질이 다르고 소유권과 활용권이 불명확하면 기업은 이를 안정적으로 사용할 수 없다. 반대로 권리와 보안을 지나치게 늦게 검토하면 연구가 거의 완료된 뒤 사업화가 중단되기도 한다.</p>
+<div class="review-step"><div class="review-card"><div class="step">Silo</div><h4>기관과 부서별 데이터 사일로</h4><p>연구자, 병원, 산학협력단과 기업이 데이터를 서로 다른 기준과 시스템으로 관리한다.</p></div><div class="review-card"><div class="step">Quality</div><h4>품질과 표준의 불일치</h4><p>데이터 정의, 수집조건, 결측치와 라벨링 기준이 달라 결합과 재사용이 어렵다.</p></div><div class="review-card"><div class="step">Rights</div><h4>소유권과 활용권의 불명확성</h4><p>연구자, 대학, 병원, 환자, 기업 가운데 누가 어떤 범위까지 데이터를 사용할 수 있는지 명확하지 않다.</p></div><div class="review-card"><div class="step">Transfer</div><h4>기술이전 이후의 간극</h4><p>데이터나 알고리즘을 이전해도 기업이 이를 제품과 규제환경에 맞게 적용할 역량이 부족할 수 있다.</p></div></div>
+<h2>2. 특허 중심 기술사업화의 한계</h2>
+<p>전통적인 대학 기술사업화는 발명을 특허로 보호하고 기업에 라이선스하거나 연구자 창업으로 연결하는 방식에 익숙하다. 그러나 AI와 데이터 기반 기술은 특허 하나만 이전해서는 가치가 충분히 전달되지 않을 수 있다.</p>
+<div class="table-wrap"><table class="compare-table"><thead><tr><th>전통적 기술자산</th><th>데이터·AI 기반 자산</th><th>추가로 필요한 조건</th></tr></thead><tbody><tr><td><strong>특허</strong></td><td>데이터셋과 메타데이터</td><td>수집근거, 품질, 업데이트와 재사용 조건</td></tr><tr><td><strong>시제품</strong></td><td>모델·알고리즘·코드</td><td>학습환경, 성능한계, 버전과 재현성</td></tr><tr><td><strong>기술문서</strong></td><td>라벨링·전처리 노하우</td><td>암묵지 이전, 연구자와 기업의 협업</td></tr><tr><td><strong>라이선스</strong></td><td>API·플랫폼·지속서비스</td><td>운영비용, 보안, SLA와 책임체계</td></tr></tbody></table></div>
+<p>AI 기술은 데이터가 바뀌면 성능도 달라지고, 지속적인 업데이트와 운영환경이 필요하다. 따라서 기술이전 계약에는 단순 권리사용뿐 아니라 데이터 제공, 모델 유지보수, 성능검증, 보안과 책임분담이 포함돼야 한다.</p>
+<h2>3. 바이오헬스가 보여주는 데이터 사업화의 조건</h2>
+<p>바이오헬스 분야에서는 AI 신약개발, AI 의료기기, 정밀의료와 디지털 헬스케어가 빠르게 성장하고 있다. 하지만 의료데이터는 민감도가 높고 결과의 오류가 생명과 안전에 영향을 줄 수 있어 일반 산업보다 더 엄격한 조건이 필요하다.</p>
+<div class="review-step"><div class="review-card"><div class="step">Consent</div><h4>동의와 적법한 활용</h4><p>연구목적으로 수집한 데이터가 제품개발과 상업적 서비스에 사용될 수 있는지 별도로 검토해야 한다.</p></div><div class="review-card"><div class="step">Evidence</div><h4>임상적 근거와 검증</h4><p>알고리즘의 정확도뿐 아니라 환자집단과 실제 의료환경에서 안전성과 유효성을 입증해야 한다.</p></div><div class="review-card"><div class="step">Bias</div><h4>대표성과 편향</h4><p>특정 병원이나 집단의 데이터에 치우치면 다른 환경에서 성능이 저하될 수 있다.</p></div><div class="review-card"><div class="step">Security</div><h4>보안과 신뢰</h4><p>재식별, 데이터 유출, 모델 공격과 공급망 위험을 제품의 전체 생애주기에서 관리해야 한다.</p></div><div class="review-card"><div class="step">Regulation</div><h4>규제와 시장접근</h4><p>의료기기 인허가, 보험수가, 의료기관 도입과 책임체계가 사업화 속도와 확산을 결정한다.</p></div></div>
+<h2>4. 오픈사이언스와 기술보호의 균형</h2>
+<p>연구데이터와 코드를 개방하면 검증과 재사용, 공동연구와 후속혁신이 촉진될 수 있다. 그러나 모든 데이터를 무조건 공개할 수는 없다. 개인정보, 연구참여자의 권리, 영업비밀, 국가핵심기술과 미공개 특허 가능성을 함께 고려해야 한다.</p>
+<div class="callout"><div class="l"><i class="ti ti-scale"></i>핵심 균형</div><strong>개방의 수준을 “공개 또는 비공개”로만 나누지 않고, 데이터의 위험과 목적에 따라 접근권한·사용기간·보안조건·성과공유를 단계적으로 설계해야 한다.</strong></div>
+<p>예를 들어 완전 공개가 어려운 데이터는 안전한 분석환경에서 승인된 연구자만 접근하게 하거나, 원본 대신 가명·합성데이터를 제공할 수 있다. 연구성과를 공개하되 재현에 필요한 코드는 제한된 절차로 검증하는 방식도 가능하다.</p>
+<h2>5. 데이터 거버넌스가 기술사업화의 기반이 되는 이유</h2>
+<p>데이터 거버넌스는 규제를 준수하기 위한 사후 점검이 아니다. 사업화 초기부터 데이터의 품질, 권리, 보안과 책임을 정의해 기업이 데이터를 신뢰하고 투자할 수 있도록 만드는 기반이다.</p>
+<div class="year-grid"><div class="year-card"><div class="eyebrow">Quality</div><h4>쓸 수 있는 데이터인가</h4><p>정의, 수집조건, 표준, 결측치, 편향과 업데이트 기준이 명확해야 한다.</p></div><div class="year-card"><div class="eyebrow">Rights</div><h4>사용할 권리가 있는가</h4><p>연구, 학습, 검증, 상업화와 제3자 제공의 허용범위를 구분해야 한다.</p></div><div class="year-card"><div class="eyebrow">Security</div><h4>안전하게 연결할 수 있는가</h4><p>접근통제, 가명처리, 안전한 분석환경, 로그와 사고대응 체계를 마련해야 한다.</p></div><div class="year-card"><div class="eyebrow">Value</div><h4>가치를 어떻게 나눌 것인가</h4><p>연구자·대학·병원·기업의 기여, 수익과 후속 활용 권리를 계약으로 정해야 한다.</p></div></div>
+<h2>6. 대학과 기업이 함께 준비할 운영체계</h2>
+<div class="review-step"><div class="review-card"><div class="step">Catalog</div><h4>데이터·기술 카탈로그</h4><p>어떤 데이터와 알고리즘이 존재하고 품질·권리·연구단계가 어떠한지 검색 가능한 형태로 관리한다.</p></div><div class="review-card"><div class="step">Review</div><h4>초기 사업화 검토</h4><p>연구기획 단계부터 시장수요, 규제, 데이터 권리, 개인정보와 보안을 함께 검토한다.</p></div><div class="review-card"><div class="step">Sandbox</div><h4>공동검증 환경</h4><p>원본 데이터를 무분별하게 이전하지 않고 대학·병원·기업이 안전하게 모델을 시험할 환경을 제공한다.</p></div><div class="review-card"><div class="step">Contract</div><h4>데이터 중심 계약</h4><p>데이터 사용목적, 재학습, 파생데이터, 모델 업데이트, 사고책임과 종료 후 폐기를 구체화한다.</p></div><div class="review-card"><div class="step">Measure</div><h4>전환성과 측정</h4><p>특허와 기술료 외에도 제품화, 임상·현장 적용, 후속투자, 사용자 가치와 사회적 영향을 평가한다.</p></div></div>
+<h2>7. 기술사업화의 새로운 관점</h2>
+<p>데이터 기반 기술사업화는 완성된 기술을 기업에 넘기는 단발성 거래가 아니다. 데이터가 지속적으로 축적되고 모델이 업데이트되며, 연구자와 기업이 현장검증을 반복하는 장기적 협력과정에 가깝다.</p>
+<ul class="question-list"><li>연구가 끝난 뒤가 아니라 기획단계부터 기업의 문제와 규제환경을 반영했는가?</li><li>특허뿐 아니라 데이터셋, 코드, 운영노하우와 연구자의 암묵지를 함께 이전할 수 있는가?</li><li>기업이 기술을 흡수하고 제품으로 발전시킬 인력과 인프라를 갖추고 있는가?</li><li>데이터와 알고리즘의 업데이트, 성능저하와 사고책임을 누가 관리하는가?</li><li>기술료 외에 실제 현장적용과 산업적 영향력을 측정하는가?</li></ul>
+<h2>마치며</h2>
+<p>2026 데이터 경제 컨퍼런스는 바이오헬스 사례를 통해 데이터와 연구성과가 산업가치로 전환되기 위해 필요한 조건을 보여줬다.</p>
+<div class="quote">데이터 기반 기술사업화는 데이터를 기업에 전달하는 일이 아니라, 품질·권리·보안·활용조건·성과배분을 함께 설계하는 과정이다.</div>
+<p>데이터와 기술의 보유량만으로는 혁신이 완성되지 않는다. 대학과 연구기관은 기업이 활용할 수 있는 형태로 데이터와 지식을 구조화해야 하고, 기업은 이를 흡수해 제품과 서비스로 발전시킬 역량을 갖춰야 한다.</p>
+<p>결국 데이터 패러독스를 해결하는 핵심은 더 많은 데이터를 모으는 것이 아니라, 연구·거버넌스·규제·시장과 운영을 하나의 전환체계로 연결하는 데 있다.</p>
+<div class="source-note"><strong>주요 자료</strong><br>· <a href="https://sgmot.sogang.ac.kr/front/cmsboardview.do?bbsConfigFK=22&currentPage=1&pkid=934657&searchField=ALL&searchLowItem=ALL&searchValue=&siteId=sogangmot" target="_blank" rel="noopener">2026 데이터 경제 컨퍼런스 공식 안내</a><br>· <a href="https://sgmot.sogang.ac.kr/sogangmot/newsletter/mot-newsletter-42.html" target="_blank" rel="noopener">서강MOT 뉴스레터 제42호: 제7차 데이터 경제 컨퍼런스</a></div>
+</div>
+  <div class="flex flex-wrap gap-2.5 my-8"><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#기술사업화</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#데이터거버넌스</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#데이터패러독스</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#바이오헬스</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#AI의료</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#기술경영</span></div>
+  <div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7">
+    <a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[rgba(255,255,255,.09)] transition" href="post-51.html"><div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 글</div><div class="font-bold mt-1 text-[15px]">AI는 과학연구와 혁신의 방식을 어떻게 바꾸는가</div></a>
+    
+    <a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[rgba(255,255,255,.09)] transition" href="post-53.html">
+      <div class="text-[13px] text-mut font-medium">다음 글 <i class="ti ti-arrow-right"></i></div>
+      <div class="font-bold mt-1 text-[15px]">다음 글 준비 중</div>
+    </a>
+  </div>
+</article>
+</body>
+</html>

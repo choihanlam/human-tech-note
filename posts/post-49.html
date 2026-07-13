@@ -1,59 +1,874 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AI 시대의 정보보호 — 무엇이 달라지고 그대로인가 · Human Tech Note</title><meta name="description" content="AI 보안 관점 정립"/>
+
+<title>AI 보안의 본질은 ‘차단’이 아니라 ‘신뢰의 구조’다 · Human Tech Note</title>
+<meta
+  name="description"
+  content="AI가 기업의 업무 안으로 들어올수록 보안은 사용을 막는 일이 아니라 데이터와 권한, 로그와 책임을 설명할 수 있는 구조를 만드는 일이 됩니다."
+/>
+
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"
+/>
+
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
 <style type="text/tailwindcss">
 @theme{
---color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,0.05);
---color-hair:rgba(255,255,255,0.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
---radius-pill:100px;--radius-feat:32px;
---font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
+  --color-ink:#ff4e1c;
+  --color-cobalt:#ff8256;
+  --color-warn:#e8b45a;
+  --color-soft:rgba(255,255,255,0.05);
+  --color-hair:rgba(255,255,255,0.11);
+  --color-tx:#f1f3ef;
+  --color-mut:#a6aca4;
+  --color-hint:#767b73;
+  --radius-pill:100px;
+  --radius-feat:32px;
+  --font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
 }
 </style>
+
 <style>
-body{background:#08090a}
-.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
-radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
-radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
-radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
-radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
-#07080a}
+body{
+  background:#08090a;
+}
+
+.bgfx{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
+    radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
+    radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
+    radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
+    #07080a;
+}
+
+.pb h2{
+  font-size:30px;
+  font-weight:650;
+  letter-spacing:-.7px;
+  line-height:1.35;
+  margin:52px 0 18px;
+  color:#f1f3ef;
+}
+
+.pb h3{
+  font-size:23px;
+  font-weight:600;
+  letter-spacing:-.4px;
+  line-height:1.45;
+  margin:36px 0 12px;
+  color:#f1f3ef;
+}
+
+.pb p{
+  font-size:18px;
+  line-height:1.78;
+  margin:0 0 18px;
+  letter-spacing:-.2px;
+  color:#d9ddd7;
+}
+
+.pb ul{
+  font-size:18px;
+  line-height:1.72;
+  padding-left:22px;
+  margin:0 0 22px;
+  color:#d9ddd7;
+}
+
+.pb li{
+  margin-bottom:9px;
+}
+
+.pb strong{
+  color:#fff;
+  font-weight:700;
+}
+
+.callout{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.10);
+  border-radius:28px;
+  padding:25px 28px;
+  margin:28px 0;
+  font-size:16px;
+  line-height:1.72;
+  color:#e7e9e4;
+}
+
+.callout .l{
+  color:#ff8256;
+  font-weight:700;
+  font-size:13px;
+  margin-bottom:9px;
+  display:flex;
+  gap:7px;
+  align-items:center;
+}
+
+.quote{
+  border-left:3px solid #ff8256;
+  padding:4px 0 4px 22px;
+  margin:26px 0 30px;
+  font-size:21px;
+  line-height:1.65;
+  color:#fff;
+  font-weight:600;
+  letter-spacing:-.35px;
+}
+
+.table-wrap{
+  width:100%;
+  overflow-x:auto;
+  margin:25px 0 34px;
+  border:1px solid rgba(255,255,255,0.10);
+  border-radius:22px;
+}
+
+.compare-table{
+  width:100%;
+  min-width:720px;
+  border-collapse:collapse;
+  background:rgba(255,255,255,0.035);
+}
+
+.compare-table th,
+.compare-table td{
+  padding:16px 18px;
+  text-align:left;
+  vertical-align:top;
+  border-bottom:1px solid rgba(255,255,255,0.09);
+  font-size:15px;
+  line-height:1.65;
+}
+
+.compare-table th{
+  color:#fff;
+  font-weight:700;
+  background:rgba(255,255,255,0.05);
+}
+
+.compare-table td{
+  color:#c8cdc6;
+}
+
+.compare-table tr:last-child td{
+  border-bottom:0;
+}
+
+.flow{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
+  margin:26px 0 34px;
+}
+
+.flow-item{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.10);
+  border-radius:18px;
+  padding:18px 13px;
+  text-align:center;
+  font-size:14px;
+  line-height:1.55;
+  color:#e7e9e4;
+}
+
+.flow-item strong{
+  display:block;
+  margin-bottom:4px;
+  font-size:14px;
+}
+
+.question-list{
+  list-style:none;
+  padding-left:0 !important;
+  margin-top:20px !important;
+}
+
+.question-list li{
+  position:relative;
+  padding:16px 18px 16px 48px;
+  margin-bottom:11px;
+  background:rgba(255,255,255,0.045);
+  border:1px solid rgba(255,255,255,0.09);
+  border-radius:18px;
+}
+
+.question-list li::before{
+  content:"?";
+  position:absolute;
+  left:17px;
+  top:15px;
+  width:22px;
+  height:22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:rgba(255,130,86,.17);
+  color:#ff9a76;
+  font-weight:800;
+  font-size:13px;
+}
+
+.figure{
+  margin:30px 0 38px;
+}
+
+.figure img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,0.11);
+  box-shadow:0 16px 40px rgba(0,0,0,.24);
+}
+
+.figure.light img{
+  background:#fff;
+}
+
+.figure figcaption{
+  margin-top:12px;
+  padding:0 4px;
+  font-size:13px;
+  line-height:1.65;
+  color:#8e958c;
+}
+
+.figure figcaption strong{
+  color:#b9beb7;
+}
+
+.review-step{
+  margin:24px 0 38px;
+}
+
+.review-card{
+  background:rgba(255,255,255,0.045);
+  border:1px solid rgba(255,255,255,0.09);
+  border-radius:20px;
+  padding:22px 24px;
+  margin-bottom:13px;
+}
+
+.review-card .step{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:28px;
+  height:28px;
+  padding:0 9px;
+  border-radius:100px;
+  background:rgba(255,130,86,.15);
+  color:#ff9a76;
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:10px;
+}
+
+.review-card h4{
+  font-size:18px;
+  line-height:1.5;
+  color:#fff;
+  font-weight:700;
+  margin:0 0 8px;
+}
+
+.review-card p{
+  font-size:16px;
+  line-height:1.7;
+  color:#b9beb7;
+  margin:0;
+}
+
+.source-note{
+  font-size:14px;
+  line-height:1.7;
+  color:#8e958c;
+  border-top:1px solid rgba(255,255,255,0.10);
+  margin-top:48px;
+  padding-top:22px;
+}
+
+@media(max-width:760px){
+  .flow{
+    grid-template-columns:1fr;
+  }
+}
 </style>
-<style>
-.pb h3{font-size:24px;font-weight:500;letter-spacing:-.4px;margin:36px 0 10px;color:#f1f3ef}
-.pb p{font-size:18px;line-height:1.75;margin:0 0 18px;letter-spacing:-.2px}
-.pb ul{font-size:18px;line-height:1.7;padding-left:22px;margin:0 0 20px}
-.pb li{margin-bottom:7px}
-.pb strong{color:#fff;font-weight:700}
-.callout{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:32px;padding:26px 30px;margin:30px 0;font-size:16px;line-height:1.65;color:#e7e9e4}
-.callout .l{color:#ff8256;font-weight:700;font-size:13px;margin-bottom:8px;display:flex;gap:7px;align-items:center}
-</style>
-</head><body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em"><div class="bgfx"></div>
+</head>
+
+<body
+  class="font-sans text-tx antialiased"
+  style="letter-spacing:-0.01em"
+>
+
+<div class="bgfx"></div>
+
 <nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair">
-<div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
-<a class="font-bold text-lg flex items-center gap-2" href="../index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a>
-<span class="ml-auto"></span>
-<a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive"><i class="ti ti-arrow-left"></i> 포트폴리오</a>
-</div></nav>
+  <div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
+
+    <a
+      class="font-bold text-lg flex items-center gap-2"
+      href="../index.html"
+    >
+      <i class="ti ti-book-2"></i>
+      Human Tech Note
+      <span class="font-normal text-mut text-[13px]">by 최한람</span>
+    </a>
+
+    <span class="ml-auto"></span>
+
+    <a
+      class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition"
+      href="../index.html#archive"
+    >
+      <i class="ti ti-arrow-left"></i>
+      포트폴리오
+    </a>
+
+  </div>
+</nav>
+
 <article class="max-w-[760px] mx-auto px-6 pt-14 pb-28">
-<span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6"><i class="ti ti-flask"></i> 포트폴리오 데모용 더미 콘텐츠</span>
-<div><span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#EDEBFB;color:#3E2FA6"><i class="ti ti-cpu"></i> AI·AX</span></div>
-<h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">AI 시대의 정보보호 — 무엇이 달라지고 그대로인가</h1>
-<div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
-<span><i class="ti ti-calendar align-[-2px]"></i> 2026년 11월 2일 (월)</span><span><i class="ti ti-clock align-[-2px]"></i> 약 9분</span><span>#49 / 75</span></div>
-<div class="pb">
-<h3>들어가며</h3>
-<p>AI가 바꾸는 업무와 보안의 지형을 실무자의 시각에서 짚어본다. 이번 글은 <strong>AI 보안 관점 정립</strong>을(를) 중심으로, 개념 설명에 그치지 않고 실제 판단의 맥락을 함께 담으려 했다.</p>
-<p>많은 조직이 같은 문제를 겪지만, 정답은 조직의 규모·문화·서비스 특성에 따라 달라진다. 그래서 '무엇을 했는가'보다 '왜 그렇게 판단했는가'에 무게를 두었다.</p>
-<h3>문제 정의</h3><p>먼저 상황을 명확히 규정하는 것이 중요하다. 문제를 좁게 정의할수록 해결책은 선명해지고, 이해관계자 사이의 합의도 빨라진다.</p>
-<h3>접근 방법</h3><p>실무에서는 이상적인 방법론보다 '지속 가능한 운영'이 우선한다. 한 번의 조치로 끝나는 일은 거의 없고, 대부분은 정책·프로세스·사람이 맞물려야 유지된다.</p>
-<h3>정리하며</h3><p>결국 남는 것은 기록과 반복 가능한 체계다. AI 보안 관점 정립에서 얻은 교훈은 다른 영역에도 그대로 적용된다.</p>
-</div>
-<div class="callout"><div class="l"><i class="ti ti-link"></i> 이 글과 연결된 실무 역량</div>AI 보안 관점 정립 — 이력서·경력기술서의 실제 수행 경험과 직접 연결되는 주제입니다.</div>
-<div class="flex flex-wrap gap-2.5 my-8"><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#AI·AX</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#AI 보안 관점 정립</span></div>
-<div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7"><a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[#e9edf2] transition" href="post-48.html"><div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 글</div><div class="font-bold mt-1 text-[15px]">[회고] DX 협의체 운영기 — 벽을 데이터로 허물기</div></a><a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[#e9edf2] transition" href="post-50.html"><div class="text-[13px] text-mut font-medium">다음 글 <i class="ti ti-arrow-right"></i></div><div class="font-bold mt-1 text-[15px]">AI 보안 위협 지도 — 프롬프트 인젝션부터 유출까지</div></a></div>
+
+  <span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6">
+    <i class="ti ti-shield-check"></i>
+    AI Security
+  </span>
+
+  <div>
+    <span
+      class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill"
+      style="background:#EDEBFB;color:#3E2FA6"
+    >
+      <i class="ti ti-cpu"></i>
+      AI·AX
+    </span>
+  </div>
+
+  <h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">
+    AI 보안의 본질은 ‘차단’이 아니라 ‘신뢰의 구조’다
+  </h1>
+
+  <p class="text-[20px] md:text-[22px] leading-relaxed text-mut mb-5">
+    기업형 AI 보안, 왜 중요한가
+  </p>
+
+  <div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
+
+    <span>
+      <i class="ti ti-calendar align-[-2px]"></i>
+      2026년 7월 6일 (월)
+    </span>
+
+    <span>
+      <i class="ti ti-clock align-[-2px]"></i>
+      약 10분
+    </span>
+
+    <span>#49 / 75</span>
+
+  </div>
+
+  <div class="pb">
+
+    <h2>들어가며</h2>
+
+    <p>
+      최근 기업들의 AI 보안, LLM 거버넌스, AI 서비스 보안성 검토와 관련된
+      움직임을 보면서 한 가지 생각이 분명해졌다.
+    </p>
+
+    <div class="quote">
+      AI가 이제 단순한 생산성 도구를 넘어 기업의 핵심 업무 인프라 안으로
+      들어오고 있다.
+    </div>
+
+    <p>
+      처음에는 AI 보안이라고 하면 프롬프트 인젝션, 탈옥(Jailbreaking),
+      데이터 오염과 같은 기술적 위협을 먼저 떠올렸다. 물론 이러한 위협은
+      보안 담당자가 중요하게 다뤄야 할 문제다.
+    </p>
+
+    <p>
+      하지만 실제 기업 환경에서 마주하게 되는 AI 보안은 그보다 훨씬 넓다.
+      모델 자체를 공격으로부터 보호하는 일뿐 아니라, AI가 기업의 데이터와
+      문서를 참고하고 결과물을 만들어내는 전 과정을 관리해야 하기 때문이다.
+    </p>
+
+    <ul class="question-list">
+      <li>AI에 우리 회사의 어떤 데이터를 입력해도 되는가?</li>
+      <li>AI가 사내의 어떤 문서까지 참고하고 검색해도 되는가?</li>
+      <li>AI가 만든 결과물을 실제 업무에서 어디까지 신뢰할 수 있는가?</li>
+      <li>AI가 수행한 과정은 로그로 남고, 문제가 생기면 추적할 수 있는가?</li>
+    </ul>
+
+    <p>
+      결국 AI 보안은 새로운 보안솔루션을 도입하는 문제에 머물지 않는다.
+      AI가 기업 안에서 신뢰받으며 작동할 수 있도록 데이터, 권한, 문서,
+      로그와 책임체계를 설계하는 <strong>운영체계의 문제</strong>에 가깝다.
+    </p>
+
+    <h2>1. AI 보안은 단순한 모델 보안이 아니다</h2>
+
+    <p>
+      기존의 정보보호는 서버, 네트워크, 데이터베이스, 사용자 단말처럼
+      비교적 경계가 명확한 자산을 보호하는 방식으로 운영돼 왔다.
+      방화벽과 접근통제, 백신, 개인정보 유출 방지와 같은 통제도 이러한
+      경계를 기준으로 설계됐다.
+    </p>
+
+    <p>
+      그러나 AI는 특정 공간에 고정된 자산이 아니다. 사용자의 데이터를
+      입력받고, 사내 문서를 검색하고, 모델을 통해 추론하며 새로운 결과물을
+      만들어낸다. 경우에 따라 외부 API나 다른 업무도구와 연결되어 실제
+      업무까지 수행한다.
+    </p>
+
+    <p>
+      따라서 관리해야 할 대상도 모델 하나에 머물지 않는다. 학습 데이터,
+      프롬프트, 벡터 데이터베이스, 검색 권한, 외부 API, 생성 결과와 로그를
+      하나의 흐름으로 봐야 한다.
+    </p>
+
+    <div class="table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>구분</th>
+            <th>기존 IT 보안</th>
+            <th>기업형 AI 보안</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><strong>주요 방어 대상</strong></td>
+            <td>
+              서버, 네트워크, DB, 방화벽, IPS, WAF, Endpoint
+            </td>
+            <td>
+              AI 모델, 학습 데이터, 프롬프트 파이프라인, 벡터 DB
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>핵심 위협</strong></td>
+            <td>
+              해킹, 악성코드, 인프라 및 계정 권한 탈취
+            </td>
+            <td>
+              프롬프트 인젝션, 탈옥, 데이터 오염, 모델 역공학
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>비즈니스 리스크</strong></td>
+            <td>
+              시스템 중단, 개인정보 유출, 서비스 장애
+            </td>
+            <td>
+              환각, 민감정보 오출력, AI 오작동, 권한 남용
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>보안의 지향점</strong></td>
+            <td>
+              외부 침입 차단과 경계 중심 통제
+            </td>
+            <td>
+              데이터 흐름 추적, AI 거버넌스, 설명 가능성 확보
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="l">
+        <i class="ti ti-bulb"></i>
+        기업이 답해야 할 질문
+      </div>
+
+      우리 회사의 AI가 지금 무엇을 보고, 어떤 권한으로 판단하며,
+      무엇을 만들어내고 있는가?
+    </div>
+
+    <p>
+      기업은 이 질문에 답할 수 있어야 한다. AI가 어떤 데이터를 참고했는지,
+      어떤 문서 권한을 기반으로 답변했는지, 그 과정이 감사 가능한 로그로
+      남아 있는지 확인할 수 없다면 제대로 된 통제도 어렵다.
+    </p>
+
+    <p>
+      결국 AI 보안은 모델 하나를 보호하는 일이 아니라, AI가 데이터를 만나
+      업무를 수행하는 <strong>전체 파이프라인을 보호하는 일</strong>이다.
+    </p>
+
+    <h2>2. 데이터는 저장된 자산에만 머물지 않는다</h2>
+
+    <p>
+      기존 정보보호 체계에서 데이터는 주로 데이터베이스, 파일서버,
+      문서 저장소에 정적으로 존재했다. 따라서 보안팀은 데이터의 저장 위치를
+      식별하고, 접근권한을 관리하며, 외부 반출을 모니터링하는 데 집중했다.
+    </p>
+
+    <p>
+      하지만 AI 활용 환경에서는 데이터가 훨씬 더 동적으로 움직인다.
+    </p>
+
+    <div class="flow">
+
+      <div class="flow-item">
+        <strong>01</strong>
+        프롬프트 입력
+      </div>
+
+      <div class="flow-item">
+        <strong>02</strong>
+        데이터 가공·임베딩
+      </div>
+
+      <div class="flow-item">
+        <strong>03</strong>
+        RAG 문서 검색
+      </div>
+
+      <div class="flow-item">
+        <strong>04</strong>
+        모델 추론·응답
+      </div>
+
+      <div class="flow-item">
+        <strong>05</strong>
+        결과물 재사용
+      </div>
+
+    </div>
+
+    <p>
+      사용자가 입력한 데이터는 벡터 DB에 임베딩되어 저장될 수 있고,
+      RAG를 통해 다시 검색되며, 모델의 추론을 거쳐 응답이나 보고서로
+      재가공된다. 데이터는 더 이상 보관만 되는 자산이 아니라 끊임없이
+      이동하고 변환되는 업무 자산이 된다.
+    </p>
+
+    <p>
+      이 때문에 보안팀은 “데이터가 어디에 저장되어 있는가”뿐 아니라
+      “AI 활용 과정에서 어떻게 변환되고 누구에게 노출되는가”를 함께
+      살펴봐야 한다.
+    </p>
+
+    <p>
+      데이터 분류, 비식별화, 문서 접근권한, 프롬프트와 응답 로그,
+      결과물 검증이 서로 분리된 통제가 아니라 하나의 흐름으로 작동해야
+      하는 이유도 여기에 있다.
+    </p>
+
+    <h2>3. 기업형 AI 보안에서 중요한 세 가지 쟁점</h2>
+
+    <h3>첫째, AI 파이프라인의 복잡성</h3>
+
+    <p>
+      데이터 수집과 비식별화, 벡터 DB, LLM Gateway, API 연동,
+      프롬프트와 응답 로그 저장까지 전체 연결 구조를 확인해야 한다.
+      어느 지점에서 데이터가 입력되고 외부로 전달되는지 알 수 없다면
+      통제 기준도 만들기 어렵다.
+    </p>
+
+    <h3>둘째, 결과의 신뢰성과 무결성</h3>
+
+    <p>
+      AI는 사실과 다른 내용을 그럴듯하게 생성할 수 있다. 오래되거나
+      잘못된 사내 문서를 참고하면 부정확한 판단을 내릴 수도 있다.
+      따라서 결과만 검토할 것이 아니라, 어떤 데이터와 권한을 바탕으로
+      생성됐는지 출처와 과정을 확인할 수 있어야 한다.
+    </p>
+
+    <h3>셋째, 사람과 프로세스의 역할</h3>
+
+    <p>
+      AI가 초안을 만들고 사람이 검토하는 구조로 업무가 바뀐다면,
+      자동화를 허용할 범위와 검토 절차를 함께 정해야 한다.
+      문제가 발생했을 때 최종 책임을 누가 질 것인지도 명확해야 한다.
+    </p>
+
+    <p>
+      AI 보안은 보안팀 단독으로 운영하기 어렵다. 개발, 데이터, 법무,
+      개인정보보호, 현업 부서가 함께 업무 기준과 역할을 재설계해야 한다.
+    </p>
+
+    <div class="callout">
+      <div class="l">
+        <i class="ti ti-arrows-exchange"></i>
+        보안 운영 흐름의 변화
+      </div>
+
+      <strong>기존 IT 보안</strong><br/>
+      자산 식별 → 경계 기반 통제 → 모니터링 → 사고 대응
+
+      <br/><br/>
+
+      <strong>AI 활용 환경</strong><br/>
+      데이터 분류·비식별화 → 문서 및 RAG 권한 제어 →
+      프롬프트 입력 검증 → 생성 결과 검토 → 로그 감사
+    </div>
+
+    <p>
+      LLM 기반 서비스의 구조를 단순화하면 사용자의 프롬프트는
+      API Gateway와 입력 필터링 구간을 지나 모델로 전달되고,
+      생성된 응답은 다시 출력 검증과 로그 저장 과정을 거친다.
+    </p>
+
+    <p>
+      중요한 것은 특정 제품이나 솔루션의 이름이 아니다.
+      입력, 검색, 처리, 출력, 로그의 각 단계마다 어떤 통제를 둘 것인지가
+      핵심이다.
+    </p>
+
+    <figure class="figure">
+      <img
+        src="../assets/images/post-49/llm-prompt-injection-firewall.png"
+        alt="사용자 요청이 API Gateway와 Prompt Firewall을 거쳐 LLM Backend와 응답 생성 단계로 전달되는 구조"
+        loading="lazy"
+      />
+
+      <figcaption>
+        <strong>LLM Prompt Injection Firewall 구조 예시.</strong>
+        사용자의 요청이 API Gateway, Prompt Firewall, LLM Backend,
+        응답 생성과 로그 관리 단계로 이어지는 구조를 보여준다.
+        출처: Nine Lives, Zero Trust.
+      </figcaption>
+    </figure>
+
+    <h2>4. 현장 적용에서 정보보호가 던져야 할 질문</h2>
+
+    <p>
+      AI 보안이 실제 업무 환경에 안착하려면 기술의 고도화만큼
+      운영 기준이 중요하다. 현업의 생산성을 지나치게 낮추지 않으면서도
+      위험을 관리할 수 있는 균형점을 찾아야 한다.
+    </p>
+
+    <p>
+      새로운 AI 서비스를 도입하거나 보안성 검토를 진행할 때는 입력,
+      인프라, 문서 권한, 운영 로그와 최종 책임을 함께 살펴봐야 한다.
+    </p>
+
+    <figure class="figure light">
+      <img
+        src="../assets/images/post-49/ai-security-review-checklist.png"
+        alt="Input, Infra, Context, Operation, Governance의 다섯 단계로 구성된 기업형 AI 보안성 검토 질문"
+        loading="lazy"
+      />
+
+      <figcaption>
+        기업형 AI 서비스를 검토할 때는 입력 데이터뿐 아니라 인프라,
+        문서 접근권한, 프롬프트와 응답 로그, API 통제 범위와 최종 책임까지
+        함께 확인해야 한다.
+      </figcaption>
+    </figure>
+
+    <div class="review-step">
+
+      <div class="review-card">
+        <div class="step">Input</div>
+
+        <h4>입력 데이터 식별과 개인정보 검토</h4>
+
+        <p>
+          AI에 입력되는 데이터에 개인정보, 신용정보, 영업비밀이나 기업 기밀이
+          포함되는지 확인해야 한다. 입력을 허용할 데이터와 제한할 데이터를
+          사전에 구분할 수 있는 기준도 필요하다.
+        </p>
+      </div>
+
+      <div class="review-card">
+        <div class="step">Infra</div>
+
+        <h4>데이터 전송과 저장 위치 확인</h4>
+
+        <p>
+          데이터가 외부 모델의 API 서버로 전달되는지, 사내 인프라나
+          프라이빗 클라우드에서 처리되는지 확인해야 한다.
+          입력 데이터가 모델 학습이나 서비스 개선에 재활용되는지도
+          함께 검토할 필요가 있다.
+        </p>
+      </div>
+
+      <div class="review-card">
+        <div class="step">Context</div>
+
+        <h4>문서 보안등급과 접근권한 연동</h4>
+
+        <p>
+          RAG가 검색하는 사내 문서의 보안등급이 실제 사용자의 접근권한과
+          연동되는지 확인해야 한다. 권한이 없는 문서가 AI 검색과 답변을 통해
+          우회적으로 노출되지 않도록 해야 한다.
+        </p>
+      </div>
+
+      <div class="review-card">
+        <div class="step">Operation</div>
+
+        <h4>입력 필터링과 로그 추적성</h4>
+
+        <p>
+          악의적인 프롬프트를 차단하거나 탐지하는 기준이 있는지 확인하고,
+          사용자의 프롬프트와 AI의 응답을 사고 조사와 감사가 가능한 형태로
+          기록해야 한다.
+        </p>
+      </div>
+
+      <div class="review-card">
+        <div class="step">Governance</div>
+
+        <h4>통제 범위와 최종 책임 정의</h4>
+
+        <p>
+          AI가 호출할 수 있는 API와 업무도구의 권한을 제한하고,
+          잘못된 결과로 업무상 손실이 발생했을 때 중단, 조사와 최종 의사결정을
+          담당할 주체를 명확히 해야 한다.
+        </p>
+      </div>
+
+    </div>
+
+    <p>
+      이러한 질문은 새로운 통제 항목을 계속 추가하자는 의미가 아니다.
+      기존의 데이터 관리, 접근권한, 변경관리, 로그관리와 사고 대응 기준을
+      AI 서비스의 동적인 업무 흐름에 맞게 다시 연결하자는 의미에 가깝다.
+    </p>
+
+    <h2>AI 보안의 본질은 신뢰의 구조를 만드는 것</h2>
+
+    <p>
+      기업 환경에서 AI 보안이 까다로운 이유는 새로운 공격기법이 많아졌기
+      때문만은 아니다. 더 어려운 문제는 AI가 내놓은 결과와 수행 과정을
+      조직이 어디까지 설명할 수 있는가에 있다.
+    </p>
+
+    <p>
+      AI가 어떤 데이터를 참고했는지, 어떤 권한으로 실행됐는지,
+      그 과정이 로그로 남아 있는지 답할 수 없다면 AI는 아무리 편리해도
+      기업의 핵심 업무 인프라로 자리 잡기 어렵다. 편리한 도구일 수는
+      있어도 신뢰할 수 있는 업무 주체가 되기는 어렵다.
+    </p>
+
+    <p>
+      앞으로 기업의 AI 활용은 사내 지식 검색과 문서 요약을 넘어,
+      스스로 판단하고 여러 도구를 사용하는 AI Agent 기반 자동화로
+      확장될 가능성이 높다. 그럴수록 정보보호가 던지는 질문도 달라져야 한다.
+    </p>
+
+    <div class="quote">
+      “AI를 사용할 것인가, 막을 것인가”가 아니라
+      “AI를 사용한 과정을 설명할 수 있는가”를 물어야 한다.
+    </div>
+
+    <p>
+      AI가 정답을 맞혔는지만 볼 것이 아니라, 그 답이 안전한 데이터와
+      적법한 권한 위에서 만들어졌는지 확인해야 한다. 처리 속도뿐 아니라
+      그 과정이 로그로 남고 조직이 책임질 수 있는지도 살펴봐야 한다.
+    </p>
+
+    <p>
+      AI 시대의 보안은 뒤에서 사고를 막는 통제 역할에만 머물러서는
+      안 된다. AI가 만든 결과와 과정을 조직이 투명하게 설명할 수 있도록
+      돕는 <strong>신뢰의 인프라</strong>가 되어야 한다.
+    </p>
+
+    <p>
+      AI가 기업의 업무 흐름 안으로 들어올수록 보안은 사용 여부만 판단하는
+      역할에서 벗어나야 한다. 이제는 AI가 어떤 데이터와 권한, 절차 위에서
+      작동했는지 설명할 수 있는 구조를 만들어야 한다.
+    </p>
+
+    <div class="source-note">
+      이 글은 2026년 7월 6일 네이버 블로그에 작성한 내용을 바탕으로
+      문단 구성과 일부 표현을 정리했다.
+    </div>
+
+  </div>
+
+  <div class="flex flex-wrap gap-2.5 my-8">
+
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">
+      #AI보안
+    </span>
+
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">
+      #LLM거버넌스
+    </span>
+
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">
+      #데이터거버넌스
+    </span>
+
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">
+      #RAG
+    </span>
+
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">
+      #AIAgent
+    </span>
+
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">
+      #정보보호
+    </span>
+
+  </div>
+
+  <div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7">
+
+    <a
+      class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[rgba(255,255,255,.09)] transition"
+      href="post-48.html"
+    >
+      <div class="text-[13px] text-mut font-medium">
+        <i class="ti ti-arrow-left"></i>
+        이전 글
+      </div>
+
+      <div class="font-bold mt-1 text-[15px]">
+        [회고] DX 협의체 운영기 — 벽을 데이터로 허물기
+      </div>
+    </a>
+
+    <a
+      class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[rgba(255,255,255,.09)] transition"
+      href="post-50.html"
+    >
+      <div class="text-[13px] text-mut font-medium">
+        다음 글
+        <i class="ti ti-arrow-right"></i>
+      </div>
+
+      <div class="font-bold mt-1 text-[15px]">
+        AI 보안 위협 지도 — 프롬프트 인젝션부터 유출까지
+      </div>
+    </a>
+
+  </div>
+
 </article>
-</body></html>
+
+</body>
+</html>

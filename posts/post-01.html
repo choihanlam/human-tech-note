@@ -1,59 +1,568 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>[오프닝] Human Tech Note를 시작하며 · Human Tech Note</title><meta name="description" content="블로그 정체성·방향 선언"/>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<style type="text/tailwindcss">
-@theme{
---color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,0.05);
---color-hair:rgba(255,255,255,0.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
---radius-pill:100px;--radius-feat:32px;
---font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
-}
-</style>
-<style>
-body{background:#08090a}
-.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
-radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
-radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
-radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
-radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
-#07080a}
-</style>
-<style>
-.pb h3{font-size:24px;font-weight:500;letter-spacing:-.4px;margin:36px 0 10px;color:#f1f3ef}
-.pb p{font-size:18px;line-height:1.75;margin:0 0 18px;letter-spacing:-.2px}
-.pb ul{font-size:18px;line-height:1.7;padding-left:22px;margin:0 0 20px}
-.pb li{margin-bottom:7px}
-.pb strong{color:#fff;font-weight:700}
-.callout{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:32px;padding:26px 30px;margin:30px 0;font-size:16px;line-height:1.65;color:#e7e9e4}
-.callout .l{color:#ff8256;font-weight:700;font-size:13px;margin-bottom:8px;display:flex;gap:7px;align-items:center}
-</style>
-</head><body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em"><div class="bgfx"></div>
-<nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair">
-<div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
-<a class="font-bold text-lg flex items-center gap-2" href="../index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a>
-<span class="ml-auto"></span>
-<a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive"><i class="ti ti-arrow-left"></i> 포트폴리오</a>
-</div></nav>
-<article class="max-w-[760px] mx-auto px-6 pt-14 pb-28">
-<span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6"><i class="ti ti-flask"></i> 포트폴리오 데모용 더미 콘텐츠</span>
-<div><span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#E7F0FF;color:#0047B3"><i class="ti ti-shield-lock"></i> 정보보호 기본</span></div>
-<h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">[오프닝] Human Tech Note를 시작하며</h1>
-<div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
-<span><i class="ti ti-calendar align-[-2px]"></i> 2026년 7월 13일 (월)</span><span><i class="ti ti-clock align-[-2px]"></i> 약 5분</span><span>#1 / 75</span></div>
-<div class="pb">
-<h3>들어가며</h3>
-<p>정보보호 실무에서 자주 마주치는 개념을 현장의 언어로 다시 정리한다. 이번 글은 <strong>블로그 정체성·방향 선언</strong>을(를) 중심으로, 개념 설명에 그치지 않고 실제 판단의 맥락을 함께 담으려 했다.</p>
-<p>많은 조직이 같은 문제를 겪지만, 정답은 조직의 규모·문화·서비스 특성에 따라 달라진다. 그래서 '무엇을 했는가'보다 '왜 그렇게 판단했는가'에 무게를 두었다.</p>
-<h3>문제 정의</h3><p>먼저 상황을 명확히 규정하는 것이 중요하다. 문제를 좁게 정의할수록 해결책은 선명해지고, 이해관계자 사이의 합의도 빨라진다.</p>
-<h3>접근 방법</h3><p>실무에서는 이상적인 방법론보다 '지속 가능한 운영'이 우선한다. 한 번의 조치로 끝나는 일은 거의 없고, 대부분은 정책·프로세스·사람이 맞물려야 유지된다.</p>
-<h3>정리하며</h3><p>결국 남는 것은 기록과 반복 가능한 체계다. 블로그 정체성·방향 선언에서 얻은 교훈은 다른 영역에도 그대로 적용된다.</p>
-</div>
-<div class="callout"><div class="l"><i class="ti ti-link"></i> 이 글과 연결된 실무 역량</div>블로그 정체성·방향 선언 — 이력서·경력기술서의 실제 수행 경험과 직접 연결되는 주제입니다.</div>
-<div class="flex flex-wrap gap-2.5 my-8"><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#정보보호 기본</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#블로그 정체성·방향 선언</span></div>
-<div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7"><span class="flex-1"></span><a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[#e9edf2] transition" href="post-02.html"><div class="text-[13px] text-mut font-medium">다음 글 <i class="ti ti-arrow-right"></i></div><div class="font-bold mt-1 text-[15px]">정보보호란 무엇인가 — 실무자가 정의하는 우선순위</div></a></div>
-</article>
-</body></html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>[오프닝] Human Tech Note를 시작하며 · Human Tech Note</title>
+
+  <meta
+    name="description"
+    content="정보보호·IT 거버넌스·AI·기술경영을 연구와 실무의 관점에서 기록하는 Human Tech Note의 시작"
+  />
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"
+  />
+
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      --color-ink: #ff4e1c;
+      --color-cobalt: #ff8256;
+      --color-warn: #e8b45a;
+      --color-soft: rgba(255, 255, 255, 0.05);
+      --color-hair: rgba(255, 255, 255, 0.11);
+      --color-tx: #f1f3ef;
+      --color-mut: #a6aca4;
+      --color-hint: #767b73;
+
+      --radius-pill: 100px;
+      --radius-feat: 32px;
+
+      --font-sans:
+        "Pretendard",
+        "-apple-system",
+        "BlinkMacSystemFont",
+        "Malgun Gothic",
+        sans-serif;
+    }
+  </style>
+
+  <style>
+    body {
+      background: #08090a;
+    }
+
+    .bgfx {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(
+          55% 45% at 16% 20%,
+          rgba(24, 150, 96, 0.42),
+          transparent 66%
+        ),
+        radial-gradient(
+          48% 52% at 84% 52%,
+          rgba(15, 120, 84, 0.34),
+          transparent 70%
+        ),
+        radial-gradient(
+          42% 40% at 60% 8%,
+          rgba(80, 180, 120, 0.2),
+          transparent 70%
+        ),
+        radial-gradient(
+          70% 60% at 50% 108%,
+          rgba(10, 70, 52, 0.3),
+          transparent 72%
+        ),
+        #07080a;
+    }
+
+    .pb h2 {
+      margin: 48px 0 16px;
+      color: #f1f3ef;
+      font-size: 28px;
+      font-weight: 650;
+      line-height: 1.4;
+      letter-spacing: -0.6px;
+    }
+
+    .pb h3 {
+      margin: 36px 0 12px;
+      color: #f1f3ef;
+      font-size: 23px;
+      font-weight: 600;
+      line-height: 1.45;
+      letter-spacing: -0.4px;
+    }
+
+    .pb p {
+      margin: 0 0 20px;
+      font-size: 18px;
+      line-height: 1.82;
+      letter-spacing: -0.2px;
+    }
+
+    .pb ul {
+      margin: 4px 0 24px;
+      padding-left: 24px;
+      font-size: 18px;
+      line-height: 1.78;
+    }
+
+    .pb li {
+      margin-bottom: 10px;
+    }
+
+    .pb strong {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .pb blockquote {
+      margin: 32px 0;
+      padding: 22px 26px;
+      border-left: 3px solid #ff8256;
+      border-radius: 0 18px 18px 0;
+      background: rgba(255, 255, 255, 0.045);
+      color: #f1f3ef;
+      font-size: 20px;
+      font-weight: 550;
+      line-height: 1.7;
+      letter-spacing: -0.3px;
+    }
+
+    .callout {
+      margin: 36px 0;
+      padding: 26px 30px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 32px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #e7e9e4;
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    .callout .l {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 12px;
+      color: #ff8256;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .callout ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .callout li {
+      margin-bottom: 7px;
+    }
+
+    .callout li:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body
+  class="font-sans text-tx antialiased"
+  style="letter-spacing: -0.01em"
+>
+  <div class="bgfx"></div>
+
+  <nav
+    class="sticky top-0 z-20 border-b border-hair bg-[#0a0c0bcc] backdrop-blur"
+  >
+    <div
+      class="mx-auto flex max-w-[1080px] items-center gap-5 px-6 py-3.5"
+    >
+      <a
+        class="flex items-center gap-2 text-lg font-bold"
+        href="../index.html"
+      >
+        <i class="ti ti-book-2"></i>
+        Human Tech Note
+        <span class="text-[13px] font-normal text-mut">
+          by 최한람
+        </span>
+      </a>
+
+      <span class="ml-auto"></span>
+
+      <a
+        class="inline-flex items-center gap-1.5 rounded-pill border border-[rgba(255,255,255,.22)] px-4 py-2 text-[13px] font-bold text-tx transition hover:bg-soft"
+        href="../index.html#archive"
+      >
+        <i class="ti ti-arrow-left"></i>
+        아카이브
+      </a>
+    </div>
+  </nav>
+
+  <article class="mx-auto max-w-[760px] px-6 pb-28 pt-14">
+
+    <span
+      class="mb-6 inline-flex items-center gap-1.5 rounded-pill bg-soft px-4 py-2 text-[13px] font-bold text-mut"
+    >
+      <i class="ti ti-notebook"></i>
+      Human Tech Note · Opening Note
+    </span>
+
+    <div>
+      <span
+        class="inline-flex items-center gap-1.5 rounded-pill px-4 py-1.5 text-[13px] font-bold"
+        style="background: #e7f0ff; color: #0047b3"
+      >
+        <i class="ti ti-bulb"></i>
+        연구와 실무
+      </span>
+    </div>
+
+    <h1
+      class="mb-3 mt-4 text-[36px] font-medium leading-tight tracking-tight md:text-[52px]"
+    >
+      [오프닝] Human Tech Note를 시작하며
+    </h1>
+
+    <p class="mb-6 text-[18px] leading-relaxed text-mut">
+      경험을 보여주는 기록을 넘어, 경험을 다시 질문하고 검증하는 기록을
+      시작합니다.
+    </p>
+
+    <div
+      class="mb-8 flex flex-wrap gap-4 border-b border-hair pb-6 text-[14px] text-mut"
+    >
+      <span>
+        <i class="ti ti-calendar align-[-2px]"></i>
+        2026년 7월 13일
+      </span>
+
+      <span>
+        <i class="ti ti-clock align-[-2px]"></i>
+        약 8분
+      </span>
+
+      <span>
+        <i class="ti ti-history align-[-2px]"></i>
+        지속적으로 보완하는 글
+      </span>
+    </div>
+
+    <div class="pb">
+
+      <h2>경험을 기록하는 것에서, 경험을 다시 검증하는 것으로</h2>
+
+      <p>
+        정보보호, IT기획, DX 업무를 수행하면서 다양한 기술과 제도,
+        프로젝트를 경험했다.
+      </p>
+
+      <p>
+        시스템을 안정적으로 운영하기 위해 인프라 구조를 개선하기도 했고,
+        조직의 업무 프로세스를 분석하여 DX 과제를 도출하기도 했다.
+        정보보호 업무에서는 정책과 지침을 정비하고, 접근권한과 로그를
+        점검하며, 보안 솔루션과 내부통제가 실제 조직 안에서 작동하도록
+        관리했다.
+      </p>
+
+      <p>
+        당시에는 주어진 문제를 해결하고 운영을 안정화하는 일이 가장
+        중요했다. 하지만 시간이 지나 경험을 다시 돌아보니, 해결한 문제보다
+        더 많은 질문이 남아 있었다.
+      </p>
+
+      <ul>
+        <li>그때의 판단은 어떤 근거에서 나온 것이었을까?</li>
+        <li>다른 조직에서도 적용할 수 있는 방법이었을까?</li>
+        <li>제도와 기술은 실제 현장에서 어떻게 연결되어야 할까?</li>
+        <li>
+          AI와 AX가 확산되는 환경에서는 기존의 정보보호와 IT 거버넌스가
+          어떻게 달라져야 할까?
+        </li>
+      </ul>
+
+      <p>
+        <strong>Human Tech Note는 이러한 질문에서 시작한다.</strong>
+      </p>
+
+      <h2>실무 경험만으로는 충분하지 않았다</h2>
+
+      <p>
+        실무 경험은 중요한 자산이다. 그러나 하나의 조직에서 경험한 사례만으로
+        모든 문제를 설명하거나 일반화하기는 어렵다.
+      </p>
+
+      <p>
+        조직마다 규모와 문화가 다르고, 서비스 구조와 규제 환경, 기술 수준,
+        예산과 인력도 다르다. 한 조직에서 효과적이었던 방법이 다른 조직에서도
+        동일하게 작동한다고 단정할 수 없는 이유다.
+      </p>
+
+      <p>
+        반대로 논문이나 보고서에서 제시하는 이상적인 모델도 실제 현장에
+        그대로 적용되지는 않는다. 기업에서는 일정과 비용, 기존 시스템,
+        이해관계자의 요구, 운영조직의 수용 가능성을 함께 고려해야 한다.
+      </p>
+
+      <blockquote>
+        연구가 방향을 제시한다면, 실무는 그 방향이 현실에서 작동할 수 있는
+        조건을 확인하는 과정이라고 생각한다.
+      </blockquote>
+
+      <p>
+        그래서 이 블로그에서는 실무와 연구 중 어느 한쪽만을 정답으로
+        삼지 않으려 한다.
+      </p>
+
+      <p>
+        현장에서 경험한 문제를 논문과 산업 자료를 통해 다시 살펴보고,
+        연구와 제도가 제시하는 방향이 실제 기업 환경에서 어떤 구조와
+        프로세스로 구현될 수 있는지를 검토하려 한다.
+      </p>
+
+      <h2>Human Tech Note에서 다루려는 것</h2>
+
+      <h3>1. 정보보호와 개인정보보호의 운영</h3>
+
+      <p>
+        정보보호를 정책 문서나 솔루션의 기능만으로 설명하지 않는다.
+        ISMS, 내부통제, 접근권한, 로그, DLP, DRM, NAC와 같은 통제가
+        실제 조직 안에서 지속적으로 작동하려면 어떤 정책과 프로세스,
+        역할과 책임이 필요한지를 살펴본다.
+      </p>
+
+      <h3>2. IT 거버넌스와 PMO</h3>
+
+      <p>
+        인프라 개선, 무중단 전환, 운영전환, ITO 관리, DX 과제관리와 같은
+        경험을 범위, 일정, 비용, 리스크, 이해관계자, 의사결정의 관점에서
+        다시 정리한다.
+      </p>
+
+      <p>
+        프로젝트를 완료하는 것과 새로운 체계가 조직에 안정적으로 정착하는
+        것은 서로 다른 문제이기 때문이다.
+      </p>
+
+      <h3>3. AI·AX 시대의 보안과 거버넌스</h3>
+
+      <p>
+        AI 활용을 단순히 허용하거나 차단하는 문제로만 바라보지 않는다.
+        데이터와 권한, 모델과 서비스, 외부 도구 호출, 에이전트의 행위 로그,
+        결과 검증과 책임을 어떻게 관리해야 하는지 고민한다.
+      </p>
+
+      <p>
+        새로운 기술을 도입하면서도 조직이 통제 가능성과 책임성을 유지할 수
+        있는 운영 구조를 살펴볼 예정이다.
+      </p>
+
+      <h3>4. 기술경영과 데이터 기반 연구</h3>
+
+      <p>
+        기술이 어떻게 선택되고 투자되며, 조직의 역량으로 전환되는지를
+        논문과 데이터를 통해 분석한다.
+      </p>
+
+      <p>
+        정보보호 R&amp;D 투자, 기술혁신, AI 의사결정, 데이터 거버넌스와
+        같은 주제를 산업 현상과 연결하여 살펴보고, 연구 결과를 실무자가
+        활용할 수 있는 언어로 다시 정리하려 한다.
+      </p>
+
+      <h2>글을 작성하는 방법</h2>
+
+      <p>
+        Human Tech Note의 글은 가능한 한 다음과 같은 흐름을 따르려고 한다.
+      </p>
+
+      <ul>
+        <li>
+          먼저 산업이나 조직에서 발생하는 <strong>문제를 정의한다.</strong>
+        </li>
+
+        <li>
+          논문, 법령, 공식 보고서, 기술 문서와 기업 기술블로그를 통해
+          <strong>근거를 확인한다.</strong>
+        </li>
+
+        <li>
+          기술적 개념은 비전공자와 의사결정자도 이해할 수 있도록
+          <strong>현장의 언어로 설명한다.</strong>
+        </li>
+
+        <li>
+          실제 기업 환경에 적용할 때 필요한 조건과 한계,
+          <strong>운영상의 고려사항을 함께 정리한다.</strong>
+        </li>
+
+        <li>
+          마지막에는 완성된 결론만을 제시하기보다,
+          <strong>다음 탐구로 이어질 질문을 남긴다.</strong>
+        </li>
+      </ul>
+
+      <p>
+        개인적인 실무 경험은 공개 가능한 범위에서 비식별화하고 일반화한다.
+        경험을 과장하거나 모든 결과를 개인의 성과처럼 표현하지 않으며,
+        당시 맡았던 역할과 협업 과정, 판단과 한계를 구분하여 기록할 것이다.
+      </p>
+
+      <p>
+        사실과 해석도 가능한 한 분리하려 한다. 확인된 내용에는 출처를
+        표시하고, 개인적인 판단이나 추론은 하나의 관점임을 명확하게 밝힐
+        예정이다.
+      </p>
+
+      <h2>보여주기 위한 글보다, 남길 가치가 있는 글</h2>
+
+      <p>
+        처음에는 일정한 기간 동안 많은 글을 작성하는 목표를 세웠다.
+        꾸준히 학습하고 기록하기 위한 장치로서 수량 목표 자체는 의미가 있다.
+      </p>
+
+      <p>
+        그러나 글의 수가 이 블로그의 목적이 되어서는 안 된다고 생각한다.
+      </p>
+
+      <p>
+        빠르게 정리한 여러 편의 글보다, 하나의 문제를 충분히 이해하고
+        연구와 실무의 관점에서 검토한 글 한 편이 더 오래 남을 수 있다.
+      </p>
+
+      <p>
+        앞으로는 정해진 수량을 채우기보다 실제로 공부하고 연구한 내용,
+        직접 경험한 문제, 산업적으로 검토할 가치가 있는 주제를 중심으로
+        기록하려 한다.
+      </p>
+
+      <p>
+        모든 글이 완성된 결론에 도달하지는 못할 것이다. 어떤 글은 질문을
+        정리하는 단계에 머물 수도 있고, 데이터와 사례의 한계로 인해
+        잠정적인 판단만 제시할 수도 있다.
+      </p>
+
+      <p>
+        그 한계와 부족함까지 솔직하게 남기는 것이 연구와 실무를 연결하는
+        기록에 더 가깝다고 생각한다.
+      </p>
+
+      <h2>기술과 사람, 연구와 현장 사이에서</h2>
+
+      <p>
+        Human Tech Note라는 이름에는 기술 자체뿐 아니라 기술을 선택하고,
+        운영하며, 그 결과에 책임지는 사람과 조직을 함께 바라보겠다는 의미를
+        담았다.
+      </p>
+
+      <p>
+        기술은 도입하는 것만으로 가치를 만들지 않는다. 조직의 목적과 업무에
+        맞게 적용되고, 구성원이 실제로 사용할 수 있어야 하며, 위험을
+        통제하고 결과에 책임질 수 있어야 한다.
+      </p>
+
+      <p>
+        이곳은 이미 알고 있는 것을 보여주기 위한 공간이 아니다.
+      </p>
+
+      <p>
+        과거의 경험을 다시 해석하고, 부족한 부분을 공부하며, 논문과 산업의
+        변화를 따라가고, 그 결과를 실무에서 활용할 수 있는 언어로 정리하는
+        공간이다.
+      </p>
+
+      <p>
+        Human Tech Note를 통해 기술과 조직, 보안과 혁신, 연구와 실무 사이의
+        간격을 조금씩 좁혀가고자 한다.
+      </p>
+
+      <blockquote>
+        좋은 기술은 어떻게 조직의 실제 역량이 되는가?<br />
+        그리고 그 과정에서 우리는 무엇을 관리하고, 무엇을 책임져야 하는가?
+      </blockquote>
+
+    </div>
+
+    <div class="callout">
+      <div class="l">
+        <i class="ti ti-compass"></i>
+        Human Tech Note의 기록 원칙
+      </div>
+
+      <ul>
+        <li>성과를 과장하기보다 문제와 역할, 한계를 구분하여 기록합니다.</li>
+        <li>주장보다 논문, 법령, 보고서와 실제 사례를 근거로 확인합니다.</li>
+        <li>기술 설명에 머물지 않고 기업의 운영 구조와 적용 조건을 검토합니다.</li>
+        <li>새로운 자료와 사실이 확인되면 기존 글도 지속적으로 수정합니다.</li>
+      </ul>
+    </div>
+
+    <div class="my-8 flex flex-wrap gap-2.5">
+      <span
+        class="rounded-pill bg-soft px-3.5 py-1.5 text-[13px] font-medium text-mut"
+      >
+        #HumanTechNote
+      </span>
+
+      <span
+        class="rounded-pill bg-soft px-3.5 py-1.5 text-[13px] font-medium text-mut"
+      >
+        #연구와실무
+      </span>
+
+      <span
+        class="rounded-pill bg-soft px-3.5 py-1.5 text-[13px] font-medium text-mut"
+      >
+        #정보보호
+      </span>
+
+      <span
+        class="rounded-pill bg-soft px-3.5 py-1.5 text-[13px] font-medium text-mut"
+      >
+        #IT거버넌스
+      </span>
+
+      <span
+        class="rounded-pill bg-soft px-3.5 py-1.5 text-[13px] font-medium text-mut"
+      >
+        #AI거버넌스
+      </span>
+
+      <span
+        class="rounded-pill bg-soft px-3.5 py-1.5 text-[13px] font-medium text-mut"
+      >
+        #기술경영
+      </span>
+    </div>
+
+    <div
+      class="mt-12 flex justify-between gap-4 border-t border-hair pt-7"
+    >
+      <span class="flex-1"></span>
+
+      <a
+        class="flex-1 rounded-2xl bg-soft px-5 py-4 text-right transition hover:bg-[rgba(255,255,255,0.09)]"
+        href="post-02.html"
+      >
+        <div class="text-[13px] font-medium text-mut">
+          다음 글
+          <i class="ti ti-arrow-right"></i>
+        </div>
+
+        <div class="mt-1 text-[15px] font-bold">
+          정보보호란 무엇인가 — 실무자가 다시 정의하는 우선순위
+        </div>
+      </a>
+    </div>
+
+  </article>
+</body>
+</html>

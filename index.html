@@ -1,1292 +1,418 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/><!-- dark theme v2 -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>최한람 · Human Tech Note — 기술·산업 분석 포트폴리오</title><meta name="description" content="정보보호·IT 거버넌스·기술경영·AI를 잇는 Human Tech Note 포트폴리오. 총 75편을 목표로 연재 중이며 현재 52편을 공개했습니다."/>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<style type="text/tailwindcss">
-@theme{
---color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,0.05);
---color-hair:rgba(255,255,255,0.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
---radius-pill:100px;--radius-feat:32px;
---font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
-}
-</style>
-<style>
-body{background:#08090a}
-.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
-radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
-radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
-radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
-radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
-#07080a}
-</style>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>최한람 · Human Tech Note — 기업 AX를 실무와 연구로 분석하다</title>
+  <meta name="description" content="Human Tech Note는 기업의 AX 전환 과정에서 발생하는 기술·데이터·보안·조직·책임 문제를 실무 경험과 연구 근거로 분석하는 아카이브입니다." />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-</head><body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em"><div class="bgfx"></div>
-<nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair">
-<div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
-<a class="font-bold text-lg flex items-center gap-2" href="index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a>
-<span class="ml-auto"></span>
+  <style type="text/tailwindcss">
+    @theme {
+      --color-ink:#ff4e1c;
+      --color-cobalt:#ff8256;
+      --color-warn:#e8b45a;
+      --color-soft:rgba(255,255,255,0.05);
+      --color-hair:rgba(255,255,255,0.11);
+      --color-tx:#f1f3ef;
+      --color-mut:#a6aca4;
+      --color-hint:#767b73;
+      --radius-pill:100px;
+      --radius-feat:32px;
+      --font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
+    }
+  </style>
 
-<a class="hidden md:block text-[15px] text-mut font-medium hover:text-tx" href="#main-insight">
-  Main Insight
-</a>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background:#08090a; }
+    .bgfx {
+      position:fixed; inset:0; z-index:-1; pointer-events:none;
+      background:
+        radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
+        radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
+        radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
+        radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
+        #07080a;
+    }
+    section, header, #about { scroll-margin-top: 86px; }
+    .topic-card { min-height: 178px; }
+    @media (max-width: 767px) {
+      .desktop-nav { display:none; }
+    }
+  </style>
+</head>
 
-<a class="hidden md:block text-[15px] text-mut font-medium hover:text-tx" href="#practice-notes">
-  Practice Notes
-</a>
+<body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em">
+  <div class="bgfx"></div>
 
-<a class="hidden md:block text-[15px] text-mut font-medium hover:text-tx" href="#research-notes">
-  Research Notes
-</a>
+  <nav class="sticky top-0 z-30 border-b border-hair bg-[#0a0c0bcc] backdrop-blur">
+    <div class="mx-auto flex max-w-[1120px] items-center gap-5 px-6 py-3.5">
+      <a class="flex items-center gap-2 text-lg font-bold" href="#home">
+        <i class="ti ti-book-2"></i>
+        Human Tech Note
+        <span class="text-[13px] font-normal text-mut">by 최한람</span>
+      </a>
 
-<a class="hidden md:block text-[15px] text-mut font-medium hover:text-tx" href="#topics">
-  Topics
-</a>
-
-<a class="hidden md:block text-[15px] text-mut font-medium hover:text-tx" href="#about">
-  About
-</a>
-
-<a class="hidden md:block text-[15px] text-mut font-medium hover:text-tx" href="#archive">
-  Archive
-</a>
-
-<a class="inline-flex items-center gap-1.5 bg-ink text-white rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-[#e0400f] transition" href="mailto:your.email@example.com"><i class="ti ti-mail"></i> Archive</a>
-</div></nav>
-
-<main class="max-w-[1080px] mx-auto px-6 pb-28">
-
-<header id="home" class="bg-soft rounded-feat p-8 md:p-14 my-12 text-center md:text-left">
-<div>
-<span class="inline-block bg-warn text-[#3d2c00] text-[13px] font-bold px-4 py-1.5 rounded-pill mb-4">2026 연재 아카이브 · <span id="heroBadgeDone">52</span> / 75편</span>
-<h1 class="text-[44px] md:text-[64px] font-medium tracking-tight leading-none mb-2.5">최한람</h1>
-<p class="text-[20px] md:text-2xl font-medium mb-4">정보보호 PMO · IT Governance · 리스크 관리</p>
-<p class="text-[17px] md:text-lg text-mut leading-relaxed max-w-[56ch] mx-auto md:mx-0 mb-7">정보보호·IT 거버넌스 실무 9년에 기술경영(MOT)과 AI 시대의 통찰을 더한 실무형 기술경영·거버넌스 전문가. 2026년 하반기 총 75편을 목표로 실무·연구·산업 트렌드를 기록하고 있습니다.</p>
-<div class="flex gap-3 flex-wrap justify-center md:justify-start">
-<a class="bg-ink text-white rounded-pill text-sm font-bold px-6 py-3 hover:bg-[#e0400f] transition" href="#featured">대표작 보기</a>
-<a class="border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-sm font-bold px-6 py-3 hover:bg-[rgba(255,255,255,.07)] transition" href="#archive">아카이브 전체</a>
-</div>
-</div>
-</header>
-
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
-<div class="bg-soft rounded-2xl p-6"><div class="text-sm text-mut font-medium">경력</div><div class="text-4xl font-medium tracking-tight mt-1">9<span class="text-base text-mut font-normal"> 년 4개월</span></div></div>
-<div class="bg-soft rounded-2xl p-6"><div class="text-sm text-mut font-medium">발행 글</div><div class="text-4xl font-medium tracking-tight mt-1"><span id="heroDone">52</span><span class="text-base text-mut font-normal"> 편</span></div></div>
-<div class="bg-soft rounded-2xl p-6"><div class="text-sm text-mut font-medium">연재 목표</div><div class="text-4xl font-medium tracking-tight mt-1">75<span class="text-base text-mut font-normal"> 편</span></div></div>
-<div class="bg-soft rounded-2xl p-6"><div class="text-sm text-mut font-medium">대표 케이스</div><div class="text-4xl font-medium tracking-tight mt-1">8<span class="text-base text-mut font-normal"> 편</span></div></div>
-</div>
-
-<section class="my-16">
-<h2 class="text-[28px] md:text-4xl font-medium tracking-tight mb-1.5">전문 분야 <span class="text-base text-hint font-normal">Expertise</span></h2>
-<div class="grid md:grid-cols-3 gap-4 mt-7">
-<div class="bg-soft rounded-feat p-8"><div class="w-[52px] h-[52px] rounded-full bg-[rgba(255,255,255,.08)] flex items-center justify-center text-2xl mb-4" style="color:#5aa0ff"><i class="ti ti-shield-lock"></i></div><div class="font-bold text-lg mb-1.5">정보보호 · 내부통제</div><div class="text-[15px] text-mut leading-relaxed">ISMS-P · ITGC/GITC · 취약점 관리 · 엔드포인트(DLP/DRM/NAC) 운영</div></div>
-<div class="bg-soft rounded-feat p-8"><div class="w-[52px] h-[52px] rounded-full bg-[rgba(255,255,255,.08)] flex items-center justify-center text-2xl mb-4" style="color:#ff7a4d"><i class="ti ti-sitemap"></i></div><div class="font-bold text-lg mb-1.5">IT 거버넌스 · 기술경영</div><div class="text-[15px] text-mut leading-relaxed">PMO · 변화관리 · IT 투자/ROI · RFP · DX · 데이터 기반 의사결정</div></div>
-<div class="bg-soft rounded-feat p-8"><div class="w-[52px] h-[52px] rounded-full bg-[rgba(255,255,255,.08)] flex items-center justify-center text-2xl mb-4" style="color:#a78bfa"><i class="ti ti-cpu"></i></div><div class="font-bold text-lg mb-1.5">AI · AX</div><div class="text-[15px] text-mut leading-relaxed">AI 보안 · AI 거버넌스 · R&D 투자 분석 · 기술 트렌드 전망</div></div>
-</div>
-</section>
- 
-<div id="about">
-<section id="career" class="my-16">
-<h2 class="text-[28px] md:text-4xl font-medium tracking-tight mb-6">주요 경력 <span class="text-base text-hint font-normal">Career</span></h2>
-<div class="flex flex-col gap-4">
-<div class="bg-soft rounded-2xl p-6 md:px-7"><div class="text-[13px] text-cobalt font-bold">2024.03 ~ 2027.02 (예정)</div><div class="font-bold text-lg my-1">서강대학교 기술경영전문대학원 (MOT)</div><div class="text-[15px] text-mut">기술기획·데이터 기반 전략 분석 / 정보보호 R&D 투자·거버넌스 연구</div></div>
-<div class="bg-soft rounded-2xl p-6 md:px-7"><div class="text-[13px] text-cobalt font-bold">2023.08 ~ 2026.04 · ㈜KT 지니뮤직 정보보호팀</div><div class="font-bold text-lg my-1">정보보호 거버넌스 및 내부통제 운영</div><div class="text-[15px] text-mut">ISMS 관리체계 · ITGC/GITC · 취약점 관리 · 엔드포인트 보안 · 악성코드 대응</div></div>
-<div class="bg-soft rounded-2xl p-6 md:px-7"><div class="text-[13px] text-cobalt font-bold">2019.01 ~ 2023.07 · ㈜KT 지니뮤직 IT기획팀 / DX Center</div><div class="font-bold text-lg my-1">플랫폼 인프라 구조개선 · 전사 DX 과제 관리</div><div class="text-[15px] text-mut">대규모 트래픽 대응 무중단 인프라 / 프로세스 1,100건 분석·자동화</div></div>
-<div class="bg-soft rounded-2xl p-6 md:px-7"><div class="text-[13px] text-cobalt font-bold">2011.04 ~ 2017.07 · 대한민국 공군</div><div class="font-bold text-lg my-1">통신정비/운영중대 — 방공 C4I 운영</div><div class="text-[15px] text-mut">미션 크리티컬 시스템 무중단 운영 및 위기 대응</div></div>
-</div>
-</section>
-
-<section class="my-16">
-
-  <h2 class="text-[28px] md:text-4xl font-medium tracking-tight mb-6">
-    수상 · 인증
-    <span class="text-base text-hint font-normal">Awards</span>
-  </h2>
-
-  <div class="grid md:grid-cols-2 gap-4">
-
-    <!-- 서강MOT 창업경진대회 -->
-    <div class="bg-soft rounded-2xl p-6 flex gap-4">
-      <div
-        class="w-11 h-11 rounded-full bg-[rgba(255,255,255,.08)] flex items-center justify-center text-[22px] text-[#e8b45a] shrink-0"
-      >
-        <i class="ti ti-trophy"></i>
+      <div class="desktop-nav ml-auto flex items-center gap-5">
+        <a class="text-[14px] font-medium text-mut hover:text-tx" href="#main-insight">Main Insight</a>
+        <a class="text-[14px] font-medium text-mut hover:text-tx" href="#practice-notes">Practice Notes</a>
+        <a class="text-[14px] font-medium text-mut hover:text-tx" href="#research-notes">Research Notes</a>
+        <a class="text-[14px] font-medium text-mut hover:text-tx" href="#topics">Topics</a>
+        <a class="text-[14px] font-medium text-mut hover:text-tx" href="#about">About</a>
       </div>
 
-      <div class="min-w-0">
-        <div class="flex flex-wrap items-center gap-2 mb-2">
-          <span class="text-[13px] text-cobalt font-bold">
-            2024.12
-          </span>
-
-          <span
-            class="text-[11px] font-bold px-2.5 py-1 rounded-pill"
-            style="background:#FDF1DA;color:#8A5A00"
-          >
-            팀 공동수상
-          </span>
-        </div>
-
-        <div class="font-bold text-[16px] leading-snug">
-          서강MOT 창업경진대회 최우수상
-        </div>
-
-        <div class="text-[13px] text-mut mt-1">
-          서강대학교 기술경영전문대학원
-        </div>
-
-        <div class="text-[14px] text-mut leading-relaxed mt-3">
-          AI 음악 유통 플랫폼 ‘모두레이블’ 기획 및 사업화 검증 참여
-        </div>
-      </div>
+      <a class="ml-auto inline-flex items-center gap-1.5 rounded-pill bg-ink px-4 py-2 text-[13px] font-bold text-white transition hover:bg-[#e0400f] md:ml-0" href="#archive">
+        <i class="ti ti-archive"></i>
+        Archive
+      </a>
     </div>
+  </nav>
 
-
-    <!-- 정보보호 산업발전 유공 표창 -->
-    <div class="bg-soft rounded-2xl p-6 flex gap-4">
-      <div
-        class="w-11 h-11 rounded-full bg-[rgba(255,255,255,.08)] flex items-center justify-center text-[22px] text-[#e8b45a] shrink-0"
-      >
-        <i class="ti ti-award"></i>
-      </div>
-
-      <div class="min-w-0">
-        <div class="flex flex-wrap items-center gap-2 mb-2">
-          <span class="text-[13px] text-cobalt font-bold">
-            2023.12
-          </span>
-
-          <span
-            class="text-[11px] font-bold px-2.5 py-1 rounded-pill"
-            style="background:#FDF1DA;color:#8A5A00"
-          >
-            팀 공동수상
-          </span>
-        </div>
-
-        <div class="font-bold text-[16px] leading-snug">
-          정보보호 산업발전 유공 표창
-        </div>
-
-        <div class="text-[13px] text-mut mt-1">
-          과학기술정보통신부
-        </div>
-
-        <div class="text-[14px] text-mut leading-relaxed mt-3">
-          지니뮤직 정보보호 활동 및 정보보호 산업발전 기여 공로
-        </div>
-      </div>
-    </div>
-
-
-    <!-- 아이디어 페스티벌 -->
-    <div class="bg-soft rounded-2xl p-6 flex gap-4">
-      <div
-        class="w-11 h-11 rounded-full bg-[rgba(255,255,255,.08)] flex items-center justify-center text-[22px] text-[#e8b45a] shrink-0"
-      >
-        <i class="ti ti-bulb"></i>
-      </div>
-
-      <div class="min-w-0">
-        <div class="flex flex-wrap items-center gap-2 mb-2">
-          <span class="text-[13px] text-cobalt font-bold">
-            2022.09
-          </span>
-
-          <span
-            class="text-[11px] font-bold px-2.5 py-1 rounded-pill"
-            style="background:#E7F3EC;color:#1F6B3B"
-          >
-            개인수상
-          </span>
-        </div>
-
-        <div class="font-bold text-[16px] leading-snug">
-          아이디어 페스티벌 장려상
-        </div>
-
-        <div class="text-[13px] text-mut mt-1">
-          지니뮤직
-        </div>
-
-        <div class="text-[14px] text-mut leading-relaxed mt-3">
-          메타버스 아이돌·아티스트 기획 및 2022 FIFA 카타르 월드컵
-          응원가 프로젝트 제안
-        </div>
-      </div>
-    </div>
-
-
-    <!-- 지니스타상 -->
-    <div class="bg-soft rounded-2xl p-6 flex gap-4">
-      <div
-        class="w-11 h-11 rounded-full bg-[rgba(255,255,255,.08)] flex items-center justify-center text-[22px] text-[#e8b45a] shrink-0"
-      >
-        <i class="ti ti-star"></i>
-      </div>
-
-      <div class="min-w-0">
-        <div class="flex flex-wrap items-center gap-2 mb-2">
-          <span class="text-[13px] text-cobalt font-bold">
-            2019.12
-          </span>
-
-          <span
-            class="text-[11px] font-bold px-2.5 py-1 rounded-pill"
-            style="background:#FDF1DA;color:#8A5A00"
-          >
-            팀 공동수상
-          </span>
-        </div>
-
-        <div class="font-bold text-[16px] leading-snug">
-          서비스 안정화 지니스타상
-        </div>
-
-        <div class="text-[13px] text-mut mt-1">
-          지니뮤직
-        </div>
-
-        <div class="text-[14px] text-mut leading-relaxed mt-3">
-          지니뮤직 부하분산 센터 구축 및 안정적 서비스 운영 기여
-        </div>
-      </div>
-    </div>
-
-
-    <!-- ACE상 -->
-    <div class="bg-soft rounded-2xl p-6 flex gap-4">
-      <div
-        class="w-11 h-11 rounded-full bg-[rgba(255,255,255,.08)] flex items-center justify-center text-[22px] text-[#e8b45a] shrink-0"
-      >
-        <i class="ti ti-shield-check"></i>
-      </div>
-
-      <div class="min-w-0">
-        <div class="flex flex-wrap items-center gap-2 mb-2">
-          <span class="text-[13px] text-cobalt font-bold">
-            2019.05
-          </span>
-
-          <span
-            class="text-[11px] font-bold px-2.5 py-1 rounded-pill"
-            style="background:#FDF1DA;color:#8A5A00"
-          >
-            팀 공동수상
-          </span>
-        </div>
-
-        <div class="font-bold text-[16px] leading-snug">
-          서비스 무장애 ACE상
-        </div>
-
-        <div class="text-[13px] text-mut mt-1">
-          지니뮤직
-        </div>
-
-        <div class="text-[14px] text-mut leading-relaxed mt-3">
-          대규모 트래픽 대응 및 지니 서비스 무장애 센터 운영 관제 신규 구축
-        </div>
-      </div>
-    </div>
-
-
-    <!-- 공군 표창 -->
-    <div class="bg-soft rounded-2xl p-6 md:col-span-2">
-
-      <div class="flex gap-4">
-        <div
-          class="w-11 h-11 rounded-full bg-[rgba(255,255,255,.08)] flex items-center justify-center text-[22px] text-[#e8b45a] shrink-0"
-        >
-          <i class="ti ti-medal"></i>
-        </div>
-
-        <div class="flex-1 min-w-0">
-          <div class="flex flex-wrap items-center gap-2 mb-2">
-            <span class="text-[13px] text-cobalt font-bold">
-              2013 ~ 2014
-            </span>
-
-            <span
-              class="text-[11px] font-bold px-2.5 py-1 rounded-pill"
-              style="background:#E7F3EC;color:#1F6B3B"
-            >
-              개인수상
-            </span>
-          </div>
-
-          <div class="font-bold text-[16px] leading-snug">
-            대한민국공군 표창 4건
-          </div>
-
-          <div class="text-[13px] text-mut mt-1">
-            대한민국공군
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-5 grid md:grid-cols-2 gap-3">
-
-        <div
-          class="rounded-2xl border border-hair bg-[rgba(255,255,255,.025)] p-4"
-        >
-          <div class="text-[12px] text-cobalt font-bold mb-1">
-            2014.10.01
-          </div>
-
-          <div class="font-bold text-[14px] leading-snug">
-            건군 제66주년 국군의 날 기념 개인표창
-          </div>
-
-          <div class="text-[12px] text-mut mt-1">
-            사단장 표창 · 개인수상
-          </div>
-        </div>
-
-        <div
-          class="rounded-2xl border border-hair bg-[rgba(255,255,255,.025)] p-4"
-        >
-          <div class="text-[12px] text-cobalt font-bold mb-1">
-            2014.07.14
-          </div>
-
-          <div class="font-bold text-[14px] leading-snug">
-            후반기 수시업무 유공 표창
-          </div>
-
-          <div class="text-[12px] text-mut mt-1">
-            대대장 표창 · 개인수상
-          </div>
-        </div>
-
-        <div
-          class="rounded-2xl border border-hair bg-[rgba(255,255,255,.025)] p-4"
-        >
-          <div class="text-[12px] text-cobalt font-bold mb-1">
-            2014.06.16
-          </div>
-
-          <div class="font-bold text-[14px] leading-snug">
-            로그분석 경연대회 최우수
-          </div>
-
-          <div class="text-[12px] text-mut mt-1">
-            연대장 표창 · 개인수상
-          </div>
-        </div>
-
-        <div
-          class="rounded-2xl border border-hair bg-[rgba(255,255,255,.025)] p-4"
-        >
-          <div class="text-[12px] text-cobalt font-bold mb-1">
-            2013.07.03
-          </div>
-
-          <div class="font-bold text-[14px] leading-snug">
-            부대발전 유공 표창
-          </div>
-
-          <div class="text-[12px] text-mut mt-1">
-            대대장 표창 · 개인수상
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section id="featured" class="my-16">
-<h2 class="text-[28px] md:text-4xl font-medium tracking-tight mb-1.5">대표작 <span class="text-base text-hint font-normal">Featured</span></h2>
-<p class="text-mut mb-7">이력서의 실제 성과와 직접 연결되는 케이스·회고·연구 글입니다. &lsquo;실제 원고&rsquo; 표시 글은 본문이 완성되어 있습니다.</p>
-<div class="grid md:grid-cols-2 gap-4"><a class="relative block bg-soft rounded-feat p-7 hover:bg-[rgba(255,255,255,.08)] transition" href="posts/post-16.html"><span class="absolute top-5 right-5 text-[12px] font-bold text-white bg-ink px-3 py-1 rounded-pill">실제 원고</span>
-<span class="inline-block text-[12px] font-bold px-3 py-1.5 rounded-pill" style="background:#E7F3EC;color:#1F6B3B">실무보안/케이스</span>
-<div class="font-bold text-[19px] leading-snug mt-4 mb-1.5">[케이스] 실제 악성코드 감염 대응기</div>
-<div class="text-[14px] text-mut">악성코드 대응 실사례</div>
-<span class="inline-flex items-center gap-1.5 text-[14px] font-bold text-ink mt-4">글 읽기 <i class="ti ti-arrow-right"></i></span></a><a class="relative block bg-soft rounded-feat p-7 hover:bg-[rgba(255,255,255,.08)] transition" href="posts/post-36.html"><span class="absolute top-5 right-5 text-[12px] font-bold text-white bg-ink px-3 py-1 rounded-pill">실제 원고</span>
-<span class="inline-block text-[12px] font-bold px-3 py-1.5 rounded-pill" style="background:#FBEBE4;color:#9A4222">IT거버넌스/PMO</span>
-<div class="font-bold text-[19px] leading-snug mt-4 mb-1.5">[회고] 무중단 운영을 위한 변화관리 — 인프라 개선</div>
-<div class="text-[14px] text-mut">무중단 전환 프로젝트</div>
-<span class="inline-flex items-center gap-1.5 text-[14px] font-bold text-ink mt-4">글 읽기 <i class="ti ti-arrow-right"></i></span></a><a class="relative block bg-soft rounded-feat p-7 hover:bg-[rgba(255,255,255,.08)] transition" href="posts/post-48.html"><span class="absolute top-5 right-5 text-[12px] font-bold text-white bg-ink px-3 py-1 rounded-pill">실제 원고</span>
-<span class="inline-block text-[12px] font-bold px-3 py-1.5 rounded-pill" style="background:#FDF1DA;color:#8A5A00">DX/기술경영</span>
-<div class="font-bold text-[19px] leading-snug mt-4 mb-1.5">[회고] DX 협의체 운영기 — 벽을 데이터로 허물기</div>
-<div class="text-[14px] text-mut">DX 과제/협의체 운영</div>
-<span class="inline-flex items-center gap-1.5 text-[14px] font-bold text-ink mt-4">글 읽기 <i class="ti ti-arrow-right"></i></span></a><a class="relative block bg-soft rounded-feat p-7 hover:bg-[rgba(255,255,255,.08)] transition" href="posts/post-60.html">
-<span class="inline-block text-[12px] font-bold px-3 py-1.5 rounded-pill" style="background:#EDEBFB;color:#3E2FA6">AI·AX</span>
-<div class="font-bold text-[19px] leading-snug mt-4 mb-1.5">[실험] AI로 보안 정책 문서 초안 만들기</div>
-<div class="text-[14px] text-mut">AI 활용 실무 검증</div>
-<span class="inline-flex items-center gap-1.5 text-[14px] font-bold text-ink mt-4">글 읽기 <i class="ti ti-arrow-right"></i></span></a><a class="relative block bg-soft rounded-feat p-7 hover:bg-[rgba(255,255,255,.08)] transition" href="posts/post-64.html"><span class="absolute top-5 right-5 text-[12px] font-bold text-white bg-ink px-3 py-1 rounded-pill">실제 원고</span>
-<span class="inline-block text-[12px] font-bold px-3 py-1.5 rounded-pill" style="background:#FBEAF1;color:#98305C">연구·종합</span>
-<div class="font-bold text-[19px] leading-snug mt-4 mb-1.5">정보보호 R&amp;D 투자 동향 — NTIS 데이터로 본 흐름</div>
-<div class="text-[14px] text-mut">산학 연구(NTIS)</div>
-<span class="inline-flex items-center gap-1.5 text-[14px] font-bold text-ink mt-4">글 읽기 <i class="ti ti-arrow-right"></i></span></a><a class="relative block bg-soft rounded-feat p-7 hover:bg-[rgba(255,255,255,.08)] transition" href="posts/post-71.html">
-<span class="inline-block text-[12px] font-bold px-3 py-1.5 rounded-pill" style="background:#FBEAF1;color:#98305C">연구·종합</span>
-<div class="font-bold text-[19px] leading-snug mt-4 mb-1.5">9년 4개월, 정보보호 실무자의 커리어 회고</div>
-<div class="text-[14px] text-mut">커리어 종합 서사</div>
-<span class="inline-flex items-center gap-1.5 text-[14px] font-bold text-ink mt-4">글 읽기 <i class="ti ti-arrow-right"></i></span></a><a class="relative block bg-soft rounded-feat p-7 hover:bg-[rgba(255,255,255,.08)] transition" href="posts/post-73.html">
-<span class="inline-block text-[12px] font-bold px-3 py-1.5 rounded-pill" style="background:#FBEAF1;color:#98305C">연구·종합</span>
-<div class="font-bold text-[19px] leading-snug mt-4 mb-1.5">AI·정보보호·기술경영의 교차점 — 내 커리어 지도</div>
-<div class="text-[14px] text-mut">핵심 포지셔닝</div>
-<span class="inline-flex items-center gap-1.5 text-[14px] font-bold text-ink mt-4">글 읽기 <i class="ti ti-arrow-right"></i></span></a><a class="relative block bg-soft rounded-feat p-7 hover:bg-[rgba(255,255,255,.08)] transition" href="posts/post-75.html">
-<span class="inline-block text-[12px] font-bold px-3 py-1.5 rounded-pill" style="background:#FBEAF1;color:#98305C">연구·종합</span>
-<div class="font-bold text-[19px] leading-snug mt-4 mb-1.5">[포트폴리오] 기록이 만든 전문성</div>
-<div class="text-[14px] text-mut">포트폴리오 완성</div>
-<span class="inline-flex items-center gap-1.5 text-[14px] font-bold text-ink mt-4">글 읽기 <i class="ti ti-arrow-right"></i></span></a></div>
-</section>
- 
-</div>
-<section id="main-insight" class="my-16">
-<h2 class="text-[28px] md:text-4xl font-medium tracking-tight mb-1.5">
-  Main Insight
-  <span class="text-base text-hint font-normal">산업·AX 핵심 분석</span>
-</h2>
-
-<p class="text-mut mb-7">
-  기업과 사회가 직면한 AI·AX 문제를 실무, 연구, 거버넌스의 관점에서 분석합니다.
-</p>
- 
- <p class="text-mut mb-7">AI 보안의 신뢰 구조와 2024~2026 데이터경제 컨퍼런스의 핵심 흐름을 정리한 최신 글입니다.</p>
-<div class="grid md:grid-cols-2 gap-4">
-<a class="block bg-soft border border-hair rounded-feat p-7 hover:bg-[rgba(255,255,255,.08)] transition" href="posts/post-49.html">
-<div class="flex items-center justify-between gap-3">
-<span class="inline-block text-[12px] font-bold px-3 py-1.5 rounded-pill" style="background:#EDEBFB;color:#3E2FA6">AI·AX</span>
-<span class="text-[12px] text-[#64d3a7] font-bold">발행완료 · #49</span>
-</div>
-<div class="font-bold text-[19px] leading-snug mt-4 mb-1.5">AI 보안의 본질은 ‘차단’이 아니라 ‘신뢰의 구조’다</div>
-<div class="text-[14px] text-mut">기업형 AI 보안에서 데이터·권한·행위·로그·책임을 하나의 구조로 바라봅니다.</div>
-<span class="inline-flex items-center gap-1.5 text-[14px] font-bold text-ink mt-4">글 읽기 <i class="ti ti-arrow-right"></i></span>
-</a>
-
-<a class="block bg-soft border border-hair rounded-feat p-7 hover:bg-[rgba(255,255,255,.08)] transition" href="posts/post-50.html">
-<div class="flex items-center justify-between gap-3">
-<span class="inline-block text-[12px] font-bold px-3 py-1.5 rounded-pill" style="background:#FDF1DA;color:#8A5A00">기술경영·MOT</span>
-<span class="text-[12px] text-[#64d3a7] font-bold">발행완료 · #50</span>
-</div>
-<div class="font-bold text-[19px] leading-snug mt-4 mb-1.5">데이터를 많이 모으는 시대에서, 안전하게 연결하는 시대로</div>
-<div class="text-[14px] text-mut">2024 데이터경제 컨퍼런스로 읽는 데이터 활용·보호·서비스 경쟁.</div>
-<span class="inline-flex items-center gap-1.5 text-[14px] font-bold text-ink mt-4">글 읽기 <i class="ti ti-arrow-right"></i></span>
-</a>
-
-<a class="block bg-soft border border-hair rounded-feat p-7 hover:bg-[rgba(255,255,255,.08)] transition" href="posts/post-51.html">
-<div class="flex items-center justify-between gap-3">
-<span class="inline-block text-[12px] font-bold px-3 py-1.5 rounded-pill" style="background:#FDF1DA;color:#8A5A00">기술경영·MOT</span>
-<span class="text-[12px] text-[#64d3a7] font-bold">발행완료 · #51</span>
-</div>
-<div class="font-bold text-[19px] leading-snug mt-4 mb-1.5">AI는 과학연구와 혁신의 방식을 어떻게 바꾸는가</div>
-<div class="text-[14px] text-mut">2025 데이터경제 학술 컨퍼런스로 읽는 AI for Science와 연구성과.</div>
-<span class="inline-flex items-center gap-1.5 text-[14px] font-bold text-ink mt-4">글 읽기 <i class="ti ti-arrow-right"></i></span>
-</a>
-
-<a class="block bg-soft border border-hair rounded-feat p-7 hover:bg-[rgba(255,255,255,.08)] transition" href="posts/post-52.html">
-<div class="flex items-center justify-between gap-3">
-<span class="inline-block text-[12px] font-bold px-3 py-1.5 rounded-pill" style="background:#FDF1DA;color:#8A5A00">기술경영·MOT</span>
-<span class="text-[12px] text-[#64d3a7] font-bold">발행완료 · #52</span>
-</div>
-<div class="font-bold text-[19px] leading-snug mt-4 mb-1.5">데이터는 많은데 왜 산업성과로 이어지지 않을까</div>
-<div class="text-[14px] text-mut">2026 데이터경제 컨퍼런스로 읽는 기술사업화와 데이터 거버넌스.</div>
-<span class="inline-flex items-center gap-1.5 text-[14px] font-bold text-ink mt-4">글 읽기 <i class="ti ti-arrow-right"></i></span>
-</a>
-</div>
-</section>
-
-<section id="practice-notes" class="my-16">
-
- <section id="archive" class="my-16">
-
-  <h2 class="text-[28px] md:text-4xl font-medium tracking-tight mb-1.5">
-    연재 아카이브
-    <span class="text-base text-hint font-normal">
-      Archive · 75편
-    </span>
-  </h2>
-
-  <p class="text-mut mb-6">
-    제목을 누르면 글이 열립니다. 상태 뱃지를 클릭하면
-    예정 → 작성중 → 발행완료로 바뀌고 자동 저장됩니다.
-  </p>
-
-  <div class="bg-soft rounded-feat p-8 mb-6">
-
-    <div class="flex items-baseline gap-3 flex-wrap mb-4">
-      <span
-        class="text-4xl font-medium tracking-tight"
-        id="pgBig"
-      >
-        0 / 75
+  <main class="mx-auto max-w-[1120px] px-6 pb-28">
+    <header id="home" class="my-12 rounded-feat bg-soft p-8 text-center md:p-14 md:text-left">
+      <span class="mb-4 inline-block rounded-pill bg-warn px-4 py-1.5 text-[13px] font-bold text-[#3d2c00]">
+        2026 연재 아카이브 · <span id="heroBadgeDone">52</span> / 75편
       </span>
 
-      <span
-        class="text-[15px] text-mut font-medium"
-        id="pgPct"
-      >
-        발행 0%
-      </span>
+      <h1 class="mb-3 text-[42px] font-medium leading-none tracking-tight md:text-[62px]">
+        기업 AX를 실무와 연구로 분석하다
+      </h1>
+
+      <p class="mb-4 text-[19px] font-medium md:text-2xl">
+        기술·데이터·보안·조직·책임을 하나의 운영체계로 연결합니다.
+      </p>
+
+      <p class="mx-auto mb-7 max-w-[64ch] text-[17px] leading-relaxed text-mut md:mx-0 md:text-lg">
+        Human Tech Note는 기업이 AI를 도입·운영·통제하는 과정에서 발생하는 문제를
+        논문, 표준, 기술블로그와 현장 경험을 바탕으로 분석하는 아카이브입니다.
+        개인 경험은 주제가 아니라, 산업과 조직의 문제를 이해하기 위한 근거로 활용합니다.
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-3 md:justify-start">
+        <a class="rounded-pill bg-ink px-6 py-3 text-sm font-bold text-white transition hover:bg-[#e0400f]" href="#main-insight">핵심 분석 보기</a>
+        <a class="rounded-pill border border-[rgba(255,255,255,.22)] px-6 py-3 text-sm font-bold text-tx transition hover:bg-[rgba(255,255,255,.07)]" href="#archive">75편 아카이브</a>
+      </div>
+    </header>
+
+    <div class="mb-16 grid grid-cols-2 gap-4 md:grid-cols-4">
+      <div class="rounded-2xl bg-soft p-6"><div class="text-sm font-medium text-mut">실무 경력</div><div class="mt-1 text-4xl font-medium tracking-tight">9<span class="text-base font-normal text-mut">년 4개월</span></div></div>
+      <div class="rounded-2xl bg-soft p-6"><div class="text-sm font-medium text-mut">발행 글</div><div class="mt-1 text-4xl font-medium tracking-tight"><span id="heroDone">52</span><span class="text-base font-normal text-mut">편</span></div></div>
+      <div class="rounded-2xl bg-soft p-6"><div class="text-sm font-medium text-mut">핵심 주제군</div><div class="mt-1 text-4xl font-medium tracking-tight">5<span class="text-base font-normal text-mut">개</span></div></div>
+      <div class="rounded-2xl bg-soft p-6"><div class="text-sm font-medium text-mut">대표 콘텐츠</div><div class="mt-1 text-4xl font-medium tracking-tight">8<span class="text-base font-normal text-mut">편</span></div></div>
     </div>
 
-    <div
-      class="h-3.5 bg-[rgba(255,255,255,.10)] rounded-pill overflow-hidden flex"
-    >
-      <div
-        class="bg-[#12946a] transition-all"
-        id="pgDone"
-        style="width:0%"
-      ></div>
+    <section id="main-insight" class="my-16">
+      <h2 class="mb-1.5 text-[28px] font-medium tracking-tight md:text-4xl">Main Insight <span class="text-base font-normal text-hint">산업·AX 핵심 분석</span></h2>
+      <p class="mb-7 text-mut">기업과 사회가 직면한 AI·AX 문제를 기술, 운영, 연구와 거버넌스 관점에서 분석합니다.</p>
 
-      <div
-        class="bg-warn transition-all"
-        id="pgWip"
-        style="width:0%"
-      ></div>
-    </div>
-
-    <div
-      class="flex gap-5 mt-4 text-[14px] text-mut flex-wrap items-center"
-    >
-
-      <span class="inline-flex items-center gap-1.5">
-        <i
-          class="w-2.5 h-2.5 rounded-sm inline-block bg-[#12946a]"
-        ></i>
-        발행완료
-        <b class="text-tx" id="cDone">0</b>
-      </span>
-
-      <span class="inline-flex items-center gap-1.5">
-        <i
-          class="w-2.5 h-2.5 rounded-sm inline-block bg-warn"
-        ></i>
-        작성중
-        <b class="text-tx" id="cWip">0</b>
-      </span>
-
-      <span class="inline-flex items-center gap-1.5">
-        <i
-          class="w-2.5 h-2.5 rounded-sm inline-block bg-[rgba(255,255,255,.28)]"
-        ></i>
-        예정
-        <b class="text-tx" id="cTodo">75</b>
-      </span>
-
-      <span class="ml-auto">
-        <a
-          href="#"
-          id="resetBtn"
-          class="text-mut font-medium"
-        >
-          <i class="ti ti-refresh align-[-2px]"></i>
-          초기화
+      <div class="grid gap-4 md:grid-cols-2">
+        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-49.html">
+          <div class="flex items-center justify-between gap-3"><span class="rounded-pill bg-[#EDEBFB] px-3 py-1.5 text-[12px] font-bold text-[#3E2FA6]">Agentic AI Security</span><span class="text-[12px] font-bold text-[#64d3a7]">발행완료 · #49</span></div>
+          <div class="mb-1.5 mt-4 text-[19px] font-bold leading-snug">AI 보안의 본질은 ‘차단’이 아니라 ‘신뢰의 구조’다</div>
+          <div class="text-[14px] text-mut">데이터·권한·행위·로그·책임을 하나의 기업형 AI 보안구조로 바라봅니다.</div>
         </a>
-      </span>
 
+        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-50.html">
+          <div class="flex items-center justify-between gap-3"><span class="rounded-pill bg-[#E7F0FF] px-3 py-1.5 text-[12px] font-bold text-[#0047B3]">Knowledge & Data</span><span class="text-[12px] font-bold text-[#64d3a7]">발행완료 · #50</span></div>
+          <div class="mb-1.5 mt-4 text-[19px] font-bold leading-snug">데이터를 많이 모으는 시대에서, 안전하게 연결하는 시대로</div>
+          <div class="text-[14px] text-mut">데이터 활용·보호·서비스 경쟁을 데이터 거버넌스 관점에서 검토합니다.</div>
+        </a>
+
+        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-51.html">
+          <div class="flex items-center justify-between gap-3"><span class="rounded-pill bg-[#E7F3EC] px-3 py-1.5 text-[12px] font-bold text-[#1F6B3B]">AI Productivity</span><span class="text-[12px] font-bold text-[#64d3a7]">발행완료 · #51</span></div>
+          <div class="mb-1.5 mt-4 text-[19px] font-bold leading-snug">AI는 과학연구와 혁신의 방식을 어떻게 바꾸는가</div>
+          <div class="text-[14px] text-mut">AI for Science와 연구생산성의 변화를 산업과 연구 관점에서 읽습니다.</div>
+        </a>
+
+        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-52.html">
+          <div class="flex items-center justify-between gap-3"><span class="rounded-pill bg-[#FDF1DA] px-3 py-1.5 text-[12px] font-bold text-[#8A5A00]">AX Operating Model</span><span class="text-[12px] font-bold text-[#64d3a7]">발행완료 · #52</span></div>
+          <div class="mb-1.5 mt-4 text-[19px] font-bold leading-snug">데이터는 많은데 왜 산업성과로 이어지지 않을까</div>
+          <div class="text-[14px] text-mut">기술사업화와 데이터 거버넌스가 산업성과로 연결되는 조건을 분석합니다.</div>
+        </a>
+      </div>
+    </section>
+
+    <section id="practice-notes" class="my-16">
+      <h2 class="mb-1.5 text-[28px] font-medium tracking-tight md:text-4xl">Practice Notes <span class="text-base font-normal text-hint">현장 적용과 운영</span></h2>
+      <p class="mb-7 text-mut">실제 운영 과정에서 확인한 문제를 프로세스, 통제, 체크리스트와 의사결정 기준으로 정리합니다.</p>
+
+      <div class="grid gap-4 md:grid-cols-3">
+        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-16.html">
+          <span class="text-[12px] font-bold text-[#64d3a7]">Security Operations</span>
+          <div class="mb-2 mt-4 text-[18px] font-bold">실제 악성코드 감염 대응기</div>
+          <div class="text-[14px] leading-relaxed text-mut">탐지, 분석, 격리, 복구와 재발 방지까지 실제 대응 흐름을 정리합니다.</div>
+        </a>
+        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-36.html">
+          <span class="text-[12px] font-bold text-[#64d3a7]">IT Operations</span>
+          <div class="mb-2 mt-4 text-[18px] font-bold">무중단 운영을 위한 변화관리</div>
+          <div class="text-[14px] leading-relaxed text-mut">인프라 구조개선과 운영전환 과정에서 필요한 변화관리 조건을 검토합니다.</div>
+        </a>
+        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-48.html">
+          <span class="text-[12px] font-bold text-[#64d3a7]">DX Practice</span>
+          <div class="mb-2 mt-4 text-[18px] font-bold">DX 협의체 운영기</div>
+          <div class="text-[14px] leading-relaxed text-mut">부서별 프로세스와 요구사항을 데이터로 연결한 과정을 정리합니다.</div>
+        </a>
+      </div>
+    </section>
+
+    <section id="research-notes" class="my-16">
+      <h2 class="mb-1.5 text-[28px] font-medium tracking-tight md:text-4xl">Research Notes <span class="text-base font-normal text-hint">논문·정책·데이터</span></h2>
+      <p class="mb-7 text-mut">논문, 학회, 표준, 법령과 산업 데이터를 바탕으로 기술의 효과와 적용 조건을 검토합니다.</p>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-50.html"><span class="text-[12px] font-bold text-cobalt">Conference Review</span><div class="mb-2 mt-4 text-[18px] font-bold">데이터 활용과 보호는 어떻게 함께 설계되는가</div><div class="text-[14px] text-mut">데이터경제 컨퍼런스에서 확인한 산업·정책·서비스의 변화를 정리합니다.</div></a>
+        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-51.html"><span class="text-[12px] font-bold text-cobalt">AI for Science</span><div class="mb-2 mt-4 text-[18px] font-bold">AI는 연구생산성을 어떻게 바꾸는가</div><div class="text-[14px] text-mut">AI가 연구과정과 혁신성과 창출방식에 미치는 영향을 살펴봅니다.</div></a>
+        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-52.html"><span class="text-[12px] font-bold text-cobalt">Technology Commercialization</span><div class="mb-2 mt-4 text-[18px] font-bold">데이터는 왜 산업성과로 이어지지 않는가</div><div class="text-[14px] text-mut">기술사업화와 데이터 거버넌스를 연결하는 조건을 분석합니다.</div></a>
+        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-64.html"><span class="text-[12px] font-bold text-cobalt">Research Project</span><div class="mb-2 mt-4 text-[18px] font-bold">정보보호 R&D 투자 동향</div><div class="text-[14px] text-mut">NTIS 데이터를 기반으로 국내 정보보호 연구개발 투자 흐름을 분석합니다.</div></a>
+      </div>
+    </section>
+
+    <section id="topics" class="my-16">
+      <h2 class="mb-1.5 text-[28px] font-medium tracking-tight md:text-4xl">Five Research Topics <span class="text-base font-normal text-hint">Human Tech Note Topics</span></h2>
+      <p class="mb-7 text-mut">기업의 AX 전환을 다섯 가지 연구·실무 주제군으로 축적합니다.</p>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        <div class="topic-card rounded-feat border border-hair bg-soft p-7"><div class="mb-3 text-[13px] font-bold text-ink">01</div><div class="mb-2 text-[19px] font-bold">AX Operating Model</div><div class="text-[14px] leading-relaxed text-mut">AI 과제 발굴, PoC, 운영전환, KPI, ROI, FinOps와 조직의 역할을 분석합니다.</div></div>
+        <div class="topic-card rounded-feat border border-hair bg-soft p-7"><div class="mb-3 text-[13px] font-bold text-ink">02</div><div class="mb-2 text-[19px] font-bold">Agentic AI Security</div><div class="text-[14px] leading-relaxed text-mut">AI Agent의 신원, 권한, 도구 실행, 메모리, 행동 로그와 사고 대응을 다룹니다.</div></div>
+        <div class="topic-card rounded-feat border border-hair bg-soft p-7"><div class="mb-3 text-[13px] font-bold text-ink">03</div><div class="mb-2 text-[19px] font-bold">Enterprise Knowledge &amp; Data Architecture</div><div class="text-[14px] leading-relaxed text-mut">RAG, 온톨로지, GraphRAG, Data Lineage와 기업 지식·데이터 거버넌스를 분석합니다.</div></div>
+        <div class="topic-card rounded-feat border border-hair bg-soft p-7"><div class="mb-3 text-[13px] font-bold text-ink">04</div><div class="mb-2 text-[19px] font-bold">AI Productivity &amp; Organizational Change</div><div class="text-[14px] leading-relaxed text-mut">AI 생산성, 직무 변화, 자동화 편향, 숙련도와 조직역량을 연구합니다.</div></div>
+        <div class="topic-card rounded-feat border border-hair bg-soft p-7 md:col-span-2"><div class="mb-3 text-[13px] font-bold text-ink">05</div><div class="mb-2 text-[19px] font-bold">AI Governance &amp; Social Impact</div><div class="text-[14px] leading-relaxed text-mut">AI 법·제도, 책임, 투명성, 관리체계, 사회적 영향과 기업 대응을 분석합니다.</div></div>
+      </div>
+    </section>
+
+    <div id="about" class="my-16">
+      <h2 class="mb-1.5 text-[28px] font-medium tracking-tight md:text-4xl">About / Portfolio <span class="text-base font-normal text-hint">실무와 연구의 기반</span></h2>
+      <p class="mb-7 text-mut">경력과 수상은 콘텐츠의 주제가 아니라, 분석과 제안의 현실성을 뒷받침하는 근거로 배치합니다.</p>
+
+      <section id="career" class="my-12">
+        <h3 class="mb-6 text-[24px] font-medium tracking-tight">주요 경력 <span class="text-base font-normal text-hint">Career</span></h3>
+        <div class="flex flex-col gap-4">
+          <div class="rounded-2xl bg-soft p-6 md:px-7"><div class="text-[13px] font-bold text-cobalt">2024.03 ~ 2027.02 (예정)</div><div class="my-1 text-lg font-bold">서강대학교 기술경영전문대학원 (MOT)</div><div class="text-[15px] text-mut">기술기획·데이터 기반 전략 분석 / 정보보호 R&D 투자·거버넌스 연구</div></div>
+          <div class="rounded-2xl bg-soft p-6 md:px-7"><div class="text-[13px] font-bold text-cobalt">2023.08 ~ 2026.04 · ㈜KT 지니뮤직 정보보호팀</div><div class="my-1 text-lg font-bold">정보보호 거버넌스 및 내부통제 운영</div><div class="text-[15px] text-mut">ISMS 관리체계 · ITGC/GITC · 취약점 관리 · 엔드포인트 보안 · 악성코드 대응</div></div>
+          <div class="rounded-2xl bg-soft p-6 md:px-7"><div class="text-[13px] font-bold text-cobalt">2019.01 ~ 2023.07 · ㈜KT 지니뮤직 IT기획팀 / DX Center</div><div class="my-1 text-lg font-bold">플랫폼 인프라 구조개선 · 전사 DX 과제 관리</div><div class="text-[15px] text-mut">대규모 트래픽 대응 무중단 인프라 / 프로세스 1,100건 분석·자동화</div></div>
+          <div class="rounded-2xl bg-soft p-6 md:px-7"><div class="text-[13px] font-bold text-cobalt">2011.04 ~ 2017.07 · 대한민국 공군</div><div class="my-1 text-lg font-bold">통신정비/운영중대 — 방공 C4I 운영</div><div class="text-[15px] text-mut">미션 크리티컬 시스템 무중단 운영 및 위기 대응</div></div>
+        </div>
+      </section>
+
+      <section class="my-12">
+        <h3 class="mb-6 text-[24px] font-medium tracking-tight">수상 · 인증 <span class="text-base font-normal text-hint">Awards</span></h3>
+        <div class="grid gap-4 md:grid-cols-2">
+          <div class="flex gap-4 rounded-2xl bg-soft p-6"><i class="ti ti-trophy mt-1 text-[26px] text-[#e8b45a]"></i><div><div class="text-[13px] font-bold text-cobalt">2024.12 · 팀 공동수상</div><div class="mt-1 font-bold">서강MOT 창업경진대회 최우수상</div><div class="mt-1 text-[13px] text-mut">서강대학교 기술경영전문대학원</div><div class="mt-3 text-[14px] leading-relaxed text-mut">AI 음악 유통 플랫폼 ‘모두레이블’ 기획 및 사업화 검증 참여</div></div></div>
+          <div class="flex gap-4 rounded-2xl bg-soft p-6"><i class="ti ti-award mt-1 text-[26px] text-[#e8b45a]"></i><div><div class="text-[13px] font-bold text-cobalt">2023.12 · 팀 공동수상</div><div class="mt-1 font-bold">정보보호 산업발전 유공 표창</div><div class="mt-1 text-[13px] text-mut">과학기술정보통신부</div><div class="mt-3 text-[14px] leading-relaxed text-mut">지니뮤직 정보보호 활동 및 정보보호 산업발전 기여 공로</div></div></div>
+          <div class="flex gap-4 rounded-2xl bg-soft p-6"><i class="ti ti-bulb mt-1 text-[26px] text-[#e8b45a]"></i><div><div class="text-[13px] font-bold text-cobalt">2022.09 · 개인수상</div><div class="mt-1 font-bold">아이디어 페스티벌 장려상</div><div class="mt-1 text-[13px] text-mut">지니뮤직</div><div class="mt-3 text-[14px] leading-relaxed text-mut">메타버스 아이돌·아티스트 및 2022 FIFA 카타르 월드컵 응원가 프로젝트 제안</div></div></div>
+          <div class="flex gap-4 rounded-2xl bg-soft p-6"><i class="ti ti-star mt-1 text-[26px] text-[#e8b45a]"></i><div><div class="text-[13px] font-bold text-cobalt">2019.12 · 팀 공동수상</div><div class="mt-1 font-bold">서비스 안정화 지니스타상</div><div class="mt-1 text-[13px] text-mut">지니뮤직</div><div class="mt-3 text-[14px] leading-relaxed text-mut">부하분산 센터 구축 및 안정적 서비스 운영 기여</div></div></div>
+          <div class="flex gap-4 rounded-2xl bg-soft p-6"><i class="ti ti-shield-check mt-1 text-[26px] text-[#e8b45a]"></i><div><div class="text-[13px] font-bold text-cobalt">2019.05 · 팀 공동수상</div><div class="mt-1 font-bold">서비스 무장애 ACE상</div><div class="mt-1 text-[13px] text-mut">지니뮤직</div><div class="mt-3 text-[14px] leading-relaxed text-mut">대규모 트래픽 대응 및 무장애 센터 운영 관제 신규 구축</div></div></div>
+          <div class="rounded-2xl bg-soft p-6 md:col-span-2"><div class="flex gap-4"><i class="ti ti-medal mt-1 text-[26px] text-[#e8b45a]"></i><div><div class="text-[13px] font-bold text-cobalt">2013~2014 · 개인수상</div><div class="mt-1 font-bold">대한민국공군 표창 4건</div></div></div><div class="mt-5 grid gap-3 md:grid-cols-2"><div class="rounded-2xl border border-hair p-4"><b class="text-[13px]">2014.10.01</b><div class="mt-1 text-[14px]">건군 제66주년 국군의 날 기념 개인표창</div><div class="mt-1 text-[12px] text-mut">사단장 표창</div></div><div class="rounded-2xl border border-hair p-4"><b class="text-[13px]">2014.07.14</b><div class="mt-1 text-[14px]">후반기 수시업무 유공 표창</div><div class="mt-1 text-[12px] text-mut">대대장 표창</div></div><div class="rounded-2xl border border-hair p-4"><b class="text-[13px]">2014.06.16</b><div class="mt-1 text-[14px]">로그분석 경연대회 최우수</div><div class="mt-1 text-[12px] text-mut">연대장 표창</div></div><div class="rounded-2xl border border-hair p-4"><b class="text-[13px]">2013.07.03</b><div class="mt-1 text-[14px]">부대발전 유공 표창</div><div class="mt-1 text-[12px] text-mut">대대장 표창</div></div></div></div>
+        </div>
+      </section>
+
+      <section id="featured" class="my-12">
+        <h3 class="mb-1.5 text-[24px] font-medium tracking-tight">대표 콘텐츠 <span class="text-base font-normal text-hint">Featured</span></h3>
+        <p class="mb-6 text-mut">실무 사례, 산업 분석과 연구를 연결하는 대표 콘텐츠입니다.</p>
+        <div class="grid gap-4 md:grid-cols-2" id="featuredCards"></div>
+      </section>
     </div>
-  </div>
 
-  <div
-    class="flex flex-wrap gap-2.5 mb-4"
-    id="filters"
-  ></div>
-
-  <div class="flex items-center gap-3.5 mb-5 flex-wrap">
-
-    <button
-      class="text-sm font-bold px-4 py-2.5 rounded-pill bg-soft hover:bg-[rgba(255,255,255,.08)]"
-      id="featBtn"
-    >
-      <i class="ti ti-star align-[-2px]"></i>
-      대표작만 보기
-    </button>
-
-    <span
-      class="text-[14px] text-mut"
-      id="cnt"
-    ></span>
-
-  </div>
-
-  <div
-    class="flex flex-col gap-2.5"
-    id="posts"
-  ></div>
-
-</section>
-
-<footer class="mt-20 text-[14px] text-mut leading-relaxed border-t border-hair pt-7">
-
-  <p>
-    Human Tech Note는 기업의 AX 전환 과정에서 발생하는 기술·데이터·보안·조직·책임 문제를
-    실무와 연구의 관점에서 분석하는 아카이브입니다.
-  </p>
-
-  <p class="mt-2">
-    각 글은 논문, 법령, 표준, 산업 자료와 실제 운영 경험을 바탕으로 순차적으로 보완합니다.
-    · © 2026 최한람 · Human Tech Note
-  </p>
-
-</footer>
-
-</main> 
-
-const CATS = {
-  "AX Operating Model": {
-    "bg": "#FDF1DA",
-    "fg": "#8A5A00"
-  },
-  "Agentic AI Security": {
-    "bg": "#EDEBFB",
-    "fg": "#3E2FA6"
-  },
-  "Enterprise Knowledge & Data Architecture": {
-    "bg": "#E7F0FF",
-    "fg": "#0047B3"
-  },
-  "AI Productivity & Organizational Change": {
-    "bg": "#E7F3EC",
-    "fg": "#1F6B3B"
-  },
-  "AI Governance & Social Impact": {
-    "bg": "#FBEAF1",
-    "fg": "#98305C"
-  }
-};
-
-const FEAT = new Set([
-  16,
-  36,
-  48,
-  49,
-  52,
-  64,
-  74,
-  75
-]);
-
-const D = [
-
-  // #01
-  [
-    "AX Operating Model",
-    "7월",
-    "[오프닝] Human Tech Note를 시작하며",
-    "Opening Note · 실무와 연구를 연결하는 기록 원칙"
-  ],
-
-  // #02
-  [
-    "AI Governance & Social Impact",
-    "7월",
-    "정보보호란 무엇인가 — 실무자가 정의하는 우선순위",
-    "Research Notes · 정보보호의 목적과 위험 우선순위"
-  ],
-
-  // #03
-  [
-    "AI Governance & Social Impact",
-    "7월",
-    "ISMS-P 인증, 실무자의 눈으로 다시 보기",
-    "Practice Notes · 인증 대응과 상시 운영체계의 차이"
-  ],
-
-  // #04
-  [
-    "AI Governance & Social Impact",
-    "7월",
-    "ITGC와 GITC, '운영의 언어'로 이해하기",
-    "Practice Notes · 내부통제와 IT 운영의 연결"
-  ],
-
-  // #05
-  [
-    "Agentic AI Security",
-    "7월",
-    "접근통제의 3원칙 — 최소권한이 무너지는 순간",
-    "Practice Notes · 최소권한과 권한분리 설계"
-  ],
-
-  // #06
-  [
-    "Agentic AI Security",
-    "7월",
-    "계정 생명주기 관리의 딜레마",
-    "Practice Notes · 계정 생성·변경·회수 프로세스"
-  ],
-
-  // #07
-  [
-    "Agentic AI Security",
-    "7월",
-    "취약점 관리 — 진단보다 조치가 어려운 이유",
-    "Practice Notes · 취약점 조치 우선순위와 책임구조"
-  ],
-
-  // #08
-  [
-    "Agentic AI Security",
-    "7월",
-    "시큐어코딩·취약점 진단 도구 실무 적용기",
-    "Practice Notes · 도구 결과를 개발 프로세스에 연결하기"
-  ],
-
-  // #09
-  [
-    "AI Governance & Social Impact",
-    "7월",
-    "정보보호위원회는 왜 형식적으로 흐르는가",
-    "Main Insight · 보안 의사결정기구의 역할과 책임"
-  ],
-
-  // #10
-  [
-    "Agentic AI Security",
-    "8월",
-    "엔드포인트 보안 전체 그림 한눈에 정리",
-    "Practice Notes · DLP·DRM·NAC·EPP 통합 운영"
-  ],
-
-  // #11
-  [
-    "Agentic AI Security",
-    "8월",
-    "DLP 도입 — 정책 하나 잘못 짜면 업무가 멈춘다",
-    "Practice Notes · 탐지정책과 업무 연속성의 균형"
-  ],
-
-  // #12
-  [
-    "Agentic AI Security",
-    "8월",
-    "DRM 문서보안 — 보안과 협업 생산성의 균형점",
-    "Practice Notes · 문서 권한과 사용자 경험 설계"
-  ],
-
-  // #13
-  [
-    "Agentic AI Security",
-    "8월",
-    "NAC 운영기 — Windows와 Mac의 현실적 차이",
-    "Practice Notes · 단말 유형별 접근통제 정책"
-  ],
-
-  // #14
-  [
-    "Enterprise Knowledge & Data Architecture",
-    "8월",
-    "협업툴 시대의 유출 방지 전략 — Slack과 M365",
-    "Practice Notes · SaaS 데이터 흐름과 통제지점"
-  ],
-
-  // #15
-  [
-    "Agentic AI Security",
-    "8월",
-    "Mac 보안은 왜 늘 뒷전이 되는가",
-    "Main Insight · 이기종 단말과 보안 사각지대"
-  ],
-
-  // #16
-  [
-    "Agentic AI Security",
-    "8월",
-    "[케이스] 실제 악성코드 감염 대응기",
-    "Practice Notes · 탐지·분석·격리·복구·재발방지"
-  ],
-
-  // #17
-  [
-    "Agentic AI Security",
-    "8월",
-    "IOC·Hash·Sandbox — 분석 결과 읽는 법",
-    "Practice Notes · 보안 분석정보의 해석과 대응"
-  ],
-
-  // #18
-  [
-    "Agentic AI Security",
-    "8월",
-    "랜섬웨어 대응, 백신 정책만으로 충분한가",
-    "Main Insight · 예방·탐지·복구체계의 연결"
-  ],
-
-  // #19
-  [
-    "AI Productivity & Organizational Change",
-    "8월",
-    "피싱 모의훈련은 실제 행동을 바꿀 수 있는가",
-    "Research Notes · 보안교육 효과와 행동변화 측정"
-  ],
-
-  // #20
-  [
-    "AI Productivity & Organizational Change",
-    "8월",
-    "보안 캠페인은 조직문화를 바꿀 수 있는가",
-    "Research Notes · 인식제고와 조직행동의 관계"
-  ],
-
-  // #21
-  [
-    "Enterprise Knowledge & Data Architecture",
-    "8월",
-    "개인정보 처리현황과 정보서비스 흐름도",
-    "Practice Notes · 개인정보 데이터 흐름과 책임자 관리"
-  ],
-
-  // #22
-  [
-    "Enterprise Knowledge & Data Architecture",
-    "8월",
-    "파일서버 속 개인정보 — 방치된 위험 찾기",
-    "Practice Notes · 비정형 데이터의 탐지·분류·정비"
-  ],
-
-  // #23
-  [
-    "AX Operating Model",
-    "9월",
-    "보안 벤더 관리 — 계약서에 담아야 할 것들",
-    "Practice Notes · SLA·보안책임·종료조건 설계"
-  ],
-
-  // #24
-  [
-    "AX Operating Model",
-    "9월",
-    "정보보호 예산은 어떻게 짜고 설득해야 하는가",
-    "Main Insight · 위험감소와 투자효과의 연결"
-  ],
-
-  // #25
-  [
-    "AX Operating Model",
-    "9월",
-    "IT 거버넌스란 — 통제가 아니라 정렬이다",
-    "Research Notes · 전략·투자·운영의 정렬 구조"
-  ],
-
-  // #26
-  [
-    "AI Governance & Social Impact",
-    "9월",
-    "내부통제 고도화, 감사 대응을 넘어 운영 표준으로",
-    "Practice Notes · 통제를 일상 업무에 내재화하기"
-  ],
-
-  // #27
-  [
-    "AI Governance & Social Impact",
-    "9월",
-    "IT 리스크 관리 프레임워크 — 식별·평가·대응",
-    "Research Notes · 위험평가와 잔여위험 관리"
-  ],
-
-  // #28
-  [
-    "AX Operating Model",
-    "9월",
-    "변화관리가 장애를 막는 방법",
-    "Practice Notes · 변경승인·검증·롤백 프로세스"
-  ],
-
-  // #29
-  [
-    "AI Governance & Social Impact",
-    "9월",
-    "Jira·Confluence로 운영 증적을 설계하는 방법",
-    "Practice Notes · 업무기록과 감사 추적성 확보"
-  ],
-
-  // #30
-  [
-    "AX Operating Model",
-    "9월",
-    "PMO의 핵심은 일정이 아니라 이해관계자다",
-    "Main Insight · 요구사항·갈등·의사결정 관리"
-  ],
-
-  // #31
-  [
-    "AX Operating Model",
-    "9월",
-    "IT 투자 타당성 — ROI를 숫자로만 말하지 않는 법",
-    "Research Notes · 재무효과와 전략효과의 통합평가"
-  ],
-
-  // #32
-  [
-    "AX Operating Model",
-    "9월",
-    "RFP는 어떻게 기술과 운영의 요구를 연결하는가",
-    "Practice Notes · 요구사항·평가기준·책임범위 설계"
-  ],
-
-  // #33
-  [
-    "AI Productivity & Organizational Change",
-    "9월",
-    "사업·개발·운영은 왜 같은 과제에서 충돌하는가",
-    "Main Insight · 크로스펑셔널 협업의 구조적 문제"
-  ],
-
-  // #34
-  [
-    "AI Governance & Social Impact",
-    "9월",
-    "서비스 안정성과 통제는 어떻게 균형을 잡아야 하는가",
-    "Main Insight · 위험기반 통제수준 결정"
-  ],
-
-  // #35
-  [
-    "AX Operating Model",
-    "9월",
-    "IT 자산과 예산을 하나의 포트폴리오로 관리하기",
-    "Practice Notes · 자산·비용·수명주기 통합관리"
-  ],
-
-  // #36
-  [
-    "AX Operating Model",
-    "10월",
-    "[회고] 무중단 운영을 위한 변화관리 — 인프라 개선",
-    "Practice Notes · 운영전환과 서비스 연속성"
-  ],
-
-  // #37
-  [
-    "AX Operating Model",
-    "10월",
-    "DX를 실행 가능한 운영모델로 전환하는 방법",
-    "Main Insight · 전략·과제·조직·KPI 연결"
-  ],
-
-  // #38
-  [
-    "AI Productivity & Organizational Change",
-    "10월",
-    "전사 프로세스 1,100건을 분석하면 무엇이 보이는가",
-    "Practice Notes · 프로세스 분류와 개선 우선순위"
-  ],
-
-  // #39
-  [
-    "AX Operating Model",
-    "10월",
-    "업무 자동화의 ROI는 어떻게 측정해야 하는가",
-    "Research Notes · 처리량·시간·품질·오류율 측정"
-  ],
-
-  // #40
-  [
-    "AX Operating Model",
-    "10월",
-    "정산·유통 자동화는 어떻게 운영 프로세스로 정착하는가",
-    "Practice Notes · 자동화 과제의 운영전환 조건"
-  ],
-
-  // #41
-  [
-    "Enterprise Knowledge & Data Architecture",
-    "10월",
-    "데이터 흐름도로 업무와 시스템을 함께 이해하기",
-    "Practice Notes · 데이터·시스템·책임주체 연결"
-  ],
-
-  // #42
-  [
-    "AX Operating Model",
-    "10월",
-    "KPI·Compliance·Risk를 요구사항에 녹이는 방법",
-    "Practice Notes · 비기능 요구사항과 통제조건 설계"
-  ],
-
-  // #43
-  [
-    "AI Productivity & Organizational Change",
-    "10월",
-    "고객경험 데이터는 서비스 의사결정을 어떻게 바꾸는가",
-    "Research Notes · CX 지표와 서비스 개선의 연결"
-  ],
-
-  // #44
-  [
-    "AI Productivity & Organizational Change",
-    "10월",
-    "데이터 기반 의사결정이 조직에서 실패하는 이유",
-    "Main Insight · 데이터 품질보다 중요한 조직조건"
-  ],
-
-  // #45
-  [
-    "AX Operating Model",
-    "10월",
-    "기술경영은 기술을 어떻게 경영의 언어로 바꾸는가",
-    "Research Notes · 기술선택·투자·사업화 의사결정"
-  ],
-
-  // #46
-  [
-    "Enterprise Knowledge & Data Architecture",
-    "10월",
-    "데이터 시각화는 전략적 의사결정을 개선할 수 있는가",
-    "Research Notes · 시각화와 판단편향의 관계"
-  ],
-
-  // #47
-  [
-    "AX Operating Model",
-    "10월",
-    "산업별 DX·AI 적용은 왜 서로 다른 경로를 보이는가",
-    "Research Notes · 산업구조와 기술수용 조건"
-  ],
-
-  // #48
-  [
-    "AX Operating Model",
-    "10월",
-    "[회고] DX 협의체 운영기 — 벽을 데이터로 허물기",
-    "Practice Notes · 협의체·요구사항·프로세스 개선"
-  ],
-
-  // #49
-  [
-    "Agentic AI Security",
-    "7월",
-    "AI 보안의 본질은 ‘차단’이 아니라 ‘신뢰의 구조’다",
-    "Main Insight · 데이터·권한·행위·로그·책임"
-  ],
-
-  // #50
-  [
-    "Enterprise Knowledge & Data Architecture",
-    "7월",
-    "데이터를 많이 모으는 시대에서, 안전하게 연결하는 시대로",
-    "Research Notes · 데이터 활용·보호·서비스 경쟁"
-  ],
-
-  // #51
-  [
-    "AI Productivity & Organizational Change",
-    "7월",
-    "AI는 과학연구와 혁신의 방식을 어떻게 바꾸는가",
-    "Research Notes · AI for Science와 연구생산성"
-  ],
-
-  // #52
-  [
-    "AX Operating Model",
-    "7월",
-    "데이터는 많은데 왜 산업성과로 이어지지 않을까",
-    "Research Notes · 기술사업화와 데이터 거버넌스"
-  ],
-
-  // #53
-  [
-    "AX Operating Model",
-    "8월",
-    "기업의 AX는 왜 PoC에서 멈추는가",
-    "Main Insight · 데이터·프로세스·운영주체·예산 분석"
-  ],
-
-  // #54
-  [
-    "AX Operating Model",
-    "8월",
-    "AI 과제는 어떤 기준으로 선정해야 하는가",
-    "Practice Notes · AI Use Case 평가 매트릭스"
-  ],
-
-  // #55
-  [
-    "AX Operating Model",
-    "8월",
-    "AI ROI는 비용 절감만으로 측정할 수 있는가",
-    "Research Notes · 생산성·품질·위험감소·조직학습"
-  ],
-
-  // #56
-  [
-    "AX Operating Model",
-    "8월",
-    "Build·Buy·Compose — 기업 AI 도입의 세 가지 선택",
-    "Main Insight · 비용·통제력·확장성·벤더 종속성"
-  ],
-
-  // #57
-  [
-    "AX Operating Model",
-    "8월",
-    "AI FinOps — 모델과 추론비용을 어떻게 관리할 것인가",
-    "Practice Notes · 토큰·지연시간·사용량·비용 KPI"
-  ],
-
-  // #58
-  [
-    "Agentic AI Security",
-    "9월",
-    "AI Agent에게 어디까지 권한을 부여할 것인가",
-    "Practice Notes · 행위별 권한분류와 승인체계"
-  ],
-
-  // #59
-  [
-    "Agentic AI Security",
-    "9월",
-    "사람의 계정관리에서 Agent Identity 관리로",
-    "Research Notes · Agent 신원과 생명주기 관리"
-  ],
-
-  // #60
-  [
-    "Agentic AI Security",
-    "9월",
-    "AI Agent의 Memory Poisoning은 어떻게 발생하는가",
-    "Research Notes · 장기기억·검색문서·세션 오염"
-  ],
-
-  // #61
-  [
-    "Agentic AI Security",
-    "9월",
-    "MCP와 Tool Calling은 새로운 공급망 위험인가",
-    "Main Insight · 외부 도구와 신뢰경계의 확장"
-  ],
-
-  // #62
-  [
-    "Agentic AI Security",
-    "9월",
-    "AI Agent 행동 로그는 감사 증적이 될 수 있는가",
-    "Practice Notes · 계획·도구호출·승인·수정이력"
-  ],
-
-  // #63
-  [
-    "Enterprise Knowledge & Data Architecture",
-    "10월",
-    "RAG는 검색 기술이 아니라 데이터 거버넌스 문제다",
-    "Main Insight · 수집·분할·검색·생성의 책임구조"
-  ],
-
-  // #64
-  [
-    "AI Governance & Social Impact",
-    "10월",
-    "정보보호 R&D 투자 동향 — NTIS 데이터로 본 흐름",
-    "Research Notes · 국가 R&D 데이터와 기업 역량 분석"
-  ],
-
-  // #65
-  [
-    "Enterprise Knowledge & Data Architecture",
-    "10월",
-    "기업 RAG는 왜 정확도보다 접근권한에서 실패하는가",
-    "Practice Notes · 문서권한과 검색결과 통제"
-  ],
-
-  // #66
-  [
-    "Enterprise Knowledge & Data Architecture",
-    "10월",
-    "온톨로지와 GraphRAG는 언제 필요한가",
-    "Research Notes · 유사도 검색과 관계 기반 검색 비교"
-  ],
-
-  // #67
-  [
-    "Enterprise Knowledge & Data Architecture",
-    "10월",
-    "AI 시대의 Data Lineage — 답변의 출처를 추적할 수 있는가",
-    "Practice Notes · 원천문서·검색결과·생성답변 계보"
-  ],
-
-  // #68
-  [
-    "Enterprise Knowledge & Data Architecture",
-    "10월",
-    "사내 문서를 AI-Ready Data로 만드는 방법",
-    "Practice Notes · 최신성·중복·메타데이터·보안등급"
-  ],
-
-  // #69
-  [
-    "AI Productivity & Organizational Change",
-    "11월",
-    "생성형 AI는 실제로 업무 생산성을 높이는가",
-    "Research Notes · 실험연구와 생산성 측정방법"
-  ],
-
-  // #70
-  [
-    "AI Productivity & Organizational Change",
-    "11월",
-    "AI의 효과가 직무와 숙련도에 따라 다른 이유",
-    "Research Notes · 초급자·숙련자·업무유형 비교"
-  ],
-
-  // #71
-  [
-    "AI Productivity & Organizational Change",
-    "11월",
-    "Human-in-the-loop만으로 AI 사고를 막을 수 있는가",
-    "Main Insight · 인간 검토의 조건과 자동화 편향"
-  ],
-
-  // #72
-  [
-    "AI Productivity & Organizational Change",
-    "11월",
-    "AI Literacy는 교육이 아니라 조직 운영역량이다",
-    "Practice Notes · 업무기준·검토책임·평가·지식공유"
-  ],
-
-  // #73
-  [
-    "AI Governance & Social Impact",
-    "12월",
-    "NIST AI RMF를 기업 운영 체크리스트로 전환하기",
-    "Practice Notes · Govern·Map·Measure·Manage 적용"
-  ],
-
-  // #74
-  [
-    "AI Governance & Social Impact",
-    "12월",
-    "ISO/IEC 42001과 ISMS를 함께 운영할 수 있는가",
-    "Research Notes · AI 경영시스템과 정보보호 관리체계"
-  ],
-
-  // #75
-  [
-    "AI Governance & Social Impact",
-    "12월",
-    "AI 사고 대응체계 — 모델·데이터·Agent·벤더 실패에 대응하기",
-    "Practice Notes · AI Incident 탐지·중단·조사·복구"
-  ]
-
-];
-const KEY="htn_status_v3";
-const D=[["정보보호 기본","7월","[오프닝] Human Tech Note를 시작하며","블로그 정체성·방향 선언"],["정보보호 기본","7월","정보보호란 무엇인가 — 실무자가 정의하는 우선순위","보안 철학·관점"],["정보보호 기본","7월","ISMS-P 인증, 실무자의 눈으로 다시 보기","ISMS 운영 경험"],["정보보호 기본","7월","ITGC와 GITC, '운영의 언어'로 이해하기","내부통제 역량"],["정보보호 기본","7월","접근통제의 3원칙 — 최소권한이 무너지는 순간","접근통제 운영"],["정보보호 기본","7월","계정 생명주기(Lifecycle) 관리의 딜레마","AD/AM 계정관리"],["정보보호 기본","7월","취약점 관리 — '진단'보다 '조치'가 어려운 이유","취약점 프로세스"],["정보보호 기본","7월","시큐어코딩·취약점 진단 도구 실무 적용기","보안 도구 운영"],["정보보호 기본","7월","정보보호위원회는 왜 형식적으로 흐르는가","위원회 기획·운영"],["실무보안/케이스","8월","엔드포인트 보안 전체 그림 한눈에 정리","엔드포인트 통합 운영"],["실무보안/케이스","8월","DLP 도입 — 정책 하나 잘못 짜면 업무가 멈춘다","DLP 정책 고도화"],["실무보안/케이스","8월","DRM 문서보안 — 보안과 협업 생산성의 균형점","DRM 운영·개선"],["실무보안/케이스","8월","NAC 운영기 — Windows와 Mac의 현실적 차이","NAC 정책 고도화"],["실무보안/케이스","8월","협업툴(Slack·M365) 시대의 유출 방지 전략","협업환경 보안"],["실무보안/케이스","8월","Mac 보안은 왜 늘 뒷전이 되는가","CVE·공급망 대응"],["실무보안/케이스","8월","[케이스] 실제 악성코드 감염 대응기","악성코드 대응 실사례"],["실무보안/케이스","8월","IOC·Hash·Sandbox — 분석 결과 읽는 법","악성코드 분석 역량"],["실무보안/케이스","8월","랜섬웨어 대응, 백신 정책만으로 충분한가","랜섬웨어 대응 운영"],["실무보안/케이스","8월","피싱 모의훈련 기획기 — '배우게' 하는 훈련","모의훈련 기획·운영"],["실무보안/케이스","8월","보안 인식 제고, 캠페인으로 문화를 바꿀 수 있을까","보안문화 정착"],["실무보안/케이스","8월","개인정보 처리현황과 정보서비스 흐름도","개인정보 흐름도 관리"],["실무보안/케이스","8월","파일서버 속 개인정보 — 방치된 위험 찾기","개인정보 점검 활동"],["실무보안/케이스","9월","보안 벤더 관리 — 계약서에 담아야 할 것들","벤더 관리 역량"],["실무보안/케이스","9월","정보보호 예산, 어떻게 짜고 어떻게 설득하는가","정보보호 예산 관리"],["IT거버넌스/PMO","9월","IT 거버넌스란 — 통제가 아니라 정렬(Alignment)","IT Governance 기획"],["IT거버넌스/PMO","9월","내부통제 고도화, 감사 대응을 넘어 운영 표준으로","내부통제 체계"],["IT거버넌스/PMO","9월","IT 리스크 관리 프레임워크 — 식별·평가·대응","리스크 관리 운영"],["IT거버넌스/PMO","9월","변화관리(Change Mgmt)가 장애를 막는 방법","변화관리 수행"],["IT거버넌스/PMO","9월","Jira·Confluence로 운영 증적 남기기","증적 기반 운영관리"],["IT거버넌스/PMO","9월","PMO의 핵심은 일정이 아니라 이해관계자다","프로젝트 관리 역량"],["IT거버넌스/PMO","9월","IT 투자 타당성 — ROI를 숫자로만 말하지 않는 법","투자 타당성/ROI"],["IT거버넌스/PMO","9월","RFP 잘 쓰는 법 — 우리가 주도하려면","RFP 작성 역량"],["IT거버넌스/PMO","9월","크로스펑셔널 협업 — 사업·개발·운영은 왜 부딪히나","Cross-functional 협업"],["IT거버넌스/PMO","9월","서비스 안정성 vs 통제 — 어디까지 통제할 것인가","운영 리스크 판단"],["IT거버넌스/PMO","9월","IT 자산·예산 관리, 거버넌스의 중요한 축","IT 자산/예산 관리"],["IT거버넌스/PMO","10월","[회고] 무중단 운영을 위한 변화관리 — 인프라 개선","무중단 전환 프로젝트"],["DX/기술경영","10월","DX, 유행어를 넘어 실행 로드맵으로","DX 전략 수립"],["DX/기술경영","10월","전사 프로세스 1,100건 분석기 — 어디부터 손대나","프로세스 전수분석"],["DX/기술경영","10월","업무 자동화의 ROI — 월 50건→1,000건 검수 자동화","자동화 정량 성과"],["DX/기술경영","10월","정산·유통 자동화(SODA·DDEX·GEMSTONE)","자동화 프로젝트 성과"],["DX/기술경영","10월","데이터 흐름도로 업무를 다시 그리기","프로세스 최적화"],["DX/기술경영","10월","KPI·Compliance·Risk를 요구사항에 녹이는 법","관리체계 고도화"],["DX/기술경영","10월","고객경험(CX) 기반 서비스 분석 — 오디오 플랫폼","CX 분석 모델"],["DX/기술경영","10월","데이터 기반 의사결정, 조직이 진짜 바뀌려면","데이터 의사결정"],["DX/기술경영","10월","기술경영(MOT)이란 — 엔지니어가 경영을 배우는 이유","서강MOT 학습"],["DX/기술경영","10월","데이터 시각화로 전략을 설득하기","시각화/전략 분석"],["DX/기술경영","10월","산업별 DX·AI 활용 트렌드 — 어디로 가는가","산업 트렌드 분석"],["DX/기술경영","10월","[회고] DX 협의체 운영기 — 벽을 데이터로 허물기","DX 과제/협의체 운영"],["AI·AX","7월","AI 보안의 본질은 ‘차단’이 아니라 ‘신뢰의 구조’다","기업형 AI 보안·신뢰 구조"],["DX/기술경영","7월","데이터를 많이 모으는 시대에서, 안전하게 연결하는 시대로","2024 데이터경제: 활용·보호·서비스 경쟁"],["DX/기술경영","7월","AI는 과학연구와 혁신의 방식을 어떻게 바꾸는가","2025 데이터경제: AI for Science·연구성과"],["DX/기술경영","7월","데이터는 많은데 왜 산업성과로 이어지지 않을까","2026 데이터경제: 기술사업화·데이터 거버넌스"],["AI·AX","11월","EU AI Act와 국내 AI 기본법 — 알아야 할 흐름","컴플라이언스 동향"],["AI·AX","11월","AX(AI Transformation), DX와 무엇이 다른가","AX 관점 정립"],["AI·AX","11월","생성형 AI로 보안 운영 자동화 실험기","AI 활용 실험"],["AI·AX","11월","RAG와 사내 지식 — 보안 지키며 AI 쓰는 법","AI 보안 아키텍처"],["AI·AX","11월","AI 에이전트 시대의 접근통제","차세대 접근통제"],["AI·AX","11월","AI 도입 ROI를 어떻게 측정할 것인가","AI 투자 분석"],["AI·AX","11월","AI 윤리와 정보보호 — 편향과 프라이버시","AI 윤리 관점"],["AI·AX","11월","[실험] AI로 보안 정책 문서 초안 만들기","AI 활용 실무 검증"],["AI·AX","11월","AI 시대, 정보보호 실무자의 역할은 어떻게 변하나","커리어 방향성"],["AI·AX","12월","AI 보안 컨퍼런스(ISEC·PASCON) 현장 정리","지식발신/학습"],["AI·AX","12월","CISO/CPO의 고민 — AI 시대의 보안 리더십","리더십/거버넌스 시야"],["연구·종합","12월","정보보호 R&D 투자 동향 — NTIS 데이터로 본 흐름","산학 연구(NTIS)"],["연구·종합","12월","BERTopic으로 기술 트렌드 읽기","텍스트 분석 역량"],["연구·종합","12월","정보보호 투자, 기업은 얼마나 어디에 쓰는가","분석 모델 구축"],["연구·종합","12월","정보보호 공시제도 — 실무자가 본 의미와 한계","공시제도 이해"],["연구·종합","12월","글로벌 기술사업화 인사이트 — 네덜란드 방문기","글로벌 혁신 프로그램"],["연구·종합","12월","ESG와 정보보호 — 지속가능성 관점의 리스크","ESG/리스크 관점"],["연구·종합","12월","미션 크리티컬 운영에서 배운 것 — 공군 C4I 회고","공군 C4I 경험"],["연구·종합","12월","9년 4개월, 정보보호 실무자의 커리어 회고","커리어 종합 서사"],["연구·종합","12월","2027 정보보호·IT 거버넌스 전망","미래 준비/전략 시야"],["연구·종합","12월","AI·정보보호·기술경영의 교차점 — 내 커리어 지도","핵심 포지셔닝"],["연구·종합","12월","Human Tech Note 6개월 회고 — 75편이 남긴 것","꾸준함·지식발신 증명"],["연구·종합","1월","[포트폴리오] 기록이 만든 전문성","포트폴리오 완성"]];
-const KEY="htn_status_v4";
-function pad(n){return n<10?"0"+n:""+n;}
-const DEF=D.map((_,i)=> i<12?"done":(i===12?"writing":"todo"));
-const DEF=D.map((_,i)=> i<52?"done":"todo");
-let ST=(()=>{try{const s=JSON.parse(localStorage.getItem(KEY));if(Array.isArray(s)&&s.length===D.length)return s;}catch(e){} return DEF.slice();})();
-function save(){try{localStorage.setItem(KEY,JSON.stringify(ST));}catch(e){}}
-const NEXT={todo:"writing",writing:"done",done:"todo"};
-@@ -260,6 +232,8 @@ <h2 class="text-[28px] md:text-4xl font-medium tracking-tight mb-1.5">연재 아
- document.getElementById("pgDone").style.width=(done/D.length*100)+"%";
- document.getElementById("pgWip").style.width=(wip/D.length*100)+"%";
- document.getElementById("cDone").textContent=done;document.getElementById("cWip").textContent=wip;document.getElementById("cTodo").textContent=todo;
- const heroDone=document.getElementById("heroDone");if(heroDone)heroDone.textContent=done;
- const heroBadgeDone=document.getElementById("heroBadgeDone");if(heroBadgeDone)heroBadgeDone.textContent=done;
-}
-function paint(){
- Array.from(fEl.children).forEach(b=>{const on=b.dataset.cat===active;
-@@ -286,4 +260,4 @@ <h2 class="text-[28px] md:text-4xl font-medium tracking-tight mb-1.5">연재 아
-document.getElementById("resetBtn").onclick=(e)=>{e.preventDefault();ST=DEF.slice();save();paint();updateProg();};
-paint();updateProg();
-</script>
-</body></html>
-</body></html>
+    <section id="archive" class="my-16">
+      <h2 class="mb-1.5 text-[28px] font-medium tracking-tight md:text-4xl">연재 아카이브 <span class="text-base font-normal text-hint">Archive · 75편</span></h2>
+      <p class="mb-6 text-mut">제목을 누르면 각 글로 이동합니다. 상태는 현재 브라우저에 자동 저장됩니다.</p>
+
+      <div class="mb-6 rounded-feat bg-soft p-8">
+        <div class="mb-4 flex flex-wrap items-baseline gap-3"><span class="text-4xl font-medium tracking-tight" id="pgBig">0 / 75</span><span class="text-[15px] font-medium text-mut" id="pgPct">발행 0%</span></div>
+        <div class="flex h-3.5 overflow-hidden rounded-pill bg-[rgba(255,255,255,.10)]"><div class="bg-[#12946a] transition-all" id="pgDone"></div><div class="bg-warn transition-all" id="pgWip"></div></div>
+        <div class="mt-4 flex flex-wrap items-center gap-5 text-[14px] text-mut">
+          <span>발행완료 <b class="text-tx" id="cDone">0</b></span>
+          <span>작성중 <b class="text-tx" id="cWip">0</b></span>
+          <span>예정 <b class="text-tx" id="cTodo">75</b></span>
+          <a href="#" id="resetBtn" class="ml-auto font-medium text-mut"><i class="ti ti-refresh"></i> 초기화</a>
+        </div>
+      </div>
+
+      <div class="mb-4 flex flex-wrap gap-2.5" id="filters"></div>
+      <div class="mb-5 flex flex-wrap items-center gap-3.5">
+        <button class="rounded-pill bg-soft px-4 py-2.5 text-sm font-bold hover:bg-[rgba(255,255,255,.08)]" id="featBtn"><i class="ti ti-star"></i> 대표 콘텐츠만</button>
+        <span class="text-[14px] text-mut" id="cnt"></span>
+      </div>
+      <div class="flex flex-col gap-2.5" id="posts"></div>
+    </section>
+
+    <footer class="mt-20 border-t border-hair pt-7 text-[14px] leading-relaxed text-mut">
+      <p>Human Tech Note는 기업의 AX 전환 과정에서 발생하는 기술·데이터·보안·조직·책임 문제를 실무와 연구의 관점에서 분석합니다.</p>
+      <p class="mt-2">각 글은 논문, 법령, 표준, 기술문서, 산업 사례와 실제 운영 경험을 바탕으로 순차적으로 보완합니다. · © 2026 최한람</p>
+    </footer>
+  </main>
+
+  <script>
+    const CATS = {"AX Operating Model": {"bg": "#FDF1DA", "fg": "#8A5A00"}, "Agentic AI Security": {"bg": "#EDEBFB", "fg": "#3E2FA6"}, "Enterprise Knowledge & Data Architecture": {"bg": "#E7F0FF", "fg": "#0047B3"}, "AI Productivity & Organizational Change": {"bg": "#E7F3EC", "fg": "#1F6B3B"}, "AI Governance & Social Impact": {"bg": "#FBEAF1", "fg": "#98305C"}};
+    const FEAT = new Set([16, 36, 48, 49, 50, 51, 52, 64]);
+    const D = [["AX Operating Model", "7월", "[오프닝] Human Tech Note를 시작하며", "Opening Note · 실무와 연구를 연결하는 기록 원칙"], ["AI Governance & Social Impact", "7월", "정보보호란 무엇인가 — 실무자가 정의하는 우선순위", "Research Notes · 정보보호의 목적과 위험 우선순위"], ["AI Governance & Social Impact", "7월", "ISMS-P 인증, 실무자의 눈으로 다시 보기", "Practice Notes · 인증 대응과 상시 운영체계의 차이"], ["AI Governance & Social Impact", "7월", "ITGC와 GITC, '운영의 언어'로 이해하기", "Practice Notes · 내부통제와 IT 운영의 연결"], ["Agentic AI Security", "7월", "접근통제의 3원칙 — 최소권한이 무너지는 순간", "Practice Notes · 최소권한과 권한분리 설계"], ["Agentic AI Security", "7월", "계정 생명주기 관리의 딜레마", "Practice Notes · 계정 생성·변경·회수 프로세스"], ["Agentic AI Security", "7월", "취약점 관리 — 진단보다 조치가 어려운 이유", "Practice Notes · 취약점 조치 우선순위와 책임구조"], ["Agentic AI Security", "7월", "시큐어코딩·취약점 진단 도구 실무 적용기", "Practice Notes · 도구 결과를 개발 프로세스에 연결하기"], ["AI Governance & Social Impact", "7월", "정보보호위원회는 왜 형식적으로 흐르는가", "Main Insight · 보안 의사결정기구의 역할과 책임"], ["Agentic AI Security", "8월", "엔드포인트 보안 전체 그림 한눈에 정리", "Practice Notes · DLP·DRM·NAC·EPP 통합 운영"], ["Agentic AI Security", "8월", "DLP 도입 — 정책 하나 잘못 짜면 업무가 멈춘다", "Practice Notes · 탐지정책과 업무 연속성의 균형"], ["Agentic AI Security", "8월", "DRM 문서보안 — 보안과 협업 생산성의 균형점", "Practice Notes · 문서 권한과 사용자 경험 설계"], ["Agentic AI Security", "8월", "NAC 운영기 — Windows와 Mac의 현실적 차이", "Practice Notes · 단말 유형별 접근통제 정책"], ["Enterprise Knowledge & Data Architecture", "8월", "협업툴 시대의 유출 방지 전략 — Slack과 M365", "Practice Notes · SaaS 데이터 흐름과 통제지점"], ["Agentic AI Security", "8월", "Mac 보안은 왜 늘 뒷전이 되는가", "Main Insight · 이기종 단말과 보안 사각지대"], ["Agentic AI Security", "8월", "[케이스] 실제 악성코드 감염 대응기", "Practice Notes · 탐지·분석·격리·복구·재발방지"], ["Agentic AI Security", "8월", "IOC·Hash·Sandbox — 분석 결과 읽는 법", "Practice Notes · 보안 분석정보의 해석과 대응"], ["Agentic AI Security", "8월", "랜섬웨어 대응, 백신 정책만으로 충분한가", "Main Insight · 예방·탐지·복구체계의 연결"], ["AI Productivity & Organizational Change", "8월", "피싱 모의훈련은 실제 행동을 바꿀 수 있는가", "Research Notes · 보안교육 효과와 행동변화 측정"], ["AI Productivity & Organizational Change", "8월", "보안 캠페인은 조직문화를 바꿀 수 있는가", "Research Notes · 인식제고와 조직행동의 관계"], ["Enterprise Knowledge & Data Architecture", "8월", "개인정보 처리현황과 정보서비스 흐름도", "Practice Notes · 개인정보 데이터 흐름과 책임자 관리"], ["Enterprise Knowledge & Data Architecture", "8월", "파일서버 속 개인정보 — 방치된 위험 찾기", "Practice Notes · 비정형 데이터의 탐지·분류·정비"], ["AX Operating Model", "9월", "보안 벤더 관리 — 계약서에 담아야 할 것들", "Practice Notes · SLA·보안책임·종료조건 설계"], ["AX Operating Model", "9월", "정보보호 예산은 어떻게 짜고 설득해야 하는가", "Main Insight · 위험감소와 투자효과의 연결"], ["AX Operating Model", "9월", "IT 거버넌스란 — 통제가 아니라 정렬이다", "Research Notes · 전략·투자·운영의 정렬 구조"], ["AI Governance & Social Impact", "9월", "내부통제 고도화, 감사 대응을 넘어 운영 표준으로", "Practice Notes · 통제를 일상 업무에 내재화하기"], ["AI Governance & Social Impact", "9월", "IT 리스크 관리 프레임워크 — 식별·평가·대응", "Research Notes · 위험평가와 잔여위험 관리"], ["AX Operating Model", "9월", "변화관리가 장애를 막는 방법", "Practice Notes · 변경승인·검증·롤백 프로세스"], ["AI Governance & Social Impact", "9월", "Jira·Confluence로 운영 증적을 설계하는 방법", "Practice Notes · 업무기록과 감사 추적성 확보"], ["AX Operating Model", "9월", "PMO의 핵심은 일정이 아니라 이해관계자다", "Main Insight · 요구사항·갈등·의사결정 관리"], ["AX Operating Model", "9월", "IT 투자 타당성 — ROI를 숫자로만 말하지 않는 법", "Research Notes · 재무효과와 전략효과의 통합평가"], ["AX Operating Model", "9월", "RFP는 어떻게 기술과 운영의 요구를 연결하는가", "Practice Notes · 요구사항·평가기준·책임범위 설계"], ["AI Productivity & Organizational Change", "9월", "사업·개발·운영은 왜 같은 과제에서 충돌하는가", "Main Insight · 크로스펑셔널 협업의 구조적 문제"], ["AI Governance & Social Impact", "9월", "서비스 안정성과 통제는 어떻게 균형을 잡아야 하는가", "Main Insight · 위험기반 통제수준 결정"], ["AX Operating Model", "9월", "IT 자산과 예산을 하나의 포트폴리오로 관리하기", "Practice Notes · 자산·비용·수명주기 통합관리"], ["AX Operating Model", "10월", "[회고] 무중단 운영을 위한 변화관리 — 인프라 개선", "Practice Notes · 운영전환과 서비스 연속성"], ["AX Operating Model", "10월", "DX를 실행 가능한 운영모델로 전환하는 방법", "Main Insight · 전략·과제·조직·KPI 연결"], ["AI Productivity & Organizational Change", "10월", "전사 프로세스 1,100건을 분석하면 무엇이 보이는가", "Practice Notes · 프로세스 분류와 개선 우선순위"], ["AX Operating Model", "10월", "업무 자동화의 ROI는 어떻게 측정해야 하는가", "Research Notes · 처리량·시간·품질·오류율 측정"], ["AX Operating Model", "10월", "정산·유통 자동화는 어떻게 운영 프로세스로 정착하는가", "Practice Notes · 자동화 과제의 운영전환 조건"], ["Enterprise Knowledge & Data Architecture", "10월", "데이터 흐름도로 업무와 시스템을 함께 이해하기", "Practice Notes · 데이터·시스템·책임주체 연결"], ["AX Operating Model", "10월", "KPI·Compliance·Risk를 요구사항에 녹이는 방법", "Practice Notes · 비기능 요구사항과 통제조건 설계"], ["AI Productivity & Organizational Change", "10월", "고객경험 데이터는 서비스 의사결정을 어떻게 바꾸는가", "Research Notes · CX 지표와 서비스 개선의 연결"], ["AI Productivity & Organizational Change", "10월", "데이터 기반 의사결정이 조직에서 실패하는 이유", "Main Insight · 데이터 품질보다 중요한 조직조건"], ["AX Operating Model", "10월", "기술경영은 기술을 어떻게 경영의 언어로 바꾸는가", "Research Notes · 기술선택·투자·사업화 의사결정"], ["Enterprise Knowledge & Data Architecture", "10월", "데이터 시각화는 전략적 의사결정을 개선할 수 있는가", "Research Notes · 시각화와 판단편향의 관계"], ["AX Operating Model", "10월", "산업별 DX·AI 적용은 왜 서로 다른 경로를 보이는가", "Research Notes · 산업구조와 기술수용 조건"], ["AX Operating Model", "10월", "[회고] DX 협의체 운영기 — 벽을 데이터로 허물기", "Practice Notes · 협의체·요구사항·프로세스 개선"], ["Agentic AI Security", "7월", "AI 보안의 본질은 ‘차단’이 아니라 ‘신뢰의 구조’다", "Main Insight · 데이터·권한·행위·로그·책임"], ["Enterprise Knowledge & Data Architecture", "7월", "데이터를 많이 모으는 시대에서, 안전하게 연결하는 시대로", "Research Notes · 데이터 활용·보호·서비스 경쟁"], ["AI Productivity & Organizational Change", "7월", "AI는 과학연구와 혁신의 방식을 어떻게 바꾸는가", "Research Notes · AI for Science와 연구생산성"], ["AX Operating Model", "7월", "데이터는 많은데 왜 산업성과로 이어지지 않을까", "Research Notes · 기술사업화와 데이터 거버넌스"], ["AX Operating Model", "8월", "기업의 AX는 왜 PoC에서 멈추는가", "Main Insight · 데이터·프로세스·운영주체·예산 분석"], ["AX Operating Model", "8월", "AI 과제는 어떤 기준으로 선정해야 하는가", "Practice Notes · AI Use Case 평가 매트릭스"], ["AX Operating Model", "8월", "AI ROI는 비용 절감만으로 측정할 수 있는가", "Research Notes · 생산성·품질·위험감소·조직학습"], ["AX Operating Model", "8월", "Build·Buy·Compose — 기업 AI 도입의 세 가지 선택", "Main Insight · 비용·통제력·확장성·벤더 종속성"], ["AX Operating Model", "8월", "AI FinOps — 모델과 추론비용을 어떻게 관리할 것인가", "Practice Notes · 토큰·지연시간·사용량·비용 KPI"], ["Agentic AI Security", "9월", "AI Agent에게 어디까지 권한을 부여할 것인가", "Practice Notes · 행위별 권한분류와 승인체계"], ["Agentic AI Security", "9월", "사람의 계정관리에서 Agent Identity 관리로", "Research Notes · Agent 신원과 생명주기 관리"], ["Agentic AI Security", "9월", "AI Agent의 Memory Poisoning은 어떻게 발생하는가", "Research Notes · 장기기억·검색문서·세션 오염"], ["Agentic AI Security", "9월", "MCP와 Tool Calling은 새로운 공급망 위험인가", "Main Insight · 외부 도구와 신뢰경계의 확장"], ["Agentic AI Security", "9월", "AI Agent 행동 로그는 감사 증적이 될 수 있는가", "Practice Notes · 계획·도구호출·승인·수정이력"], ["Enterprise Knowledge & Data Architecture", "10월", "RAG는 검색 기술이 아니라 데이터 거버넌스 문제다", "Main Insight · 수집·분할·검색·생성의 책임구조"], ["AI Governance & Social Impact", "10월", "정보보호 R&D 투자 동향 — NTIS 데이터로 본 흐름", "Research Notes · 국가 R&D 데이터와 기업 역량 분석"], ["Enterprise Knowledge & Data Architecture", "10월", "기업 RAG는 왜 정확도보다 접근권한에서 실패하는가", "Practice Notes · 문서권한과 검색결과 통제"], ["Enterprise Knowledge & Data Architecture", "10월", "온톨로지와 GraphRAG는 언제 필요한가", "Research Notes · 유사도 검색과 관계 기반 검색 비교"], ["Enterprise Knowledge & Data Architecture", "10월", "AI 시대의 Data Lineage — 답변의 출처를 추적할 수 있는가", "Practice Notes · 원천문서·검색결과·생성답변 계보"], ["Enterprise Knowledge & Data Architecture", "10월", "사내 문서를 AI-Ready Data로 만드는 방법", "Practice Notes · 최신성·중복·메타데이터·보안등급"], ["AI Productivity & Organizational Change", "11월", "생성형 AI는 실제로 업무 생산성을 높이는가", "Research Notes · 실험연구와 생산성 측정방법"], ["AI Productivity & Organizational Change", "11월", "AI의 효과가 직무와 숙련도에 따라 다른 이유", "Research Notes · 초급자·숙련자·업무유형 비교"], ["AI Productivity & Organizational Change", "11월", "Human-in-the-loop만으로 AI 사고를 막을 수 있는가", "Main Insight · 인간 검토의 조건과 자동화 편향"], ["AI Productivity & Organizational Change", "11월", "AI Literacy는 교육이 아니라 조직 운영역량이다", "Practice Notes · 업무기준·검토책임·평가·지식공유"], ["AI Governance & Social Impact", "12월", "NIST AI RMF를 기업 운영 체크리스트로 전환하기", "Practice Notes · Govern·Map·Measure·Manage 적용"], ["AI Governance & Social Impact", "12월", "ISO/IEC 42001과 ISMS를 함께 운영할 수 있는가", "Research Notes · AI 경영시스템과 정보보호 관리체계"], ["AI Governance & Social Impact", "12월", "AI 사고 대응체계 — 모델·데이터·Agent·벤더 실패에 대응하기", "Practice Notes · AI Incident 탐지·중단·조사·복구"]];
+
+    const KEY = "htn_status_v5";
+    const DEFAULT_STATUS = D.map((_, i) => i < 52 ? "done" : "todo");
+    const NEXT = {todo:"writing", writing:"done", done:"todo"};
+    const STLABEL = {todo:"예정", writing:"작성중", done:"발행완료"};
+    const STCLS = {
+      todo:"bg-soft text-mut",
+      writing:"bg-warn text-[#3d2c00]",
+      done:"bg-[#12946a] text-white"
+    };
+
+    let ST = (() => {
+      try {
+        const saved = JSON.parse(localStorage.getItem(KEY));
+        if (Array.isArray(saved) && saved.length === D.length) return saved;
+      } catch (e) {}
+      return DEFAULT_STATUS.slice();
+    })();
+
+    let active = "전체";
+    let featOnly = false;
+
+    function pad(n) {
+      return String(n).padStart(2, "0");
+    }
+
+    function save() {
+      try { localStorage.setItem(KEY, JSON.stringify(ST)); } catch (e) {}
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function updateProgress() {
+      const done = ST.filter(s => s === "done").length;
+      const writing = ST.filter(s => s === "writing").length;
+      const todo = D.length - done - writing;
+
+      document.getElementById("pgBig").textContent = `${done} / ${D.length}`;
+      document.getElementById("pgPct").textContent = `발행 ${Math.round(done / D.length * 100)}%`;
+      document.getElementById("pgDone").style.width = `${done / D.length * 100}%`;
+      document.getElementById("pgWip").style.width = `${writing / D.length * 100}%`;
+      document.getElementById("cDone").textContent = done;
+      document.getElementById("cWip").textContent = writing;
+      document.getElementById("cTodo").textContent = todo;
+      document.getElementById("heroDone").textContent = done;
+      document.getElementById("heroBadgeDone").textContent = done;
+    }
+
+    function renderFilters() {
+      const container = document.getElementById("filters");
+      container.innerHTML = "";
+      const categoryNames = ["전체", ...Object.keys(CATS)];
+
+      categoryNames.forEach(name => {
+        const count = name === "전체" ? D.length : D.filter(item => item[0] === name).length;
+        const button = document.createElement("button");
+        const selected = name === active;
+        button.className = `rounded-pill px-4 py-2.5 text-sm font-bold transition ${selected ? "bg-ink text-white" : "bg-soft hover:bg-[rgba(255,255,255,.08)]"}`;
+        button.textContent = `${name} (${count})`;
+        button.addEventListener("click", () => {
+          active = name;
+          render();
+        });
+        container.appendChild(button);
+      });
+    }
+
+    function renderFeatured() {
+      const box = document.getElementById("featuredCards");
+      box.innerHTML = "";
+      FEAT.forEach(num => {
+        const item = D[num - 1];
+        const cat = CATS[item[0]];
+        const link = document.createElement("a");
+        link.className = "block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]";
+        link.href = `posts/post-${pad(num)}.html`;
+        link.innerHTML = `
+          <div class="flex items-center justify-between gap-3">
+            <span class="rounded-pill px-3 py-1.5 text-[12px] font-bold" style="background:${cat.bg};color:${cat.fg}">${escapeHtml(item[0])}</span>
+            <span class="text-[12px] text-mut">#${num}</span>
+          </div>
+          <div class="mb-2 mt-4 text-[18px] font-bold leading-snug">${escapeHtml(item[2])}</div>
+          <div class="text-[14px] text-mut">${escapeHtml(item[3])}</div>`;
+        box.appendChild(link);
+      });
+    }
+
+    function renderPosts() {
+      const box = document.getElementById("posts");
+      box.innerHTML = "";
+      let shown = 0;
+
+      D.forEach((item, index) => {
+        const num = index + 1;
+        const isFeatured = FEAT.has(num);
+        if (active !== "전체" && item[0] !== active) return;
+        if (featOnly && !isFeatured) return;
+
+        shown += 1;
+        const cat = CATS[item[0]];
+        const row = document.createElement("a");
+        row.className = "flex items-center gap-3 rounded-2xl border border-hair bg-soft px-4 py-4 transition hover:bg-[rgba(255,255,255,.08)] md:gap-4 md:px-5";
+        row.href = `posts/post-${pad(num)}.html`;
+
+        row.innerHTML = `
+          <span class="w-8 shrink-0 text-right text-[13px] font-medium text-hint">#${num}</span>
+          <span class="hidden shrink-0 rounded-pill px-3 py-1.5 text-[12px] font-bold lg:inline" style="background:${cat.bg};color:${cat.fg}">${escapeHtml(item[0])}</span>
+          <button class="status-button shrink-0 rounded-pill px-3 py-1.5 text-[12px] font-bold ${STCLS[ST[index]]}" data-index="${index}" style="min-width:74px">${STLABEL[ST[index]]}</button>
+          <span class="hidden w-16 shrink-0 text-[13px] text-mut md:block">${escapeHtml(item[1])}</span>
+          <span class="min-w-0 flex-1">
+            <span class="block text-[15px] font-bold">${isFeatured ? '<i class="ti ti-star mr-1 text-cobalt"></i>' : ""}${escapeHtml(item[2])}</span>
+            <span class="mt-0.5 hidden text-[13px] text-hint md:block">${escapeHtml(item[3])}</span>
+          </span>
+          <i class="ti ti-arrow-right shrink-0 text-lg text-hint"></i>`;
+        box.appendChild(row);
+      });
+
+      document.getElementById("cnt").textContent = `${shown}편 표시 중`;
+
+      box.querySelectorAll(".status-button").forEach(button => {
+        button.addEventListener("click", event => {
+          event.preventDefault();
+          event.stopPropagation();
+          const index = Number(button.dataset.index);
+          ST[index] = NEXT[ST[index]];
+          save();
+          render();
+        });
+      });
+    }
+
+    function render() {
+      renderFilters();
+      renderPosts();
+      updateProgress();
+
+      const button = document.getElementById("featBtn");
+      button.className = featOnly
+        ? "rounded-pill bg-ink px-4 py-2.5 text-sm font-bold text-white"
+        : "rounded-pill bg-soft px-4 py-2.5 text-sm font-bold hover:bg-[rgba(255,255,255,.08)]";
+    }
+
+    document.getElementById("featBtn").addEventListener("click", () => {
+      featOnly = !featOnly;
+      render();
+    });
+
+    document.getElementById("resetBtn").addEventListener("click", event => {
+      event.preventDefault();
+      ST = DEFAULT_STATUS.slice();
+      save();
+      render();
+    });
+
+    renderFeatured();
+    render();
+  </script>
+</body>
+</html>

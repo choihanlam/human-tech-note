@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>AI가 AI를 공격해 더 안전해지는 구조 · Human Tech Note</title>
+  <meta
+    name="description"
+    content="GPT-Red를 통해 자동화 레드팀, AI Agent의 실행 권한, 업무분리와 지속적 보안 검증체계를 기술·조직·거버넌스 관점에서 분석합니다."
+  />
+
+  <meta property="og:title" content="AI가 AI를 공격해 더 안전해지는 구조" />
+  <meta
+    property="og:description"
+    content="GPT-Red가 보여준 자동화 레드팀과 AI Agent 보안의 변화"
+  />
+  <meta property="og:type" content="article" />
+  <meta
+    property="og:url"
+    content="https://choihanlam.github.io/human-tech-note/posts/post-53.html"
+  />
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"
+  />
+
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      --color-ink: #ff4e1c;
+      --color-cobalt: #ff8256;
+      --color-warn: #e8b45a;
+      --color-soft: rgba(255, 255, 255, 0.05);
+      --color-hair: rgba(255, 255, 255, 0.11);
+      --color-tx: #f1f3ef;
+      --color-mut: #a6aca4;
+      --color-hint: #767b73;
+      --radius-pill: 100px;
+      --radius-feat: 32px;
+      --font-sans:
+        "Pretendard",
+        "-apple-system",
+        "BlinkMacSystemFont",
+        "Malgun Gothic",
+        sans-serif;
+    }
+  </style>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: #08090a;
+    }
+
+    a { color: inherit; }
+
+    .bgfx {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(55% 45% at 16% 20%, rgba(24, 150, 96, 0.42), transparent 66%),
+        radial-gradient(48% 52% at 84% 52%, rgba(15, 120, 84, 0.34), transparent 70%),
+        radial-gradient(42% 40% at 60% 8%, rgba(80, 180, 120, 0.20), transparent 70%),
+        radial-gradient(70% 60% at 50% 108%, rgba(10, 70, 52, 0.30), transparent 72%),
+        #07080a;
+    }
+
+    .pb h2 {
+      margin: 48px 0 16px;
+      color: #f1f3ef;
+      font-size: 29px;
+      font-weight: 650;
+      line-height: 1.38;
+      letter-spacing: -0.7px;
+    }
+
+    .pb p {
+      margin: 0 0 17px;
+      color: #d9ddd7;
+      font-size: 18px;
+      line-height: 1.76;
+      letter-spacing: -0.2px;
+    }
+
+    .pb strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .quote {
+      margin: 25px 0 29px;
+      padding: 4px 0 4px 22px;
+      border-left: 3px solid #ff8256;
+      color: #fff;
+      font-size: 21px;
+      font-weight: 650;
+      line-height: 1.62;
+      letter-spacing: -0.35px;
+    }
+
+    .figure {
+      margin: 27px 0 34px;
+    }
+
+    .figure-title {
+      margin-bottom: 11px;
+      color: #8e958c;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .figure-title strong {
+      color: #c3c8c0;
+    }
+
+    .figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 18px;
+    }
+
+    .diagram {
+      padding: 23px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 24px;
+      background: rgba(255,255,255,0.04);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.19);
+    }
+
+    .loop-flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      align-items: stretch;
+      gap: 9px;
+    }
+
+    .node {
+      position: relative;
+      display: flex;
+      min-height: 86px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 15px 10px;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 17px;
+      background: rgba(255,255,255,0.045);
+      color: #e9ece7;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .node:not(:last-child)::after {
+      position: absolute;
+      top: 50%;
+      right: -11px;
+      z-index: 2;
+      color: #ff916b;
+      content: "→";
+      font-size: 18px;
+      transform: translateY(-50%);
+    }
+
+    .node .num {
+      margin-bottom: 7px;
+      color: #ff9b78;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+    }
+
+    .loop-back {
+      margin-top: 13px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(255,255,255,0.13);
+      color: #9da39b;
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 11px;
+      margin: 25px 0 29px;
+    }
+
+    .stat {
+      padding: 19px 17px;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 19px;
+      background: rgba(255,255,255,0.045);
+    }
+
+    .stat .value {
+      display: block;
+      margin-bottom: 4px;
+      color: #fff;
+      font-size: 29px;
+      font-weight: 750;
+      letter-spacing: -0.8px;
+    }
+
+    .stat .label {
+      color: #aeb4ac;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .callout {
+      margin: 27px 0;
+      padding: 23px 25px;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 24px;
+      background: rgba(255,255,255,0.05);
+      color: #e7e9e4;
+      font-size: 16px;
+      line-height: 1.72;
+    }
+
+    .callout .l {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 9px;
+      color: #ff925f;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .table-wrap {
+      width: 100%;
+      margin: 24px 0 31px;
+      overflow-x: auto;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 21px;
+    }
+
+    .compare-table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.035);
+    }
+
+    .compare-table th,
+    .compare-table td {
+      padding: 14px 17px;
+      border-bottom: 1px solid rgba(255,255,255,0.09);
+      text-align: left;
+      vertical-align: top;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .compare-table th {
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .compare-table td {
+      color: #c8cdc6;
+    }
+
+    .compare-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .role-flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .role-card {
+      position: relative;
+      padding: 19px 13px;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.045);
+      text-align: center;
+    }
+
+    .role-card:not(:last-child)::after {
+      position: absolute;
+      top: 50%;
+      right: -12px;
+      z-index: 2;
+      color: #ff916b;
+      content: "→";
+      font-size: 19px;
+      transform: translateY(-50%);
+    }
+
+    .role-card .icon {
+      display: flex;
+      width: 34px;
+      height: 34px;
+      margin: 0 auto 10px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255,130,86,0.15);
+      color: #ff9b78;
+      font-size: 17px;
+    }
+
+    .role-card strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 15px;
+    }
+
+    .role-card span {
+      color: #9fa59d;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .three-lens {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 25px 0 30px;
+    }
+
+    .lens {
+      padding: 18px 16px;
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .lens strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #ff9b78;
+      font-size: 13px;
+    }
+
+    .lens span {
+      color: #d5d9d3;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin: 23px 0 31px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 13px;
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 100px;
+      background: rgba(255,255,255,0.045);
+      color: #d7dbd5;
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .lifecycle {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .life-item {
+      position: relative;
+      min-height: 96px;
+      padding: 16px 10px;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 17px;
+      background: rgba(255,255,255,0.045);
+      text-align: center;
+    }
+
+    .life-item:not(:last-child)::after {
+      position: absolute;
+      top: 50%;
+      right: -10px;
+      z-index: 2;
+      color: #ff916b;
+      content: "→";
+      font-size: 17px;
+      transform: translateY(-50%);
+    }
+
+    .life-item .num {
+      display: block;
+      margin-bottom: 7px;
+      color: #ff9b78;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .life-item strong {
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .questions {
+      margin: 25px 0 30px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .questions li {
+      position: relative;
+      margin-bottom: 10px;
+      padding: 15px 17px 15px 47px;
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 17px;
+      background: rgba(255,255,255,0.045);
+      color: #e6e9e4;
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    .questions li::before {
+      position: absolute;
+      top: 14px;
+      left: 16px;
+      display: flex;
+      width: 22px;
+      height: 22px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255,130,86,0.17);
+      color: #ff9a76;
+      content: "?";
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .source-note {
+      margin-top: 45px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      color: #8e958c;
+      font-size: 14px;
+      line-height: 1.72;
+    }
+
+    .source-note a {
+      color: #c3c8c0;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .skill-card {
+      margin-top: 21px;
+      padding: 22px 24px;
+      border: 1px solid rgba(255,130,86,0.20);
+      border-radius: 22px;
+      background: rgba(255,130,86,0.07);
+    }
+
+    .skill-card .label {
+      margin-bottom: 8px;
+      color: #ff9b78;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .skill-card p {
+      margin: 0;
+      color: #d8dcd6;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .post-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 38px;
+    }
+
+    .post-nav a {
+      padding: 20px 21px;
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 20px;
+      background: rgba(255,255,255,0.04);
+      text-decoration: none;
+      transition: 0.2s ease;
+    }
+
+    .post-nav a:hover {
+      background: rgba(255,255,255,0.075);
+      transform: translateY(-2px);
+    }
+
+    .post-nav .overline {
+      display: block;
+      margin-bottom: 7px;
+      color: #ff9b78;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .post-nav strong {
+      display: block;
+      color: #f1f3ef;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+
+    /* Tailwind CDN 로딩 전에도 레이아웃이 유지되도록 하는 구조용 fallback */
+    body {
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+      color: #f1f3ef;
+      letter-spacing: -0.01em;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(255,255,255,0.11);
+      background: rgba(10,12,11,0.80);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-inner {
+      display: flex;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #f1f3ef;
+      font-size: 18px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .brand-sub {
+      color: #a6aca4;
+      font-size: 13px;
+      font-weight: 400;
+    }
+
+    .nav-spacer { margin-left: auto; }
+
+    .nav-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 100px;
+      color: #f1f3ef;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .post {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 56px 24px 112px;
+    }
+
+    .note-badge,
+    .topic-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .note-badge {
+      margin-bottom: 24px;
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.05);
+      color: #a6aca4;
+    }
+
+    .topic-badge { padding: 6px 16px; }
+
+    .post-title {
+      margin: 16px 0 12px;
+      font-size: 52px;
+      font-weight: 500;
+      line-height: 1.14;
+      letter-spacing: -1.4px;
+    }
+
+    .post-subtitle {
+      margin: 0 0 20px;
+      color: #a6aca4;
+      font-size: 22px;
+      line-height: 1.65;
+    }
+
+    .post-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.11);
+      color: #a6aca4;
+      font-size: 14px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 28px;
+      color: #a6aca4;
+      font-size: 13px;
+    }
+
+    @media (max-width: 640px) {
+      .post-title { font-size: 36px; }
+      .post-subtitle { font-size: 18px; }
+      .nav-inner { padding-left: 18px; padding-right: 18px; }
+      .post { padding-left: 20px; padding-right: 20px; }
+    }
+
+    @media (max-width: 760px) {
+      .pb h2 { font-size: 25px; }
+      .pb p { font-size: 17px; }
+      .quote { font-size: 19px; }
+
+      .loop-flow,
+      .role-flow,
+      .lifecycle,
+      .stats,
+      .three-lens {
+        grid-template-columns: 1fr;
+      }
+
+      .node:not(:last-child)::after,
+      .role-card:not(:last-child)::after,
+      .life-item:not(:last-child)::after {
+        top: auto;
+        right: 50%;
+        bottom: -18px;
+        content: "↓";
+        transform: translateX(50%);
+      }
+
+      .post-nav { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body
+  class="font-sans text-tx antialiased"
+  style="letter-spacing: -0.01em"
+>
+  <div class="bgfx"></div>
+
+  <nav class="site-nav sticky top-0 z-20 border-b border-hair bg-[#0a0c0bcc] backdrop-blur">
+    <div class="nav-inner mx-auto flex max-w-[1080px] items-center gap-5 px-6 py-3.5">
+      <a class="brand flex items-center gap-2 text-lg font-bold" href="../index.html">
+        <i class="ti ti-book-2"></i>
+        Human Tech Note
+        <span class="brand-sub text-[13px] font-normal text-mut">by 최한람</span>
+      </a>
+
+      <span class="nav-spacer ml-auto"></span>
+
+      <a
+        class="nav-button inline-flex items-center gap-1.5 rounded-pill border border-[rgba(255,255,255,.22)] px-4 py-2 text-[13px] font-bold text-tx transition hover:bg-soft"
+        href="../index.html#archive"
+      >
+        <i class="ti ti-arrow-left"></i>
+        포트폴리오
+      </a>
+    </div>
+  </nav>
+
+  <article class="post mx-auto max-w-[760px] px-6 pb-28 pt-14">
+    <span
+      class="note-badge mb-6 inline-flex items-center gap-1.5 rounded-pill bg-soft px-4 py-2 text-[13px] font-bold text-mut"
+    >
+      <i class="ti ti-notebook"></i>
+      Research Notes
+    </span>
+
+    <div>
+      <span
+        class="topic-badge inline-flex items-center gap-1.5 rounded-pill px-4 py-1.5 text-[13px] font-bold"
+        style="background:#EDEBFB;color:#3E2FA6"
+      >
+        <i class="ti ti-shield-lock"></i>
+        Agentic AI Security
+      </span>
+    </div>
+
+    <h1
+      class="post-title mb-3 mt-4 text-[36px] font-medium leading-tight tracking-tight md:text-[52px]"
+    >
+      AI가 AI를 공격해 더 안전해지는 구조
+    </h1>
+
+    <p class="post-subtitle mb-5 text-[20px] leading-relaxed text-mut md:text-[22px]">
+      GPT-Red가 보여준 자동화 레드팀과 AI Agent 보안의 변화
+    </p>
+
+    <div
+      class="post-meta mb-8 flex flex-wrap gap-4 border-b border-hair pb-6 text-[14px] text-mut"
+    >
+      <span>
+        <i class="ti ti-calendar align-[-2px]"></i>
+        2026년 7월 16일 (목)
+      </span>
+
+      <span>
+        <i class="ti ti-clock align-[-2px]"></i>
+        약 5분
+      </span>
+
+      <span>#53 / 75</span>
+    </div>
+
+    <div class="pb">
+      <h2>들어가며</h2>
+
+      <p>
+        AI Agent는 이메일과 문서를 읽는 수준을 넘어 외부 시스템의 기능까지
+        실행하기 시작했다. 이에 따라 보안의 질문도 달라진다.
+      </p>
+
+      <div class="quote">
+        AI가 무엇을 알고 있는가보다, 무엇을 실행할 수 있는가?
+      </div>
+
+      <p>
+        외부 콘텐츠에 삽입된 악성 명령을 Agent가 정상 업무로 받아들이면,
+        오류는 답변에 머물지 않는다. 데이터 유출, 가격 변경, 주문 취소처럼
+        실제 업무 행위로 이어질 수 있다.
+      </p>
+
+      <h2>보안 평가가 학습 과정 안으로 들어왔다</h2>
+
+      <p>
+        OpenAI가 공개한 GPT-Red는 AI가 다른 AI를 반복적으로 공격하고,
+        발견한 실패를 방어 모델의 학습에 다시 활용하는 자동화 레드팀이다.
+      </p>
+
+      <figure class="figure">
+        <figcaption class="figure-title">
+          <strong>그림 1.</strong>
+          GPT-Red의 자동화 공격·평가·개선 반복 구조
+        </figcaption>
+
+        <div class="diagram">
+          <!-- 그림 1: GPT-Red 자동화 공격·평가·개선 반복 구조 -->
+          <img
+            src="./gpt_red_loop.png"
+            alt="GPT-Red가 공격 목표 설정, 악성 프롬프트 생성, 방어 모델 공격, 성공 여부 평가, 공격과 방어 개선, 재평가를 반복하는 구조"
+          />
+        </div>
+      </figure>
+
+      <div class="stats">
+        <div class="stat">
+          <span class="value">84%</span>
+          <span class="label">새로운 시나리오에서 GPT-Red의 공격 성공률</span>
+        </div>
+
+        <div class="stat">
+          <span class="value">13%</span>
+          <span class="label">같은 조건에서 인간 레드팀의 공격 성공률</span>
+        </div>
+
+        <div class="stat">
+          <span class="value">0.05%</span>
+          <span class="label">GPT-5.6 Sol의 직접 프롬프트 인젝션 실패율</span>
+        </div>
+      </div>
+
+      <p>
+        이 수치보다 중요한 변화는 <strong>보안 평가의 위치</strong>다.
+        취약점 점검이 개발 이후의 절차가 아니라, 공격 데이터 생성과 방어
+        학습이 반복되는 개발 과정 안으로 들어왔다.
+      </p>
+
+      <div class="callout">
+        <div class="l">
+          <i class="ti ti-shield-half"></i>
+          공격 역량의 격리
+        </div>
+
+        OpenAI는 공격 능력을 학습한 GPT-Red를 배포 모델과 분리하고,
+        공격 결과를 이용해 방어 능력만 생산 모델에 이전한다. 공격 도구는
+        통제된 환경에 두고 탐지·대응 규칙만 운영환경에 반영하는 기존 보안
+        원칙과 닮아 있다.
+      </div>
+
+      <h2>Agent의 위험은 ‘위임된 권한’에서 커진다</h2>
+
+      <p>
+        GPT-Red는 자판기 운영 Agent를 공격해 고가 상품의 가격을 낮추고,
+        신규 상품을 비정상적으로 낮은 가격에 판매하며, 다른 고객의 주문을
+        취소했다.
+      </p>
+
+      <p>
+        이 사례가 보여주는 핵심은 프롬프트 인젝션 자체보다
+        <strong>조직이 AI에 맡긴 실행 권한</strong>이다. Agent가 업무시스템과
+        연결되면 공격자는 답변이 아니라 실제 업무의 통제권을 노리게 된다.
+      </p>
+
+      <div class="table-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>통제 영역</th>
+              <th>기업이 확인해야 할 질문</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>데이터</strong></td>
+              <td>Agent는 어떤 문서와 정보를 읽을 수 있는가?</td>
+            </tr>
+            <tr>
+              <td><strong>권한</strong></td>
+              <td>조회·수정·삭제·전송 권한이 분리돼 있는가?</td>
+            </tr>
+            <tr>
+              <td><strong>도구</strong></td>
+              <td>어떤 API와 외부 시스템을 실행할 수 있는가?</td>
+            </tr>
+            <tr>
+              <td><strong>사람</strong></td>
+              <td>어떤 고위험 행위에 사람의 승인이 필요한가?</td>
+            </tr>
+            <tr>
+              <td><strong>로그</strong></td>
+              <td>최초 요청부터 실행 결과까지 추적할 수 있는가?</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>AI Agent에도 업무분리가 필요하다</h2>
+
+      <p>
+        기존 정보보호에서는 한 명의 사용자에게 신청·승인·실행·감사 권한을
+        모두 부여하지 않는다. AI Agent도 같은 원칙이 필요하다.
+      </p>
+
+      <figure class="figure">
+        <figcaption class="figure-title">
+          <strong>그림 2.</strong>
+          수집·판단·승인·실행이 한 Agent에 집중되지 않도록 분리한 구조
+        </figcaption>
+
+        <div class="diagram">
+          <!-- 그림 2: AI Agent 역할 분리 구조 -->
+          <img
+            src="./agent_role_separation.png"
+            alt="정보 수집 Agent, 분석과 추천, 사람의 검토와 승인, 실행 전용 시스템 또는 Agent로 역할을 분리한 구조"
+          />
+        </div>
+      </figure>
+
+      <div class="three-lens">
+        <div class="lens">
+          <strong>기술</strong>
+          <span>프롬프트 인젝션과 도구 오용을 차단한다.</span>
+        </div>
+
+        <div class="lens">
+          <strong>조직</strong>
+          <span>판단·승인·실행 권한을 분리한다.</span>
+        </div>
+
+        <div class="lens">
+          <strong>거버넌스</strong>
+          <span>실행 결과의 책임과 설명 주체를 정한다.</span>
+        </div>
+      </div>
+
+      <p>
+        처리속도는 조금 느려질 수 있다. 그러나 개인정보 전송, 결제, 가격
+        변경처럼 되돌리기 어려운 업무까지 하나의 Agent가 단독으로 수행하게
+        두는 것은 효율성보다 큰 위험을 만든다.
+      </p>
+
+      <h2>자동화 레드팀만으로 충분하지 않은 이유</h2>
+
+      <p>
+        자동화 레드팀은 많은 공격을 빠르게 탐색하지만, 무엇을 찾는지는
+        설정된 목표와 평가환경에 좌우된다. 모델은 공격 성공 여부를 판단할 수
+        있어도, 고객·규제·사회적 신뢰에 미칠 영향까지 스스로 결정하지는
+        못한다.
+      </p>
+
+      <div class="chips">
+        <span class="chip"><i class="ti ti-key"></i> 최소권한</span>
+        <span class="chip"><i class="ti ti-users-group"></i> 업무분리</span>
+        <span class="chip"><i class="ti ti-hand-stop"></i> 고위험 행위 승인</span>
+        <span class="chip"><i class="ti ti-api"></i> 도구·API 통제</span>
+        <span class="chip"><i class="ti ti-history-toggle"></i> 감사 추적성</span>
+        <span class="chip"><i class="ti ti-refresh-alert"></i> 변경 후 재평가</span>
+      </div>
+
+      <h2>AI Security Lifecycle로의 전환</h2>
+
+      <p>
+        Agent의 모델, 데이터, 도구와 권한은 계속 변경된다. 도입 전에 한 번
+        수행한 보안성 검토만으로는 충분하지 않다.
+      </p>
+
+      <figure class="figure">
+        <figcaption class="figure-title">
+          <strong>그림 3.</strong>
+          공격 시나리오를 지속적으로 반영하는 AI Security Lifecycle
+        </figcaption>
+
+        <div class="diagram">
+          <!-- 그림 3: AI Security Lifecycle -->
+          <img
+            src="./ai_security_lifecycle.png"
+            alt="새로운 공격 시나리오 수집, 자동화와 수동 레드팀 테스트, 취약한 업무와 권한 식별, 모델과 정책 개선, 정상업무 영향 확인, 운영 반영과 재검증으로 이어지는 AI Security Lifecycle"
+          />
+        </div>
+      </figure>
+
+      <h2>정리하며</h2>
+
+      <p>
+        GPT-Red는 AI가 AI의 취약점을 찾아 방어력을 높이는 기술적 가능성을
+        보여준다. 그러나 실제 AI Agent의 안전성은 더 강한 모델만으로
+        완성되지 않는다.
+      </p>
+
+      <ul class="questions">
+        <li>AI에게 어디까지 업무를 맡길 것인가?</li>
+        <li>그 실행을 누가 승인하고 통제할 것인가?</li>
+        <li>잘못된 결과를 누가 설명하고 책임질 것인가?</li>
+      </ul>
+
+      <p>
+        결국 AI Agent 보안은 기술적으로는 공격과 방어의 문제이고,
+        조직적으로는 권한과 업무분리의 문제이며, 거버넌스 관점에서는 승인과
+        책임의 문제다.
+      </p>
+
+      <div class="quote">
+        AI Agent의 보안 수준은 모델의 지능보다, 조직이 설계한 위임 구조에서
+        결정될 수 있다.
+      </div>
+
+      <div class="source-note">
+        <strong>참고자료</strong><br />
+        OpenAI,
+        <a
+          href="https://openai.com/index/unlocking-self-improvement-gpt-red/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GPT-Red: Unlocking Self-Improvement for Robustness
+        </a>
+        (2026.07.15)
+      </div>
+
+      <div class="skill-card">
+        <div class="label">이 글과 연결된 실무 역량</div>
+        <p>
+          AI Agent의 데이터·권한·도구·승인·로그 구조를 분석하고, 자동화
+          레드팀을 지속적 보안 검증과 운영 통제로 연결하는 Agentic AI
+          Security 설계 역량
+        </p>
+      </div>
+
+      <div class="tag-row mt-7 flex flex-wrap gap-2 text-[13px] text-mut">
+        <span>#AgenticAI</span>
+        <span>#GPT-Red</span>
+        <span>#PromptInjection</span>
+        <span>#AI보안</span>
+        <span>#RedTeaming</span>
+      </div>
+
+      <div class="post-nav">
+        <a href="post-52.html">
+          <span class="overline">이전 글</span>
+          <strong>데이터는 많은데 왜 산업성과로 이어지지 않을까</strong>
+        </a>
+
+        <a href="post-54.html">
+          <span class="overline">다음 글</span>
+          <strong>AI 과제는 어떤 기준으로 선정해야 하는가</strong>
+        </a>
+      </div>
+    </div>
+  </article>
+</body>
+</html>

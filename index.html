@@ -1,466 +1,1148 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
+
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>최한람 · Human Tech Note — AI·데이터·보안의 운영체계를 분석하다</title>
-  <meta name="description" content="Human Tech Note는 기업이 AI·데이터·보안 기술을 도입하고 운영할 때 발생하는 권한·책임·통제·성과의 문제를 실무 경험과 연구 근거로 분석하는 아카이브입니다." />
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-
-  <style type="text/tailwindcss">
-    @theme {
-      --color-ink:#ff4e1c;
-      --color-cobalt:#ff8256;
-      --color-warn:#e8b45a;
-      --color-soft:rgba(255,255,255,0.05);
-      --color-hair:rgba(255,255,255,0.11);
-      --color-tx:#f1f3ef;
-      --color-mut:#a6aca4;
-      --color-hint:#767b73;
-      --radius-pill:100px;
-      --radius-feat:32px;
-      --font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="공군의 장애사례집에서 소비데이터 분석, 서비스 운영 안정화, DX 프로세스 혁신과 AI 기반 보안운영까지 데이터를 판단과 운영 개선으로 연결해온 과정을 정리합니다." name="description"/>
+<meta content="최한람" name="author"/>
+<meta content="머신러닝, 데이터기반운영, 장애예측, AIOps, DX, 고객경험, 보안로그, AI보안, 조직역량" name="keywords"/>
+<meta content="article" property="og:type"/>
+<meta content="ko_KR" property="og:locale"/>
+<meta content="Human Tech Note" property="og:site_name"/>
+<meta content="예측은 모델에서 시작되지 않았다" property="og:title"/>
+<meta content="장애사례집에서 DX·AI 보안까지, 데이터를 운영체계로 바꾸려 했던 과정" property="og:description"/>
+<meta content="https://choihanlam.github.io/human-tech-note/posts/post-71.html" property="og:url"/>
+<title>예측은 모델에서 시작되지 않았다 · Human Tech Note</title>
+<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/>
+<link crossorigin="" href="https://cdnjs.cloudflare.com" rel="preconnect"/>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css" rel="stylesheet"/>
+<style>
+    :root {
+      --bg:#08090a;
+      --panel:rgba(255,255,255,.052);
+      --panel-strong:rgba(255,255,255,.078);
+      --line:rgba(255,255,255,.12);
+      --text:#f1f3ef;
+      --muted:#a6aca4;
+      --hint:#757b74;
+      --orange:#ff4e1c;
+      --orange-soft:#ff8256;
+      --green:#64d3a7;
+      --green-soft:#8be2bd;
+      --yellow:#e8b45a;
+      --blue:#79a9ff;
+      --cyan:#61cad8;
+      --purple:#a99bff;
+      --radius:24px;
+      --radius-lg:32px;
+      --shadow:0 24px 70px rgba(0,0,0,.24);
     }
-  </style>
 
-  <style>
-    html { scroll-behavior: smooth; }
-    body { background:#08090a; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:"Pretendard",-apple-system,BlinkMacSystemFont,"Malgun Gothic",sans-serif;
+      letter-spacing:-.012em;
+      line-height:1.78;
+      word-break:keep-all;
+    }
+
+    a { color:inherit; text-decoration:none; }
+    button { font:inherit; }
+
     .bgfx {
-      position:fixed; inset:0; z-index:-1; pointer-events:none;
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      pointer-events:none;
       background:
-        radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
-        radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
-        radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
-        radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
+        radial-gradient(55% 42% at 14% 14%,rgba(22,143,94,.33),transparent 68%),
+        radial-gradient(48% 46% at 86% 42%,rgba(20,102,78,.27),transparent 72%),
+        radial-gradient(44% 40% at 62% 8%,rgba(90,172,120,.14),transparent 70%),
+        radial-gradient(70% 60% at 50% 105%,rgba(7,61,46,.25),transparent 74%),
         #07080a;
     }
-    section, header, #about { scroll-margin-top: 86px; }
-    .topic-card { min-height: 178px; }
-    @media (max-width: 767px) {
-      .desktop-nav { display:none; }
+
+    .reading-progress {
+      position:fixed;
+      left:0;
+      top:0;
+      z-index:80;
+      width:0;
+      height:3px;
+      background:linear-gradient(90deg,var(--orange),var(--yellow));
+    }
+
+    .nav {
+      position:sticky;
+      top:0;
+      z-index:50;
+      border-bottom:1px solid var(--line);
+      background:rgba(10,12,11,.86);
+      backdrop-filter:blur(16px);
+    }
+
+    .nav-inner {
+      width:min(1120px,calc(100% - 36px));
+      min-height:64px;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      gap:18px;
+    }
+
+    .brand {
+      display:flex;
+      align-items:center;
+      gap:9px;
+      font-size:18px;
+      font-weight:800;
+      letter-spacing:-.02em;
+    }
+
+    .brand small {
+      color:var(--muted);
+      font-size:13px;
+      font-weight:500;
+    }
+
+    .nav-links {
+      margin-left:auto;
+      display:flex;
+      align-items:center;
+      gap:18px;
+    }
+
+    .nav-links a {
+      color:var(--muted);
+      font-size:14px;
+      font-weight:650;
+    }
+
+    .nav-links a:hover { color:var(--text); }
+
+    .portfolio-btn {
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      margin-left:4px;
+      padding:9px 15px;
+      border-radius:100px;
+      background:var(--orange);
+      color:white !important;
+      font-weight:800 !important;
+    }
+
+    .page {
+      width:min(900px,calc(100% - 36px));
+      margin:0 auto;
+      padding:52px 0 90px;
+    }
+
+    .hero {
+      position:relative;
+      overflow:hidden;
+      padding:46px 44px;
+      border:1px solid var(--line);
+      border-radius:var(--radius-lg);
+      background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.035));
+      box-shadow:var(--shadow);
+    }
+
+    .hero::after {
+      content:"";
+      position:absolute;
+      right:-100px;
+      top:-125px;
+      width:350px;
+      height:350px;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(100,211,167,.20),transparent 68%);
+      pointer-events:none;
+    }
+
+    .chips {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:20px;
+    }
+
+    .chip {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:7px 12px;
+      border-radius:100px;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .chip-primary {
+      background:#e7f3ec;
+      color:#1f6b3b;
+    }
+
+    .chip-secondary {
+      background:rgba(100,211,167,.12);
+      color:#7de0b7;
+      border:1px solid rgba(100,211,167,.25);
+    }
+
+    .hero h1 {
+      position:relative;
+      z-index:1;
+      margin:0;
+      max-width:760px;
+      font-size:clamp(38px,6vw,64px);
+      line-height:1.06;
+      letter-spacing:-.05em;
+      font-weight:760;
+    }
+
+    .subtitle {
+      position:relative;
+      z-index:1;
+      margin:18px 0 0;
+      max-width:780px;
+      color:#d8ddd7;
+      font-size:clamp(18px,2.7vw,25px);
+      line-height:1.48;
+      font-weight:650;
+    }
+
+    .meta {
+      position:relative;
+      z-index:1;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px 16px;
+      margin-top:26px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .meta span {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    .toc {
+      margin:24px 0 0;
+      padding:24px 26px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:var(--panel);
+    }
+
+    .toc-title {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:11px;
+      font-weight:800;
+    }
+
+    .toc-grid {
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:7px 18px;
+    }
+
+    .toc a {
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .toc a:hover { color:var(--orange-soft); }
+
+    article { margin-top:34px; }
+
+    .section {
+      scroll-margin-top:92px;
+      margin:66px 0;
+    }
+
+    .section h2 {
+      margin:0 0 22px;
+      font-size:clamp(27px,4vw,38px);
+      line-height:1.25;
+      letter-spacing:-.035em;
+    }
+
+    .section h3 {
+      margin:38px 0 13px;
+      font-size:22px;
+      line-height:1.35;
+      letter-spacing:-.025em;
+    }
+
+    .section p {
+      margin:0 0 20px;
+      color:#d9ddd8;
+      font-size:17px;
+    }
+
+    .section strong { color:white; }
+
+    .lead {
+      font-size:19px !important;
+      line-height:1.78;
+      color:#edf0ec !important;
+    }
+
+    .question-box {
+      margin:30px 0;
+      padding:30px;
+      border:1px solid rgba(255,78,28,.34);
+      border-radius:var(--radius);
+      background:linear-gradient(135deg,rgba(255,78,28,.12),rgba(255,130,86,.04));
+    }
+
+    .question-box .label {
+      display:flex;
+      align-items:center;
+      gap:7px;
+      margin-bottom:10px;
+      color:var(--orange-soft);
+      font-size:13px;
+      font-weight:850;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+
+    .question-box blockquote {
+      margin:0;
+      font-size:clamp(21px,3.3vw,29px);
+      line-height:1.48;
+      font-weight:720;
+      letter-spacing:-.025em;
+    }
+
+    .insight {
+      margin:30px 0;
+      padding:28px 30px;
+      border-left:4px solid var(--green);
+      border-radius:0 var(--radius) var(--radius) 0;
+      background:rgba(100,211,167,.08);
+    }
+
+    .insight b {
+      display:block;
+      margin-bottom:8px;
+      color:var(--green);
+      font-size:14px;
+    }
+
+    .insight p {
+      margin:0;
+      color:#e8ece8;
+      font-size:17px;
+    }
+
+    .timeline {
+      display:grid;
+      gap:14px;
+      margin:30px 0;
+    }
+
+    .timeline-card {
+      display:grid;
+      grid-template-columns:110px minmax(0,1fr);
+      gap:20px;
+      padding:24px 26px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:var(--panel);
+    }
+
+    .timeline-card:hover {
+      background:var(--panel-strong);
+      border-color:rgba(255,255,255,.2);
+    }
+
+    .timeline-year {
+      color:var(--green-soft);
+      font-size:13px;
+      font-weight:850;
+      line-height:1.5;
+    }
+
+    .timeline-content h3 {
+      margin:0 0 8px;
+      font-size:21px;
+    }
+
+    .timeline-content p {
+      margin:0;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.75;
+    }
+
+    .timeline-key {
+      display:flex;
+      flex-wrap:wrap;
+      gap:7px;
+      margin-top:13px;
+    }
+
+    .timeline-key span {
+      padding:6px 10px;
+      border:1px solid var(--line);
+      border-radius:100px;
+      color:#cbd2cb;
+      font-size:12px;
+    }
+
+    .comparison {
+      overflow:hidden;
+      margin:28px 0;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:var(--panel);
+    }
+
+    .comparison table {
+      width:100%;
+      border-collapse:collapse;
+    }
+
+    .comparison th,
+    .comparison td {
+      padding:17px 18px;
+      border-bottom:1px solid var(--line);
+      text-align:left;
+      vertical-align:top;
+    }
+
+    .comparison th {
+      color:white;
+      background:rgba(255,255,255,.04);
+      font-size:14px;
+    }
+
+    .comparison td {
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .comparison tr:last-child td { border-bottom:0; }
+    .comparison td:first-child {
+      width:24%;
+      color:#f0f2ef;
+      font-weight:760;
+    }
+
+    .data-metrics {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+      margin:28px 0;
+    }
+
+    .metric {
+      padding:22px 18px;
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:var(--panel);
+    }
+
+    .metric strong {
+      display:block;
+      margin-bottom:6px;
+      color:white;
+      font-size:24px;
+      line-height:1.2;
+    }
+
+    .metric span {
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.55;
+    }
+
+    .pattern-bars {
+      display:grid;
+      gap:13px;
+      margin:28px 0;
+      padding:24px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:var(--panel);
+    }
+
+    .bar-row {
+      display:grid;
+      grid-template-columns:120px minmax(0,1fr) 70px;
+      gap:14px;
+      align-items:center;
+    }
+
+    .bar-label {
+      color:#dfe4df;
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .bar-track {
+      height:12px;
+      overflow:hidden;
+      border-radius:100px;
+      background:rgba(255,255,255,.09);
+    }
+
+    .bar-fill {
+      height:100%;
+      border-radius:100px;
+      background:linear-gradient(90deg,var(--green),var(--cyan));
+    }
+
+    .bar-value {
+      color:var(--muted);
+      font-size:13px;
+      text-align:right;
+    }
+
+    .flow {
+      display:grid;
+      grid-template-columns:repeat(6,minmax(0,1fr));
+      gap:10px;
+      margin:30px 0 10px;
+    }
+
+    .flow-step {
+      position:relative;
+      min-height:132px;
+      padding:18px 13px;
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:var(--panel);
+      text-align:center;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content:"→";
+      position:absolute;
+      right:-18px;
+      top:44%;
+      z-index:2;
+      color:var(--hint);
+      font-size:18px;
+    }
+
+    .flow-step i {
+      display:block;
+      margin-bottom:9px;
+      color:var(--green);
+      font-size:27px;
+    }
+
+    .flow-step b {
+      display:block;
+      margin-bottom:5px;
+      font-size:14px;
+    }
+
+    .flow-step span {
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .stage-grid {
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+      margin:28px 0;
+    }
+
+    .stage-card {
+      padding:25px 26px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:var(--panel);
+    }
+
+    .stage-card .stage-no {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:42px;
+      height:42px;
+      margin-bottom:14px;
+      border-radius:14px;
+      background:rgba(100,211,167,.12);
+      color:var(--green-soft);
+      font-size:13px;
+      font-weight:900;
+    }
+
+    .stage-card h3 {
+      margin:0 0 9px;
+      font-size:20px;
+    }
+
+    .stage-card p {
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.75;
+    }
+
+    .boundary-box {
+      margin:30px 0;
+      padding:26px 28px;
+      border:1px solid rgba(232,180,90,.34);
+      border-radius:var(--radius);
+      background:rgba(232,180,90,.07);
+    }
+
+    .boundary-box h3 {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin:0 0 12px;
+      color:var(--yellow);
+      font-size:18px;
+    }
+
+    .boundary-box ul {
+      margin:0;
+      padding-left:20px;
+      color:#dce1dc;
+    }
+
+    .boundary-box li {
+      margin:8px 0;
+      font-size:15px;
+      line-height:1.65;
+    }
+
+    .resume-box {
+      margin:28px 0;
+      padding:27px 29px;
+      border:1px solid rgba(121,169,255,.30);
+      border-radius:var(--radius);
+      background:rgba(121,169,255,.07);
+    }
+
+    .resume-box .label {
+      display:flex;
+      align-items:center;
+      gap:7px;
+      margin-bottom:12px;
+      color:#a9c5ff;
+      font-size:13px;
+      font-weight:850;
+    }
+
+    .resume-box p {
+      margin:0;
+      color:#e7ebf5;
+      font-size:17px;
+      font-weight:650;
+      line-height:1.72;
+    }
+
+    .checklist {
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px;
+      margin:28px 0;
+      padding:0;
+      list-style:none;
+    }
+
+    .checklist li {
+      display:flex;
+      gap:10px;
+      padding:17px 18px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:var(--panel);
+      color:#dce1dc;
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .checklist i {
+      flex:0 0 auto;
+      margin-top:2px;
+      color:var(--green);
+      font-size:19px;
+    }
+
+    .references {
+      margin-top:70px;
+      padding:28px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:var(--panel);
+    }
+
+    .references h2 {
+      margin:0 0 16px;
+      font-size:23px;
+    }
+
+    .references ol {
+      margin:0;
+      padding-left:21px;
+    }
+
+    .references li {
+      margin:10px 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.65;
+    }
+
+    .references a {
+      color:#cfd8ff;
+      text-decoration:underline;
+      text-underline-offset:3px;
+    }
+
+    .tags {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:28px;
+    }
+
+    .tag {
+      padding:7px 11px;
+      border:1px solid var(--line);
+      border-radius:100px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .post-nav {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:13px;
+      margin-top:48px;
+    }
+
+    .post-nav a {
+      min-height:102px;
+      padding:20px 22px;
+      border:1px solid var(--line);
+      border-radius:22px;
+      background:var(--panel);
+      transition:background .2s ease,border-color .2s ease;
+    }
+
+    .post-nav a:hover {
+      background:var(--panel-strong);
+      border-color:rgba(255,255,255,.2);
+    }
+
+    .post-nav .next { text-align:right; }
+
+    .post-nav span {
+      display:block;
+      color:var(--hint);
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .post-nav b {
+      display:block;
+      margin-top:7px;
+      color:#e9ece9;
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    footer {
+      width:min(900px,calc(100% - 36px));
+      margin:0 auto;
+      padding:0 0 50px;
+      color:var(--hint);
+      font-size:13px;
+      text-align:center;
+    }
+
+    @media (max-width:820px) {
+      .nav-links a:not(.portfolio-btn) { display:none; }
+      .hero { padding:34px 26px; }
+      .toc-grid { grid-template-columns:1fr; }
+      .data-metrics { grid-template-columns:1fr; }
+      .flow { grid-template-columns:1fr; }
+      .flow-step { min-height:auto; text-align:left; }
+      .flow-step i {
+        display:inline-block;
+        margin:0 8px 0 0;
+        vertical-align:middle;
+      }
+      .flow-step b { display:inline; }
+      .flow-step span { margin:6px 0 0 36px; }
+      .flow-step:not(:last-child)::after {
+        content:"↓";
+        right:50%;
+        top:auto;
+        bottom:-21px;
+      }
+    }
+
+    @media (max-width:600px) {
+      body { word-break:normal; }
+      .page {
+        width:min(100% - 24px,900px);
+        padding-top:24px;
+      }
+      .nav-inner { width:calc(100% - 24px); }
+      .brand small { display:none; }
+      .hero {
+        padding:30px 22px;
+        border-radius:24px;
+      }
+      .hero h1 { font-size:40px; }
+      .subtitle { font-size:19px; }
+      .section { margin:50px 0; }
+      .section p { font-size:16px; }
+      .question-box { padding:23px; }
+      .timeline-card { grid-template-columns:1fr; padding:22px; }
+      .timeline-year { font-size:12px; }
+      .comparison { overflow-x:auto; }
+      .comparison table { min-width:680px; }
+      .stage-grid,.checklist,.post-nav { grid-template-columns:1fr; }
+      .bar-row { grid-template-columns:92px minmax(0,1fr) 58px; gap:9px; }
+      .post-nav .next { text-align:left; }
+      .references { padding:22px; }
     }
   </style>
+<script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BlogPosting",
+    "headline":"예측은 모델에서 시작되지 않았다",
+    "alternativeHeadline":"장애사례집에서 DX·AI 보안까지, 데이터를 운영체계로 바꾸려 했던 과정",
+    "datePublished":"2026-07-21",
+    "dateModified":"2026-07-21",
+    "author":{"@type":"Person","name":"최한람"},
+    "publisher":{"@type":"Organization","name":"Human Tech Note"},
+    "mainEntityOfPage":"https://choihanlam.github.io/human-tech-note/posts/post-71.html",
+    "keywords":["머신러닝","데이터 기반 운영","장애예측","AIOps","DX","보안로그","조직역량"]
+  }
+  </script>
 </head>
-
-<body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em">
-  <div class="bgfx"></div>
-
-  <nav class="sticky top-0 z-30 border-b border-hair bg-[#0a0c0bcc] backdrop-blur">
-    <div class="mx-auto flex max-w-[1120px] items-center gap-5 px-6 py-3.5">
-      <a class="flex items-center gap-2 text-lg font-bold" href="#home">
-        <i class="ti ti-book-2"></i>
+<body>
+<div aria-hidden="true" class="bgfx"></div>
+<div aria-hidden="true" class="reading-progress" id="readingProgress"></div>
+<nav aria-label="주요 메뉴" class="nav">
+<div class="nav-inner">
+<a class="brand" href="../index.html">
+<i class="ti ti-book-2"></i>
         Human Tech Note
-        <span class="text-[13px] font-normal text-mut">by 최한람</span>
-      </a>
+        <small>by 최한람</small>
+</a>
+<div class="nav-links">
+<a href="../index.html#main-insight">Main Insight</a>
+<a href="../index.html#practice-notes">Practice Notes</a>
+<a href="../index.html#research-notes">Research Notes</a>
+<a class="portfolio-btn" href="../index.html#about"><i class="ti ti-user"></i> 포트폴리오</a>
+</div>
+</div>
+</nav>
+<main class="page">
+<header class="hero">
+<div class="chips">
+<span class="chip chip-primary"><i class="ti ti-users-group"></i> AI Productivity &amp; Organizational Change</span>
+<span class="chip chip-secondary"><i class="ti ti-route"></i> Practice Notes · Career Insight</span>
+</div>
+<h1>예측은 모델에서 시작되지 않았다</h1>
+<p class="subtitle">장애사례집에서 DX·AI 보안까지, 데이터를 운영체계로 바꾸려 했던 과정</p>
+<div class="meta">
+<span><i class="ti ti-calendar"></i> 2026년 7월 21일 (화)</span>
+<span><i class="ti ti-clock"></i> 약 10분</span>
+<span><i class="ti ti-file-text"></i> #71 / 75</span>
+</div>
+</header>
+<aside aria-label="목차" class="toc">
+<div class="toc-title"><i class="ti ti-list"></i> 이 글의 구조</div>
+<div class="toc-grid"><a href="#intro">1. 예측을 고민한 출발점</a><a href="#airforce">2. 장애사례집은 데이터셋의 원형이었다</a><a href="#multicampus">3. 로그에서 소비데이터로</a><a href="#kt">4. 예측보다 관측 가능성이 먼저였다</a><a href="#dx-security">5. 업무·고객·보안 데이터로 확장</a><a href="#framework">6. 데이터를 운영 개선으로 연결하는 공통 프로세스</a><a href="#conclusion">7. 모델 이전에 조직이 준비할 것</a></div>
+</aside>
+<article>
+<section class="section" id="intro">
+<h2>예측을 고민한 출발점</h2>
+<p class="lead">2012년 무렵 공군에서 방공 C4I 시스템을 운영하면서 한 가지 질문을 자주 떠올렸다. 반복되는 장애를 사람의 기억과 경험에만 의존하지 않고, 과거의 장애사례와 로그를 이용해 미리 식별할 수는 없을까?</p>
+<p>당시 머신러닝의 개념과 활용사례를 조사하고, 이를 시스템 장애 분석에 적용하는 방향도 제안했다. 그러나 군의 폐쇄망 환경에서는 외부 오픈소스와 분석도구를 자유롭게 반입하기 어려웠다. 장애사례도 모델이 학습할 수 있을 정도로 동일한 형식과 기준으로 축적돼 있지 않았다.</p>
+<p>돌이켜보면 모델을 구현하지 못한 것이 아쉽기도 하다. 하지만 지금 다시 생각해보면 당시 먼저 필요했던 것은 알고리즘이 아니라 <strong>장애를 데이터로 바꾸는 구조</strong>였다.</p>
+<div class="question-box">
+<div class="label"><i class="ti ti-message-question"></i> 이 글의 중심 질문</div>
+<blockquote>예측은 머신러닝 모델을 만드는 순간 시작되는가, 아니면 현상과 원인, 로그와 조치를 일관된 방식으로 기록하는 순간 이미 시작되는가?</blockquote>
+</div>
+</section>
+<section class="section" id="airforce">
+<h2>장애사례집은 데이터셋의 원형이었다</h2>
+<p>공군에서 수행한 작업은 단순히 로그를 잘 읽는 일이 아니었다. 장애가 발생하면 현상, 원인, 기술 분석, 조치 내용과 추후 개선사항을 하나의 사례로 정리했다. 유사한 문제가 다시 발생했을 때 담당자의 기억에만 의존하지 않고, 이전 사례를 비교해 더 빠르게 판단할 수 있도록 장애사례집과 대응 프로세스를 만들었다.</p>
+<div aria-label="장애사례집과 데이터 분석 개념 비교" class="comparison" role="region">
+<table>
+<thead>
+<tr>
+<th>당시 정리 항목</th>
+<th>현재의 데이터·머신러닝 관점</th>
+<th>운영상 의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>장애 현상</td>
+<td>관측값·이벤트·증상</td>
+<td>정상과 이상을 구분하는 출발점</td>
+</tr>
+<tr>
+<td>기술 로그</td>
+<td>Feature·Event Sequence</td>
+<td>장애 전후의 징후와 패턴 식별</td>
+</tr>
+<tr>
+<td>장애 원인</td>
+<td>Label·Root Cause</td>
+<td>분류와 원인분석의 기준</td>
+</tr>
+<tr>
+<td>조치 내용</td>
+<td>Response Action</td>
+<td>동일 상황의 대응 플레이북</td>
+</tr>
+<tr>
+<td>추후 개선</td>
+<td>Feedback·Control Improvement</td>
+<td>재발방지와 운영기준 개선</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>당시에는 이를 데이터 라벨링이나 지식베이스라고 부르지 않았다. 하지만 모델이 학습하려면 무엇이 정상이고 무엇이 장애인지, 어떤 로그가 어떤 원인과 연결되는지, 어떤 조치가 효과적이었는지에 대한 기준이 먼저 필요하다.</p>
+<div class="insight">
+<b>지금의 해석</b>
+<p>나는 머신러닝 모델을 구현하지는 못했다. 그러나 모델이 학습할 수 있도록 <strong>장애 현상과 로그, 원인과 조치를 구조화하는 작업</strong>은 이미 하고 있었다.</p>
+</div>
 
-      <div class="desktop-nav ml-auto flex items-center gap-5">
-        <a class="text-[14px] font-medium text-mut hover:text-tx" href="#main-insight">Main Insight</a>
-        <a class="text-[14px] font-medium text-mut hover:text-tx" href="#practice-notes">Practice Notes</a>
-        <a class="text-[14px] font-medium text-mut hover:text-tx" href="#research-notes">Research Notes</a>
-        <a class="text-[14px] font-medium text-mut hover:text-tx" href="#topics">Topics</a>
-        <a class="text-[14px] font-medium text-mut hover:text-tx" href="#about">About</a>
-      </div>
+</section>
+<section class="section" id="multicampus">
+<h2>로그에서 소비데이터로 분석의 범위가 넓어졌다</h2>
+<p>이후 삼성SDS 멀티캠퍼스 과정에서는 시스템 로그가 아니라 사람의 소비행동을 데이터로 분석했다. 프로젝트 주제는 <strong>「20대 소비패턴 분석을 통한 여가 생활 개선」</strong>이었다.</p>
+<div class="data-metrics">
+<div class="metric">
+<strong>27,780,353건</strong>
+<span>신한카드 민간 소비데이터<br/>12개 변수</span>
+</div>
+<div class="metric">
+<strong>20,961,826건</strong>
+<span>통합 상권데이터<br/>39개 변수</span>
+</div>
+<div class="metric">
+<strong>379,113건</strong>
+<span>분석 목적에 맞게 추출한<br/>상권 관측치</span>
+</div>
+</div>
+<p>신한카드 소비데이터에 통계청과 공공데이터포털의 소비자물가, 근로형태별 임금·인원, 상권과 인구 데이터를 결합했다. 결측값을 보완하고 연령별 평균소득 파생변수를 생성한 뒤, 지역·연령·성별·업종별 소비패턴을 시각화하고 피어슨 상관분석을 수행했다.</p>
+<h3>분석에서 확인한 20대 소비의 특징</h3>
+<div aria-label="20대 소비패턴 주요 결과" class="pattern-bars">
+<div class="bar-row">
+<div class="bar-label">저가 소비</div>
+<div class="bar-track"><div class="bar-fill" style="width:41%"></div></div>
+<div class="bar-value">41%</div>
+</div>
+<div class="bar-row">
+<div class="bar-label">중저가 소비</div>
+<div class="bar-track"><div class="bar-fill" style="width:46%"></div></div>
+<div class="bar-value">46%</div>
+</div>
+<div class="bar-row">
+<div class="bar-label">상권 수 상관</div>
+<div class="bar-track"><div class="bar-fill" style="width:75.7%"></div></div>
+<div class="bar-value">r≈0.757</div>
+</div>
+<div class="bar-row">
+<div class="bar-label">인구 상관</div>
+<div class="bar-track"><div class="bar-fill" style="width:87.1%"></div></div>
+<div class="bar-value">r≈0.871</div>
+</div>
+</div>
+<p>20대의 1회 평균 지출액은 27,706원으로 다른 연령대보다 낮았고, 저가·중저가 소비의 비중이 높았다. 20대의 지출비용은 물가지수와 평균소득보다는 상권 수와 인구와 더 높은 상관을 보였다.</p>
+<p>상관관계가 곧 인과관계를 의미하는 것은 아니다. 그럼에도 이 경험을 통해 데이터를 많이 확보하는 것만큼, <strong>어떤 변수를 만들고 무엇과 비교하며 어떤 질문에 답할 것인지</strong>가 중요하다는 것을 배웠다.</p>
+<div class="insight">
+<b>분석 대상은 달라도 문제해결 방식은 같았다</b>
+<p>공군에서는 장애 로그에서 패턴을 찾았고, 멀티캠퍼스에서는 소비데이터에서 연령·지역·업종별 차이를 찾았다. 두 경험 모두 흩어진 관측값을 구조화해 판단 가능한 정보로 바꾸는 과정이었다.</p>
+</div>
+</section>
+<section class="section" id="kt"><h2>KT 지니뮤직: 예측보다 관측 가능성이 먼저였다</h2><p>KT 지니뮤직에 처음 입사했을 때에도 장애사례와 운영데이터를 축적하면 향후 장애를 예측하고 서비스 안정화에 활용할 수 있다고 생각했다. 장애가 발생한 뒤 원인을 찾는 방식에서 벗어나, 서비스 상태의 변화를 조기에 발견하고 대응하는 운영체계를 만들고 싶었다.</p><p>그러나 실제 현장에서 먼저 해결해야 할 과제는 머신러닝 모델이 아니었다. 서비스 이용자와 트래픽이 증가하면서 안정적인 수용 능력, 운영 기준, 모니터링 체계와 장애 대응 프로세스를 함께 정비해야 했다.</p><div class="stage-grid"><div class="stage-card"><div class="stage-no">01</div><h3>서비스 수용 능력</h3><p>이용자와 트래픽 증가에 대응할 수 있도록 시스템의 확장성과 안정성을 점검하는 일이 우선이었다.</p></div><div class="stage-card"><div class="stage-no">02</div><h3>운영기준 정비</h3><p>장애 대응이 개인의 경험에만 의존하지 않도록 역할, 절차와 기록 기준을 정리해야 했다.</p></div><div class="stage-card"><div class="stage-no">03</div><h3>관측 가능성 강화</h3><p>서비스 상태와 이상징후를 일관된 기준으로 확인할 수 있도록 모니터링과 운영데이터 축적 기반을 강화했다.</p></div><div class="stage-card"><div class="stage-no">04</div><h3>운영 협업체계</h3><p>개발·인프라·운영조직과 외부 파트너가 동일한 기준으로 대응할 수 있도록 협업과 운영체계를 정비했다.</p></div></div><p>실제 업무에서는 인프라와 운영의 안정성을 높이고, 모니터링 기준과 장애 대응체계를 정비하며, 사례와 운영정보가 지속적으로 축적될 수 있는 기반을 만드는 데 집중했다.</p><div class="question-box"><div class="label"><i class="ti ti-binoculars"></i> 운영에서 배운 순서</div><blockquote>장애를 예측하기 전에 먼저 장애를 관측할 수 있어야 했다. 데이터가 쌓이기 전에 모델을 만드는 것보다, 안정적인 운영환경과 일관된 기록 기준을 만드는 일이 우선이었다.</blockquote></div><p>머신러닝을 적용하지 못했다고 해서 예측 운영의 방향이 사라진 것은 아니었다. 운영 기반을 정비하고 모니터링 데이터를 축적하는 과정 자체가 이후의 분석과 자동화를 위한 선행조건이었다.</p></section>
+<section class="section" id="dx-security">
+<h2>예측의 대상은 업무·고객·보안으로 확장됐다</h2>
+<div class="timeline">
+<section class="timeline-card">
+<div class="timeline-year">DX Center</div>
+<div class="timeline-content">
+<h3>업무 프로세스를 데이터로 바꾸다</h3>
+<p>전사 주요 업무 프로세스를 유형별로 분류하고, 반복·수작업 업무와 개선 가능성이 높은 영역을 찾아 자동화와 업무혁신 과제로 연결했다. 경험과 의견으로 존재하던 업무를 비교 가능한 데이터로 바꾸고 우선순위를 정하는 작업이었다.</p>
+<div class="timeline-key">
+<span>프로세스 분류</span>
+<span>자동화 후보</span>
+<span>개선 우선순위</span>
+<span>부서 간 협의</span>
+</div>
+</div>
+</section>
+<section class="timeline-card">
+<div class="timeline-year">CX 분석</div>
+<div class="timeline-content">
+<h3>VOC와 고객경험을 서비스 판단으로 연결하다</h3>
+<p>고객의 VOC와 서비스 이용 맥락처럼 정성적인 정보를 구조화하고, 고객경험 기반의 서비스 분석방식을 수립하려 했다. 완성된 예측모델이라기보다 고객의 행동과 불편을 데이터로 해석해 다음 개선과제를 판단하는 기반이었다.</p>
+<div class="timeline-key">
+<span>VOC 구조화</span>
+<span>CX 지표</span>
+<span>서비스 분석</span>
+<span>의사결정 지원</span>
+</div>
+</div>
+</section>
+<section class="timeline-card">
+<div class="timeline-year">정보보호팀</div>
+<div class="timeline-content">
+<h3>보안 이벤트를 탐지·차단·재발방지로 연결하다</h3>
+<p>엔드포인트·네트워크·접근통제·정보유출방지 등 다양한 보안솔루션에서 생성되는 로그와 이벤트를 통합적으로 확인하고 분석했다. 보안제품 검토 과정에서는 휴리스틱·행위기반·머신러닝 탐지기술을 살펴보고, Hash·IOC·Sandbox 분석 결과를 악성코드 탐지·차단과 재발방지 조치에 활용했다.</p>
+<div class="timeline-key"><span>보안 이벤트</span><span>이상징후</span><span>Hash·IOC</span><span>Sandbox</span><span>행위기반 탐지</span></div>
+</div>
+</section>
+</div>
+<p>공군에서는 사람이 장애 로그와 사례를 직접 비교했다면, 정보보호 업무에서는 보안시스템이 제공하는 행위·평판·Hash·IOC와 머신러닝 분석 결과를 실무자가 해석해 대응하는 구조를 경험했다.</p>
+<p>기술은 달라졌지만 질문은 같았다.</p>
+<div class="insight">
+<b>반복된 질문</b>
+<p>무엇을 관측해야 하는가? 어떤 패턴을 이상으로 볼 것인가? 결과를 누가 해석하고 어떤 조치로 연결할 것인가? 그리고 그 결과를 다음 판단에 어떻게 다시 반영할 것인가?</p>
+</div>
+</section>
+<section class="section" id="framework">
+<h2>데이터를 운영 개선으로 연결하는 공통 프로세스</h2>
+<p>돌이켜보면 어느 부서에서든 머신러닝을 직접 구현하려고 했다기보다, 데이터를 이용해 더 나은 판단과 운영을 가능하게 만들려 했다. 이를 하나의 과정으로 정리하면 다음과 같다.</p>
+<div aria-label="데이터 기반 예측 운영 프로세스" class="flow">
+<div class="flow-step">
+<i class="ti ti-eye"></i>
+<b>Observe</b>
+<span>장애·고객·업무·보안 현상을 관측</span>
+</div>
+<div class="flow-step">
+<i class="ti ti-category"></i>
+<b>Structure</b>
+<span>사례와 로그를 동일 기준으로 구조화</span>
+</div>
+<div class="flow-step">
+<i class="ti ti-tags"></i>
+<b>Classify</b>
+<span>유형·원인·영향도와 대응결과 분류</span>
+</div>
+<div class="flow-step">
+<i class="ti ti-chart-dots-3"></i>
+<b>Analyze</b>
+<span>패턴·상관관계·이상징후 분석</span>
+</div>
+<div class="flow-step">
+<i class="ti ti-route-2"></i>
+<b>Decide</b>
+<span>우선순위와 실행조치 결정</span>
+</div>
+<div class="flow-step">
+<i class="ti ti-refresh"></i>
+<b>Feedback</b>
+<span>결과를 기록하고 기준과 통제 개선</span>
+</div>
+</div>
+<p>이 과정은 머신러닝 프로젝트의 데이터 파이프라인과도 닮아 있지만, 반드시 머신러닝이 있어야만 작동하는 구조는 아니다. 규칙 기반 분석, 통계, 시각화, 전문가 판단과 운영 프로세스만으로도 충분히 시작할 수 있다.</p>
+<div class="resume-box">
+<div class="label"><i class="ti ti-route-2"></i> 경험을 관통한 공통 흐름</div>
+<p>장애 로그, 소비데이터, 서비스 운영, 업무 프로세스, 고객 VOC와 보안 이벤트처럼 분석 대상은 달라졌지만, 데이터를 구조화해 패턴을 찾고 판단과 운영 개선으로 연결하는 흐름은 반복됐다.</p>
+</div>
+</section>
 
-      <a class="ml-auto inline-flex items-center gap-1.5 rounded-pill bg-ink px-4 py-2 text-[13px] font-bold text-white transition hover:bg-[#e0400f] md:ml-0" href="#archive">
-        <i class="ti ti-archive"></i>
-        Archive
-      </a>
-    </div>
-  </nav>
+<section class="section" id="conclusion">
+<h2>모델 이전에 조직이 준비해야 할 것</h2>
+<p>오늘날 AIOps, 예측정비, 보안관제 자동화와 생성형 AI가 빠르게 확산되고 있다. 그러나 데이터가 충분하지 않거나, 로그의 의미가 정의되지 않았거나, 원인과 조치가 연결되지 않은 조직에서는 정교한 모델도 운영성과로 이어지기 어렵다.</p>
+<p>예측을 위해 필요한 것은 알고리즘만이 아니다.</p>
+<ul class="checklist">
+<li><i class="ti ti-circle-check"></i><span>동일한 기준으로 수집되는 관측 데이터가 있는가?</span></li>
+<li><i class="ti ti-circle-check"></i><span>정상·이상·원인·영향도에 대한 분류 기준이 있는가?</span></li>
+<li><i class="ti ti-circle-check"></i><span>분석 결과를 실제 대응과 의사결정으로 연결하는 주체가 있는가?</span></li>
+<li><i class="ti ti-circle-check"></i><span>조치 결과를 다시 데이터와 운영기준에 반영하는가?</span></li>
+<li><i class="ti ti-circle-check"></i><span>모델의 정확도뿐 아니라 오탐·미탐과 운영비용을 함께 관리하는가?</span></li>
+<li><i class="ti ti-circle-check"></i><span>담당자의 경험이 개인의 기억이 아니라 조직의 지식으로 남는가?</span></li>
+</ul>
+<div class="insight">
+<b>Human Tech Note의 관점</b>
+<p>예측은 모델을 학습시키는 순간이 아니라, 현상을 관측하고 사례를 구조화하며 결과를 다시 운영에 반영하는 순간부터 시작된다. AI는 이 과정을 가속할 수 있지만, 그 기반을 대신 만들어주지는 않는다.</p>
+</div>
+<p>장애사례집, 소비데이터 분석, 모니터링과 운영체계, 프로세스·VOC 구조화와 보안 이벤트 분석은 모두 데이터를 판단과 행동으로 바꾸기 위한 기반이었다.</p>
+<p>모델은 나중에 도입할 수 있다. 그러나 조직이 무엇을 관측하고 어떻게 기록하며, 누가 판단하고 결과를 어떻게 다시 학습할지 준비하지 않았다면 예측은 운영성과로 이어지기 어렵다.</p>
+</section>
+<section aria-labelledby="references-title" class="references">
+<h2 id="references-title">참고 자료</h2>
+<ol>
+<li>팀 프로젝트 발표자료, 「20대 소비패턴 분석을 통한 여가 생활 개선」, 삼성SDS 멀티캠퍼스 과정.</li>
+<li>Wei Xu et al., <a href="https://doi.org/10.1145/1629575.1629587" rel="noopener noreferrer" target="_blank">Detecting Large-Scale System Problems by Mining Console Logs</a>, SOSP 2009.</li>
+<li>Min Du et al., <a href="https://doi.org/10.1145/3133956.3134015" rel="noopener noreferrer" target="_blank">DeepLog: Anomaly Detection and Diagnosis from System Logs through Deep Learning</a>, ACM CCS 2017.</li>
+<li>Google, <a href="https://sre.google/sre-book/monitoring-distributed-systems/" rel="noopener noreferrer" target="_blank">Monitoring Distributed Systems</a>, Site Reliability Engineering.</li>
+</ol>
+</section>
+<div aria-label="태그" class="tags">
+<span class="tag">#머신러닝</span>
+<span class="tag">#데이터기반운영</span>
+<span class="tag">#장애예측</span>
+<span class="tag">#AIOps</span>
+<span class="tag">#DX</span>
+<span class="tag">#고객경험</span>
+<span class="tag">#보안로그</span>
+<span class="tag">#AI보안</span>
+<span class="tag">#조직역량</span>
+</div>
+<nav aria-label="이전 및 다음 글" class="post-nav">
+<a href="../index.html#archive">
+<span><i class="ti ti-arrow-left"></i> 이전 주제 · #70</span>
+<b>GraphRAG의 연결성은 새로운 개인정보 추론 위험을 만드는가</b>
+</a>
+<a class="next" href="../index.html#archive">
+<span>다음 주제 · #72 <i class="ti ti-arrow-right"></i></span>
+<b>AI 사업의 ROI는 사용량이 증가할수록 좋아지는가</b>
+</a>
+</nav>
+</article>
+</main>
+<footer>
+<p>Human Tech Note는 AI·데이터·보안·조직의 문제를 실무와 연구의 관점에서 분석합니다.</p>
+<p>© 2026 최한람 · Human Tech Note</p>
+</footer>
+<script>
+    (function () {
+      const progress = document.getElementById("readingProgress");
 
-  <main class="mx-auto max-w-[1120px] px-6 pb-28">
-    <header id="home" class="my-12 rounded-feat bg-soft p-8 text-center md:p-14 md:text-left">
-      <span class="mb-4 inline-block rounded-pill bg-warn px-4 py-1.5 text-[13px] font-bold text-[#3d2c00]">
-        2026 연재 아카이브 · <span id="heroBadgeDone">53</span> / 75편
-      </span>
+      function updateProgress() {
+        const doc = document.documentElement;
+        const scrollTop = window.scrollY || doc.scrollTop;
+        const scrollable = doc.scrollHeight - window.innerHeight;
+        const ratio = scrollable > 0
+          ? Math.min(1, Math.max(0, scrollTop / scrollable))
+          : 0;
 
-      <h1 class="mb-3 text-[42px] font-medium leading-none tracking-tight md:text-[62px]">
-        AI·데이터·보안의 운영체계를 분석하다
-      </h1>
+        progress.style.width = `${ratio * 100}%`;
+      }
 
-      <p class="mb-4 text-[19px] font-medium md:text-2xl">
-        기술의 가능성보다 권한·책임·통제·성과가 작동하는 조건을 봅니다.
-      </p>
-
-      <p class="mx-auto mb-7 max-w-[64ch] text-[17px] leading-relaxed text-mut md:mx-0 md:text-lg">
-        Human Tech Note는 기업이 새로운 기술을 도입하고 운영하는 과정에서 기존 통제·조직·의사결정 체계가
-        어디에서 깨지는지를 분석합니다. AI Agent, 기업 지식, 보안 거버넌스, AX 투자,
-        AI 생산성, 조직 변화, 거버넌스와 사회적 영향을 논문·표준·산업자료와 현장 경험으로 연결합니다.
-      </p>
-
-      <div class="flex flex-wrap justify-center gap-3 md:justify-start">
-        <a class="rounded-pill bg-ink px-6 py-3 text-sm font-bold text-white transition hover:bg-[#e0400f]" href="#main-insight">핵심 분석 보기</a>
-        <a class="rounded-pill border border-[rgba(255,255,255,.22)] px-6 py-3 text-sm font-bold text-tx transition hover:bg-[rgba(255,255,255,.07)]" href="#archive">75편 아카이브</a>
-      </div>
-    </header>
-
-    <div class="mb-16 grid grid-cols-2 gap-4 md:grid-cols-4">
-      <div class="rounded-2xl bg-soft p-6"><div class="text-sm font-medium text-mut">실무 경력</div><div class="mt-1 text-4xl font-medium tracking-tight">9<span class="text-base font-normal text-mut">년 4개월</span></div></div>
-      <div class="rounded-2xl bg-soft p-6"><div class="text-sm font-medium text-mut">발행 글</div><div class="mt-1 text-4xl font-medium tracking-tight"><span id="heroDone">53</span><span class="text-base font-normal text-mut">편</span></div></div>
-      <div class="rounded-2xl bg-soft p-6"><div class="text-sm font-medium text-mut">핵심 주제군</div><div class="mt-1 text-4xl font-medium tracking-tight">5<span class="text-base font-normal text-mut">개</span></div></div>
-      <div class="rounded-2xl bg-soft p-6"><div class="text-sm font-medium text-mut">대표 콘텐츠</div><div class="mt-1 text-4xl font-medium tracking-tight">8<span class="text-base font-normal text-mut">편</span></div></div>
-    </div>
-
-    <section id="main-insight" class="my-16">
-      <h2 class="mb-1.5 text-[28px] font-medium tracking-tight md:text-4xl">Main Insight <span class="text-base font-normal text-hint">통제 공백과 운영 쟁점</span></h2>
-      <p class="mb-7 text-mut">이미 알려진 개념보다 기업 적용 과정에서 드러나는 통제 공백, 책임 충돌, 측정 한계와 운영 트레이드오프를 분석합니다.</p>
-
-      <div class="grid gap-4 md:grid-cols-2">
-        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-49.html">
-          <div class="flex items-center justify-between gap-3"><span class="rounded-pill bg-[#EDEBFB] px-3 py-1.5 text-[12px] font-bold text-[#3E2FA6]">Agentic Control</span><span class="text-[12px] font-bold text-[#64d3a7]">발행완료 · #49</span></div>
-          <div class="mb-1.5 mt-4 text-[19px] font-bold leading-snug">AI 보안의 본질은 ‘차단’이 아니라 ‘신뢰의 구조’다</div>
-          <div class="text-[14px] text-mut">데이터·권한·행위·로그·책임을 분리된 통제가 아니라 하나의 신뢰구조로 바라봅니다.</div>
-        </a>
-
-        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-50.html">
-          <div class="flex items-center justify-between gap-3"><span class="rounded-pill bg-[#E7F0FF] px-3 py-1.5 text-[12px] font-bold text-[#0047B3]">Entitlement-Aware Knowledge</span><span class="text-[12px] font-bold text-[#64d3a7]">발행완료 · #50</span></div>
-          <div class="mb-1.5 mt-4 text-[19px] font-bold leading-snug">데이터를 많이 모으는 시대에서, 안전하게 연결하는 시대로</div>
-          <div class="text-[14px] text-mut">데이터 활용과 보호를 권한·흐름·책임이 전달되는 지식 아키텍처의 문제로 검토합니다.</div>
-        </a>
-
-        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-51.html">
-          <div class="flex items-center justify-between gap-3"><span class="rounded-pill bg-[#E7F3EC] px-3 py-1.5 text-[12px] font-bold text-[#1F6B3B]">AI Productivity &amp; Organizational Change</span><span class="text-[12px] font-bold text-[#64d3a7]">발행완료 · #51</span></div>
-          <div class="mb-1.5 mt-4 text-[19px] font-bold leading-snug">AI는 과학연구와 혁신의 방식을 어떻게 바꾸는가</div>
-          <div class="text-[14px] text-mut">AI가 개인의 생산성뿐 아니라 직무, 숙련도와 조직의 혁신역량을 어떻게 바꾸는지 읽습니다.</div>
-        </a>
-
-        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-52.html">
-          <div class="flex items-center justify-between gap-3"><span class="rounded-pill bg-[#FBEAF1] px-3 py-1.5 text-[12px] font-bold text-[#98305C]">AI Governance &amp; Social Impact</span><span class="text-[12px] font-bold text-[#64d3a7]">발행완료 · #52</span></div>
-          <div class="mb-1.5 mt-4 text-[19px] font-bold leading-snug">데이터는 많은데 왜 산업성과로 이어지지 않을까</div>
-          <div class="text-[14px] text-mut">데이터와 기술이 기업·산업의 성과로 전환되는 조건을 거버넌스와 사회적 영향 관점에서 분석합니다.</div>
-        </a>
-
-        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)] md:col-span-2" href="posts/post-53.html">
-          <div class="flex items-center justify-between gap-3"><span class="rounded-pill bg-[#EDEBFB] px-3 py-1.5 text-[12px] font-bold text-[#3E2FA6]">Agentic Control</span><span class="text-[12px] font-bold text-[#64d3a7]">발행완료 · #53</span></div>
-          <div class="mb-1.5 mt-4 text-[19px] font-bold leading-snug">AI가 AI를 공격해 더 안전해지는 구조 — GPT-Red와 AI Agent 보안의 진화</div>
-          <div class="text-[14px] text-mut">공격 자동화가 단순한 레드팀 도구를 넘어 자율형 검증과 보안 통제 구조로 확장되는 과정을 분석합니다.</div>
-        </a>
-
-        <div class="rounded-feat border border-[rgba(255,78,28,.42)] bg-[rgba(255,78,28,.07)] p-7 md:col-span-2">
-          <div class="flex items-center justify-between gap-3"><span class="rounded-pill bg-[#EDEBFB] px-3 py-1.5 text-[12px] font-bold text-[#3E2FA6]">Next Note · Agentic Control</span><span class="text-[12px] font-bold text-warn">작성중 · #54</span></div>
-          <div class="mb-1.5 mt-4 text-[19px] font-bold leading-snug">AI 시대의 보안 자산은 무엇인가</div>
-          <div class="text-[14px] text-mut">서버와 DB를 넘어 Agent의 권한, 비인간 ID, API 토큰, MCP, 메모리, 자동화 워크플로와 행위 로그까지 새로운 자산 경계를 검토합니다.</div>
-        </div>
-      </div>
-    </section>
-
-    <section id="practice-notes" class="my-16">
-      <h2 class="mb-1.5 text-[28px] font-medium tracking-tight md:text-4xl">Practice Notes <span class="text-base font-normal text-hint">현장 적용과 운영</span></h2>
-      <p class="mb-7 text-mut">실제 운영 과정에서 확인한 문제를 프로세스, 통제, 체크리스트와 의사결정 기준으로 정리합니다.</p>
-
-      <div class="grid gap-4 md:grid-cols-3">
-        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-16.html">
-          <span class="text-[12px] font-bold text-[#64d3a7]">Security Operations</span>
-          <div class="mb-2 mt-4 text-[18px] font-bold">실제 악성코드 감염 대응기</div>
-          <div class="text-[14px] leading-relaxed text-mut">탐지, 분석, 격리, 복구와 재발 방지까지 실제 대응 흐름을 정리합니다.</div>
-        </a>
-        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-36.html">
-          <span class="text-[12px] font-bold text-[#64d3a7]">IT Operations</span>
-          <div class="mb-2 mt-4 text-[18px] font-bold">무중단 운영을 위한 변화관리</div>
-          <div class="text-[14px] leading-relaxed text-mut">인프라 구조개선과 운영전환 과정에서 필요한 변화관리 조건을 검토합니다.</div>
-        </a>
-        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-48.html">
-          <span class="text-[12px] font-bold text-[#64d3a7]">DX Practice</span>
-          <div class="mb-2 mt-4 text-[18px] font-bold">DX 협의체 운영기</div>
-          <div class="text-[14px] leading-relaxed text-mut">부서별 프로세스와 요구사항을 데이터로 연결한 과정을 정리합니다.</div>
-        </a>
-      </div>
-    </section>
-
-    <section id="research-notes" class="my-16">
-      <h2 class="mb-1.5 text-[28px] font-medium tracking-tight md:text-4xl">Research Notes <span class="text-base font-normal text-hint">논문·정책·데이터</span></h2>
-      <p class="mb-7 text-mut">논문, 학회, 표준, 법령과 산업 데이터를 바탕으로 기술의 효과와 적용 조건을 검토합니다.</p>
-
-      <div class="grid gap-4 md:grid-cols-2">
-        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-50.html"><span class="text-[12px] font-bold text-cobalt">Data Governance</span><div class="mb-2 mt-4 text-[18px] font-bold">데이터 활용과 보호는 어떻게 함께 설계되는가</div><div class="text-[14px] text-mut">데이터경제 컨퍼런스에서 확인한 산업·정책·서비스의 변화를 권한과 책임구조로 읽습니다.</div></a>
-        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-51.html"><span class="text-[12px] font-bold text-cobalt">AI Productivity &amp; HCI</span><div class="mb-2 mt-4 text-[18px] font-bold">AI는 연구생산성을 어떻게 바꾸는가</div><div class="text-[14px] text-mut">AI 활용이 개인 생산성, 연구 프로세스, 숙련도와 조직의 혁신역량으로 전환되는 조건을 살펴봅니다.</div></a>
-        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-52.html"><span class="text-[12px] font-bold text-cobalt">AI Governance &amp; Social Impact</span><div class="mb-2 mt-4 text-[18px] font-bold">데이터는 왜 산업성과로 이어지지 않는가</div><div class="text-[14px] text-mut">기술과 데이터가 제도·조직·산업구조를 거쳐 성과로 전환되는 조건을 분석합니다.</div></a>
-        <a class="block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]" href="posts/post-65.html"><span class="text-[12px] font-bold text-cobalt">Security R&amp;D Capability</span><div class="mb-2 mt-4 text-[18px] font-bold">정보보호 R&amp;D 투자는 실제 기업 보안역량으로 이전되는가</div><div class="text-[14px] text-mut">NTIS 투자 흐름과 기업 내부역량 사이의 전환 메커니즘과 측정 한계를 검토합니다.</div></a>
-      </div>
-    </section>
-
-    <section id="topics" class="my-16">
-      <h2 class="mb-1.5 text-[28px] font-medium tracking-tight md:text-4xl">Five Research &amp; Practice Domains <span class="text-base font-normal text-hint">Human Tech Note Framework</span></h2>
-      <p class="mb-7 text-mut">기업이 기술을 도입하고 운영하는 과정의 미해결 문제를 다섯 가지 연구·실무 영역으로 축적합니다.</p>
-
-      <div class="grid gap-4 md:grid-cols-2">
-        <div class="topic-card rounded-feat border border-hair bg-soft p-7">
-          <div class="mb-3 text-[13px] font-bold text-ink">01 · 에이전트 통제 아키텍처</div>
-          <div class="mb-2 text-[19px] font-bold">Agentic Control Architecture</div>
-          <div class="text-[14px] leading-relaxed text-mut">비인간 ID, 위임 권한, Tool Calling, Memory, 행위 로그, 중단과 복구를 하나의 통제구조로 분석합니다.</div>
-          <div class="mt-4 border-t border-hair pt-4 text-[13px] leading-relaxed text-hint">핵심 질문 · Agent의 행위와 책임은 누구에게 귀속되는가?</div>
-        </div>
-        <div class="topic-card rounded-feat border border-hair bg-soft p-7">
-          <div class="mb-3 text-[13px] font-bold text-ink">02 · 운영체계로서의 AI 거버넌스</div>
-          <div class="mb-2 text-[19px] font-bold">AI Governance as an Operating System</div>
-          <div class="text-[14px] leading-relaxed text-mut">위험등급, 업무 오너, Risk Acceptance, 감사 증적과 외부 AI 계약을 정책이 아닌 실제 승인·예외 절차로 설계합니다.</div>
-          <div class="mt-4 border-t border-hair pt-4 text-[13px] leading-relaxed text-hint">핵심 질문 · 원칙과 정책은 실제 책임·승인·통제로 작동하는가?</div>
-        </div>
-        <div class="topic-card rounded-feat border border-hair bg-soft p-7">
-          <div class="mb-3 text-[13px] font-bold text-ink">03 · 권한을 이해하는 지식 아키텍처</div>
-          <div class="mb-2 text-[19px] font-bold">Entitlement-Aware Knowledge Architecture</div>
-          <div class="text-[14px] leading-relaxed text-mut">RAG, VectorDB와 GraphRAG에서 원본 권한, 삭제, 최신성, 출처와 추론 위험이 답변까지 어떻게 전달되는지 분석합니다.</div>
-          <div class="mt-4 border-t border-hair pt-4 text-[13px] leading-relaxed text-hint">핵심 질문 · 기업 지식의 권한과 책임은 생성된 답변에도 상속되는가?</div>
-        </div>
-        <div class="topic-card rounded-feat border border-hair bg-soft p-7">
-          <div class="mb-3 text-[13px] font-bold text-ink">04 · AI 생산성·조직 변화</div>
-          <div class="mb-2 text-[19px] font-bold">AI Productivity &amp; Organizational Change</div>
-          <div class="text-[14px] leading-relaxed text-mut">AI 생산성, 직무 변화, 자동화 편향, 숙련도와 조직역량을 연구합니다. HCI는 인간과 AI의 상호작용을 분석하는 핵심 관점으로 포함합니다.</div>
-          <div class="mt-4 border-t border-hair pt-4 text-[13px] leading-relaxed text-hint">핵심 질문 · 개인의 AI 활용성과는 조직의 역량과 장기 성과로 축적되는가?</div>
-        </div>
-        <div class="topic-card rounded-feat border border-hair bg-soft p-7 md:col-span-2">
-          <div class="mb-3 text-[13px] font-bold text-ink">05 · AI 거버넌스·사회적 영향</div>
-          <div class="mb-2 text-[19px] font-bold">AI Governance &amp; Social Impact</div>
-          <div class="text-[14px] leading-relaxed text-mut">AI 법·제도, 책임, 투명성, 관리체계, 산업·사회적 영향과 기업의 대응을 분석합니다.</div>
-          <div class="mt-4 border-t border-hair pt-4 text-[13px] leading-relaxed text-hint">핵심 질문 · 기업의 AI 의사결정은 조직과 사회에 어떤 책임과 영향을 남기는가?</div>
-        </div>
-      </div>
-
-      <div class="mt-5 rounded-feat border border-[rgba(255,255,255,.14)] bg-[rgba(255,255,255,.035)] p-7">
-        <div class="mb-2 text-[16px] font-bold">주제 선정 원칙</div>
-        <p class="text-[14px] leading-relaxed text-mut">개념 소개와 장단점 정리에 머무르지 않습니다. 기존 통제의 공백, 이해관계자 충돌, 책임 분산, 측정 한계 또는 운영 트레이드오프가 분명한 주제를 선정합니다.</p>
-        <div class="mt-4 flex flex-wrap gap-2 text-[12px] font-bold text-hint">
-          <span class="rounded-pill border border-hair px-3 py-1.5">Control Gap</span>
-          <span class="rounded-pill border border-hair px-3 py-1.5">Responsibility</span>
-          <span class="rounded-pill border border-hair px-3 py-1.5">Measurement</span>
-          <span class="rounded-pill border border-hair px-3 py-1.5">Operational Trade-off</span>
-        </div>
-      </div>
-    </section>
-
-    <div id="about" class="my-16">
-      <h2 class="mb-1.5 text-[28px] font-medium tracking-tight md:text-4xl">About / Portfolio <span class="text-base font-normal text-hint">실무와 연구의 기반</span></h2>
-      <p class="mb-7 text-mut">경력과 수상은 콘텐츠의 주제가 아니라, 분석과 제안의 현실성을 뒷받침하는 근거로 배치합니다.</p>
-
-      <section id="career" class="my-12">
-        <h3 class="mb-6 text-[24px] font-medium tracking-tight">주요 경력 <span class="text-base font-normal text-hint">Career</span></h3>
-        <div class="flex flex-col gap-4">
-          <div class="rounded-2xl bg-soft p-6 md:px-7"><div class="text-[13px] font-bold text-cobalt">2024.03 ~ 2027.02 (예정)</div><div class="my-1 text-lg font-bold">서강대학교 기술경영전문대학원 (MOT)</div><div class="text-[15px] text-mut">기술기획·데이터 기반 전략 분석 / 정보보호 R&D 투자·거버넌스 연구</div></div>
-          <div class="rounded-2xl bg-soft p-6 md:px-7"><div class="text-[13px] font-bold text-cobalt">2023.08 ~ 2026.04 · ㈜KT 지니뮤직 정보보호팀</div><div class="my-1 text-lg font-bold">정보보호 거버넌스 및 내부통제 운영</div><div class="text-[15px] text-mut">ISMS 관리체계 · ITGC/GITC · 취약점 관리 · 엔드포인트 보안 · 악성코드 대응</div></div>
-          <div class="rounded-2xl bg-soft p-6 md:px-7"><div class="text-[13px] font-bold text-cobalt">2019.01 ~ 2023.07 · ㈜KT 지니뮤직 IT기획팀 / DX Center</div><div class="my-1 text-lg font-bold">플랫폼 인프라 구조개선 · 전사 DX 과제 관리</div><div class="text-[15px] text-mut">대규모 트래픽 대응 무중단 인프라 / 프로세스 1,100건 분석·자동화</div></div>
-          <div class="rounded-2xl bg-soft p-6 md:px-7"><div class="text-[13px] font-bold text-cobalt">2011.04 ~ 2017.07 · 대한민국 공군</div><div class="my-1 text-lg font-bold">통신정비/운영중대 — 방공 C4I 운영</div><div class="text-[15px] text-mut">미션 크리티컬 시스템 무중단 운영 및 위기 대응</div></div>
-        </div>
-      </section>
-
-      <section class="my-12">
-        <h3 class="mb-6 text-[24px] font-medium tracking-tight">수상 · 인증 <span class="text-base font-normal text-hint">Awards</span></h3>
-        <div class="grid gap-4 md:grid-cols-2">
-          <div class="flex gap-4 rounded-2xl bg-soft p-6"><i class="ti ti-trophy mt-1 text-[26px] text-[#e8b45a]"></i><div><div class="text-[13px] font-bold text-cobalt">2024.12 · 팀 공동수상</div><div class="mt-1 font-bold">서강MOT 창업경진대회 최우수상</div><div class="mt-1 text-[13px] text-mut">서강대학교 기술경영전문대학원</div><div class="mt-3 text-[14px] leading-relaxed text-mut">AI 음악 유통 플랫폼 ‘모두레이블’ 기획 및 사업화 검증 참여</div></div></div>
-          <div class="flex gap-4 rounded-2xl bg-soft p-6"><i class="ti ti-award mt-1 text-[26px] text-[#e8b45a]"></i><div><div class="text-[13px] font-bold text-cobalt">2023.12 · 팀 공동수상</div><div class="mt-1 font-bold">정보보호 산업발전 유공 표창</div><div class="mt-1 text-[13px] text-mut">과학기술정보통신부</div><div class="mt-3 text-[14px] leading-relaxed text-mut">지니뮤직 정보보호 활동 및 정보보호 산업발전 기여 공로</div></div></div>
-          <div class="flex gap-4 rounded-2xl bg-soft p-6"><i class="ti ti-bulb mt-1 text-[26px] text-[#e8b45a]"></i><div><div class="text-[13px] font-bold text-cobalt">2022.09 · 개인수상</div><div class="mt-1 font-bold">아이디어 페스티벌 장려상</div><div class="mt-1 text-[13px] text-mut">지니뮤직</div><div class="mt-3 text-[14px] leading-relaxed text-mut">메타버스 아이돌·아티스트 및 2022 FIFA 카타르 월드컵 응원가 프로젝트 제안</div></div></div>
-          <div class="flex gap-4 rounded-2xl bg-soft p-6"><i class="ti ti-star mt-1 text-[26px] text-[#e8b45a]"></i><div><div class="text-[13px] font-bold text-cobalt">2019.12 · 팀 공동수상</div><div class="mt-1 font-bold">서비스 안정화 지니스타상</div><div class="mt-1 text-[13px] text-mut">지니뮤직</div><div class="mt-3 text-[14px] leading-relaxed text-mut">부하분산 센터 구축 및 안정적 서비스 운영 기여</div></div></div>
-          <div class="flex gap-4 rounded-2xl bg-soft p-6"><i class="ti ti-shield-check mt-1 text-[26px] text-[#e8b45a]"></i><div><div class="text-[13px] font-bold text-cobalt">2019.05 · 팀 공동수상</div><div class="mt-1 font-bold">서비스 무장애 ACE상</div><div class="mt-1 text-[13px] text-mut">지니뮤직</div><div class="mt-3 text-[14px] leading-relaxed text-mut">대규모 트래픽 대응 및 무장애 센터 운영 관제 신규 구축</div></div></div>
-          <div class="rounded-2xl bg-soft p-6 md:col-span-2"><div class="flex gap-4"><i class="ti ti-medal mt-1 text-[26px] text-[#e8b45a]"></i><div><div class="text-[13px] font-bold text-cobalt">2013~2014 · 개인수상</div><div class="mt-1 font-bold">대한민국공군 표창 4건</div></div></div><div class="mt-5 grid gap-3 md:grid-cols-2"><div class="rounded-2xl border border-hair p-4"><b class="text-[13px]">2014.10.01</b><div class="mt-1 text-[14px]">건군 제66주년 국군의 날 기념 개인표창</div><div class="mt-1 text-[12px] text-mut">사단장 표창</div></div><div class="rounded-2xl border border-hair p-4"><b class="text-[13px]">2014.07.14</b><div class="mt-1 text-[14px]">후반기 수시업무 유공 표창</div><div class="mt-1 text-[12px] text-mut">대대장 표창</div></div><div class="rounded-2xl border border-hair p-4"><b class="text-[13px]">2014.06.16</b><div class="mt-1 text-[14px]">로그분석 경연대회 최우수</div><div class="mt-1 text-[12px] text-mut">연대장 표창</div></div><div class="rounded-2xl border border-hair p-4"><b class="text-[13px]">2013.07.03</b><div class="mt-1 text-[14px]">부대발전 유공 표창</div><div class="mt-1 text-[12px] text-mut">대대장 표창</div></div></div></div>
-        </div>
-      </section>
-
-      <section id="featured" class="my-12">
-        <h3 class="mb-1.5 text-[24px] font-medium tracking-tight">대표 콘텐츠 <span class="text-base font-normal text-hint">Featured</span></h3>
-        <p class="mb-6 text-mut">실무 사례, 산업 분석과 연구를 연결하는 대표 콘텐츠입니다.</p>
-        <div class="grid gap-4 md:grid-cols-2" id="featuredCards"></div>
-      </section>
-    </div>
-
-    <section id="archive" class="my-16">
-      <h2 class="mb-1.5 text-[28px] font-medium tracking-tight md:text-4xl">연재 아카이브 <span class="text-base font-normal text-hint">Archive · 75편</span></h2>
-      <p class="mb-6 text-mut">제목을 누르면 각 글로 이동합니다. 상태는 현재 브라우저에 자동 저장됩니다.</p>
-
-      <div class="mb-6 rounded-feat bg-soft p-8">
-        <div class="mb-4 flex flex-wrap items-baseline gap-3"><span class="text-4xl font-medium tracking-tight" id="pgBig">0 / 75</span><span class="text-[15px] font-medium text-mut" id="pgPct">발행 0%</span></div>
-        <div class="flex h-3.5 overflow-hidden rounded-pill bg-[rgba(255,255,255,.10)]"><div class="bg-[#12946a] transition-all" id="pgDone"></div><div class="bg-warn transition-all" id="pgWip"></div></div>
-        <div class="mt-4 flex flex-wrap items-center gap-5 text-[14px] text-mut">
-          <span>발행완료 <b class="text-tx" id="cDone">0</b></span>
-          <span>작성중 <b class="text-tx" id="cWip">0</b></span>
-          <span>예정 <b class="text-tx" id="cTodo">75</b></span>
-          <a href="#" id="resetBtn" class="ml-auto font-medium text-mut"><i class="ti ti-refresh"></i> 초기화</a>
-        </div>
-      </div>
-
-      <div class="mb-4 flex flex-wrap gap-2.5" id="filters"></div>
-      <div class="mb-5 flex flex-wrap items-center gap-3.5">
-        <button class="rounded-pill bg-soft px-4 py-2.5 text-sm font-bold hover:bg-[rgba(255,255,255,.08)]" id="featBtn"><i class="ti ti-star"></i> 대표 콘텐츠만</button>
-        <span class="text-[14px] text-mut" id="cnt"></span>
-      </div>
-      <div class="flex flex-col gap-2.5" id="posts"></div>
-    </section>
-
-    <footer class="mt-20 border-t border-hair pt-7 text-[14px] leading-relaxed text-mut">
-      <p>Human Tech Note는 기업이 AI·데이터·보안 기술을 도입·운영할 때 권한, 책임, 통제와 성과가 실제로 작동하는 조건을 분석합니다.</p>
-      <p class="mt-2">각 글은 논문, 법령, 표준, 기술문서, 산업 사례와 실제 운영 경험을 바탕으로 순차적으로 보완합니다. · © 2026 최한람</p>
-    </footer>
-  </main>
-
-  <script>
-    const CATS = {"Agentic Control Architecture":{"bg":"#EDEBFB","fg":"#3E2FA6","short":"Agentic Control"},"AI Governance as an Operating System":{"bg":"#FDF1DA","fg":"#8A5A00","short":"AI Governance OS"},"Entitlement-Aware Knowledge Architecture":{"bg":"#E7F0FF","fg":"#0047B3","short":"Entitlement-Aware Knowledge"},"AI Productivity & Organizational Change":{"bg":"#E7F3EC","fg":"#1F6B3B","short":"AI Productivity & Organization"},"AI Governance & Social Impact":{"bg":"#FBEAF1","fg":"#98305C","short":"AI Governance & Social Impact"}};
-    const FEAT = new Set([16, 36, 48, 49, 50, 51, 52, 53]);
-    const D = [["AI Governance as an Operating System","7월","[오프닝] Human Tech Note를 시작하며","Opening Note · 실무와 연구를 연결하는 기록 원칙"],["AI Governance as an Operating System","7월","정보보호란 무엇인가 — 실무자가 정의하는 우선순위","Research Notes · 정보보호의 목적과 위험 우선순위"],["AI Governance as an Operating System","7월","ISMS-P 인증, 실무자의 눈으로 다시 보기","Practice Notes · 인증 대응과 상시 운영체계의 차이"],["AI Governance as an Operating System","7월","ITGC와 GITC, '운영의 언어'로 이해하기","Practice Notes · 내부통제와 IT 운영의 연결"],["Agentic Control Architecture","7월","접근통제의 3원칙 — 최소권한이 무너지는 순간","Practice Notes · 최소권한과 권한분리 설계"],["Agentic Control Architecture","7월","계정 생명주기 관리의 딜레마","Practice Notes · 계정 생성·변경·회수 프로세스"],["Agentic Control Architecture","7월","취약점 관리 — 진단보다 조치가 어려운 이유","Practice Notes · 취약점 조치 우선순위와 책임구조"],["Agentic Control Architecture","7월","시큐어코딩·취약점 진단 도구 실무 적용기","Practice Notes · 도구 결과를 개발 프로세스에 연결하기"],["AI Governance as an Operating System","7월","정보보호위원회는 왜 형식적으로 흐르는가","Main Insight · 보안 의사결정기구의 역할과 책임"],["Agentic Control Architecture","8월","엔드포인트 보안 전체 그림 한눈에 정리","Practice Notes · DLP·DRM·NAC·EPP 통합 운영"],["Agentic Control Architecture","8월","DLP 도입 — 정책 하나 잘못 짜면 업무가 멈춘다","Practice Notes · 탐지정책과 업무 연속성의 균형"],["Entitlement-Aware Knowledge Architecture","8월","DRM 문서보안 — 보안과 협업 생산성의 균형점","Practice Notes · 문서 권한과 사용자 경험 설계"],["Agentic Control Architecture","8월","NAC 운영기 — Windows와 Mac의 현실적 차이","Practice Notes · 단말 유형별 접근통제 정책"],["Entitlement-Aware Knowledge Architecture","8월","협업툴 시대의 유출 방지 전략 — Slack과 M365","Practice Notes · SaaS 데이터 흐름과 통제지점"],["Agentic Control Architecture","8월","Mac 보안은 왜 늘 뒷전이 되는가","Main Insight · 이기종 단말과 보안 사각지대"],["Agentic Control Architecture","8월","[케이스] 실제 악성코드 감염 대응기","Practice Notes · 탐지·분석·격리·복구·재발방지"],["Agentic Control Architecture","8월","IOC·Hash·Sandbox — 분석 결과 읽는 법","Practice Notes · 보안 분석정보의 해석과 대응"],["Agentic Control Architecture","8월","랜섬웨어 대응, 백신 정책만으로 충분한가","Main Insight · 예방·탐지·복구체계의 연결"],["AI Productivity & Organizational Change","8월","피싱 모의훈련은 실제 행동을 바꿀 수 있는가","Research Notes · 보안교육 효과와 행동변화 측정"],["AI Productivity & Organizational Change","8월","보안 캠페인은 조직문화를 바꿀 수 있는가","Research Notes · 인식제고와 조직행동의 관계"],["Entitlement-Aware Knowledge Architecture","8월","개인정보 처리현황과 정보서비스 흐름도","Practice Notes · 개인정보 데이터 흐름과 책임자 관리"],["Entitlement-Aware Knowledge Architecture","8월","파일서버 속 개인정보 — 방치된 위험 찾기","Practice Notes · 비정형 데이터의 탐지·분류·정비"],["AI Governance as an Operating System","9월","보안 벤더 관리 — 계약서에 담아야 할 것들","Practice Notes · SLA·보안책임·종료조건 설계"],["AI Governance as an Operating System","9월","정보보호 예산은 어떻게 짜고 설득해야 하는가","Main Insight · 위험감소와 투자효과의 연결"],["AI Governance as an Operating System","9월","IT 거버넌스란 — 통제가 아니라 정렬이다","Research Notes · 전략·투자·운영의 정렬 구조"],["AI Governance as an Operating System","9월","내부통제 고도화, 감사 대응을 넘어 운영 표준으로","Practice Notes · 통제를 일상 업무에 내재화하기"],["AI Governance as an Operating System","9월","IT 리스크 관리 프레임워크 — 식별·평가·대응","Research Notes · 위험평가와 잔여위험 관리"],["AI Governance as an Operating System","9월","변화관리가 장애를 막는 방법","Practice Notes · 변경승인·검증·롤백 프로세스"],["AI Governance as an Operating System","9월","Jira·Confluence로 운영 증적을 설계하는 방법","Practice Notes · 업무기록과 감사 추적성 확보"],["AI Governance as an Operating System","9월","PMO의 핵심은 일정이 아니라 이해관계자다","Main Insight · 요구사항·갈등·의사결정 관리"],["AI Governance as an Operating System","9월","IT 투자 타당성 — ROI를 숫자로만 말하지 않는 법","Research Notes · 재무효과와 전략효과의 통합평가"],["AI Governance as an Operating System","9월","RFP는 어떻게 기술과 운영의 요구를 연결하는가","Practice Notes · 요구사항·평가기준·책임범위 설계"],["AI Productivity & Organizational Change","9월","사업·개발·운영은 왜 같은 과제에서 충돌하는가","Main Insight · 크로스펑셔널 협업의 구조적 문제"],["AI Governance as an Operating System","9월","서비스 안정성과 통제는 어떻게 균형을 잡아야 하는가","Main Insight · 위험기반 통제수준 결정"],["AI Governance as an Operating System","9월","IT 자산과 예산을 하나의 포트폴리오로 관리하기","Practice Notes · 자산·비용·수명주기 통합관리"],["AI Governance as an Operating System","10월","[회고] 무중단 운영을 위한 변화관리 — 인프라 개선","Practice Notes · 운영전환과 서비스 연속성"],["AI Governance as an Operating System","10월","DX를 실행 가능한 운영모델로 전환하는 방법","Main Insight · 전략·과제·조직·KPI 연결"],["AI Productivity & Organizational Change","10월","전사 프로세스 1,100건을 분석하면 무엇이 보이는가","Practice Notes · 프로세스 분류와 개선 우선순위"],["AI Productivity & Organizational Change","10월","업무 자동화의 ROI는 어떻게 측정해야 하는가","Research Notes · 처리량·시간·품질·오류율 측정"],["AI Productivity & Organizational Change","10월","정산·유통 자동화는 어떻게 운영 프로세스로 정착하는가","Practice Notes · 자동화 과제의 운영전환 조건"],["Entitlement-Aware Knowledge Architecture","10월","데이터 흐름도로 업무와 시스템을 함께 이해하기","Practice Notes · 데이터·시스템·책임주체 연결"],["AI Governance as an Operating System","10월","KPI·Compliance·Risk를 요구사항에 녹이는 방법","Practice Notes · 비기능 요구사항과 통제조건 설계"],["AI Productivity & Organizational Change","10월","고객경험 데이터는 서비스 의사결정을 어떻게 바꾸는가","Research Notes · CX 지표와 서비스 개선의 연결"],["AI Productivity & Organizational Change","10월","데이터 기반 의사결정이 조직에서 실패하는 이유","Main Insight · 데이터 품질보다 중요한 조직조건"],["AI Governance as an Operating System","10월","기술경영은 기술을 어떻게 경영의 언어로 바꾸는가","Research Notes · 기술선택·투자·사업화 의사결정"],["AI Productivity & Organizational Change","10월","데이터 시각화는 전략적 의사결정을 개선할 수 있는가","Research Notes · 시각화와 판단편향의 관계"],["AI Governance & Social Impact","10월","산업별 DX·AI 적용은 왜 서로 다른 경로를 보이는가","Research Notes · 산업구조와 기술수용 조건"],["AI Governance as an Operating System","10월","[회고] DX 협의체 운영기 — 벽을 데이터로 허물기","Practice Notes · 협의체·요구사항·프로세스 개선"],["Agentic Control Architecture","7월","AI 보안의 본질은 ‘차단’이 아니라 ‘신뢰의 구조’다","Main Insight · 데이터·권한·행위·로그·책임"],["Entitlement-Aware Knowledge Architecture","7월","데이터를 많이 모으는 시대에서, 안전하게 연결하는 시대로","Research Notes · 데이터 활용·보호·서비스 경쟁"],["AI Productivity & Organizational Change","7월","AI는 과학연구와 혁신의 방식을 어떻게 바꾸는가","Research Notes · AI for Science와 연구생산성"],["AI Governance & Social Impact","7월","데이터는 많은데 왜 산업성과로 이어지지 않을까","Research Notes · 기술사업화와 데이터 거버넌스"],["Agentic Control Architecture","7월","AI가 AI를 공격해 더 안전해지는 구조 — GPT-Red와 AI Agent 보안의 진화","Main Insight · 공격 자동화가 자율형 검증과 보안 통제로 확장되는 과정"],["Agentic Control Architecture","7월","AI 시대의 보안 자산은 무엇인가 — 서버와 데이터에서 Agent의 권한·행위·기억까지","Main Insight · 비인간 ID·API 토큰·MCP·메모리·워크플로·행위 로그의 자산화"],["Agentic Control Architecture","8월","AI Agent의 권한은 사용자에게 귀속되는가, Agent 자체에 귀속되는가","Research Notes · 권한 상속·위임 범위·책임 추적과 최소권한"],["Agentic Control Architecture","8월","Agent Identity는 기존 IAM의 서비스 계정과 무엇이 다른가","Practice Notes · 비인간 ID·단기 자격증명·세션별 권한과 생명주기"],["Agentic Control Architecture","8월","AI Agent 환경에서도 직무분리 원칙은 작동할 수 있는가","Main Insight · 조회·판단·승인·실행이 결합될 때의 통제 붕괴"],["Agentic Control Architecture","8월","Agent의 Tool Calling 로그는 감사 증적이 될 수 있는가","Practice Notes · 프롬프트·계획·도구 호출·승인·결과의 추적성"],["Agentic Control Architecture","9월","Agent Memory Poisoning은 데이터 오염인가, 침해사고인가","Research Notes · 장기기억·벡터DB·세션 오염의 사고 분류와 대응"],["AI Governance as an Operating System","9월","AI 위험등급은 모델이 아니라 업무 의사결정을 기준으로 정해야 하는가","Main Insight · 동일 모델의 사용맥락에 따라 달라지는 위험과 통제수준"],["AI Governance & Social Impact","9월","AI 서비스의 최종 책임자는 모델 개발자인가, 업무 오너인가","Main Insight · 모델·데이터·현업 판단이 결합될 때의 책임 귀속"],["AI Governance as an Operating System","9월","AI Risk Acceptance는 누가 승인해야 하는가","Practice Notes · 잔여위험·예외 승인·중단 기준과 경영 책임"],["AI Governance & Social Impact","9월","Shadow AI는 보안 위반인가, 공식 도구의 사용성 실패인가","Research Notes · 차단정책·업무 요구·사용자 우회행동의 구조적 원인"],["AI Governance as an Operating System","10월","외부 AI SaaS 도입 시 책임은 계약으로 이전될 수 있는가","Practice Notes · 데이터 이용·재위탁·로그·사고 통지·종료조건"],["AI Governance & Social Impact","10월","정보보호 R&D 투자는 실제 기업 보안역량으로 이전되는가","Research Notes · 국가 R&D 투자와 기업 내부역량 사이의 전환 조건"],["Entitlement-Aware Knowledge Architecture","10월","RAG 검색 결과는 원본 문서의 접근권한을 어디까지 상속해야 하는가","Main Insight · 문서·Chunk·검색결과 사이의 권한 불일치"],["Entitlement-Aware Knowledge Architecture","10월","벡터DB에서 개인정보 삭제 요구를 어떻게 이행할 것인가","Practice Notes · 원본·임베딩·캐시·대화기록·백업의 파기 범위"],["Entitlement-Aware Knowledge Architecture","10월","문서 권한이 변경됐을 때 기존 임베딩은 즉시 무효화돼야 하는가","Practice Notes · 권한 동기화 지연과 검색 기반 정보노출 위험"],["Entitlement-Aware Knowledge Architecture","10월","AI 답변의 출처는 어느 수준까지 추적할 수 있어야 하는가","Research Notes · 문서 버전·작성자·승인상태·유효기간의 계보 관리"],["Entitlement-Aware Knowledge Architecture","11월","GraphRAG의 연결성은 새로운 개인정보 추론 위험을 만드는가","Research Notes · 관계 연결을 통해 발생하는 민감정보 재식별 가능성"],["AI Governance as an Operating System","11월","AI PoC의 성공 기준과 운영서비스의 성공 기준은 왜 다른가","Main Insight · 데모 정확도와 안정성·비용·통제 가능성의 차이"],["AI Productivity & Organizational Change","11월","AI 사업의 ROI는 사용량이 증가할수록 좋아지는가","Research Notes · 추론비용·검증인력·오류비용·통제비용을 포함한 경제성"],["AI Governance as an Operating System","11월","AI 벤더 종속성은 모델보다 데이터와 워크플로에서 발생하는가","Main Insight · 평가체계·데이터 파이프라인·업무연계의 전환비용"],["AI Governance as an Operating System","11월","AI 서비스의 SLA는 가용성만으로 충분한가","Practice Notes · 정확도·지연시간·비용·안전성·출처 품질의 서비스 수준"],["AI Productivity & Organizational Change","12월","Human-in-the-loop는 통제인가, 책임 전가 장치인가","Main Insight · 인간 검토의 실효성·자동화 편향·형식적 승인"]];
-
-    const KEY = "htn_status_v7";
-    const DEFAULT_STATUS = D.map((_, i) => i < 53 ? "done" : i === 53 ? "writing" : "todo");
-    const NEXT = {todo:"writing", writing:"done", done:"todo"};
-    const STLABEL = {todo:"예정", writing:"작성중", done:"발행완료"};
-    const STCLS = {
-      todo:"bg-soft text-mut",
-      writing:"bg-warn text-[#3d2c00]",
-      done:"bg-[#12946a] text-white"
-    };
-
-    let ST = (() => {
-      try {
-        const saved = JSON.parse(localStorage.getItem(KEY));
-        if (Array.isArray(saved) && saved.length === D.length) return saved;
-      } catch (e) {}
-      return DEFAULT_STATUS.slice();
-    })();
-
-    let active = "전체";
-    let featOnly = false;
-
-    function pad(n) {
-      return String(n).padStart(2, "0");
-    }
-
-    function save() {
-      try { localStorage.setItem(KEY, JSON.stringify(ST)); } catch (e) {}
-    }
-
-    function escapeHtml(value) {
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
-    function updateProgress() {
-      const done = ST.filter(s => s === "done").length;
-      const writing = ST.filter(s => s === "writing").length;
-      const todo = D.length - done - writing;
-
-      document.getElementById("pgBig").textContent = `${done} / ${D.length}`;
-      document.getElementById("pgPct").textContent = `발행 ${Math.round(done / D.length * 100)}%`;
-      document.getElementById("pgDone").style.width = `${done / D.length * 100}%`;
-      document.getElementById("pgWip").style.width = `${writing / D.length * 100}%`;
-      document.getElementById("cDone").textContent = done;
-      document.getElementById("cWip").textContent = writing;
-      document.getElementById("cTodo").textContent = todo;
-      document.getElementById("heroDone").textContent = done;
-      document.getElementById("heroBadgeDone").textContent = done;
-    }
-
-    function renderFilters() {
-      const container = document.getElementById("filters");
-      container.innerHTML = "";
-      const categoryNames = ["전체", ...Object.keys(CATS)];
-
-      categoryNames.forEach(name => {
-        const count = name === "전체" ? D.length : D.filter(item => item[0] === name).length;
-        const button = document.createElement("button");
-        const selected = name === active;
-        button.className = `rounded-pill px-4 py-2.5 text-sm font-bold transition ${selected ? "bg-ink text-white" : "bg-soft hover:bg-[rgba(255,255,255,.08)]"}`;
-        button.textContent = `${name === "전체" ? name : CATS[name].short} (${count})`;
-        button.addEventListener("click", () => {
-          active = name;
-          render();
-        });
-        container.appendChild(button);
-      });
-    }
-
-    function renderFeatured() {
-      const box = document.getElementById("featuredCards");
-      box.innerHTML = "";
-      FEAT.forEach(num => {
-        const item = D[num - 1];
-        const cat = CATS[item[0]];
-        const link = document.createElement("a");
-        link.className = "block rounded-feat border border-hair bg-soft p-7 transition hover:bg-[rgba(255,255,255,.08)]";
-        link.href = `posts/post-${pad(num)}.html`;
-        link.innerHTML = `
-          <div class="flex items-center justify-between gap-3">
-            <span class="rounded-pill px-3 py-1.5 text-[12px] font-bold" style="background:${cat.bg};color:${cat.fg}">${escapeHtml(cat.short)}</span>
-            <span class="text-[12px] text-mut">#${num}</span>
-          </div>
-          <div class="mb-2 mt-4 text-[18px] font-bold leading-snug">${escapeHtml(item[2])}</div>
-          <div class="text-[14px] text-mut">${escapeHtml(item[3])}</div>`;
-        box.appendChild(link);
-      });
-    }
-
-    function renderPosts() {
-      const box = document.getElementById("posts");
-      box.innerHTML = "";
-      let shown = 0;
-
-      D.forEach((item, index) => {
-        const num = index + 1;
-        const isFeatured = FEAT.has(num);
-        if (active !== "전체" && item[0] !== active) return;
-        if (featOnly && !isFeatured) return;
-
-        shown += 1;
-        const cat = CATS[item[0]];
-        const row = document.createElement("a");
-        row.className = "flex items-center gap-3 rounded-2xl border border-hair bg-soft px-4 py-4 transition hover:bg-[rgba(255,255,255,.08)] md:gap-4 md:px-5";
-        row.href = `posts/post-${pad(num)}.html`;
-
-        row.innerHTML = `
-          <span class="w-8 shrink-0 text-right text-[13px] font-medium text-hint">#${num}</span>
-          <span class="hidden shrink-0 rounded-pill px-3 py-1.5 text-[12px] font-bold lg:inline" style="background:${cat.bg};color:${cat.fg}">${escapeHtml(cat.short)}</span>
-          <button class="status-button shrink-0 rounded-pill px-3 py-1.5 text-[12px] font-bold ${STCLS[ST[index]]}" data-index="${index}" style="min-width:74px">${STLABEL[ST[index]]}</button>
-          <span class="hidden w-16 shrink-0 text-[13px] text-mut md:block">${escapeHtml(item[1])}</span>
-          <span class="min-w-0 flex-1">
-            <span class="block text-[15px] font-bold">${isFeatured ? '<i class="ti ti-star mr-1 text-cobalt"></i>' : ""}${escapeHtml(item[2])}</span>
-            <span class="mt-0.5 hidden text-[13px] text-hint md:block">${escapeHtml(item[3])}</span>
-          </span>
-          <i class="ti ti-arrow-right shrink-0 text-lg text-hint"></i>`;
-        box.appendChild(row);
-      });
-
-      document.getElementById("cnt").textContent = `${shown}편 표시 중`;
-
-      box.querySelectorAll(".status-button").forEach(button => {
-        button.addEventListener("click", event => {
-          event.preventDefault();
-          event.stopPropagation();
-          const index = Number(button.dataset.index);
-          ST[index] = NEXT[ST[index]];
-          save();
-          render();
-        });
-      });
-    }
-
-    function render() {
-      renderFilters();
-      renderPosts();
+      window.addEventListener("scroll", updateProgress, { passive:true });
+      window.addEventListener("resize", updateProgress);
       updateProgress();
-
-      const button = document.getElementById("featBtn");
-      button.className = featOnly
-        ? "rounded-pill bg-ink px-4 py-2.5 text-sm font-bold text-white"
-        : "rounded-pill bg-soft px-4 py-2.5 text-sm font-bold hover:bg-[rgba(255,255,255,.08)]";
-    }
-
-    document.getElementById("featBtn").addEventListener("click", () => {
-      featOnly = !featOnly;
-      render();
-    });
-
-    document.getElementById("resetBtn").addEventListener("click", event => {
-      event.preventDefault();
-      ST = DEFAULT_STATUS.slice();
-      save();
-      render();
-    });
-
-    renderFeatured();
-    render();
+    })();
   </script>
 </body>
 </html>

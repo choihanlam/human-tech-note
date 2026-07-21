@@ -1,59 +1,1148 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>9년 4개월, 정보보호 실무자의 커리어 회고 · Human Tech Note</title><meta name="description" content="커리어 종합 서사"/>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<style type="text/tailwindcss">
-@theme{
---color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,0.05);
---color-hair:rgba(255,255,255,0.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
---radius-pill:100px;--radius-feat:32px;
---font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
-}
-</style>
+<!DOCTYPE html>
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="공군의 장애사례집에서 소비데이터 분석, 서비스 운영 안정화, DX 프로세스 혁신과 AI 기반 보안운영까지 데이터를 판단과 운영 개선으로 연결해온 과정을 정리합니다." name="description"/>
+<meta content="최한람" name="author"/>
+<meta content="머신러닝, 데이터기반운영, 장애예측, AIOps, DX, 고객경험, 보안로그, AI보안, 조직역량" name="keywords"/>
+<meta content="article" property="og:type"/>
+<meta content="ko_KR" property="og:locale"/>
+<meta content="Human Tech Note" property="og:site_name"/>
+<meta content="예측은 모델에서 시작되지 않았다" property="og:title"/>
+<meta content="장애사례집에서 DX·AI 보안까지, 데이터를 운영체계로 바꾸려 했던 과정" property="og:description"/>
+<meta content="https://choihanlam.github.io/human-tech-note/posts/post-71.html" property="og:url"/>
+<title>예측은 모델에서 시작되지 않았다 · Human Tech Note</title>
+<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/>
+<link crossorigin="" href="https://cdnjs.cloudflare.com" rel="preconnect"/>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css" rel="stylesheet"/>
 <style>
-body{background:#08090a}
-.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
-radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
-radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
-radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
-radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
-#07080a}
-</style>
-<style>
-.pb h3{font-size:24px;font-weight:500;letter-spacing:-.4px;margin:36px 0 10px;color:#f1f3ef}
-.pb p{font-size:18px;line-height:1.75;margin:0 0 18px;letter-spacing:-.2px}
-.pb ul{font-size:18px;line-height:1.7;padding-left:22px;margin:0 0 20px}
-.pb li{margin-bottom:7px}
-.pb strong{color:#fff;font-weight:700}
-.callout{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:32px;padding:26px 30px;margin:30px 0;font-size:16px;line-height:1.65;color:#e7e9e4}
-.callout .l{color:#ff8256;font-weight:700;font-size:13px;margin-bottom:8px;display:flex;gap:7px;align-items:center}
-</style>
-</head><body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em"><div class="bgfx"></div>
-<nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair">
-<div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
-<a class="font-bold text-lg flex items-center gap-2" href="../index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a>
-<span class="ml-auto"></span>
-<a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive"><i class="ti ti-arrow-left"></i> 포트폴리오</a>
-</div></nav>
-<article class="max-w-[760px] mx-auto px-6 pt-14 pb-28">
-<span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6"><i class="ti ti-flask"></i> 포트폴리오 데모용 더미 콘텐츠</span>
-<div><span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#FBEAF1;color:#98305C"><i class="ti ti-microscope"></i> 연구·종합</span></div>
-<h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3"><i class="ti ti-star text-cobalt"></i> 9년 4개월, 정보보호 실무자의 커리어 회고</h1>
-<div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
-<span><i class="ti ti-calendar align-[-2px]"></i> 2026년 12월 23일 (수)</span><span><i class="ti ti-clock align-[-2px]"></i> 약 5분</span><span>#71 / 75</span></div>
-<div class="pb">
-<h3>들어가며</h3>
-<p>데이터 분석과 연구 경험을 바탕으로 산업의 큰 흐름과 시사점을 정리한다. 이번 글은 <strong>커리어 종합 서사</strong>을(를) 중심으로, 개념 설명에 그치지 않고 실제 판단의 맥락을 함께 담으려 했다.</p>
-<p>많은 조직이 같은 문제를 겪지만, 정답은 조직의 규모·문화·서비스 특성에 따라 달라진다. 그래서 '무엇을 했는가'보다 '왜 그렇게 판단했는가'에 무게를 두었다.</p>
-<h3>문제 정의</h3><p>먼저 상황을 명확히 규정하는 것이 중요하다. 문제를 좁게 정의할수록 해결책은 선명해지고, 이해관계자 사이의 합의도 빨라진다.</p>
-<h3>접근 방법</h3><p>실무에서는 이상적인 방법론보다 '지속 가능한 운영'이 우선한다. 한 번의 조치로 끝나는 일은 거의 없고, 대부분은 정책·프로세스·사람이 맞물려야 유지된다.</p>
-<h3>정리하며</h3><p>결국 남는 것은 기록과 반복 가능한 체계다. 커리어 종합 서사에서 얻은 교훈은 다른 영역에도 그대로 적용된다.</p>
+    :root {
+      --bg:#08090a;
+      --panel:rgba(255,255,255,.052);
+      --panel-strong:rgba(255,255,255,.078);
+      --line:rgba(255,255,255,.12);
+      --text:#f1f3ef;
+      --muted:#a6aca4;
+      --hint:#757b74;
+      --orange:#ff4e1c;
+      --orange-soft:#ff8256;
+      --green:#64d3a7;
+      --green-soft:#8be2bd;
+      --yellow:#e8b45a;
+      --blue:#79a9ff;
+      --cyan:#61cad8;
+      --purple:#a99bff;
+      --radius:24px;
+      --radius-lg:32px;
+      --shadow:0 24px 70px rgba(0,0,0,.24);
+    }
+
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:"Pretendard",-apple-system,BlinkMacSystemFont,"Malgun Gothic",sans-serif;
+      letter-spacing:-.012em;
+      line-height:1.78;
+      word-break:keep-all;
+    }
+
+    a { color:inherit; text-decoration:none; }
+    button { font:inherit; }
+
+    .bgfx {
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      pointer-events:none;
+      background:
+        radial-gradient(55% 42% at 14% 14%,rgba(22,143,94,.33),transparent 68%),
+        radial-gradient(48% 46% at 86% 42%,rgba(20,102,78,.27),transparent 72%),
+        radial-gradient(44% 40% at 62% 8%,rgba(90,172,120,.14),transparent 70%),
+        radial-gradient(70% 60% at 50% 105%,rgba(7,61,46,.25),transparent 74%),
+        #07080a;
+    }
+
+    .reading-progress {
+      position:fixed;
+      left:0;
+      top:0;
+      z-index:80;
+      width:0;
+      height:3px;
+      background:linear-gradient(90deg,var(--orange),var(--yellow));
+    }
+
+    .nav {
+      position:sticky;
+      top:0;
+      z-index:50;
+      border-bottom:1px solid var(--line);
+      background:rgba(10,12,11,.86);
+      backdrop-filter:blur(16px);
+    }
+
+    .nav-inner {
+      width:min(1120px,calc(100% - 36px));
+      min-height:64px;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      gap:18px;
+    }
+
+    .brand {
+      display:flex;
+      align-items:center;
+      gap:9px;
+      font-size:18px;
+      font-weight:800;
+      letter-spacing:-.02em;
+    }
+
+    .brand small {
+      color:var(--muted);
+      font-size:13px;
+      font-weight:500;
+    }
+
+    .nav-links {
+      margin-left:auto;
+      display:flex;
+      align-items:center;
+      gap:18px;
+    }
+
+    .nav-links a {
+      color:var(--muted);
+      font-size:14px;
+      font-weight:650;
+    }
+
+    .nav-links a:hover { color:var(--text); }
+
+    .portfolio-btn {
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      margin-left:4px;
+      padding:9px 15px;
+      border-radius:100px;
+      background:var(--orange);
+      color:white !important;
+      font-weight:800 !important;
+    }
+
+    .page {
+      width:min(900px,calc(100% - 36px));
+      margin:0 auto;
+      padding:52px 0 90px;
+    }
+
+    .hero {
+      position:relative;
+      overflow:hidden;
+      padding:46px 44px;
+      border:1px solid var(--line);
+      border-radius:var(--radius-lg);
+      background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.035));
+      box-shadow:var(--shadow);
+    }
+
+    .hero::after {
+      content:"";
+      position:absolute;
+      right:-100px;
+      top:-125px;
+      width:350px;
+      height:350px;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(100,211,167,.20),transparent 68%);
+      pointer-events:none;
+    }
+
+    .chips {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:20px;
+    }
+
+    .chip {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:7px 12px;
+      border-radius:100px;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .chip-primary {
+      background:#e7f3ec;
+      color:#1f6b3b;
+    }
+
+    .chip-secondary {
+      background:rgba(100,211,167,.12);
+      color:#7de0b7;
+      border:1px solid rgba(100,211,167,.25);
+    }
+
+    .hero h1 {
+      position:relative;
+      z-index:1;
+      margin:0;
+      max-width:760px;
+      font-size:clamp(38px,6vw,64px);
+      line-height:1.06;
+      letter-spacing:-.05em;
+      font-weight:760;
+    }
+
+    .subtitle {
+      position:relative;
+      z-index:1;
+      margin:18px 0 0;
+      max-width:780px;
+      color:#d8ddd7;
+      font-size:clamp(18px,2.7vw,25px);
+      line-height:1.48;
+      font-weight:650;
+    }
+
+    .meta {
+      position:relative;
+      z-index:1;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px 16px;
+      margin-top:26px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .meta span {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    .toc {
+      margin:24px 0 0;
+      padding:24px 26px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:var(--panel);
+    }
+
+    .toc-title {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:11px;
+      font-weight:800;
+    }
+
+    .toc-grid {
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:7px 18px;
+    }
+
+    .toc a {
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .toc a:hover { color:var(--orange-soft); }
+
+    article { margin-top:34px; }
+
+    .section {
+      scroll-margin-top:92px;
+      margin:66px 0;
+    }
+
+    .section h2 {
+      margin:0 0 22px;
+      font-size:clamp(27px,4vw,38px);
+      line-height:1.25;
+      letter-spacing:-.035em;
+    }
+
+    .section h3 {
+      margin:38px 0 13px;
+      font-size:22px;
+      line-height:1.35;
+      letter-spacing:-.025em;
+    }
+
+    .section p {
+      margin:0 0 20px;
+      color:#d9ddd8;
+      font-size:17px;
+    }
+
+    .section strong { color:white; }
+
+    .lead {
+      font-size:19px !important;
+      line-height:1.78;
+      color:#edf0ec !important;
+    }
+
+    .question-box {
+      margin:30px 0;
+      padding:30px;
+      border:1px solid rgba(255,78,28,.34);
+      border-radius:var(--radius);
+      background:linear-gradient(135deg,rgba(255,78,28,.12),rgba(255,130,86,.04));
+    }
+
+    .question-box .label {
+      display:flex;
+      align-items:center;
+      gap:7px;
+      margin-bottom:10px;
+      color:var(--orange-soft);
+      font-size:13px;
+      font-weight:850;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+
+    .question-box blockquote {
+      margin:0;
+      font-size:clamp(21px,3.3vw,29px);
+      line-height:1.48;
+      font-weight:720;
+      letter-spacing:-.025em;
+    }
+
+    .insight {
+      margin:30px 0;
+      padding:28px 30px;
+      border-left:4px solid var(--green);
+      border-radius:0 var(--radius) var(--radius) 0;
+      background:rgba(100,211,167,.08);
+    }
+
+    .insight b {
+      display:block;
+      margin-bottom:8px;
+      color:var(--green);
+      font-size:14px;
+    }
+
+    .insight p {
+      margin:0;
+      color:#e8ece8;
+      font-size:17px;
+    }
+
+    .timeline {
+      display:grid;
+      gap:14px;
+      margin:30px 0;
+    }
+
+    .timeline-card {
+      display:grid;
+      grid-template-columns:110px minmax(0,1fr);
+      gap:20px;
+      padding:24px 26px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:var(--panel);
+    }
+
+    .timeline-card:hover {
+      background:var(--panel-strong);
+      border-color:rgba(255,255,255,.2);
+    }
+
+    .timeline-year {
+      color:var(--green-soft);
+      font-size:13px;
+      font-weight:850;
+      line-height:1.5;
+    }
+
+    .timeline-content h3 {
+      margin:0 0 8px;
+      font-size:21px;
+    }
+
+    .timeline-content p {
+      margin:0;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.75;
+    }
+
+    .timeline-key {
+      display:flex;
+      flex-wrap:wrap;
+      gap:7px;
+      margin-top:13px;
+    }
+
+    .timeline-key span {
+      padding:6px 10px;
+      border:1px solid var(--line);
+      border-radius:100px;
+      color:#cbd2cb;
+      font-size:12px;
+    }
+
+    .comparison {
+      overflow:hidden;
+      margin:28px 0;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:var(--panel);
+    }
+
+    .comparison table {
+      width:100%;
+      border-collapse:collapse;
+    }
+
+    .comparison th,
+    .comparison td {
+      padding:17px 18px;
+      border-bottom:1px solid var(--line);
+      text-align:left;
+      vertical-align:top;
+    }
+
+    .comparison th {
+      color:white;
+      background:rgba(255,255,255,.04);
+      font-size:14px;
+    }
+
+    .comparison td {
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .comparison tr:last-child td { border-bottom:0; }
+    .comparison td:first-child {
+      width:24%;
+      color:#f0f2ef;
+      font-weight:760;
+    }
+
+    .data-metrics {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+      margin:28px 0;
+    }
+
+    .metric {
+      padding:22px 18px;
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:var(--panel);
+    }
+
+    .metric strong {
+      display:block;
+      margin-bottom:6px;
+      color:white;
+      font-size:24px;
+      line-height:1.2;
+    }
+
+    .metric span {
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.55;
+    }
+
+    .pattern-bars {
+      display:grid;
+      gap:13px;
+      margin:28px 0;
+      padding:24px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:var(--panel);
+    }
+
+    .bar-row {
+      display:grid;
+      grid-template-columns:120px minmax(0,1fr) 70px;
+      gap:14px;
+      align-items:center;
+    }
+
+    .bar-label {
+      color:#dfe4df;
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .bar-track {
+      height:12px;
+      overflow:hidden;
+      border-radius:100px;
+      background:rgba(255,255,255,.09);
+    }
+
+    .bar-fill {
+      height:100%;
+      border-radius:100px;
+      background:linear-gradient(90deg,var(--green),var(--cyan));
+    }
+
+    .bar-value {
+      color:var(--muted);
+      font-size:13px;
+      text-align:right;
+    }
+
+    .flow {
+      display:grid;
+      grid-template-columns:repeat(6,minmax(0,1fr));
+      gap:10px;
+      margin:30px 0 10px;
+    }
+
+    .flow-step {
+      position:relative;
+      min-height:132px;
+      padding:18px 13px;
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:var(--panel);
+      text-align:center;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content:"→";
+      position:absolute;
+      right:-18px;
+      top:44%;
+      z-index:2;
+      color:var(--hint);
+      font-size:18px;
+    }
+
+    .flow-step i {
+      display:block;
+      margin-bottom:9px;
+      color:var(--green);
+      font-size:27px;
+    }
+
+    .flow-step b {
+      display:block;
+      margin-bottom:5px;
+      font-size:14px;
+    }
+
+    .flow-step span {
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .stage-grid {
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+      margin:28px 0;
+    }
+
+    .stage-card {
+      padding:25px 26px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:var(--panel);
+    }
+
+    .stage-card .stage-no {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:42px;
+      height:42px;
+      margin-bottom:14px;
+      border-radius:14px;
+      background:rgba(100,211,167,.12);
+      color:var(--green-soft);
+      font-size:13px;
+      font-weight:900;
+    }
+
+    .stage-card h3 {
+      margin:0 0 9px;
+      font-size:20px;
+    }
+
+    .stage-card p {
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.75;
+    }
+
+    .boundary-box {
+      margin:30px 0;
+      padding:26px 28px;
+      border:1px solid rgba(232,180,90,.34);
+      border-radius:var(--radius);
+      background:rgba(232,180,90,.07);
+    }
+
+    .boundary-box h3 {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin:0 0 12px;
+      color:var(--yellow);
+      font-size:18px;
+    }
+
+    .boundary-box ul {
+      margin:0;
+      padding-left:20px;
+      color:#dce1dc;
+    }
+
+    .boundary-box li {
+      margin:8px 0;
+      font-size:15px;
+      line-height:1.65;
+    }
+
+    .resume-box {
+      margin:28px 0;
+      padding:27px 29px;
+      border:1px solid rgba(121,169,255,.30);
+      border-radius:var(--radius);
+      background:rgba(121,169,255,.07);
+    }
+
+    .resume-box .label {
+      display:flex;
+      align-items:center;
+      gap:7px;
+      margin-bottom:12px;
+      color:#a9c5ff;
+      font-size:13px;
+      font-weight:850;
+    }
+
+    .resume-box p {
+      margin:0;
+      color:#e7ebf5;
+      font-size:17px;
+      font-weight:650;
+      line-height:1.72;
+    }
+
+    .checklist {
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px;
+      margin:28px 0;
+      padding:0;
+      list-style:none;
+    }
+
+    .checklist li {
+      display:flex;
+      gap:10px;
+      padding:17px 18px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:var(--panel);
+      color:#dce1dc;
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .checklist i {
+      flex:0 0 auto;
+      margin-top:2px;
+      color:var(--green);
+      font-size:19px;
+    }
+
+    .references {
+      margin-top:70px;
+      padding:28px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:var(--panel);
+    }
+
+    .references h2 {
+      margin:0 0 16px;
+      font-size:23px;
+    }
+
+    .references ol {
+      margin:0;
+      padding-left:21px;
+    }
+
+    .references li {
+      margin:10px 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.65;
+    }
+
+    .references a {
+      color:#cfd8ff;
+      text-decoration:underline;
+      text-underline-offset:3px;
+    }
+
+    .tags {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:28px;
+    }
+
+    .tag {
+      padding:7px 11px;
+      border:1px solid var(--line);
+      border-radius:100px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .post-nav {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:13px;
+      margin-top:48px;
+    }
+
+    .post-nav a {
+      min-height:102px;
+      padding:20px 22px;
+      border:1px solid var(--line);
+      border-radius:22px;
+      background:var(--panel);
+      transition:background .2s ease,border-color .2s ease;
+    }
+
+    .post-nav a:hover {
+      background:var(--panel-strong);
+      border-color:rgba(255,255,255,.2);
+    }
+
+    .post-nav .next { text-align:right; }
+
+    .post-nav span {
+      display:block;
+      color:var(--hint);
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .post-nav b {
+      display:block;
+      margin-top:7px;
+      color:#e9ece9;
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    footer {
+      width:min(900px,calc(100% - 36px));
+      margin:0 auto;
+      padding:0 0 50px;
+      color:var(--hint);
+      font-size:13px;
+      text-align:center;
+    }
+
+    @media (max-width:820px) {
+      .nav-links a:not(.portfolio-btn) { display:none; }
+      .hero { padding:34px 26px; }
+      .toc-grid { grid-template-columns:1fr; }
+      .data-metrics { grid-template-columns:1fr; }
+      .flow { grid-template-columns:1fr; }
+      .flow-step { min-height:auto; text-align:left; }
+      .flow-step i {
+        display:inline-block;
+        margin:0 8px 0 0;
+        vertical-align:middle;
+      }
+      .flow-step b { display:inline; }
+      .flow-step span { margin:6px 0 0 36px; }
+      .flow-step:not(:last-child)::after {
+        content:"↓";
+        right:50%;
+        top:auto;
+        bottom:-21px;
+      }
+    }
+
+    @media (max-width:600px) {
+      body { word-break:normal; }
+      .page {
+        width:min(100% - 24px,900px);
+        padding-top:24px;
+      }
+      .nav-inner { width:calc(100% - 24px); }
+      .brand small { display:none; }
+      .hero {
+        padding:30px 22px;
+        border-radius:24px;
+      }
+      .hero h1 { font-size:40px; }
+      .subtitle { font-size:19px; }
+      .section { margin:50px 0; }
+      .section p { font-size:16px; }
+      .question-box { padding:23px; }
+      .timeline-card { grid-template-columns:1fr; padding:22px; }
+      .timeline-year { font-size:12px; }
+      .comparison { overflow-x:auto; }
+      .comparison table { min-width:680px; }
+      .stage-grid,.checklist,.post-nav { grid-template-columns:1fr; }
+      .bar-row { grid-template-columns:92px minmax(0,1fr) 58px; gap:9px; }
+      .post-nav .next { text-align:left; }
+      .references { padding:22px; }
+    }
+  </style>
+<script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BlogPosting",
+    "headline":"예측은 모델에서 시작되지 않았다",
+    "alternativeHeadline":"장애사례집에서 DX·AI 보안까지, 데이터를 운영체계로 바꾸려 했던 과정",
+    "datePublished":"2026-07-21",
+    "dateModified":"2026-07-21",
+    "author":{"@type":"Person","name":"최한람"},
+    "publisher":{"@type":"Organization","name":"Human Tech Note"},
+    "mainEntityOfPage":"https://choihanlam.github.io/human-tech-note/posts/post-71.html",
+    "keywords":["머신러닝","데이터 기반 운영","장애예측","AIOps","DX","보안로그","조직역량"]
+  }
+  </script>
+</head>
+<body>
+<div aria-hidden="true" class="bgfx"></div>
+<div aria-hidden="true" class="reading-progress" id="readingProgress"></div>
+<nav aria-label="주요 메뉴" class="nav">
+<div class="nav-inner">
+<a class="brand" href="../index.html">
+<i class="ti ti-book-2"></i>
+        Human Tech Note
+        <small>by 최한람</small>
+</a>
+<div class="nav-links">
+<a href="../index.html#main-insight">Main Insight</a>
+<a href="../index.html#practice-notes">Practice Notes</a>
+<a href="../index.html#research-notes">Research Notes</a>
+<a class="portfolio-btn" href="../index.html#about"><i class="ti ti-user"></i> 포트폴리오</a>
 </div>
-<div class="callout"><div class="l"><i class="ti ti-link"></i> 이 글과 연결된 실무 역량</div>커리어 종합 서사 — 이력서·경력기술서의 실제 수행 경험과 직접 연결되는 주제입니다.</div>
-<div class="flex flex-wrap gap-2.5 my-8"><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#연구·종합</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#커리어 종합 서사</span></div>
-<div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7"><a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[#e9edf2] transition" href="post-70.html"><div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 글</div><div class="font-bold mt-1 text-[15px]">미션 크리티컬 운영에서 배운 것 — 공군 C4I 회고</div></a><a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[#e9edf2] transition" href="post-72.html"><div class="text-[13px] text-mut font-medium">다음 글 <i class="ti ti-arrow-right"></i></div><div class="font-bold mt-1 text-[15px]">2027 정보보호·IT 거버넌스 전망</div></a></div>
+</div>
+</nav>
+<main class="page">
+<header class="hero">
+<div class="chips">
+<span class="chip chip-primary"><i class="ti ti-users-group"></i> AI Productivity &amp; Organizational Change</span>
+<span class="chip chip-secondary"><i class="ti ti-route"></i> Practice Notes · Career Insight</span>
+</div>
+<h1>예측은 모델에서 시작되지 않았다</h1>
+<p class="subtitle">장애사례집에서 DX·AI 보안까지, 데이터를 운영체계로 바꾸려 했던 과정</p>
+<div class="meta">
+<span><i class="ti ti-calendar"></i> 2026년 7월 21일 (화)</span>
+<span><i class="ti ti-clock"></i> 약 10분</span>
+<span><i class="ti ti-file-text"></i> #71 / 75</span>
+</div>
+</header>
+<aside aria-label="목차" class="toc">
+<div class="toc-title"><i class="ti ti-list"></i> 이 글의 구조</div>
+<div class="toc-grid"><a href="#intro">1. 예측을 고민한 출발점</a><a href="#airforce">2. 장애사례집은 데이터셋의 원형이었다</a><a href="#multicampus">3. 로그에서 소비데이터로</a><a href="#kt">4. 예측보다 관측 가능성이 먼저였다</a><a href="#dx-security">5. 업무·고객·보안 데이터로 확장</a><a href="#framework">6. 데이터를 운영 개선으로 연결하는 공통 프로세스</a><a href="#conclusion">7. 모델 이전에 조직이 준비할 것</a></div>
+</aside>
+<article>
+<section class="section" id="intro">
+<h2>예측을 고민한 출발점</h2>
+<p class="lead">2012년 무렵 공군에서 방공 C4I 시스템을 운영하면서 한 가지 질문을 자주 떠올렸다. 반복되는 장애를 사람의 기억과 경험에만 의존하지 않고, 과거의 장애사례와 로그를 이용해 미리 식별할 수는 없을까?</p>
+<p>당시 머신러닝의 개념과 활용사례를 조사하고, 이를 시스템 장애 분석에 적용하는 방향도 제안했다. 그러나 군의 폐쇄망 환경에서는 외부 오픈소스와 분석도구를 자유롭게 반입하기 어려웠다. 장애사례도 모델이 학습할 수 있을 정도로 동일한 형식과 기준으로 축적돼 있지 않았다.</p>
+<p>돌이켜보면 모델을 구현하지 못한 것이 아쉽기도 하다. 하지만 지금 다시 생각해보면 당시 먼저 필요했던 것은 알고리즘이 아니라 <strong>장애를 데이터로 바꾸는 구조</strong>였다.</p>
+<div class="question-box">
+<div class="label"><i class="ti ti-message-question"></i> 이 글의 중심 질문</div>
+<blockquote>예측은 머신러닝 모델을 만드는 순간 시작되는가, 아니면 현상과 원인, 로그와 조치를 일관된 방식으로 기록하는 순간 이미 시작되는가?</blockquote>
+</div>
+</section>
+<section class="section" id="airforce">
+<h2>장애사례집은 데이터셋의 원형이었다</h2>
+<p>공군에서 수행한 작업은 단순히 로그를 잘 읽는 일이 아니었다. 장애가 발생하면 현상, 원인, 기술 분석, 조치 내용과 추후 개선사항을 하나의 사례로 정리했다. 유사한 문제가 다시 발생했을 때 담당자의 기억에만 의존하지 않고, 이전 사례를 비교해 더 빠르게 판단할 수 있도록 장애사례집과 대응 프로세스를 만들었다.</p>
+<div aria-label="장애사례집과 데이터 분석 개념 비교" class="comparison" role="region">
+<table>
+<thead>
+<tr>
+<th>당시 정리 항목</th>
+<th>현재의 데이터·머신러닝 관점</th>
+<th>운영상 의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>장애 현상</td>
+<td>관측값·이벤트·증상</td>
+<td>정상과 이상을 구분하는 출발점</td>
+</tr>
+<tr>
+<td>기술 로그</td>
+<td>Feature·Event Sequence</td>
+<td>장애 전후의 징후와 패턴 식별</td>
+</tr>
+<tr>
+<td>장애 원인</td>
+<td>Label·Root Cause</td>
+<td>분류와 원인분석의 기준</td>
+</tr>
+<tr>
+<td>조치 내용</td>
+<td>Response Action</td>
+<td>동일 상황의 대응 플레이북</td>
+</tr>
+<tr>
+<td>추후 개선</td>
+<td>Feedback·Control Improvement</td>
+<td>재발방지와 운영기준 개선</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>당시에는 이를 데이터 라벨링이나 지식베이스라고 부르지 않았다. 하지만 모델이 학습하려면 무엇이 정상이고 무엇이 장애인지, 어떤 로그가 어떤 원인과 연결되는지, 어떤 조치가 효과적이었는지에 대한 기준이 먼저 필요하다.</p>
+<div class="insight">
+<b>지금의 해석</b>
+<p>나는 머신러닝 모델을 구현하지는 못했다. 그러나 모델이 학습할 수 있도록 <strong>장애 현상과 로그, 원인과 조치를 구조화하는 작업</strong>은 이미 하고 있었다.</p>
+</div>
+
+</section>
+<section class="section" id="multicampus">
+<h2>로그에서 소비데이터로 분석의 범위가 넓어졌다</h2>
+<p>이후 삼성SDS 멀티캠퍼스 과정에서는 시스템 로그가 아니라 사람의 소비행동을 데이터로 분석했다. 프로젝트 주제는 <strong>「20대 소비패턴 분석을 통한 여가 생활 개선」</strong>이었다.</p>
+<div class="data-metrics">
+<div class="metric">
+<strong>27,780,353건</strong>
+<span>신한카드 민간 소비데이터<br/>12개 변수</span>
+</div>
+<div class="metric">
+<strong>20,961,826건</strong>
+<span>통합 상권데이터<br/>39개 변수</span>
+</div>
+<div class="metric">
+<strong>379,113건</strong>
+<span>분석 목적에 맞게 추출한<br/>상권 관측치</span>
+</div>
+</div>
+<p>신한카드 소비데이터에 통계청과 공공데이터포털의 소비자물가, 근로형태별 임금·인원, 상권과 인구 데이터를 결합했다. 결측값을 보완하고 연령별 평균소득 파생변수를 생성한 뒤, 지역·연령·성별·업종별 소비패턴을 시각화하고 피어슨 상관분석을 수행했다.</p>
+<h3>분석에서 확인한 20대 소비의 특징</h3>
+<div aria-label="20대 소비패턴 주요 결과" class="pattern-bars">
+<div class="bar-row">
+<div class="bar-label">저가 소비</div>
+<div class="bar-track"><div class="bar-fill" style="width:41%"></div></div>
+<div class="bar-value">41%</div>
+</div>
+<div class="bar-row">
+<div class="bar-label">중저가 소비</div>
+<div class="bar-track"><div class="bar-fill" style="width:46%"></div></div>
+<div class="bar-value">46%</div>
+</div>
+<div class="bar-row">
+<div class="bar-label">상권 수 상관</div>
+<div class="bar-track"><div class="bar-fill" style="width:75.7%"></div></div>
+<div class="bar-value">r≈0.757</div>
+</div>
+<div class="bar-row">
+<div class="bar-label">인구 상관</div>
+<div class="bar-track"><div class="bar-fill" style="width:87.1%"></div></div>
+<div class="bar-value">r≈0.871</div>
+</div>
+</div>
+<p>20대의 1회 평균 지출액은 27,706원으로 다른 연령대보다 낮았고, 저가·중저가 소비의 비중이 높았다. 20대의 지출비용은 물가지수와 평균소득보다는 상권 수와 인구와 더 높은 상관을 보였다.</p>
+<p>상관관계가 곧 인과관계를 의미하는 것은 아니다. 그럼에도 이 경험을 통해 데이터를 많이 확보하는 것만큼, <strong>어떤 변수를 만들고 무엇과 비교하며 어떤 질문에 답할 것인지</strong>가 중요하다는 것을 배웠다.</p>
+<div class="insight">
+<b>분석 대상은 달라도 문제해결 방식은 같았다</b>
+<p>공군에서는 장애 로그에서 패턴을 찾았고, 멀티캠퍼스에서는 소비데이터에서 연령·지역·업종별 차이를 찾았다. 두 경험 모두 흩어진 관측값을 구조화해 판단 가능한 정보로 바꾸는 과정이었다.</p>
+</div>
+</section>
+<section class="section" id="kt"><h2>KT 지니뮤직: 예측보다 관측 가능성이 먼저였다</h2><p>KT 지니뮤직에 처음 입사했을 때에도 장애사례와 운영데이터를 축적하면 향후 장애를 예측하고 서비스 안정화에 활용할 수 있다고 생각했다. 장애가 발생한 뒤 원인을 찾는 방식에서 벗어나, 서비스 상태의 변화를 조기에 발견하고 대응하는 운영체계를 만들고 싶었다.</p><p>그러나 실제 현장에서 먼저 해결해야 할 과제는 머신러닝 모델이 아니었다. 서비스 이용자와 트래픽이 증가하면서 안정적인 수용 능력, 운영 기준, 모니터링 체계와 장애 대응 프로세스를 함께 정비해야 했다.</p><div class="stage-grid"><div class="stage-card"><div class="stage-no">01</div><h3>서비스 수용 능력</h3><p>이용자와 트래픽 증가에 대응할 수 있도록 시스템의 확장성과 안정성을 점검하는 일이 우선이었다.</p></div><div class="stage-card"><div class="stage-no">02</div><h3>운영기준 정비</h3><p>장애 대응이 개인의 경험에만 의존하지 않도록 역할, 절차와 기록 기준을 정리해야 했다.</p></div><div class="stage-card"><div class="stage-no">03</div><h3>관측 가능성 강화</h3><p>서비스 상태와 이상징후를 일관된 기준으로 확인할 수 있도록 모니터링과 운영데이터 축적 기반을 강화했다.</p></div><div class="stage-card"><div class="stage-no">04</div><h3>운영 협업체계</h3><p>개발·인프라·운영조직과 외부 파트너가 동일한 기준으로 대응할 수 있도록 협업과 운영체계를 정비했다.</p></div></div><p>실제 업무에서는 인프라와 운영의 안정성을 높이고, 모니터링 기준과 장애 대응체계를 정비하며, 사례와 운영정보가 지속적으로 축적될 수 있는 기반을 만드는 데 집중했다.</p><div class="question-box"><div class="label"><i class="ti ti-binoculars"></i> 운영에서 배운 순서</div><blockquote>장애를 예측하기 전에 먼저 장애를 관측할 수 있어야 했다. 데이터가 쌓이기 전에 모델을 만드는 것보다, 안정적인 운영환경과 일관된 기록 기준을 만드는 일이 우선이었다.</blockquote></div><p>머신러닝을 적용하지 못했다고 해서 예측 운영의 방향이 사라진 것은 아니었다. 운영 기반을 정비하고 모니터링 데이터를 축적하는 과정 자체가 이후의 분석과 자동화를 위한 선행조건이었다.</p></section>
+<section class="section" id="dx-security">
+<h2>예측의 대상은 업무·고객·보안으로 확장됐다</h2>
+<div class="timeline">
+<section class="timeline-card">
+<div class="timeline-year">DX Center</div>
+<div class="timeline-content">
+<h3>업무 프로세스를 데이터로 바꾸다</h3>
+<p>전사 주요 업무 프로세스를 유형별로 분류하고, 반복·수작업 업무와 개선 가능성이 높은 영역을 찾아 자동화와 업무혁신 과제로 연결했다. 경험과 의견으로 존재하던 업무를 비교 가능한 데이터로 바꾸고 우선순위를 정하는 작업이었다.</p>
+<div class="timeline-key">
+<span>프로세스 분류</span>
+<span>자동화 후보</span>
+<span>개선 우선순위</span>
+<span>부서 간 협의</span>
+</div>
+</div>
+</section>
+<section class="timeline-card">
+<div class="timeline-year">CX 분석</div>
+<div class="timeline-content">
+<h3>VOC와 고객경험을 서비스 판단으로 연결하다</h3>
+<p>고객의 VOC와 서비스 이용 맥락처럼 정성적인 정보를 구조화하고, 고객경험 기반의 서비스 분석방식을 수립하려 했다. 완성된 예측모델이라기보다 고객의 행동과 불편을 데이터로 해석해 다음 개선과제를 판단하는 기반이었다.</p>
+<div class="timeline-key">
+<span>VOC 구조화</span>
+<span>CX 지표</span>
+<span>서비스 분석</span>
+<span>의사결정 지원</span>
+</div>
+</div>
+</section>
+<section class="timeline-card">
+<div class="timeline-year">정보보호팀</div>
+<div class="timeline-content">
+<h3>보안 이벤트를 탐지·차단·재발방지로 연결하다</h3>
+<p>엔드포인트·네트워크·접근통제·정보유출방지 등 다양한 보안솔루션에서 생성되는 로그와 이벤트를 통합적으로 확인하고 분석했다. 보안제품 검토 과정에서는 휴리스틱·행위기반·머신러닝 탐지기술을 살펴보고, Hash·IOC·Sandbox 분석 결과를 악성코드 탐지·차단과 재발방지 조치에 활용했다.</p>
+<div class="timeline-key"><span>보안 이벤트</span><span>이상징후</span><span>Hash·IOC</span><span>Sandbox</span><span>행위기반 탐지</span></div>
+</div>
+</section>
+</div>
+<p>공군에서는 사람이 장애 로그와 사례를 직접 비교했다면, 정보보호 업무에서는 보안시스템이 제공하는 행위·평판·Hash·IOC와 머신러닝 분석 결과를 실무자가 해석해 대응하는 구조를 경험했다.</p>
+<p>기술은 달라졌지만 질문은 같았다.</p>
+<div class="insight">
+<b>반복된 질문</b>
+<p>무엇을 관측해야 하는가? 어떤 패턴을 이상으로 볼 것인가? 결과를 누가 해석하고 어떤 조치로 연결할 것인가? 그리고 그 결과를 다음 판단에 어떻게 다시 반영할 것인가?</p>
+</div>
+</section>
+<section class="section" id="framework">
+<h2>데이터를 운영 개선으로 연결하는 공통 프로세스</h2>
+<p>돌이켜보면 어느 부서에서든 머신러닝을 직접 구현하려고 했다기보다, 데이터를 이용해 더 나은 판단과 운영을 가능하게 만들려 했다. 이를 하나의 과정으로 정리하면 다음과 같다.</p>
+<div aria-label="데이터 기반 예측 운영 프로세스" class="flow">
+<div class="flow-step">
+<i class="ti ti-eye"></i>
+<b>Observe</b>
+<span>장애·고객·업무·보안 현상을 관측</span>
+</div>
+<div class="flow-step">
+<i class="ti ti-category"></i>
+<b>Structure</b>
+<span>사례와 로그를 동일 기준으로 구조화</span>
+</div>
+<div class="flow-step">
+<i class="ti ti-tags"></i>
+<b>Classify</b>
+<span>유형·원인·영향도와 대응결과 분류</span>
+</div>
+<div class="flow-step">
+<i class="ti ti-chart-dots-3"></i>
+<b>Analyze</b>
+<span>패턴·상관관계·이상징후 분석</span>
+</div>
+<div class="flow-step">
+<i class="ti ti-route-2"></i>
+<b>Decide</b>
+<span>우선순위와 실행조치 결정</span>
+</div>
+<div class="flow-step">
+<i class="ti ti-refresh"></i>
+<b>Feedback</b>
+<span>결과를 기록하고 기준과 통제 개선</span>
+</div>
+</div>
+<p>이 과정은 머신러닝 프로젝트의 데이터 파이프라인과도 닮아 있지만, 반드시 머신러닝이 있어야만 작동하는 구조는 아니다. 규칙 기반 분석, 통계, 시각화, 전문가 판단과 운영 프로세스만으로도 충분히 시작할 수 있다.</p>
+<div class="resume-box">
+<div class="label"><i class="ti ti-route-2"></i> 경험을 관통한 공통 흐름</div>
+<p>장애 로그, 소비데이터, 서비스 운영, 업무 프로세스, 고객 VOC와 보안 이벤트처럼 분석 대상은 달라졌지만, 데이터를 구조화해 패턴을 찾고 판단과 운영 개선으로 연결하는 흐름은 반복됐다.</p>
+</div>
+</section>
+
+<section class="section" id="conclusion">
+<h2>모델 이전에 조직이 준비해야 할 것</h2>
+<p>오늘날 AIOps, 예측정비, 보안관제 자동화와 생성형 AI가 빠르게 확산되고 있다. 그러나 데이터가 충분하지 않거나, 로그의 의미가 정의되지 않았거나, 원인과 조치가 연결되지 않은 조직에서는 정교한 모델도 운영성과로 이어지기 어렵다.</p>
+<p>예측을 위해 필요한 것은 알고리즘만이 아니다.</p>
+<ul class="checklist">
+<li><i class="ti ti-circle-check"></i><span>동일한 기준으로 수집되는 관측 데이터가 있는가?</span></li>
+<li><i class="ti ti-circle-check"></i><span>정상·이상·원인·영향도에 대한 분류 기준이 있는가?</span></li>
+<li><i class="ti ti-circle-check"></i><span>분석 결과를 실제 대응과 의사결정으로 연결하는 주체가 있는가?</span></li>
+<li><i class="ti ti-circle-check"></i><span>조치 결과를 다시 데이터와 운영기준에 반영하는가?</span></li>
+<li><i class="ti ti-circle-check"></i><span>모델의 정확도뿐 아니라 오탐·미탐과 운영비용을 함께 관리하는가?</span></li>
+<li><i class="ti ti-circle-check"></i><span>담당자의 경험이 개인의 기억이 아니라 조직의 지식으로 남는가?</span></li>
+</ul>
+<div class="insight">
+<b>Human Tech Note의 관점</b>
+<p>예측은 모델을 학습시키는 순간이 아니라, 현상을 관측하고 사례를 구조화하며 결과를 다시 운영에 반영하는 순간부터 시작된다. AI는 이 과정을 가속할 수 있지만, 그 기반을 대신 만들어주지는 않는다.</p>
+</div>
+<p>장애사례집, 소비데이터 분석, 모니터링과 운영체계, 프로세스·VOC 구조화와 보안 이벤트 분석은 모두 데이터를 판단과 행동으로 바꾸기 위한 기반이었다.</p>
+<p>모델은 나중에 도입할 수 있다. 그러나 조직이 무엇을 관측하고 어떻게 기록하며, 누가 판단하고 결과를 어떻게 다시 학습할지 준비하지 않았다면 예측은 운영성과로 이어지기 어렵다.</p>
+</section>
+<section aria-labelledby="references-title" class="references">
+<h2 id="references-title">참고 자료</h2>
+<ol>
+<li>팀 프로젝트 발표자료, 「20대 소비패턴 분석을 통한 여가 생활 개선」, 삼성SDS 멀티캠퍼스 과정.</li>
+<li>Wei Xu et al., <a href="https://doi.org/10.1145/1629575.1629587" rel="noopener noreferrer" target="_blank">Detecting Large-Scale System Problems by Mining Console Logs</a>, SOSP 2009.</li>
+<li>Min Du et al., <a href="https://doi.org/10.1145/3133956.3134015" rel="noopener noreferrer" target="_blank">DeepLog: Anomaly Detection and Diagnosis from System Logs through Deep Learning</a>, ACM CCS 2017.</li>
+<li>Google, <a href="https://sre.google/sre-book/monitoring-distributed-systems/" rel="noopener noreferrer" target="_blank">Monitoring Distributed Systems</a>, Site Reliability Engineering.</li>
+</ol>
+</section>
+<div aria-label="태그" class="tags">
+<span class="tag">#머신러닝</span>
+<span class="tag">#데이터기반운영</span>
+<span class="tag">#장애예측</span>
+<span class="tag">#AIOps</span>
+<span class="tag">#DX</span>
+<span class="tag">#고객경험</span>
+<span class="tag">#보안로그</span>
+<span class="tag">#AI보안</span>
+<span class="tag">#조직역량</span>
+</div>
+<nav aria-label="이전 및 다음 글" class="post-nav">
+<a href="../index.html#archive">
+<span><i class="ti ti-arrow-left"></i> 이전 주제 · #70</span>
+<b>GraphRAG의 연결성은 새로운 개인정보 추론 위험을 만드는가</b>
+</a>
+<a class="next" href="../index.html#archive">
+<span>다음 주제 · #72 <i class="ti ti-arrow-right"></i></span>
+<b>AI 사업의 ROI는 사용량이 증가할수록 좋아지는가</b>
+</a>
+</nav>
 </article>
-</body></html>
+</main>
+<footer>
+<p>Human Tech Note는 AI·데이터·보안·조직의 문제를 실무와 연구의 관점에서 분석합니다.</p>
+<p>© 2026 최한람 · Human Tech Note</p>
+</footer>
+<script>
+    (function () {
+      const progress = document.getElementById("readingProgress");
+
+      function updateProgress() {
+        const doc = document.documentElement;
+        const scrollTop = window.scrollY || doc.scrollTop;
+        const scrollable = doc.scrollHeight - window.innerHeight;
+        const ratio = scrollable > 0
+          ? Math.min(1, Math.max(0, scrollTop / scrollable))
+          : 0;
+
+        progress.style.width = `${ratio * 100}%`;
+      }
+
+      window.addEventListener("scroll", updateProgress, { passive:true });
+      window.addEventListener("resize", updateProgress);
+      updateProgress();
+    })();
+  </script>
+</body>
+</html>

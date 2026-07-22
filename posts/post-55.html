@@ -1,59 +1,106 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>생성형 AI로 보안 운영 자동화 실험기 · Human Tech Note</title><meta name="description" content="AI 활용 실험"/>
+<title>[컨퍼런스 노트] 공격자는 성공한 공격을 반복한다 · Human Tech Note</title>
+<meta name="description" content="2026년 상반기 침해사고 사례를 자산 식별, 취약점 패치, EDR 적용 범위, 정상 관리도구 악용과 로그관리 관점에서 재구성한 컨퍼런스 노트"/>
+<meta property="og:title" content="[컨퍼런스 노트] 공격자는 성공한 공격을 반복한다"/>
+<meta property="og:description" content="반복되는 침해사고를 자산·패치·권한·탐지·로그 사이의 운영 공백으로 분석합니다."/>
+<meta property="og:type" content="article"/>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <style type="text/tailwindcss">
-@theme{
---color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,0.05);
---color-hair:rgba(255,255,255,0.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
---radius-pill:100px;--radius-feat:32px;
---font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
-}
+@theme{--color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,.05);--color-hair:rgba(255,255,255,.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;--radius-pill:100px;--radius-feat:32px;--font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif}
 </style>
 <style>
-body{background:#08090a}
-.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
-radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
-radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
-radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
-radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
-#07080a}
+body{background:#08090a}.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),#07080a}
+.pb h2{margin:52px 0 16px;color:#f1f3ef;font-size:29px;font-weight:650;line-height:1.4;letter-spacing:-.65px}.pb h3{margin:38px 0 12px;color:#f1f3ef;font-size:23px;font-weight:620;line-height:1.45;letter-spacing:-.4px}.pb p{margin:0 0 20px;font-size:18px;line-height:1.84;letter-spacing:-.2px}.pb ul,.pb ol{margin:4px 0 26px;padding-left:24px;font-size:18px;line-height:1.8}.pb li{margin-bottom:9px}.pb strong{color:#fff;font-weight:700}.pb blockquote{margin:34px 0;padding:22px 26px;border-left:3px solid #ff8256;border-radius:0 18px 18px 0;background:rgba(255,255,255,.045);color:#f1f3ef;font-size:20px;font-weight:550;line-height:1.72;letter-spacing:-.3px}
+.lead{margin:0 0 28px;color:#d9ddd7;font-size:20px;line-height:1.75;letter-spacing:-.3px}.stage-label{display:inline-flex;align-items:center;gap:7px;margin-bottom:4px;padding:7px 12px;border:1px solid rgba(255,130,86,.22);border-radius:999px;background:rgba(255,130,86,.09);color:#ff9a72;font-size:12px;font-weight:800;letter-spacing:.04em}.notice{margin:28px 0 34px;padding:22px 24px;border:1px solid rgba(232,180,90,.22);border-radius:22px;background:rgba(232,180,90,.07);color:#e9e3d7;font-size:15px;line-height:1.72}.notice strong{color:#f4cd84}.callout{margin:38px 0;padding:27px 30px;border:1px solid rgba(255,255,255,.1);border-radius:32px;background:rgba(255,255,255,.05);color:#e7e9e4;font-size:16px;line-height:1.75}.callout .l{display:flex;align-items:center;gap:7px;margin-bottom:12px;color:#ff8256;font-size:13px;font-weight:700}.callout ul{margin:0;padding-left:20px}.callout li{margin-bottom:8px}
+.table-wrap{overflow-x:auto;margin:24px 0 34px;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:rgba(255,255,255,.035)}.table-wrap table{width:100%;min-width:620px;border-collapse:collapse}.table-wrap th,.table-wrap td{padding:15px 17px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top;font-size:15px;line-height:1.65}.table-wrap th{color:#ff9a72;font-weight:750;background:rgba(255,255,255,.035)}.table-wrap td{color:#dde1db}.table-wrap tr:last-child td{border-bottom:0}
+.viz-wrap{margin:30px 0 38px}.viz-title{display:flex;align-items:center;gap:8px;margin-bottom:15px;color:#ff8f65;font-size:14px;font-weight:780;letter-spacing:-.2px}.viz-title:before{width:8px;height:8px;border-radius:999px;background:#ff8256;content:"";box-shadow:0 0 18px rgba(255,130,86,.55)}.viz-note{margin-top:12px;color:#92988f;font-size:13px;line-height:1.65}
+.card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card-grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}.mini-card{position:relative;overflow:hidden;min-height:154px;padding:19px 18px;border:1px solid rgba(255,255,255,.1);border-radius:21px;background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.025))}.mini-card:after{position:absolute;right:-32px;bottom:-44px;width:105px;height:105px;border-radius:999px;background:rgba(255,130,86,.08);content:""}.mini-card .k{position:relative;z-index:1;margin-bottom:10px;color:#ff8f65;font-size:11px;font-weight:800;letter-spacing:.08em}.mini-card .v{position:relative;z-index:1;color:#f1f3ef;font-size:18px;font-weight:680;line-height:1.45}.mini-card .d{position:relative;z-index:1;margin-top:9px;color:#c7cdc5;font-size:13px;line-height:1.65}
+.attack-path{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.attack-node{position:relative;min-height:164px;padding:17px 15px;border:1px solid rgba(255,255,255,.1);border-radius:19px;background:rgba(255,255,255,.04)}.attack-node:not(:last-child):after{position:absolute;top:50%;right:-10px;width:10px;border-top:1px solid rgba(255,130,86,.55);content:""}.attack-node .n{display:block;margin-bottom:9px;color:#ff8256;font-size:11px;font-weight:800;letter-spacing:.07em}.attack-node .t{color:#f1f3ef;font-size:15px;font-weight:680;line-height:1.5}.attack-node .s{margin-top:8px;color:#bec5bc;font-size:12px;line-height:1.6}
+.gap-flow{display:grid;gap:10px}.gap-step{display:grid;grid-template-columns:42px 1fr auto;gap:14px;align-items:center;padding:17px 18px;border:1px solid rgba(255,255,255,.1);border-radius:19px;background:rgba(255,255,255,.038)}.gap-step .num{display:flex;width:34px;height:34px;align-items:center;justify-content:center;border-radius:999px;background:rgba(255,130,86,.14);color:#ff9169;font-size:12px;font-weight:850}.gap-step .txt strong{display:block;margin-bottom:4px;color:#f1f3ef;font-size:16px;font-weight:680}.gap-step .txt span{color:#c4cac2;font-size:13px;line-height:1.65}.gap-step .state{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.055);color:#aeb5ac;font-size:11px;font-weight:700;white-space:nowrap}
+.lifecycle,.control-chain{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.life-card{padding:18px 15px;border:1px solid rgba(255,255,255,.1);border-radius:19px;background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.022))}.life-card .phase{margin-bottom:9px;color:#ff8256;font-size:11px;font-weight:820;letter-spacing:.07em}.life-card .head{margin-bottom:8px;color:#f1f3ef;font-size:16px;font-weight:680}.life-card .desc{color:#c2c8c0;font-size:12px;line-height:1.62}.control-box{padding:17px 12px;border:1px solid rgba(255,255,255,.1);border-radius:18px;background:rgba(255,255,255,.04);color:#edf0eb;text-align:center;font-size:14px;font-weight:680;line-height:1.5}.control-summary{margin-top:11px;padding:15px 17px;border:1px solid rgba(255,130,86,.18);border-radius:17px;background:rgba(255,130,86,.07);color:#e8ebe6;text-align:center;font-size:14px;font-weight:620;line-height:1.65}
+.decision-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.decision-card{min-height:190px;padding:20px 19px;border:1px solid rgba(255,255,255,.1);border-radius:21px;background:rgba(255,255,255,.04)}.decision-card .h{margin-bottom:11px;color:#ff9169;font-size:12px;font-weight:820;letter-spacing:.035em}.decision-card .title{margin-bottom:10px;color:#f1f3ef;font-size:17px;font-weight:690;line-height:1.45}.decision-card ul{margin:0;padding-left:18px;color:#ccd1ca;font-size:13px;line-height:1.7}.priority-formula{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:24px 0 32px}.priority-item{padding:17px 14px;border:1px solid rgba(255,255,255,.1);border-radius:18px;background:rgba(255,255,255,.04);color:#dfe3dd;text-align:center;font-size:13px;font-weight:640;line-height:1.55}.priority-result{grid-column:1/-1;padding:17px;border:1px solid rgba(255,130,86,.2);border-radius:18px;background:rgba(255,130,86,.075);color:#fff3ed;text-align:center;font-size:15px;font-weight:720}
+@media(max-width:980px){.card-grid.four,.attack-path,.lifecycle,.control-chain{grid-template-columns:repeat(2,minmax(0,1fr))}.attack-node:not(:last-child):after{display:none}}@media(max-width:700px){.card-grid,.card-grid.four,.attack-path,.lifecycle,.control-chain,.decision-grid,.priority-formula{grid-template-columns:1fr}.gap-step{grid-template-columns:38px 1fr}.gap-step .state{grid-column:2;justify-self:start}.pb h2{font-size:25px}.pb h3{font-size:21px}.pb p,.pb ul,.pb ol{font-size:17px}.pb blockquote{font-size:18px}.lead{font-size:18px}}
 </style>
-<style>
-.pb h3{font-size:24px;font-weight:500;letter-spacing:-.4px;margin:36px 0 10px;color:#f1f3ef}
-.pb p{font-size:18px;line-height:1.75;margin:0 0 18px;letter-spacing:-.2px}
-.pb ul{font-size:18px;line-height:1.7;padding-left:22px;margin:0 0 20px}
-.pb li{margin-bottom:7px}
-.pb strong{color:#fff;font-weight:700}
-.callout{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:32px;padding:26px 30px;margin:30px 0;font-size:16px;line-height:1.65;color:#e7e9e4}
-.callout .l{color:#ff8256;font-weight:700;font-size:13px;margin-bottom:8px;display:flex;gap:7px;align-items:center}
-</style>
-</head><body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em"><div class="bgfx"></div>
-<nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair">
-<div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
-<a class="font-bold text-lg flex items-center gap-2" href="../index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a>
-<span class="ml-auto"></span>
-<a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive"><i class="ti ti-arrow-left"></i> 포트폴리오</a>
-</div></nav>
-<article class="max-w-[760px] mx-auto px-6 pt-14 pb-28">
-<span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6"><i class="ti ti-flask"></i> 포트폴리오 데모용 더미 콘텐츠</span>
-<div><span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#EDEBFB;color:#3E2FA6"><i class="ti ti-cpu"></i> AI·AX</span></div>
-<h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">생성형 AI로 보안 운영 자동화 실험기</h1>
-<div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
-<span><i class="ti ti-calendar align-[-2px]"></i> 2026년 11월 16일 (월)</span><span><i class="ti ti-clock align-[-2px]"></i> 약 6분</span><span>#55 / 75</span></div>
+</head>
+<body class="font-sans text-tx antialiased" style="letter-spacing:-.01em"><div class="bgfx"></div>
+<nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair"><div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5"><a class="font-bold text-lg flex items-center gap-2" href="../index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a><span class="ml-auto"></span><a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive"><i class="ti ti-arrow-left"></i> 아카이브</a></div></nav>
+<article class="max-w-[820px] mx-auto px-6 pt-14 pb-28">
+<span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6"><i class="ti ti-notes"></i> Practice Notes · Conference Note</span>
+<div><span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#e9f5ef;color:#12613d"><i class="ti ti-shield-search"></i> Security Operations</span></div>
+<h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">[컨퍼런스 노트] 공격자는 성공한 공격을 반복한다</h1>
+<p class="mb-6 text-[18px] leading-relaxed text-mut">2026년 상반기 침해사고 사례에서 다시 본 자산 식별·패치·EDR·로그의 중요성</p>
+<div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8"><span><i class="ti ti-calendar align-[-2px]"></i> 2026년 7월 22일 (수)</span><span><i class="ti ti-clock align-[-2px]"></i> 약 12분</span><span><i class="ti ti-file-text align-[-2px]"></i> #55</span><span><i class="ti ti-refresh align-[-2px]"></i> 발표자료 수령 후 보완 예정</span></div>
 <div class="pb">
-<h3>들어가며</h3>
-<p>AI가 바꾸는 업무와 보안의 지형을 실무자의 시각에서 짚어본다. 이번 글은 <strong>AI 활용 실험</strong>을(를) 중심으로, 개념 설명에 그치지 않고 실제 판단의 맥락을 함께 담으려 했다.</p>
-<p>많은 조직이 같은 문제를 겪지만, 정답은 조직의 규모·문화·서비스 특성에 따라 달라진다. 그래서 '무엇을 했는가'보다 '왜 그렇게 판단했는가'에 무게를 두었다.</p>
-<h3>문제 정의</h3><p>먼저 상황을 명확히 규정하는 것이 중요하다. 문제를 좁게 정의할수록 해결책은 선명해지고, 이해관계자 사이의 합의도 빨라진다.</p>
-<h3>접근 방법</h3><p>실무에서는 이상적인 방법론보다 '지속 가능한 운영'이 우선한다. 한 번의 조치로 끝나는 일은 거의 없고, 대부분은 정책·프로세스·사람이 맞물려야 유지된다.</p>
-<h3>정리하며</h3><p>결국 남는 것은 기록과 반복 가능한 체계다. AI 활용 실험에서 얻은 교훈은 다른 영역에도 그대로 적용된다.</p>
+<div class="notice"><strong>작성 기준</strong><br/>이 글은 2026년 상반기 침해사고 정보공유 세미나에서 확인한 내용을 바탕으로 작성한 1차 정리다. 발표 세션명, 공격기법의 세부 흐름과 기술적 사실은 발표자료를 받은 뒤 추가로 검증하고 보완할 예정이다.</div>
+<p class="lead">2026년 상반기 침해사고 사례에서는 사용자, 웹서비스, 서버, 가상화 플랫폼을 대상으로 한 다양한 공격이 소개됐다. 공격에 활용된 기술과 침투경로는 달랐지만, 사례를 관통하는 공통점은 비교적 분명했다.</p>
+<p>공격자는 반드시 새로운 취약점이나 복잡한 공격기법만을 사용하는 것이 아니었다. 외부에 노출된 서버, 패치되지 않은 취약점, 탈취된 계정, 정상 관리도구의 오남용, 보안 에이전트가 설치되지 않은 자산처럼 이미 알려진 보안 공백을 반복적으로 활용했다.</p>
+<blockquote>공격자는 성공 가능성이 확인된 공격경로를 반복해서 사용한다.</blockquote>
+<p>기업이 새로운 보안기술을 도입하는 것도 중요하다. 그러나 자산 식별, 취약점 패치, 접근권한, 엔드포인트 탐지, 로그관리와 사고 대응이 실제 운영환경에서 일관되게 작동하지 않는다면 기존의 공격방식도 다시 성공할 수 있다.</p>
+<p>이번 글에서는 세미나에서 확인한 내용을 <strong>Learn → Analyze → Structure → Connect → Decide</strong> 흐름으로 정리한다.</p>
+<span class="stage-label">01 · LEARN</span><h2>침해사고 사례에서 무엇을 확인했는가</h2>
+<p>세미나에서 소개된 공격 대상을 크게 구분하면 사용자, 웹서비스, 서버, 가상화·중앙관리 플랫폼의 네 영역으로 정리할 수 있다.</p>
+<div class="viz-wrap"><div class="viz-title">주요 공격 대상 4대 영역</div><div class="card-grid four"><div class="mini-card"><div class="k">TARGET 01</div><div class="v">사용자</div><div class="d">스피어피싱, 계정 탈취, 악성파일 실행과 외부 사이트 접속 유도</div></div><div class="mini-card"><div class="k">TARGET 02</div><div class="v">웹서비스</div><div class="d">외부 노출 서비스, 관리페이지와 인증 우회 가능 지점</div></div><div class="mini-card"><div class="k">TARGET 03</div><div class="v">서버</div><div class="d">MSSQL, 취약 계정, 원격접속과 내부 이동의 출발점</div></div><div class="mini-card"><div class="k">TARGET 04</div><div class="v">중앙관리 플랫폼</div><div class="d">vCenter·ESXi 등 다수 자산을 제어하는 핵심 관리계층</div></div></div></div>
+<h3>사용자를 대상으로 한 공격</h3><p>사용자는 여전히 중요한 초기 침투경로다. 공격자는 스피어피싱과 워터링홀 등을 통해 사용자가 악성파일을 실행하거나 공격자가 준비한 웹페이지에 접근하도록 유도한다.</p><p>특정 조직과 사용자의 관심사, 업무 관계와 커뮤니케이션 방식을 파악할수록 공격은 정상적인 업무 요청처럼 보일 수 있다. 공격 메일을 차단하는 기술뿐 아니라 메일 수신 이후의 파일 실행, 계정정보 입력과 외부 사이트 접속을 탐지하는 체계도 함께 필요하다.</p>
+<h3>외부에 공개된 웹서비스</h3><p>인터넷에 공개된 웹서비스, 관리페이지와 원격접속 기능도 주요 공격 대상이다. 서비스에 알려진 취약점이 남아 있거나 관리용 포트가 불필요하게 노출되어 있으면 공격자는 이를 기업 내부로 진입하기 위한 경로로 활용할 수 있다.</p><p>취약점이 존재한다는 사실만 확인해서는 부족하다. 기업이 해당 제품과 버전을 사용하고 있는지, 인터넷에 노출되어 있는지, 패치를 적용했는지, 적용하지 못했다면 어떤 보완조치를 운영하고 있는지까지 연결해서 확인해야 한다.</p>
+<h3>외부 노출 서버에서 랜섬웨어로 이어지는 공격</h3><p>세미나에서는 외부에 노출된 MSSQL 서버를 시작점으로 자격증명을 확보하고, 정상적인 원격관리 도구를 이용해 내부 시스템을 탐색한 뒤 랜섬웨어를 실행하는 공격 흐름도 소개됐다.</p>
+<div class="viz-wrap"><div class="viz-title">외부 노출 서버에서 랜섬웨어로 이어지는 공격 흐름</div><div class="attack-path"><div class="attack-node"><span class="n">STEP 01</span><div class="t">외부 노출 서버 접근</div><div class="s">인터넷에 공개된 서버와 관리포트 식별</div></div><div class="attack-node"><span class="n">STEP 02</span><div class="t">취약점·계정 악용</div><div class="s">CVE 또는 탈취한 자격증명으로 초기 접근</div></div><div class="attack-node"><span class="n">STEP 03</span><div class="t">정상 원격도구 활용</div><div class="s">관리도구를 이용해 지속적인 원격접속 확보</div></div><div class="attack-node"><span class="n">STEP 04</span><div class="t">내부 탐색·보안 우회</div><div class="s">내부 자산 탐색과 보안기능 비활성화 시도</div></div><div class="attack-node"><span class="n">STEP 05</span><div class="t">랜섬웨어·흔적 삭제</div><div class="s">암호화 실행 이후 로그와 공격 흔적 제거</div></div></div><div class="viz-note">※ 세부 도구와 공격 순서는 발표자료 수령 후 추가 검증 예정</div></div>
+<p>공격은 하나의 취약점만으로 완성되지 않는다. 외부 노출, 계정관리, 내부 이동, 정상 도구의 악용, 보안기능 무력화와 로그 삭제가 하나의 연속된 공격 흐름을 만든다.</p>
+<h3>가상화·중앙관리 플랫폼</h3><p>vCenter와 ESXi 같은 가상화 관리계층도 중요한 공격 대상으로 다뤄졌다. 가상화 플랫폼은 다수의 서버와 업무시스템을 통합적으로 관리한다. 따라서 중앙관리 계층이 침해되면 개별 서버 한 대의 침해보다 피해 범위가 빠르게 확대될 수 있다.</p><p>가상화 플랫폼뿐 아니라 NAC, 백업시스템, 보안관리 서버처럼 여러 자산을 통합적으로 관리하는 시스템도 별도의 핵심자산으로 식별해야 한다. 다른 자산을 보호하거나 관리하는 시스템도 자체 취약점과 계정, 패치와 접근권한을 관리해야 하는 정보자산이다.</p>
+
+<span class="stage-label">02 · ANALYZE</span><h2>사고는 왜 비슷한 경로에서 반복되는가</h2>
+<p>침해사고가 항상 새로운 공격기술의 등장 때문에 발생하는 것은 아니다. 공격이 성공하는 과정에서는 외부 노출 서버, 미패치 취약점, 탈취 계정, 관리대장 누락 자산, EDR 미설치 자산, 정상 관리도구 악용과 로그 부족이 반복해서 나타난다.</p>
+<h3>EDR 도입과 EDR 적용은 다르다</h3><p>기업이 EDR을 도입했다는 사실만으로 전체 엔드포인트가 보호된다고 판단하기는 어렵다. 전체 설치 대상, 정상 설치 자산, 미설치 자산, 비활성화 또는 통신 불가 자산, 예외 승인 자산을 구분해서 확인해야 한다.</p><p>결국 중요한 것은 솔루션 보유 여부가 아니라 <strong>적용 범위와 예외를 지속적으로 확인할 수 있는가</strong>이다.</p>
+<h3>CVE 확인과 패치 완료는 다르다</h3><p>새로운 CVE가 발표됐다는 사실을 확인하는 것만으로는 충분하지 않다. 기업 내부에서 해당 제품과 버전을 사용하고 있는지, 어떤 업무와 데이터에 연결되어 있는지, 외부에 노출되어 있는지를 함께 판단해야 한다.</p><p>즉시 패치할 수 없다면 접근 제한, 네트워크 차단, 기능 비활성화, 모니터링 강화와 같은 보완통제를 적용하고 그 상태를 추적해야 한다. 취약점 관리는 목록을 작성하는 업무가 아니라 실제 자산과 위험을 연결하고 조치 여부를 끝까지 확인하는 과정이다.</p>
+<h3>정상 도구는 차단만으로 해결하기 어렵다</h3><p>PowerShell과 원격관리 도구는 정상적인 시스템 운영에도 사용된다. 따라서 특정 도구가 실행됐다는 사실만으로 공격 여부를 판단하거나 모든 사용을 차단하기는 어렵다.</p><p>누가, 어느 시스템에서, 어느 시간에, 어떤 명령을 실행했는지, 실행 전후에 계정과 네트워크 행위가 어떻게 달라졌는지를 함께 살펴봐야 한다. 정상 도구의 악용을 탐지하려면 실행 파일의 이름보다 사용자, 자산, 시간, 명령과 후속 행위를 연결해서 분석해야 한다.</p>
+<h3>기술의 부족보다 운영의 간극</h3>
+<div class="viz-wrap"><div class="viz-title">침해사고를 반복시키는 운영의 간극</div><div class="gap-flow"><div class="gap-step"><div class="num">1</div><div class="txt"><strong>정책과 솔루션은 이미 존재한다</strong><span>자산관리, 취약점, EDR과 로그관리 기준은 마련되어 있다.</span></div><div class="state">FORMAL CONTROL</div></div><div class="gap-step"><div class="num">2</div><div class="txt"><strong>전체 자산이 정확히 식별되지 않는다</strong><span>관리대장과 실제 운영자산의 불일치가 통제 범위의 공백으로 이어진다.</span></div><div class="state">VISIBILITY GAP</div></div><div class="gap-step"><div class="num">3</div><div class="txt"><strong>미설치·미패치·예외 자산이 누적된다</strong><span>예외가 조치기한과 책임자 없이 장기간 유지되며 사각지대를 만든다.</span></div><div class="state">OPERATION GAP</div></div><div class="gap-step"><div class="num">4</div><div class="txt"><strong>검증된 공격경로가 다시 성공한다</strong><span>공격자는 새로운 기법보다 관리되지 않는 기존 경로를 반복 활용한다.</span></div><div class="state">REPEATED ATTACK</div></div></div></div>
+<p>기업의 정보보호 수준은 보유한 솔루션의 수보다 <strong>통제의 적용 범위, 예외관리와 지속적인 검증 가능성</strong>으로 판단할 필요가 있다.</p>
+<span class="stage-label">03 · STRUCTURE</span><h2>침해사고 대응을 하나의 구조로 정리해보면</h2>
+<p>세미나에서 확인한 내용을 기업의 정보보호 운영체계로 구조화하면 자산 식별, 노출·취약점 관리, 예방·탐지, 행위·로그 분석, 대응·재발방지의 다섯 단계로 정리할 수 있다.</p>
+<div class="viz-wrap"><div class="viz-title">침해사고 대응 운영체계</div><div class="lifecycle"><div class="life-card"><div class="phase">PHASE 01</div><div class="head">자산 식별</div><div class="desc">PC, 서버, DB, 네트워크, 보안장비와 가상화 플랫폼 식별</div></div><div class="life-card"><div class="phase">PHASE 02</div><div class="head">노출·취약점 관리</div><div class="desc">외부 노출, CVE, 패치, 계정과 보안설정 확인</div></div><div class="life-card"><div class="phase">PHASE 03</div><div class="head">예방·탐지</div><div class="desc">EDR, 백신, 접근통제와 이상행위 탐지 운영</div></div><div class="life-card"><div class="phase">PHASE 04</div><div class="head">행위·로그 분석</div><div class="desc">원격도구, PowerShell, C2와 내부 이동의 연결 분석</div></div><div class="life-card"><div class="phase">PHASE 05</div><div class="head">대응·재발방지</div><div class="desc">격리, 복구, 원인분석, 정책 개선과 동일 시나리오 재점검</div></div></div></div>
+<h3>1단계: 자산 식별</h3><p>보안 운영의 출발점은 기업이 보유한 자산을 정확하게 파악하는 것이다. 자산을 알지 못하면 패치 대상, EDR 설치 대상, 로그 수집 대상과 사고 대응 담당자를 정할 수 없다.</p><p>자산관리대장만을 기준으로 판단하기보다 NAC, EDR, 네트워크 스캔, 클라우드 관리 콘솔과 실제 운영정보를 대조하여 누락된 자산을 확인할 필요가 있다.</p>
+<h3>2단계: 노출과 취약점 관리</h3><p>모든 취약점을 같은 우선순위로 조치하기는 어렵다. 외부 노출 여부, 실제 공격 활용 가능성, 자산의 관리권한과 영향 범위, 처리하는 업무와 데이터의 중요도, 패치와 복구 가능성을 함께 고려해야 한다.</p>
+<div class="priority-formula"><div class="priority-item">외부 노출 여부</div><div class="priority-item">실제 공격 활용 가능성</div><div class="priority-item">자산의 영향 범위</div><div class="priority-item">업무·데이터 중요도</div><div class="priority-result">위험 기반 패치·보완조치 우선순위</div></div>
+<h3>3단계: 예방과 탐지</h3><p>EDR과 백신, 접근통제 등의 보안수단은 실제 설치와 정상 작동 여부까지 확인해야 한다. 미설치 자산, 통신 불가 에이전트, 정책 미적용과 장기간 비활성화 상태가 예외로 남지 않도록 조치기한과 담당자를 관리해야 한다.</p><p>보안솔루션 자체도 패치와 취약점 관리 대상이다. 다른 자산을 보호하는 시스템이라고 해서 공격 대상에서 제외되는 것은 아니다.</p>
+<h3>4단계: 행위와 로그 분석</h3><p>정상 관리도구를 공격자가 악용할 수 있다는 점을 고려하면 정상적인 사용기준을 먼저 정의해야 한다. 누가 어떤 시스템에서 어떤 도구와 명령을 사용할 수 있는지 기준이 있어야 기준을 벗어난 행위를 탐지할 수 있다.</p><p>로그는 개별 시스템에 분산해서 보관하기보다 계정, 엔드포인트, 네트워크와 시스템 행위를 연결해 공격 흐름을 재구성할 수 있어야 한다.</p>
+<h3>5단계: 사고 대응과 재발방지</h3><p>공격을 차단한 이후에는 최초 침투경로, 사용된 계정, 내부 이동, 보안기능 무력화, 악성코드 실행과 로그 삭제 과정을 확인해야 한다. 확인된 원인은 다시 자산관리, 취약점 관리, 접근권한과 탐지정책에 반영되어야 한다.</p><p>사고 대응은 시스템을 복구하는 것으로 끝나는 것이 아니라 동일한 공격경로가 다시 작동하지 않는지를 확인하는 단계까지 포함해야 한다.</p>
+
+<span class="stage-label">04 · CONNECT</span><h2>기존 정보보호 관리체계와 어떻게 연결되는가</h2>
+<p>세미나에서 소개된 사례는 기존 정보보호 관리체계에서 강조해 온 기본 통제가 여전히 중요하다는 점을 보여준다.</p><p>자산관리, 접근통제, 취약점 관리, 악성프로그램 방지, 로그관리와 침해사고 대응은 각각 별개의 통제영역처럼 보인다. 그러나 실제 공격은 이 통제 사이의 공백을 따라 진행된다.</p>
+<div class="table-wrap"><table><thead><tr><th>공격 단계</th><th>연결되는 관리·통제</th></tr></thead><tbody><tr><td>외부 노출 자산 탐색</td><td>자산 식별, 외부 노출 현황 관리</td></tr><tr><td>취약점과 계정 악용</td><td>CVE 점검, 패치, 계정·인증 관리</td></tr><tr><td>내부 접근과 이동</td><td>네트워크 분리, 접근통제, 최소권한</td></tr><tr><td>정상 도구 악용</td><td>관리자 도구 사용기준, 행위기반 탐지</td></tr><tr><td>보안기능 비활성화</td><td>EDR 정책 보호, 에이전트 상태점검</td></tr><tr><td>랜섬웨어 실행</td><td>실행통제, 이상행위 탐지, 백업</td></tr><tr><td>로그와 흔적 삭제</td><td>로그 중앙화, 무결성 보호, 권한 분리</td></tr></tbody></table></div>
+<p>자산이 누락되면 취약점 점검과 패치 대상에서도 제외될 수 있다. EDR과 백신이 설치되지 않을 수 있으며, 사고 발생 이후 관련 담당자와 로그를 신속하게 확인하기도 어렵다. 하나의 통제 공백은 다른 통제의 공백으로 이어진다.</p>
+<div class="viz-wrap"><div class="viz-title">연결된 정보보호 운영체계</div><div class="control-chain"><div class="control-box">자산 식별</div><div class="control-box">취약점·계정 관리</div><div class="control-box">엔드포인트 탐지</div><div class="control-box">정상 행위 기준</div><div class="control-box">로그·사고 대응</div></div><div class="control-summary">개별 통제의 보유 여부보다 실제 공격 흐름 안에서 여러 통제가 연결되어 작동하는지가 더 중요하다.</div></div>
+<p>중요한 것은 통제항목을 각각 점검했는가가 아니다. 실제 공격 시나리오를 기준으로 여러 통제가 순서대로 작동하는지, 통제 사이에 탐지되지 않는 구간이 남아 있지는 않은지를 확인해야 한다.</p><p>공격자는 하나의 통제만을 공격하지 않는다. 여러 조직과 시스템, 보안통제 사이에서 책임과 관리가 불분명한 구간을 찾는다. 따라서 방어 역시 개별 솔루션과 점검항목을 넘어 <strong>공격 흐름을 기준으로 통제의 연결성을 검증하는 방식</strong>으로 발전해야 한다.</p>
+
+<span class="stage-label">05 · DECIDE</span><h2>정보보호 PM이라면 무엇부터 결정할 것인가</h2>
+<p>기업의 정보보호 PM 또는 보안 운영 책임자라면 새로운 솔루션을 추가하기 전에 현재의 보호 범위와 운영 공백을 먼저 확인해야 한다.</p>
+<div class="viz-wrap"><div class="viz-title">정보보호 PM의 우선 의사결정 포인트</div><div class="decision-grid"><div class="decision-card"><div class="h">DECISION 01</div><div class="title">핵심자산과 외부 노출 현황 재식별</div><ul><li>인터넷 노출 서버와 관리자 페이지</li><li>가상화·백업·보안관리 플랫폼</li><li>개인정보와 핵심업무 처리 자산</li></ul></div><div class="decision-card"><div class="h">DECISION 02</div><div class="title">보안 에이전트 적용 범위 수치화</div><ul><li>전체 대상과 정상 설치 자산 비교</li><li>미설치·비활성화·예외 자산 분리</li><li>예외 사유, 책임자와 조치기한 관리</li></ul></div><div class="decision-card"><div class="h">DECISION 03</div><div class="title">위험 기반 패치 우선순위 재설계</div><ul><li>외부 노출과 실제 공격 가능성</li><li>자산 중요도와 영향 범위</li><li>패치 불가 시 보완통제 적용</li></ul></div><div class="decision-card"><div class="h">DECISION 04</div><div class="title">정상 관리도구의 사용기준 정의</div><ul><li>허용 사용자, 시스템과 시간대</li><li>승인된 도구와 명령 범위</li><li>비정상 실행과 후속행위 탐지</li></ul></div><div class="decision-card"><div class="h">DECISION 05</div><div class="title">공격 흐름 중심으로 통제 재검증</div><ul><li>침투 → 계정 악용 → 내부 이동</li><li>보안 우회 → 랜섬웨어 → 로그 삭제</li><li>단계별 예방·탐지·대응 책임 확인</li></ul></div><div class="decision-card"><div class="h">DECISION 06</div><div class="title">복구 이후 동일 시나리오 재평가</div><ul><li>최초 침투경로 제거 여부 확인</li><li>정책·탐지규칙과 운영절차 개선</li><li>개선 통제의 실제 작동 여부 재시험</li></ul></div></div></div>
+<h3>첫째, 핵심자산과 외부 노출 현황을 다시 확인한다</h3><p>PC, 서버, DB, 네트워크 장비, 보안장비와 가상화 플랫폼을 동일한 기준으로 식별해야 한다. 특히 인터넷에 직접 노출된 서버, 관리자 페이지와 원격접속 서비스, 개인정보와 핵심 업무데이터를 처리하는 시스템, 다수 자산을 제어하는 중앙관리 플랫폼을 높은 우선순위로 관리해야 한다.</p><p>자산관리대장과 NAC, EDR, 네트워크 및 클라우드에서 확인되는 실제 자산을 주기적으로 대조할 필요가 있다.</p>
+<h3>둘째, 보안 에이전트 적용 범위를 숫자로 관리한다</h3><p>“대부분 설치됐다”는 표현으로는 통제 수준을 판단하기 어렵다. 전체 설치 대상, 정상 설치 및 통신 자산, 미설치 자산, 비활성화 또는 통신 불가 자산, 설치가 제한된 예외 자산을 구분해 관리해야 한다.</p><p>설치율뿐 아니라 미설치 사유, 예외 승인자, 조치기한과 후속조치를 함께 관리해야 한다.</p>
+<h3>셋째, 패치 우선순위를 자산과 공격 가능성에 연결한다</h3><p>취약점의 심각도 점수만으로 조치 우선순위를 결정해서는 안 된다. 인터넷 노출 여부, 실제 공격사례, 자산의 중요도, 중앙관리 권한, 개인정보와 업무 영향, 패치 가능성을 함께 고려해야 한다.</p><p>특히 가상화 관리 플랫폼, NAC, 백업과 보안관리 시스템처럼 여러 자산에 영향을 줄 수 있는 시스템은 일반 서버와 다른 수준으로 평가해야 한다.</p>
+<h3>넷째, 정상 관리도구의 사용기준을 정의한다</h3><p>PowerShell과 원격접속 도구는 정상 업무에도 필요하다. 따라서 전면 차단보다 허용된 사용자와 관리자 계정, 사용할 수 있는 서버와 업무범위, 허용 시간대, 승인된 도구, 비정상 명령과 대량 실행에 대한 탐지기준을 정의하는 것이 현실적이다.</p><p>기준이 있어야 기준을 벗어난 행위를 이상행위로 판단할 수 있다.</p>
+<h3>다섯째, 실제 공격 흐름으로 통제를 검증한다</h3><p>점검표의 항목을 하나씩 확인하는 것만으로는 부족하다. 외부 서버 침투, 계정정보 탈취, 내부 탐색, 정상 도구를 이용한 원격접속, 보안기능 비활성화, 랜섬웨어 실행과 로그 삭제의 흐름을 기준으로 각 통제가 작동하는지를 확인해야 한다.</p><p>각 단계에서 어떤 통제가 예방하고, 무엇이 탐지하며, 누가 대응하는지, 어느 시점에 시스템을 격리할 수 있는지, 사고 이후 전체 행위를 재구성할 수 있는지를 확인해야 한다.</p><p>통제가 없는 구간뿐 아니라 담당자와 의사결정 권한이 불분명한 구간도 함께 찾아야 한다.</p>
+<h2>방어자도 기본 통제를 반복해서 검증해야 한다</h2>
+<p>2026년 상반기 침해사고 사례는 공격기술의 변화와 함께 반복되는 보안 운영의 공백을 보여준다.</p>
+<p>외부에 노출된 서버, 패치되지 않은 취약점, 취약하거나 탈취된 계정, 정상 관리도구의 오남용, EDR 사각지대와 로그 부족은 새로운 문제가 아니다. 그러나 이미 알려진 문제라도 운영환경에서 지속적으로 관리되지 않으면 다시 유효한 공격경로가 된다.</p>
+<p>기업의 정보보호 수준은 보유한 보안솔루션의 수만으로 판단하기 어렵다. 전체 자산을 식별하고 있는지, 외부 노출과 취약점 현황을 확인할 수 있는지, 필요한 통제가 모든 대상에 적용되어 있는지, 예외와 미조치 항목이 관리되고 있는지를 반복적으로 검증해야 한다.</p>
+<p>정상 관리도구의 악용을 구분할 수 있는 행위기준도 필요하다. 사고가 발생한 이후에는 계정 사용, 내부 이동, 보안기능 비활성화와 데이터 변경 과정을 다시 구성할 수 있도록 로그와 증적이 남아 있어야 한다.</p>
+<p>결국 침해사고 대응의 출발점은 새로운 기술을 추가하는 것보다 현재의 통제 범위와 운영 상태를 정확하게 확인하는 데 있다.</p>
+<blockquote>공격자는 성공한 공격경로를 반복한다.<br/>방어자는 기본 통제가 실제로 작동하는지를 반복해서 검증해야 한다.</blockquote>
+<h2>추후 보완할 내용</h2>
+<p>발표자료를 받은 뒤 다음 내용을 추가로 확인하고 보완할 예정이다.</p>
+<ul><li>정확한 컨퍼런스명과 발표 세션명</li><li>MSSQL 침해부터 랜섬웨어 실행까지의 세부 공격 흐름</li><li>사용된 원격관리 도구와 보안기능 무력화 방식</li><li>vCenter·ESXi 침해사례의 취약점과 공격경로</li><li>발표자료에 포함된 공격 흐름 도식과 통계</li><li>Anti-forensics, DDoS, 금융권 APT 사례의 별도 글 분리 여부</li><li>관련 논문 1~2편의 핵심 결과와 본문 연결</li></ul>
 </div>
-<div class="callout"><div class="l"><i class="ti ti-link"></i> 이 글과 연결된 실무 역량</div>AI 활용 실험 — 이력서·경력기술서의 실제 수행 경험과 직접 연결되는 주제입니다.</div>
-<div class="flex flex-wrap gap-2.5 my-8"><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#AI·AX</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#AI 활용 실험</span></div>
-<div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7"><a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[#e9edf2] transition" href="post-54.html"><div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 글</div><div class="font-bold mt-1 text-[15px]">AX(AI Transformation), DX와 무엇이 다른가</div></a><a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[#e9edf2] transition" href="post-56.html"><div class="text-[13px] text-mut font-medium">다음 글 <i class="ti ti-arrow-right"></i></div><div class="font-bold mt-1 text-[15px]">RAG와 사내 지식 — 보안 지키며 AI 쓰는 법</div></a></div>
+<div class="callout"><div class="l"><i class="ti ti-compass"></i> 이 글의 핵심 판단</div><ul><li>보안솔루션 도입과 실제 통제 적용은 서로 다른 문제입니다.</li><li>자산 식별이 불완전하면 패치·EDR·로그의 적용 범위도 불완전해집니다.</li><li>정상 관리도구의 악용은 실행 여부가 아니라 사용 맥락으로 탐지해야 합니다.</li><li>개별 통제보다 실제 공격 흐름 안에서 통제가 연결되는지를 검증해야 합니다.</li></ul></div>
+<div class="flex flex-wrap gap-2.5 my-8"><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#침해사고</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#SecurityOperations</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#자산관리</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#EDR</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#취약점관리</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#랜섬웨어</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#정보보호거버넌스</span></div>
+<div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7"><a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[rgba(255,255,255,.09)] transition" href="post-54.html"><div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 글</div><div class="font-bold mt-1 text-[15px]">AX(AI Transformation), DX와 무엇이 다른가</div></a><a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[rgba(255,255,255,.09)] transition" href="post-56.html"><div class="text-[13px] text-mut font-medium">다음 글 <i class="ti ti-arrow-right"></i></div><div class="font-bold mt-1 text-[15px]">RAG와 사내 지식 — 보안 지키며 AI 쓰는 법</div></a></div>
 </article>
-</body></html>
+</body>
+</html>

@@ -1,65 +1,459 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>정보보호 R&amp;D 투자 동향 — NTIS 데이터로 본 흐름 · Human Tech Note</title><meta name="description" content="산학 연구(NTIS)"/>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<style type="text/tailwindcss">
-@theme{
---color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,0.05);
---color-hair:rgba(255,255,255,0.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
---radius-pill:100px;--radius-feat:32px;
---font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
-}
-</style>
-<style>
-body{background:#08090a}
-.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
-radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
-radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
-radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
-radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
-#07080a}
-</style>
-<style>
-.pb h3{font-size:24px;font-weight:500;letter-spacing:-.4px;margin:36px 0 10px;color:#f1f3ef}
-.pb p{font-size:18px;line-height:1.75;margin:0 0 18px;letter-spacing:-.2px}
-.pb ul{font-size:18px;line-height:1.7;padding-left:22px;margin:0 0 20px}
-.pb li{margin-bottom:7px}
-.pb strong{color:#fff;font-weight:700}
-.callout{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:32px;padding:26px 30px;margin:30px 0;font-size:16px;line-height:1.65;color:#e7e9e4}
-.callout .l{color:#ff8256;font-weight:700;font-size:13px;margin-bottom:8px;display:flex;gap:7px;align-items:center}
-</style>
-</head><body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em"><div class="bgfx"></div>
-<nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair">
-<div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
-<a class="font-bold text-lg flex items-center gap-2" href="../index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a>
-<span class="ml-auto"></span>
-<a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive"><i class="ti ti-arrow-left"></i> 포트폴리오</a>
-</div></nav>
-<article class="max-w-[760px] mx-auto px-6 pt-14 pb-28">
-<span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-ink text-white mb-6"><i class="ti ti-pencil"></i> 실제 원고 (샘플 공개본)</span>
-<div><span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#FBEAF1;color:#98305C"><i class="ti ti-microscope"></i> 연구·종합</span></div>
-<h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3"><i class="ti ti-star text-cobalt"></i> 정보보호 R&amp;D 투자 동향 — NTIS 데이터로 본 흐름</h1>
-<div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
-<span><i class="ti ti-calendar align-[-2px]"></i> 2026년 12월 7일 (월)</span><span><i class="ti ti-clock align-[-2px]"></i> 약 6분</span><span>#64 / 75</span></div>
-<div class="pb">
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<h3>&ldquo;정보보호 투자, 우리는 잘 하고 있는 걸까?&rdquo;</h3>
-<p>실무에서 늘 부딪히는 질문이 있다. &lsquo;우리 조직의 정보보호 투자는 적정한가?&rsquo; 답하기 어려운 이유는, 비교할 기준이 마땅치 않기 때문이다. 대학원 산학협력 프로젝트에서 나는 이 질문을 데이터로 풀어보기로 했다. 개인의 감이 아니라, 국가 R&amp;D 데이터라는 객관적 렌즈로.</p>
-<h3>NTIS 데이터에 BERTopic을 얹다</h3>
-<p>국가과학기술지식정보서비스(NTIS)의 국가 R&amp;D 데이터를 활용해 국내 정보보호 연구개발 투자 동향을 분석했다. 수천 건의 과제 텍스트를 사람이 일일이 분류하는 것은 불가능하다. 그래서 BERTopic 기반의 토픽 모델링으로 기술을 자동 분류하고, 정부출연금 흐름과 연결해 기술별 변화 추세를 도출했다.</p>
-<ul><li>NTIS 국가 R&amp;D 과제 데이터 수집·정제</li><li>BERTopic 기반 기술 분류(토픽 모델링)</li><li>정부출연금 분석을 통한 기술 변화 추세 도출</li><li>기업 내부 정보보호 운영 수준과 외부 투자 수준을 연계한 분석 모델 구축</li></ul>
-<div class="callout"><div class="l"><i class="ti ti-bulb"></i> 핵심 시사점</div>투자 &lsquo;규모&rsquo;보다 &lsquo;방향&rsquo;이 중요합니다. 내부 운영 수준과 외부 R&amp;D 투자 흐름을 겹쳐 보면, 어떤 영역에 선제적으로 자원을 배분해야 하는지 &mdash; 특히 AI·거버넌스 관점의 우선순위가 &mdash; 데이터로 드러납니다.</div>
-<h3>실무와 연구가 만나는 지점</h3>
-<p>이 연구가 특별했던 이유는, 내가 현장에서 다뤄온 &lsquo;정보보호 예산 수립&rsquo;과 &lsquo;투자 효율성 관리&rsquo;라는 실무 문제를, 국가 단위 데이터로 다시 바라볼 수 있었다는 점이다. 실무자는 조직 안을 보고, 연구자는 산업 전체를 본다. 두 시야가 겹치는 곳에서 더 나은 의사결정이 나온다.</p>
-<h3>배운 것</h3>
-<p>정보보호는 이제 &lsquo;막는 일&rsquo;을 넘어 &lsquo;어디에 얼마나 투자할지 판단하는 일&rsquo;이 되고 있다. 데이터는 그 판단에 근거를 준다. 나는 이 연구를 통해 정보보호·기술경영·데이터 분석이 하나의 흐름으로 이어질 수 있다는 확신을 얻었고, 그것이 지금 내가 그리는 커리어의 방향이다.</p>
+  <title>국가 R&amp;D 투자와 기업 보안역량은 같은 방향을 보고 있는가 · Human Tech Note</title>
+  <meta name="description" content="NTIS 정보보호 R&D 과제 1,015건을 BERTopic으로 분석하고, 기업 내부 보안역량과 연결한 4분면 포트폴리오 연구의 방법·시사점·한계를 정리합니다."/>
+  <link rel="canonical" href="https://choihanlam.github.io/human-tech-note/posts/post-64.html"/>
 
-</div>
+  <meta property="og:type" content="article"/>
+  <meta property="og:title" content="국가 R&D 투자와 기업 보안역량은 같은 방향을 보고 있는가"/>
+  <meta property="og:description" content="NTIS 10년 데이터와 BERTopic, 기업 내부역량 평가를 연결해 정보보호 투자 우선순위를 탐색한 연구를 정리합니다."/>
+  <meta property="og:url" content="https://choihanlam.github.io/human-tech-note/posts/post-64.html"/>
 
-<div class="flex flex-wrap gap-2.5 my-8"><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#NTIS</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#R&D 투자 분석</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#BERTopic</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#AI 거버넌스</span></div>
-<div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7"><a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[#e9edf2] transition" href="post-63.html"><div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 글</div><div class="font-bold mt-1 text-[15px]">CISO/CPO의 고민 — AI 시대의 보안 리더십</div></a><a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[#e9edf2] transition" href="post-65.html"><div class="text-[13px] text-mut font-medium">다음 글 <i class="ti ti-arrow-right"></i></div><div class="font-bold mt-1 text-[15px]">BERTopic으로 기술 트렌드 읽기</div></a></div>
-</article>
-</body></html>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "국가 R&D 투자와 기업 보안역량은 같은 방향을 보고 있는가",
+    "description": "NTIS 정보보호 R&D 과제 1,015건을 BERTopic으로 분석하고, 기업 내부 보안역량과 연결한 4분면 포트폴리오 연구의 방법·시사점·한계를 정리합니다.",
+    "datePublished": "2026-08-06",
+    "dateModified": "2026-08-06",
+    "author": {
+      "@type": "Person",
+      "name": "최한람"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Human Tech Note"
+    },
+    "mainEntityOfPage": "https://choihanlam.github.io/human-tech-note/posts/post-64.html"
+  }
+  </script>
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      --color-ink:#ff4e1c;
+      --color-cobalt:#ff8256;
+      --color-warn:#e8b45a;
+      --color-soft:rgba(255,255,255,0.05);
+      --color-hair:rgba(255,255,255,0.11);
+      --color-tx:#f1f3ef;
+      --color-mut:#a6aca4;
+      --color-hint:#767b73;
+      --radius-pill:100px;
+      --radius-feat:32px;
+      --font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
+    }
+  </style>
+
+  <style>
+    body { background:#08090a; }
+    .bgfx {
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      background:
+        radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
+        radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
+        radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
+        radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
+        #07080a;
+    }
+    .pb h2 {
+      margin:48px 0 14px;
+      color:#f1f3ef;
+      font-size:28px;
+      font-weight:650;
+      line-height:1.4;
+      letter-spacing:-.55px;
+    }
+    .pb h3 {
+      margin:34px 0 10px;
+      color:#f1f3ef;
+      font-size:22px;
+      font-weight:650;
+      line-height:1.45;
+      letter-spacing:-.35px;
+    }
+    .pb p {
+      margin:0 0 18px;
+      color:#d9ddd7;
+      font-size:18px;
+      line-height:1.78;
+      letter-spacing:-.2px;
+    }
+    .pb ul,
+    .pb ol {
+      margin:0 0 22px;
+      padding-left:24px;
+      color:#d9ddd7;
+      font-size:18px;
+      line-height:1.72;
+    }
+    .pb li { margin-bottom:8px; }
+    .pb strong { color:#fff; font-weight:750; }
+    .pb a {
+      color:#ff9a75;
+      text-decoration:underline;
+      text-underline-offset:4px;
+    }
+    .callout {
+      margin:28px 0;
+      padding:24px 28px;
+      border:1px solid rgba(255,255,255,0.10);
+      border-radius:28px;
+      background:rgba(255,255,255,0.05);
+      color:#e7e9e4;
+      font-size:16px;
+      line-height:1.72;
+    }
+    .callout .l {
+      display:flex;
+      align-items:center;
+      gap:7px;
+      margin-bottom:8px;
+      color:#ff8256;
+      font-size:13px;
+      font-weight:750;
+    }
+    .disclosure {
+      border-color:rgba(232,180,90,.26);
+      background:rgba(232,180,90,.08);
+    }
+    .disclosure .l { color:#efc16f; }
+    .metric-grid {
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:10px;
+      margin:28px 0 34px;
+    }
+    .metric {
+      min-height:124px;
+      padding:18px 12px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:20px;
+      background:rgba(255,255,255,.04);
+      text-align:center;
+    }
+    .metric b {
+      display:block;
+      margin-bottom:7px;
+      color:#ff9a75;
+      font-size:24px;
+      line-height:1.2;
+    }
+    .metric span {
+      display:block;
+      color:#c7ccc5;
+      font-size:13px;
+      line-height:1.5;
+    }
+    .process {
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:10px;
+      margin:26px 0 34px;
+    }
+    .process div {
+      padding:17px 10px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:18px;
+      background:rgba(255,255,255,.04);
+      color:#dfe3dc;
+      text-align:center;
+      font-size:14px;
+      line-height:1.5;
+    }
+    .process strong {
+      display:block;
+      margin-bottom:4px;
+      color:#ff9a75;
+      font-size:12px;
+    }
+    .table-wrap {
+      width:100%;
+      overflow-x:auto;
+      margin:26px 0 34px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:22px;
+      background:rgba(255,255,255,.035);
+    }
+    .compare-table {
+      width:100%;
+      min-width:720px;
+      border-collapse:collapse;
+    }
+    .compare-table th,
+    .compare-table td {
+      padding:16px 18px;
+      border-bottom:1px solid rgba(255,255,255,.09);
+      text-align:left;
+      vertical-align:top;
+      font-size:15px;
+      line-height:1.65;
+    }
+    .compare-table th {
+      background:rgba(255,255,255,.05);
+      color:#fff;
+      font-weight:750;
+    }
+    .compare-table td { color:#c8cdc6; }
+    .compare-table tr:last-child td { border-bottom:0; }
+    .axis-grid {
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+      margin:26px 0 34px;
+    }
+    .axis-card {
+      padding:24px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:22px;
+      background:rgba(255,255,255,.04);
+    }
+    .axis-card h3 { margin:0 0 10px; font-size:20px; }
+    .axis-card p { margin:0; color:#bfc5bd; font-size:15px; line-height:1.7; }
+    .axis-card i { margin-right:6px; color:#ff9a75; }
+    .source-list {
+      margin-top:44px;
+      padding-top:28px;
+      border-top:1px solid rgba(255,255,255,.11);
+    }
+    .source-list li {
+      color:#aeb4ac;
+      font-size:15px;
+      line-height:1.68;
+    }
+    @media (max-width:800px) {
+      .metric-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .metric:last-child { grid-column:1 / -1; }
+      .process { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .process div:last-child { grid-column:1 / -1; }
+      .axis-grid { grid-template-columns:1fr; }
+      .pb h2 { font-size:25px; }
+      .pb h3 { font-size:21px; }
+      .pb p,.pb ul,.pb ol { font-size:17px; }
+    }
+  </style>
+</head>
+
+<body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em">
+  <div class="bgfx"></div>
+
+  <nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair">
+    <div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
+      <a class="font-bold text-lg flex items-center gap-2" href="../index.html">
+        <i class="ti ti-book-2"></i>
+        Human Tech Note
+        <span class="font-normal text-mut text-[13px]">by 최한람</span>
+      </a>
+      <span class="ml-auto"></span>
+      <a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive">
+        <i class="ti ti-arrow-left"></i> Selected Articles
+      </a>
+    </div>
+  </nav>
+
+  <article class="max-w-[760px] mx-auto px-6 pt-14 pb-28">
+    <div>
+      <span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#FBEAF1;color:#98305C">
+        <i class="ti ti-microscope"></i> Research Note · 정보보호/기술경영
+      </span>
+    </div>
+
+    <h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-5 mb-4">
+      국가 R&amp;D 투자와 기업 보안역량은
+      <span class="block text-cobalt">같은 방향을 보고 있는가</span>
+    </h1>
+
+    <p class="text-[19px] md:text-[21px] leading-relaxed text-mut mb-5">
+      NTIS 10년 데이터와 BERTopic, 내부역량 평가를 연결한 탐색적 포트폴리오 연구
+    </p>
+
+    <div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
+      <span><i class="ti ti-calendar align-[-2px]"></i> 2026년 8월 6일</span>
+      <span><i class="ti ti-clock align-[-2px]"></i> 약 9분</span>
+      <span><i class="ti ti-user align-[-2px]"></i> 최한람</span>
+    </div>
+
+    <div class="pb">
+      <div class="callout disclosure">
+        <div class="l"><i class="ti ti-lock"></i> 공개 범위 안내</div>
+        이 글은 기술경영전문대학원 산학연계 프로젝트의 연구설계와 실무적 시사점을 재구성한 글입니다. 기업 내부의 기술영역별 세부 점수, 예산, 인력, 솔루션 구성과 평가자 식별정보는 공개하지 않습니다. 연구 결과는 단일 조직을 대상으로 한 탐색적 분석이며, 산업 전체에 일반화된 결론이 아닙니다.
+      </div>
+
+      <p>정보보호 투자를 논의할 때 조직은 흔히 “예산을 얼마나 늘려야 하는가”부터 묻는다. 그러나 한정된 자원을 실제 의사결정으로 바꾸려면 질문을 조금 다르게 설정해야 한다.</p>
+
+      <div class="callout">
+        <div class="l"><i class="ti ti-bulb"></i> 연구의 출발점</div>
+        국가가 미래 보안기술에 투자하는 방향과 기업이 현재 보유한 보안 운영역량 사이에는 어떤 정렬과 공백이 존재하는가? 그리고 그 차이를 투자 우선순위로 어떻게 전환할 수 있는가?
+      </div>
+
+      <p>이 질문을 검토하기 위해 국가 차원의 정보보호 R&amp;D 흐름을 <strong>외부 기술환경</strong>으로, 기업의 투자·인력·솔루션·운영·거버넌스 수준을 <strong>내부 실행역량</strong>으로 정의했다. 두 축을 연결하면 단순히 기술이 유망하다는 설명을 넘어, 조직이 무엇을 강화하고 무엇을 유지하거나 재검토해야 하는지 논의할 수 있다.</p>
+
+      <h2>1. 1,867건에서 1,015건으로: 분석 가능한 데이터를 만들다</h2>
+
+      <p>연구에는 국가과학기술지식정보서비스(NTIS)에서 수집한 2015~2025년 정보보호 관련 국가 R&amp;D 과제 데이터를 활용했다. 원천자료 1,867건에서 중복과 결측을 처리하고, 연구 목적과 관련성이 낮은 과제를 제외해 1,015건을 분석대상으로 구성했다.</p>
+
+      <div class="metric-grid" aria-label="연구 데이터와 분석 구조 요약">
+        <div class="metric"><b>1,867건</b><span>NTIS 원천 과제</span></div>
+        <div class="metric"><b>1,015건</b><span>정제 후 분석대상</span></div>
+        <div class="metric"><b>2015–2025</b><span>분석 기간</span></div>
+        <div class="metric"><b>7개</b><span>보안기술 Topic</span></div>
+        <div class="metric"><b>5개</b><span>내부역량 평가 차원</span></div>
+      </div>
+
+      <p>텍스트 분석에는 과제명만 사용하지 않았다. 연구목표, 주요 내용, 기대효과와 기술 키워드를 하나의 문서 단위로 결합했다. 국가 R&amp;D 과제는 비슷한 기술을 다루더라도 명칭이 서로 다를 수 있기 때문에, 제목의 단어 빈도만으로 분류하면 기술적 맥락이 충분히 반영되지 않을 수 있기 때문이다.</p>
+
+      <div class="process" aria-label="NTIS 데이터 분석 절차">
+        <div><strong>01</strong>원천과제 수집</div>
+        <div><strong>02</strong>중복·결측·관련성 정제</div>
+        <div><strong>03</strong>분석 문서 구성</div>
+        <div><strong>04</strong>BERTopic 군집화</div>
+        <div><strong>05</strong>Topic 해석·점수화</div>
+      </div>
+
+      <h2>2. BERTopic은 분류기가 아니라 탐색 도구다</h2>
+
+      <p>BERTopic은 문서를 임베딩한 뒤 의미적으로 유사한 문서들을 군집화하고, c-TF-IDF를 이용해 각 군집을 대표하는 단어를 추출하는 토픽모델링 방법이다. 이 연구에서는 1,015개 과제의 기술적 맥락을 탐색하고 주요 보안기술 영역을 구성하는 데 활용했다.</p>
+
+      <p>다만 토픽모델이 제시한 군집명을 그대로 정답으로 사용하지 않았다. 각 Topic의 대표 키워드와 포함 과제를 다시 확인하고, 정보보호 실무의 기술영역과 연결될 수 있는지 해석했다. 최종적으로 7개 보안기술 영역을 구성했지만, 이는 데이터와 모델 설정, 연구자의 해석에 영향을 받는 <strong>분석 결과</strong>이지 보안기술의 고정된 표준분류가 아니다.</p>
+
+      <div class="callout">
+        <div class="l"><i class="ti ti-adjustments"></i> 모델 활용 원칙</div>
+        토픽모델링은 많은 문서를 빠르게 구조화해 탐색 범위를 줄여준다. 그러나 Topic 수와 명칭, 경계의 타당성은 도메인 전문가 검토와 정량적 품질평가를 통해 다시 확인해야 한다.
+      </div>
+
+      <h2>3. 외부 투자 흐름과 내부 실행역량을 두 축으로 연결하다</h2>
+
+      <div class="axis-grid">
+        <div class="axis-card">
+          <h3><i class="ti ti-world"></i>외부축: 국가 R&amp;D 투자 흐름</h3>
+          <p>Topic별 과제 분포와 정부출연금 등 국가 R&amp;D 데이터를 바탕으로 기술영역의 상대적 투자 수준을 비교했다. 이는 시장 수요나 기술의 성공 가능성을 직접 의미하는 값이 아니라, 국가 연구개발 포트폴리오에서 나타난 관심과 자원배분의 신호다.</p>
+        </div>
+        <div class="axis-card">
+          <h3><i class="ti ti-building"></i>내부축: 기업 보안 운영역량</h3>
+          <p>투자, 전문인력, 솔루션, 운영, 거버넌스의 5개 차원을 기준으로 실무자 평가를 구성했다. 특정 제품 보유 여부만 보는 대신, 해당 기술을 실제 업무에서 운영하고 책임질 수 있는 조직역량을 함께 평가하려 했다.</p>
+        </div>
+      </div>
+
+      <p>두 점수는 성격이 다르다. 외부축은 공공 R&amp;D 데이터를 가공한 정량지표이고 내부축은 제한된 전문가 평가를 바탕으로 한 탐색값이다. 따라서 두 축의 숫자가 동일한 측정단위를 가진다고 볼 수는 없다. 이 연구에서 중요한 것은 정밀한 순위를 확정하는 것이 아니라, <strong>외부 환경과 내부 준비 수준을 한 화면에서 비교해 전략적 질문을 만드는 것</strong>이었다.</p>
+
+      <h2>4. 4분면은 정답표가 아니라 의사결정 대화의 시작점이다</h2>
+
+      <div class="table-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>영역</th>
+              <th>외부 투자</th>
+              <th>내부 역량</th>
+              <th>의사결정 질문</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>정렬·확장</strong></td>
+              <td>높음</td>
+              <td>높음</td>
+              <td>현재 강점을 표준화하고 다음 단계로 확장할 수 있는가?</td>
+            </tr>
+            <tr>
+              <td><strong>전략적 공백</strong></td>
+              <td>높음</td>
+              <td>낮음</td>
+              <td>PoC, 인력양성, 파트너십 중 무엇부터 시작해야 하는가?</td>
+            </tr>
+            <tr>
+              <td><strong>운영 유지</strong></td>
+              <td>낮음</td>
+              <td>높음</td>
+              <td>규제와 사업 연속성 관점에서 유지할 핵심역량은 무엇인가?</td>
+            </tr>
+            <tr>
+              <td><strong>재검토·관찰</strong></td>
+              <td>낮음</td>
+              <td>낮음</td>
+              <td>즉시 투자보다 기술·위협·규제 변화를 관찰해야 하는가?</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>예를 들어 국가 R&amp;D 투자가 빠르게 증가한 영역이라도 모든 기업이 즉시 대규모 솔루션을 구매해야 하는 것은 아니다. 현재 서비스 구조와 위협모델, 규제, 고객데이터, 기술인력의 준비 상태가 다르기 때문이다. 반대로 국가 R&amp;D 비중이 상대적으로 낮아도 접근통제, 로그관리, 개인정보보호처럼 기업 운영에 필수적인 역량은 계속 유지·고도화해야 한다.</p>
+
+      <p>즉, 외부 투자와 내부 역량의 불일치는 곧바로 “부족함”을 의미하지 않는다. 그 차이가 기업의 사업전략과 위험수준에 비춰 타당한지 설명할 수 있어야 한다.</p>
+
+      <h2>5. 실무에서는 기술명이 아니라 행동으로 번역해야 한다</h2>
+
+      <p>4분면 분석이 실제 예산과 로드맵으로 이어지려면 각 영역을 실행 가능한 선택지로 바꿔야 한다.</p>
+
+      <ul>
+        <li><strong>강화:</strong> 기술검증, PoC, 전문인력 확보, 데이터·권한·로그 구조 선행정비</li>
+        <li><strong>확장:</strong> 기존 운영체계를 표준화하고 적용 범위와 자동화 수준 확대</li>
+        <li><strong>유지:</strong> 규제, 서비스 안정성, 고객 신뢰에 필요한 기본 통제의 품질 관리</li>
+        <li><strong>관찰:</strong> 기술성숙도, 규제 변화, 업계 적용사례를 정기적으로 재평가</li>
+        <li><strong>재검토:</strong> 중복 투자, 낮은 활용도, 책임주체 부재와 운영비용을 확인</li>
+      </ul>
+
+      <div class="callout">
+        <div class="l"><i class="ti ti-briefcase"></i> PM·기술경영 관점</div>
+        정보보호 투자의 품질은 최신 기술을 얼마나 많이 도입했는지가 아니라, 외부 변화와 내부 역량을 비교하고 사업위험·운영책임·성과지표를 포함한 실행계획으로 전환할 수 있는지에 달려 있다.
+      </div>
+
+      <h2>6. 이 연구가 말하지 못하는 것</h2>
+
+      <p>이 연구는 정보보호 투자 의사결정을 위한 완성된 최적화 모델이 아니다. 결과를 해석할 때 다음 한계를 분명히 해야 한다.</p>
+
+      <ul>
+        <li><strong>일반화 한계:</strong> 내부역량 평가는 단일 디지털 플랫폼 기업을 대상으로 해 업종과 규모가 다른 기업에 그대로 적용할 수 없다.</li>
+        <li><strong>평가자 한계:</strong> 소수 실무자의 판단을 사용했기 때문에 역할과 경험에 따른 주관적 편향이 존재할 수 있다.</li>
+        <li><strong>측정단위 차이:</strong> 외부축의 정량데이터와 내부축의 정성평가는 동일한 척도가 아니다.</li>
+        <li><strong>Topic 검증 한계:</strong> 7개 Topic의 수와 해석은 모델 설정에 영향을 받으므로 Coherence 지표와 추가 전문가 검토가 필요하다.</li>
+        <li><strong>정적 분석 한계:</strong> 특정 시점의 점수와 기준선을 사용했기 때문에 기술·위협·조직역량의 시간 변화를 충분히 반영하지 못한다.</li>
+      </ul>
+
+      <p>향후에는 업종별 다수 기업 비교, Delphi 방식의 전문가 합의, 예산·인력·보안로그 같은 내부 정량데이터 연계, Topic 품질검증과 연도별 동적 포트폴리오 분석으로 확장할 필요가 있다.</p>
+
+      <h2>7. 연구를 통해 다시 정의한 정보보호 투자</h2>
+
+      <p>이번 프로젝트에서 얻은 가장 중요한 결론은 “어떤 기술이 가장 유망한가”가 아니었다. 정보보호 투자는 외부 기술흐름을 따라가는 활동도, 현재 운영을 유지하는 활동도 아니다. 두 관점을 함께 보고 조직의 사업모델, 위험, 규제와 실행역량에 맞는 우선순위를 설계하는 일이다.</p>
+
+      <p><strong>국가 R&amp;D 데이터는 미래 기술의 방향을 보여주고, 기업 내부역량 평가는 그 방향을 실행할 수 있는 현실적 조건을 보여준다.</strong> 두 데이터를 연결할 때 정보보호는 비용 항목을 넘어 고객 신뢰, 서비스 안정성, 규제 대응과 기술전략을 함께 다루는 경영 의사결정의 언어가 된다.</p>
+
+      <div class="source-list">
+        <h2>참고자료</h2>
+        <ol>
+          <li><a href="https://www.ntis.go.kr/" target="_blank" rel="noopener noreferrer">국가과학기술지식정보서비스(NTIS)</a> — 국가 R&amp;D 사업·과제·성과 정보</li>
+          <li><a href="https://arxiv.org/abs/2203.05794" target="_blank" rel="noopener noreferrer">Grootendorst, M. (2022), “BERTopic: Neural topic modeling with a class-based TF-IDF procedure”</a></li>
+          <li><a href="https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003074812" target="_blank" rel="noopener noreferrer">윤선영 외 (2024), 「토픽 모델링을 사용한 정보보호 및 보안 관련 국가 R&amp;D 사업 기술 동향 분석」</a></li>
+          <li>최한람 (2026), 「국내 정보보호 R&amp;D 투자 흐름과 기업 내부 정보보호 역량 분석」, 서강대학교 기술경영전문대학원 산학연계 프로젝트.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap gap-2.5 my-8">
+      <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#정보보호R&amp;D</span>
+      <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#NTIS</span>
+      <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#BERTopic</span>
+      <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#기술경영</span>
+      <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#보안투자</span>
+    </div>
+
+    <div class="mt-12 border-t border-hair pt-7">
+      <a class="inline-flex items-center gap-2 rounded-pill bg-soft px-5 py-3 font-bold hover:bg-[rgba(255,255,255,.09)] transition" href="../index.html#archive">
+        <i class="ti ti-arrow-left"></i> Selected Articles로 돌아가기
+      </a>
+    </div>
+  </article>
+</body>
+</html>

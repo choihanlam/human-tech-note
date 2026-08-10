@@ -1,40 +1,25 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>최한람 · Human Tech Note — Selected Articles 10</title>
-  <meta
-    name="description"
-    content="AI·AX·정보보호·인프라 운영·DX·기술경영 분야의 실무 사례와 기술·산업 분석 콘텐츠 10편을 선별한 최한람의 포트폴리오입니다."
-  />
-  <meta name="author" content="최한람" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://choihanlam.github.io/human-tech-note/" />
-
-  <meta property="og:type" content="website" />
-  <meta property="og:locale" content="ko_KR" />
-  <meta property="og:title" content="최한람 · Human Tech Note — Selected Articles 10" />
-  <meta
-    property="og:description"
-    content="기술과 조직, 사용자와 비즈니스를 연결하는 실무 기반 기록"
-  />
-  <meta property="og:url" content="https://choihanlam.github.io/human-tech-note/" />
-  <meta property="og:site_name" content="Human Tech Note" />
-
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
-  />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"
-  />
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-
-  <style type="text/tailwindcss">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>최한람 · Human Tech Note — 경험에서 시작해 AI·AX 적용까지</title>
+<meta content="IT 운영·IT기획·DX·정보보호 실무에서 생긴 질문을 AI·AX와 기술경영 관점으로 다시 풀어낸 최한람의 Selected Articles 10편입니다." name="description"/>
+<meta content="최한람" name="author"/>
+<meta content="index, follow" name="robots"/>
+<link href="https://choihanlam.github.io/human-tech-note/" rel="canonical"/>
+<meta content="website" property="og:type"/>
+<meta content="ko_KR" property="og:locale"/>
+<meta content="최한람 · Human Tech Note — 경험에서 시작해 AI·AX 적용까지" property="og:title"/>
+<meta content="업무를 이해하고, AI를 어디에 적용해야 실제 일이 바뀌는지 고민한 기록" property="og:description"/>
+<meta content="https://choihanlam.github.io/human-tech-note/" property="og:url"/>
+<meta content="Human Tech Note" property="og:site_name"/>
+<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style type="text/tailwindcss">
     @theme {
       --color-ink:#ff4e1c;
       --color-cobalt:#ff8256;
@@ -49,8 +34,7 @@
       --font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
     }
   </style>
-
-  <style>
+<style>
     html { scroll-behavior: smooth; }
     body { background:#08090a; }
     section, header, #about { scroll-margin-top: 86px; }
@@ -82,8 +66,7 @@
       .desktop-nav { display:none; }
     }
   </style>
-
-  <script type="application/ld+json">
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -97,395 +80,278 @@
   }
   </script>
 </head>
-
 <body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em">
-  <div class="bgfx"></div>
-
-  <nav class="sticky top-0 z-30 border-b border-hair bg-[#0a0c0bcc] backdrop-blur">
-    <div class="mx-auto flex max-w-[1120px] items-center gap-5 px-6 py-3.5">
-      <a class="flex items-center gap-2 text-lg font-bold" href="#home" aria-label="Human Tech Note 홈">
-        <i class="ti ti-book-2" aria-hidden="true"></i>
+<div class="bgfx"></div>
+<nav class="sticky top-0 z-30 border-b border-hair bg-[#0a0c0bcc] backdrop-blur">
+<div class="mx-auto flex max-w-[1120px] items-center gap-5 px-6 py-3.5">
+<a aria-label="Human Tech Note 홈" class="flex items-center gap-2 text-lg font-bold" href="#home">
+<i aria-hidden="true" class="ti ti-book-2"></i>
         Human Tech Note
         <span class="text-[13px] font-normal text-mut">by 최한람</span>
-      </a>
-
-      <div class="desktop-nav ml-auto flex items-center gap-5">
-        <a class="text-[14px] font-medium text-mut transition hover:text-tx" href="#selected">Selected Articles</a>
-        <a class="text-[14px] font-medium text-mut transition hover:text-tx" href="#principles">Principles</a>
-        <a class="text-[14px] font-medium text-mut transition hover:text-tx" href="#about">About</a>
-      </div>
-
-      <a
-        class="ml-auto inline-flex items-center gap-1.5 rounded-pill bg-ink px-4 py-2 text-[13px] font-bold text-white transition hover:bg-[#e0400f] md:ml-0"
-        href="#selected"
-      >
-        <i class="ti ti-layout-grid" aria-hidden="true"></i>
+</a>
+<div class="desktop-nav ml-auto flex items-center gap-5">
+<a class="text-[14px] font-medium text-mut transition hover:text-tx" href="#selected">Selected Articles</a>
+<a class="text-[14px] font-medium text-mut transition hover:text-tx" href="#principles">Principles</a>
+<a class="text-[14px] font-medium text-mut transition hover:text-tx" href="#about">About</a>
+</div>
+<a class="ml-auto inline-flex items-center gap-1.5 rounded-pill bg-ink px-4 py-2 text-[13px] font-bold text-white transition hover:bg-[#e0400f] md:ml-0" href="#selected">
+<i aria-hidden="true" class="ti ti-layout-grid"></i>
         10편 보기
       </a>
-    </div>
-  </nav>
-
-  <main class="mx-auto max-w-[1120px] px-6 pb-28">
-    <header id="home" class="my-12 rounded-feat bg-soft p-8 text-center md:p-14 md:text-left">
-      <span class="mb-4 inline-block rounded-pill bg-warn px-4 py-1.5 text-[13px] font-bold text-[#3d2c00]">
+</div>
+</nav>
+<main class="mx-auto max-w-[1120px] px-6 pb-28">
+<header class="my-12 rounded-feat bg-soft p-8 text-center md:p-14 md:text-left" id="home">
+<span class="mb-4 inline-block rounded-pill bg-warn px-4 py-1.5 text-[13px] font-bold text-[#3d2c00]">
         Selected Articles · 10
       </span>
-
-      <h1 class="mb-4 text-[40px] font-medium leading-[1.08] tracking-tight md:text-[62px]">
-        기술과 조직, 사용자와 비즈니스를 연결하는 실무 기반 기록
-      </h1>
-
-      <p class="mb-4 text-[19px] font-medium md:text-2xl">
-        AI·AX·정보보호·인프라 운영·DX·기술경영을 하나의 운영 관점으로 분석합니다.
-      </p>
-
-      <p class="mx-auto mb-7 max-w-[68ch] text-[16px] leading-relaxed text-mut md:mx-0 md:text-lg">
-        Human Tech Note는 IT기획, DX, 정보보호 실무와 기술경영 연구를 바탕으로
-        기술이 실제 조직에서 어떻게 도입되고 운영되며 통제되는지를 기록합니다.
-        공개 글은 완성도, 사실관계, 출처, 공개 적정성과 면접 설명 가능성을 기준으로 선별했습니다.
-      </p>
-
-      <div class="flex flex-wrap justify-center gap-3 md:justify-start">
-        <a
-          class="rounded-pill bg-ink px-6 py-3 text-sm font-bold text-white transition hover:bg-[#e0400f]"
-          href="#selected"
-        >
+<h1 class="mb-4 text-[40px] font-medium leading-[1.08] tracking-tight md:text-[62px]">AI·AX, Security, DX &amp; Technology Management</h1>
+<p class="mb-4 text-[19px] font-medium md:text-2xl">IT 운영·IT기획·DX·정보보호 실무와 기술경영 연구를 바탕으로 정리한 Selected Articles입니다.</p>
+<p class="mx-auto mb-7 max-w-[68ch] text-[16px] leading-relaxed text-mut md:mx-0 md:text-lg">업무에서 경험한 문제를 기술·산업·연구 자료와 연결해 검토하고, AI·AX와 정보보호 기술을 실제 조직과 업무 프로세스에 적용할 때 필요한 조건을 정리합니다.</p>
+<div class="flex flex-wrap justify-center gap-3 md:justify-start">
+<a class="rounded-pill bg-ink px-6 py-3 text-sm font-bold text-white transition hover:bg-[#e0400f]" href="#selected">
           Selected Articles 보기
         </a>
-        <a
-          class="rounded-pill border border-[rgba(255,255,255,.22)] px-6 py-3 text-sm font-bold text-tx transition hover:bg-[rgba(255,255,255,.07)]"
-          href="#about"
-        >
+<a class="rounded-pill border border-[rgba(255,255,255,.22)] px-6 py-3 text-sm font-bold text-tx transition hover:bg-[rgba(255,255,255,.07)]" href="#about">
           경력과 연구 기반
         </a>
-      </div>
-    </header>
-
-    <section aria-label="포트폴리오 요약" class="mb-16 grid grid-cols-2 gap-4 md:grid-cols-4">
-      <div class="rounded-2xl bg-soft p-6">
-        <div class="text-sm font-medium text-mut">Selected Articles</div>
-        <div class="mt-1 text-4xl font-medium tracking-tight">
-          10<span class="text-base font-normal text-mut">편</span>
-        </div>
-      </div>
-
-      <div class="rounded-2xl bg-soft p-6">
-        <div class="text-sm font-medium text-mut">Content Domains</div>
-        <div class="mt-1 text-4xl font-medium tracking-tight">
-          5<span class="text-base font-normal text-mut">개</span>
-        </div>
-      </div>
-
-      <div class="rounded-2xl bg-soft p-6">
-        <div class="text-sm font-medium text-mut">Practice Base</div>
-        <div class="mt-2 text-xl font-medium tracking-tight">IT · DX · 보안</div>
-      </div>
-
-      <div class="rounded-2xl bg-soft p-6">
-        <div class="text-sm font-medium text-mut">Research Base</div>
-        <div class="mt-2 text-xl font-medium tracking-tight">기술경영 · 데이터</div>
-      </div>
-    </section>
-
-    <section id="selected" class="my-16">
-      <div class="mb-8">
-        <h2 class="mb-2 text-[30px] font-medium tracking-tight md:text-4xl">
+</div>
+</header>
+<section aria-label="포트폴리오 요약" class="mb-16 grid grid-cols-2 gap-4 md:grid-cols-4">
+<div class="rounded-2xl bg-soft p-6">
+<div class="text-sm font-medium text-mut">Selected Articles</div>
+<div class="mt-1 text-4xl font-medium tracking-tight">10<span class="text-base font-normal text-mut">편</span></div>
+</div>
+<div class="rounded-2xl bg-soft p-6">
+<div class="text-sm font-medium text-mut">Content Domains</div>
+<div class="mt-2 text-xl font-medium tracking-tight">5<span class="text-base font-normal text-mut">개</span></div>
+</div>
+<div class="rounded-2xl bg-soft p-6">
+<div class="text-sm font-medium text-mut">Practice Base</div>
+<div class="mt-2 text-xl font-medium tracking-tight">IT · DX · Security</div>
+</div>
+<div class="rounded-2xl bg-soft p-6">
+<div class="text-sm font-medium text-mut">Research Base</div>
+<div class="mt-2 text-xl font-medium tracking-tight">MOT · Data</div>
+</div>
+</section>
+<section class="my-16" id="selected">
+<div class="mb-8">
+<h2 class="mb-2 text-[30px] font-medium tracking-tight md:text-4xl">
           Selected Articles
           <span class="text-base font-normal text-hint">공개 콘텐츠 10편</span>
-        </h2>
-        <p class="max-w-[74ch] text-mut">
-          실무 경험을 일반화하고 논문, 표준, 공식 문서와 산업 자료를 연결해
-          기술 도입의 조건, 운영 리스크와 의사결정 기준을 분석했습니다.
-        </p>
-      </div>
-
-      <div class="space-y-10">
-        <section aria-labelledby="domain-ax">
-          <div class="mb-4 flex flex-wrap items-end justify-between gap-2">
-            <div>
-              <div class="mb-1 text-[13px] font-bold text-cobalt">01 · AI·AX 전환</div>
-              <h3 id="domain-ax" class="text-[24px] font-medium tracking-tight">AI를 모델이 아닌 운영체계로 보기</h3>
-            </div>
-            <span class="text-[13px] text-hint">2 Articles</span>
-          </div>
-
-          <div class="grid gap-4 md:grid-cols-2">
-            <a class="article-card flex flex-col rounded-feat border border-hair bg-soft p-7 transition hover:-translate-y-0.5 hover:bg-[rgba(255,255,255,.08)]" href="posts/post-56.html">
-              <div class="flex items-center justify-between gap-3">
-                <span class="rounded-pill bg-[#FDF1DA] px-3 py-1.5 text-[12px] font-bold text-[#8A5A00]">AX Operating Model</span>
-                <i class="ti ti-arrow-up-right text-xl text-hint" aria-hidden="true"></i>
-              </div>
-              <h4 class="mb-3 mt-5 text-[21px] font-bold leading-snug">AI 시대의 경쟁력은 모델이 아니라 운영체계다</h4>
-              <p class="text-[14px] leading-relaxed text-mut">
-                모델, 인프라, 플랫폼, 운영지식, Agent·Tool, 거버넌스와 비즈니스 운영을 하나의 구조로 연결합니다.
-              </p>
-              <span class="mt-auto pt-6 text-[13px] font-bold text-cobalt">글 읽기</span>
-            </a>
-
-            <a class="article-card flex flex-col rounded-feat border border-hair bg-soft p-7 transition hover:-translate-y-0.5 hover:bg-[rgba(255,255,255,.08)]" href="posts/post-49.html">
-              <div class="flex items-center justify-between gap-3">
-                <span class="rounded-pill bg-[#EDEBFB] px-3 py-1.5 text-[12px] font-bold text-[#3E2FA6]">AI Governance</span>
-                <i class="ti ti-arrow-up-right text-xl text-hint" aria-hidden="true"></i>
-              </div>
-              <h4 class="mb-3 mt-5 text-[21px] font-bold leading-snug">AI 보안의 본질은 ‘차단’이 아니라 ‘신뢰의 구조’다</h4>
-              <p class="text-[14px] leading-relaxed text-mut">
-                데이터, 권한, 행위, 로그와 책임을 분리된 통제가 아니라 기업 AI 운영의 신뢰구조로 분석합니다.
-              </p>
-              <span class="mt-auto pt-6 text-[13px] font-bold text-cobalt">글 읽기</span>
-            </a>
-          </div>
-        </section>
-
-        <section aria-labelledby="domain-security">
-          <div class="mb-4 flex flex-wrap items-end justify-between gap-2">
-            <div>
-              <div class="mb-1 text-[13px] font-bold text-cobalt">02 · 정보보호·AI 보안</div>
-              <h3 id="domain-security" class="text-[24px] font-medium tracking-tight">탐지 이후의 대응과 자율형 검증</h3>
-            </div>
-            <span class="text-[13px] text-hint">2 Articles</span>
-          </div>
-
-          <div class="grid gap-4 md:grid-cols-2">
-            <a class="article-card flex flex-col rounded-feat border border-hair bg-soft p-7 transition hover:-translate-y-0.5 hover:bg-[rgba(255,255,255,.08)]" href="posts/post-16.html">
-              <div class="flex items-center justify-between gap-3">
-                <span class="rounded-pill bg-[#E7F3EC] px-3 py-1.5 text-[12px] font-bold text-[#1F6B3B]">Security Operations</span>
-                <i class="ti ti-arrow-up-right text-xl text-hint" aria-hidden="true"></i>
-              </div>
-              <h4 class="mb-3 mt-5 text-[21px] font-bold leading-snug">악성코드 감염 의심 단말 대응기 — 격리에서 재발방지까지</h4>
-              <p class="text-[14px] leading-relaxed text-mut">
-                탐지, 초기 격리, 분석, 영향 범위 확인, 복구와 정책 개선까지 사고 대응의 전 과정을 정리합니다.
-              </p>
-              <span class="mt-auto pt-6 text-[13px] font-bold text-cobalt">글 읽기</span>
-            </a>
-
-            <a class="article-card flex flex-col rounded-feat border border-hair bg-soft p-7 transition hover:-translate-y-0.5 hover:bg-[rgba(255,255,255,.08)]" href="posts/post-53.html">
-              <div class="flex items-center justify-between gap-3">
-                <span class="rounded-pill bg-[#EDEBFB] px-3 py-1.5 text-[12px] font-bold text-[#3E2FA6]">Agentic Security</span>
-                <i class="ti ti-arrow-up-right text-xl text-hint" aria-hidden="true"></i>
-              </div>
-              <h4 class="mb-3 mt-5 text-[21px] font-bold leading-snug">AI가 AI를 공격해 더 안전해지는 구조</h4>
-              <p class="text-[14px] leading-relaxed text-mut">
-                GPT-Red 사례를 중심으로 공격 자동화가 자율형 검증과 AI Agent 보안통제로 확장되는 과정을 분석합니다.
-              </p>
-              <span class="mt-auto pt-6 text-[13px] font-bold text-cobalt">글 읽기</span>
-            </a>
-          </div>
-        </section>
-
-        <section aria-labelledby="domain-operations">
-          <div class="mb-4 flex flex-wrap items-end justify-between gap-2">
-            <div>
-              <div class="mb-1 text-[13px] font-bold text-cobalt">03 · 인프라·운영 통제</div>
-              <h3 id="domain-operations" class="text-[24px] font-medium tracking-tight">서비스 연속성과 새로운 자산 경계</h3>
-            </div>
-            <span class="text-[13px] text-hint">2 Articles</span>
-          </div>
-
-          <div class="grid gap-4 md:grid-cols-2">
-            <a class="article-card flex flex-col rounded-feat border border-hair bg-soft p-7 transition hover:-translate-y-0.5 hover:bg-[rgba(255,255,255,.08)]" href="posts/post-36.html">
-              <div class="flex items-center justify-between gap-3">
-                <span class="rounded-pill bg-[#E7F0FF] px-3 py-1.5 text-[12px] font-bold text-[#0047B3]">IT Operations</span>
-                <i class="ti ti-arrow-up-right text-xl text-hint" aria-hidden="true"></i>
-              </div>
-              <h4 class="mb-3 mt-5 text-[21px] font-bold leading-snug">무중단 운영은 어떻게 만들어지는가 — 인프라 개선과 변화관리</h4>
-              <p class="text-[14px] leading-relaxed text-mut">
-                구조개선, 데이터 이관, 검증, 롤백과 운영전환을 통해 무중단 운영을 만드는 PMO 조건을 살펴봅니다.
-              </p>
-              <span class="mt-auto pt-6 text-[13px] font-bold text-cobalt">글 읽기</span>
-            </a>
-
-            <a class="article-card flex flex-col rounded-feat border border-hair bg-soft p-7 transition hover:-translate-y-0.5 hover:bg-[rgba(255,255,255,.08)]" href="posts/post-54.html">
-              <div class="flex items-center justify-between gap-3">
-                <span class="rounded-pill bg-[#EDEBFB] px-3 py-1.5 text-[12px] font-bold text-[#3E2FA6]">Control Architecture</span>
-                <i class="ti ti-arrow-up-right text-xl text-hint" aria-hidden="true"></i>
-              </div>
-              <h4 class="mb-3 mt-5 text-[21px] font-bold leading-snug">AI 시대의 보안 자산은 무엇인가</h4>
-              <p class="text-[14px] leading-relaxed text-mut">
-                서버와 DB를 넘어 비인간 ID, API 토큰, MCP, 메모리, 워크플로와 행위 로그까지 자산 범위를 확장합니다.
-              </p>
-              <span class="mt-auto pt-6 text-[13px] font-bold text-cobalt">글 읽기</span>
-            </a>
-          </div>
-        </section>
-
-        <section aria-labelledby="domain-dx">
-          <div class="mb-4 flex flex-wrap items-end justify-between gap-2">
-            <div>
-              <div class="mb-1 text-[13px] font-bold text-cobalt">04 · DX·프로세스 혁신</div>
-              <h3 id="domain-dx" class="text-[24px] font-medium tracking-tight">업무를 가시화하고 의사결정 구조를 바꾸기</h3>
-            </div>
-            <span class="text-[13px] text-hint">2 Articles</span>
-          </div>
-
-          <div class="grid gap-4 md:grid-cols-2">
-            <a class="article-card flex flex-col rounded-feat border border-hair bg-soft p-7 transition hover:-translate-y-0.5 hover:bg-[rgba(255,255,255,.08)]" href="posts/post-48.html">
-              <div class="flex items-center justify-between gap-3">
-                <span class="rounded-pill bg-[#E7F3EC] px-3 py-1.5 text-[12px] font-bold text-[#1F6B3B]">DX Practice</span>
-                <i class="ti ti-arrow-up-right text-xl text-hint" aria-hidden="true"></i>
-              </div>
-              <h4 class="mb-3 mt-5 text-[21px] font-bold leading-snug">DX는 도구 도입이 아니라 업무를 다시 설계하는 일이다</h4>
-              <p class="text-[14px] leading-relaxed text-mut">
-                1,103개 업무를 분류하고 개선 우선순위, KPI, 리스크, 책임주체와 협업구조를 다시 설계한 경험을 정리합니다.
-              </p>
-              <span class="mt-auto pt-6 text-[13px] font-bold text-cobalt">글 읽기</span>
-            </a>
-
-            <a class="article-card flex flex-col rounded-feat border border-hair bg-soft p-7 transition hover:-translate-y-0.5 hover:bg-[rgba(255,255,255,.08)]" href="posts/post-71.html">
-              <div class="flex items-center justify-between gap-3">
-                <span class="rounded-pill bg-[#E7F3EC] px-3 py-1.5 text-[12px] font-bold text-[#1F6B3B]">Data-driven Operations</span>
-                <i class="ti ti-arrow-up-right text-xl text-hint" aria-hidden="true"></i>
-              </div>
-              <h4 class="mb-3 mt-5 text-[21px] font-bold leading-snug">예측은 모델에서 시작되지 않았다</h4>
-              <p class="text-[14px] leading-relaxed text-mut">
-                장애사례집, 운영데이터, DX와 AI 보안을 연결하며 데이터를 반복 가능한 운영체계로 바꾸려 했던 과정을 돌아봅니다.
-              </p>
-              <span class="mt-auto pt-6 text-[13px] font-bold text-cobalt">글 읽기</span>
-            </a>
-          </div>
-        </section>
-
-        <section aria-labelledby="domain-research">
-          <div class="mb-4 flex flex-wrap items-end justify-between gap-2">
-            <div>
-              <div class="mb-1 text-[13px] font-bold text-cobalt">05 · 데이터·기술경영 연구</div>
-              <h3 id="domain-research" class="text-[24px] font-medium tracking-tight">데이터의 활용 조건과 투자 의사결정</h3>
-            </div>
-            <span class="text-[13px] text-hint">2 Articles</span>
-          </div>
-
-          <div class="grid gap-4 md:grid-cols-2">
-            <a class="article-card flex flex-col rounded-feat border border-hair bg-soft p-7 transition hover:-translate-y-0.5 hover:bg-[rgba(255,255,255,.08)]" href="posts/post-50.html">
-              <div class="flex items-center justify-between gap-3">
-                <span class="rounded-pill bg-[#E7F0FF] px-3 py-1.5 text-[12px] font-bold text-[#0047B3]">Data Governance</span>
-                <i class="ti ti-arrow-up-right text-xl text-hint" aria-hidden="true"></i>
-              </div>
-              <h4 class="mb-3 mt-5 text-[21px] font-bold leading-snug">데이터를 많이 모으는 시대에서, 안전하게 연결하는 시대로</h4>
-              <p class="text-[14px] leading-relaxed text-mut">
-                데이터 활용과 보호를 권한, 흐름, 출처와 책임이 함께 전달되는 지식 아키텍처의 문제로 살펴봅니다.
-              </p>
-              <span class="mt-auto pt-6 text-[13px] font-bold text-cobalt">글 읽기</span>
-            </a>
-
-            <a class="article-card flex flex-col rounded-feat border border-hair bg-soft p-7 transition hover:-translate-y-0.5 hover:bg-[rgba(255,255,255,.08)]" href="posts/post-64.html">
-              <div class="flex items-center justify-between gap-3">
-                <span class="rounded-pill bg-[#FBEAF1] px-3 py-1.5 text-[12px] font-bold text-[#98305C]">Security R&amp;D Portfolio</span>
-                <i class="ti ti-arrow-up-right text-xl text-hint" aria-hidden="true"></i>
-              </div>
-              <h4 class="mb-3 mt-5 text-[21px] font-bold leading-snug">국가 R&amp;D 투자와 기업 보안역량은 같은 방향을 보고 있는가</h4>
-              <p class="text-[14px] leading-relaxed text-mut">
-                NTIS 과제와 기업 내부역량을 4분면으로 연결해 투자 방향, 전환 조건, 측정 한계와 연구의 후속 과제를 제시합니다.
-              </p>
-              <span class="mt-auto pt-6 text-[13px] font-bold text-cobalt">글 읽기</span>
-            </a>
-          </div>
-        </section>
-      </div>
-    </section>
-
-    <section id="principles" class="my-20">
-      <h2 class="mb-2 text-[30px] font-medium tracking-tight md:text-4xl">
-        Publication Principles
-        <span class="text-base font-normal text-hint">공개 기준</span>
-      </h2>
-      <p class="mb-7 max-w-[74ch] text-mut">
-        글의 양보다 공개된 모든 글의 완성도와 신뢰성을 우선합니다.
-      </p>
-
-      <div class="grid gap-4 md:grid-cols-3">
-        <div class="rounded-feat border border-hair bg-soft p-7">
-          <i class="ti ti-file-check mb-4 text-[28px] text-cobalt" aria-hidden="true"></i>
-          <h3 class="mb-2 text-lg font-bold">완성도와 사실관계</h3>
-          <p class="text-[14px] leading-relaxed text-mut">
-            제목, 본문, 링크, 발행일과 근거자료를 검수하고 미작성 영역이나 더미 문구가 없는 글만 공개합니다.
-          </p>
-        </div>
-
-        <div class="rounded-feat border border-hair bg-soft p-7">
-          <i class="ti ti-shield-lock mb-4 text-[28px] text-cobalt" aria-hidden="true"></i>
-          <h3 class="mb-2 text-lg font-bold">공개 적정성</h3>
-          <p class="text-[14px] leading-relaxed text-mut">
-            실무 사례는 회사와 개인을 식별하기 어렵도록 일반화하며 회사 기밀, 내부 상세정보와 미검증 수치는 공개하지 않습니다.
-          </p>
-        </div>
-
-        <div class="rounded-feat border border-hair bg-soft p-7">
-          <i class="ti ti-message-circle-check mb-4 text-[28px] text-cobalt" aria-hidden="true"></i>
-          <h3 class="mb-2 text-lg font-bold">설명 가능성</h3>
-          <p class="text-[14px] leading-relaxed text-mut">
-            경력과 지원 직무를 설명할 수 있고, 면접에서 문제·접근·의사결정·한계를 직접 설명할 수 있는 글만 선정합니다.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section id="about" class="my-20">
-      <h2 class="mb-2 text-[30px] font-medium tracking-tight md:text-4xl">
+</h2>
+<p class="max-w-[74ch] text-mut">실무 경험을 일반화하고 논문, 표준, 공식 문서와 산업 자료를 연결해 기술 도입의 조건, 운영 리스크와 의사결정 기준을 분석했습니다.</p>
+</div>
+<div class="space-y-10">
+<section aria-labelledby="domain-ax">
+<div class="mb-4 flex flex-wrap items-end justify-between gap-2">
+<div>
+<div class="mb-1 text-[13px] font-bold text-cobalt">01 · AI·AX 전환</div>
+<h3 class="text-[24px] font-medium tracking-tight" id="domain-ax">AI Native Enterprise와 운영체계</h3>
+</div>
+<span class="text-[13px] text-hint">2 Articles</span>
+</div>
+<div class="grid gap-4 md:grid-cols-2">
+<a class="article-card flex flex-col rounded-feat border border-hair bg-soft p-7 transition hover:-translate-y-0.5 hover:bg-[rgba(255,255,255,.08)]" href="posts/post-56.html">
+<div class="flex items-center justify-between gap-3">
+<span class="rounded-pill bg-[#FDF1DA] px-3 py-1.5 text-[12px] font-bold text-[#8A5A00]">AX Operating Model</span>
+<i aria-hidden="true" class="ti ti-arrow-up-right text-xl text-hint"></i>
+</div>
+<h4 class="mb-3 mt-5 text-[21px] font-bold leading-snug">AI 시대의 경쟁력은 모델이 아니라 운영체계다</h4>
+<p class="text-[14px] leading-relaxed text-mut">OPUS 2026에서 들은 AI Native Enterprise를 제가 겪어온 IT 운영·DX 경험과 연결해 다시 정리했습니다. 모델보다 운영지식과 프로세스가 왜 중요한지 봅니다.</p>
+<span class="mt-auto pt-6 text-[13px] font-bold text-cobalt">글 읽기</span>
+</a>
+<a class="article-card flex flex-col rounded-feat border border-hair bg-soft p-7 transition hover:-translate-y-0.5 hover:bg-[rgba(255,255,255,.08)]" href="posts/post-49.html">
+<div class="flex items-center justify-between gap-3">
+<span class="rounded-pill bg-[#EDEBFB] px-3 py-1.5 text-[12px] font-bold text-[#3E2FA6]">AI Governance</span>
+<i aria-hidden="true" class="ti ti-arrow-up-right text-xl text-hint"></i>
+</div>
+<h4 class="mb-3 mt-5 text-[21px] font-bold leading-snug">AI 보안의 본질은 ‘차단’이 아니라 ‘신뢰의 구조’다</h4>
+<p class="text-[14px] leading-relaxed text-mut">보안솔루션을 운영하며 계정과 권한을 통제했던 경험에서 출발했습니다. Agent 환경에서는 행위·도구·로그·책임까지 무엇을 더 관리해야 하는지 질문합니다.</p>
+<span class="mt-auto pt-6 text-[13px] font-bold text-cobalt">글 읽기</span>
+</a>
+</div>
+</section>
+<section aria-labelledby="domain-security">
+<div class="mb-4 flex flex-wrap items-end justify-between gap-2">
+<div>
+<div class="mb-1 text-[13px] font-bold text-cobalt">02 · 정보보호·AI 보안</div>
+<h3 class="text-[24px] font-medium tracking-tight" id="domain-security">Security Operations와 Agentic AI Security</h3>
+</div>
+<span class="text-[13px] text-hint">2 Articles</span>
+</div>
+<div class="grid gap-4 md:grid-cols-2">
+<a class="article-card flex flex-col rounded-feat border border-hair bg-soft p-7 transition hover:-translate-y-0.5 hover:bg-[rgba(255,255,255,.08)]" href="posts/post-16.html">
+<div class="flex items-center justify-between gap-3">
+<span class="rounded-pill bg-[#E7F3EC] px-3 py-1.5 text-[12px] font-bold text-[#1F6B3B]">Security Operations</span>
+<i aria-hidden="true" class="ti ti-arrow-up-right text-xl text-hint"></i>
+</div>
+<h4 class="mb-3 mt-5 text-[21px] font-bold leading-snug">악성코드 감염 의심 단말 대응기 — 격리에서 재발방지까지</h4>
+<p class="text-[14px] leading-relaxed text-mut">의심 단말을 격리하고 원인을 확인한 뒤 정책을 손봤던 경험을 바탕으로, 사고 대응은 탐지보다 그 이후의 판단과 재발방지가 더 중요하다는 점을 정리했습니다.</p>
+<span class="mt-auto pt-6 text-[13px] font-bold text-cobalt">글 읽기</span>
+</a>
+<a class="article-card flex flex-col rounded-feat border border-hair bg-soft p-7 transition hover:-translate-y-0.5 hover:bg-[rgba(255,255,255,.08)]" href="posts/post-53.html">
+<div class="flex items-center justify-between gap-3">
+<span class="rounded-pill bg-[#EDEBFB] px-3 py-1.5 text-[12px] font-bold text-[#3E2FA6]">Agentic Security</span>
+<i aria-hidden="true" class="ti ti-arrow-up-right text-xl text-hint"></i>
+</div>
+<h4 class="mb-3 mt-5 text-[21px] font-bold leading-snug">AI가 AI를 공격해 더 안전해지는 구조</h4>
+<p class="text-[14px] leading-relaxed text-mut">AI가 공격을 자동화한다면 방어와 검증도 더 자동화될 수 있지 않을까? GPT-Red 사례에서 출발해 자율형 검증의 가능성과 통제 조건을 살펴봅니다.</p>
+<span class="mt-auto pt-6 text-[13px] font-bold text-cobalt">글 읽기</span>
+</a>
+</div>
+</section>
+<section aria-labelledby="domain-operations">
+<div class="mb-4 flex flex-wrap items-end justify-between gap-2">
+<div>
+<div class="mb-1 text-[13px] font-bold text-cobalt">03 · 인프라·운영 통제</div>
+<h3 class="text-[24px] font-medium tracking-tight" id="domain-operations">무중단 운영과 AI 시대의 보안 자산</h3>
+</div>
+<span class="text-[13px] text-hint">2 Articles</span>
+</div>
+<div class="grid gap-4 md:grid-cols-2">
+<a class="article-card flex flex-col rounded-feat border border-hair bg-soft p-7 transition hover:-translate-y-0.5 hover:bg-[rgba(255,255,255,.08)]" href="posts/post-36.html">
+<div class="flex items-center justify-between gap-3">
+<span class="rounded-pill bg-[#E7F0FF] px-3 py-1.5 text-[12px] font-bold text-[#0047B3]">IT Operations</span>
+<i aria-hidden="true" class="ti ti-arrow-up-right text-xl text-hint"></i>
+</div>
+<h4 class="mb-3 mt-5 text-[21px] font-bold leading-snug">무중단 운영은 어떻게 만들어지는가 — 인프라 개선과 변화관리</h4>
+<p class="text-[14px] leading-relaxed text-mut">서비스 구조를 바꾸는 일은 장비 교체보다 전환 순서, 검증, 롤백과 협업이 더 중요했습니다. 실제 운영 경험을 변화관리 관점에서 정리했습니다.</p>
+<span class="mt-auto pt-6 text-[13px] font-bold text-cobalt">글 읽기</span>
+</a>
+<a class="article-card flex flex-col rounded-feat border border-hair bg-soft p-7 transition hover:-translate-y-0.5 hover:bg-[rgba(255,255,255,.08)]" href="posts/post-54.html">
+<div class="flex items-center justify-between gap-3">
+<span class="rounded-pill bg-[#EDEBFB] px-3 py-1.5 text-[12px] font-bold text-[#3E2FA6]">Control Architecture</span>
+<i aria-hidden="true" class="ti ti-arrow-up-right text-xl text-hint"></i>
+</div>
+<h4 class="mb-3 mt-5 text-[21px] font-bold leading-snug">AI 시대의 보안 자산은 무엇인가</h4>
+<p class="text-[14px] leading-relaxed text-mut">서버와 데이터에서 Agent의 권한·행위·기억까지</p>
+<span class="mt-auto pt-6 text-[13px] font-bold text-cobalt">글 읽기</span>
+</a>
+</div>
+</section>
+<section aria-labelledby="domain-dx">
+<div class="mb-4 flex flex-wrap items-end justify-between gap-2">
+<div>
+<div class="mb-1 text-[13px] font-bold text-cobalt">04 · DX·프로세스 혁신</div>
+<h3 class="text-[24px] font-medium tracking-tight" id="domain-dx">업무를 먼저 이해해야 자동화할 수 있다</h3>
+</div>
+<span class="text-[13px] text-hint">2 Articles</span>
+</div>
+<div class="grid gap-4 md:grid-cols-2">
+<a class="article-card flex flex-col rounded-feat border border-hair bg-soft p-7 transition hover:-translate-y-0.5 hover:bg-[rgba(255,255,255,.08)]" href="posts/post-48.html">
+<div class="flex items-center justify-between gap-3">
+<span class="rounded-pill bg-[#E7F3EC] px-3 py-1.5 text-[12px] font-bold text-[#1F6B3B]">DX Practice</span>
+<i aria-hidden="true" class="ti ti-arrow-up-right text-xl text-hint"></i>
+</div>
+<h4 class="mb-3 mt-5 text-[21px] font-bold leading-snug">DX는 도구 도입이 아니라 업무를 다시 설계하는 일이다</h4>
+<p class="text-[14px] leading-relaxed text-mut">DX Center에서 1,103개 업무를 들여다보며 느낀 것은 자동화보다 먼저 해야 할 일이 업무를 이해하는 것이었다는 점입니다. AI 적용도 같은 순서여야 한다고 봅니다.</p>
+<span class="mt-auto pt-6 text-[13px] font-bold text-cobalt">글 읽기</span>
+</a>
+<a class="article-card flex flex-col rounded-feat border border-hair bg-soft p-7 transition hover:-translate-y-0.5 hover:bg-[rgba(255,255,255,.08)]" href="posts/post-71.html">
+<div class="flex items-center justify-between gap-3">
+<span class="rounded-pill bg-[#E7F3EC] px-3 py-1.5 text-[12px] font-bold text-[#1F6B3B]">Data-driven Operations</span>
+<i aria-hidden="true" class="ti ti-arrow-up-right text-xl text-hint"></i>
+</div>
+<h4 class="mb-3 mt-5 text-[21px] font-bold leading-snug">예측은 모델에서 시작되지 않았다</h4>
+<p class="text-[14px] leading-relaxed text-mut">공군의 장애기록, IT 운영데이터와 DX 분석 경험을 돌아보며, ‘예측’보다 먼저 필요한 데이터 기록과 운영 습관을 정리했습니다.</p>
+<span class="mt-auto pt-6 text-[13px] font-bold text-cobalt">글 읽기</span>
+</a>
+</div>
+</section>
+<section aria-labelledby="domain-research">
+<div class="mb-4 flex flex-wrap items-end justify-between gap-2">
+<div>
+<div class="mb-1 text-[13px] font-bold text-cobalt">05 · 데이터·기술경영 연구</div>
+<h3 class="text-[24px] font-medium tracking-tight" id="domain-research">데이터 기반 기술경영과 투자 의사결정</h3>
+</div>
+<span class="text-[13px] text-hint">2 Articles</span>
+</div>
+<div class="grid gap-4 md:grid-cols-2">
+<a class="article-card flex flex-col rounded-feat border border-hair bg-soft p-7 transition hover:-translate-y-0.5 hover:bg-[rgba(255,255,255,.08)]" href="posts/post-50.html">
+<div class="flex items-center justify-between gap-3">
+<span class="rounded-pill bg-[#E7F0FF] px-3 py-1.5 text-[12px] font-bold text-[#0047B3]">Data Governance</span>
+<i aria-hidden="true" class="ti ti-arrow-up-right text-xl text-hint"></i>
+</div>
+<h4 class="mb-3 mt-5 text-[21px] font-bold leading-snug">데이터를 많이 모으는 시대에서, 안전하게 연결하는 시대로</h4>
+<p class="text-[14px] leading-relaxed text-mut">데이터를 많이 모으는 것과 잘 쓰는 것은 달랐습니다. 컨퍼런스와 실무 경험을 연결해 권한·출처·책임이 함께 움직여야 하는 이유를 살펴봅니다.</p>
+<span class="mt-auto pt-6 text-[13px] font-bold text-cobalt">글 읽기</span>
+</a>
+<a class="article-card flex flex-col rounded-feat border border-hair bg-soft p-7 transition hover:-translate-y-0.5 hover:bg-[rgba(255,255,255,.08)]" href="posts/post-64.html">
+<div class="flex items-center justify-between gap-3">
+<span class="rounded-pill bg-[#FBEAF1] px-3 py-1.5 text-[12px] font-bold text-[#98305C]">Security R&amp;D Portfolio</span>
+<i aria-hidden="true" class="ti ti-arrow-up-right text-xl text-hint"></i>
+</div>
+<h4 class="mb-3 mt-5 text-[21px] font-bold leading-snug">국가 R&amp;D 투자와 기업 보안역량은 같은 방향을 보고 있는가</h4>
+<p class="text-[14px] leading-relaxed text-mut">국가 R&amp;D 투자 흐름과 기업 내부역량을 같은 화면에 놓으면 무엇이 보일까? 석사 산학 프로젝트에서 1,015개 과제를 분석한 과정과 해석의 한계를 정리했습니다.</p>
+<span class="mt-auto pt-6 text-[13px] font-bold text-cobalt">글 읽기</span>
+</a>
+</div>
+</section>
+</div>
+</section>
+<section class="my-20" id="principles">
+<h2 class="mb-2 text-[30px] font-medium tracking-tight md:text-4xl">How I write <span class="text-base font-normal text-hint">글을 쓰는 방식</span></h2>
+<p class="mb-7 max-w-[74ch] text-mut">기술을 설명하는 것보다, 실제 업무에서 왜 필요했는지부터 쓰려고 합니다.</p>
+<div class="grid gap-4 md:grid-cols-3">
+<div class="rounded-feat border border-hair bg-soft p-7">
+<i aria-hidden="true" class="ti ti-file-check mb-4 text-[28px] text-cobalt"></i>
+<h3 class="mb-2 text-lg font-bold">경험에서 질문 찾기</h3>
+<p class="text-[14px] leading-relaxed text-mut">장애, 운영, 보안통제, 프로세스 개선에서 실제로 부딪힌 문제를 글의 출발점으로 삼습니다.</p>
+</div>
+<div class="rounded-feat border border-hair bg-soft p-7">
+<i aria-hidden="true" class="ti ti-shield-lock mb-4 text-[28px] text-cobalt"></i>
+<h3 class="mb-2 text-lg font-bold">외부 근거로 확인하기</h3>
+<p class="text-[14px] leading-relaxed text-mut">제 경험이 일반화될 수 있는지 논문, 표준, 공식 문서와 기업 기술블로그를 비교하며 확인합니다.</p>
+</div>
+<div class="rounded-feat border border-hair bg-soft p-7">
+<i aria-hidden="true" class="ti ti-message-circle-check mb-4 text-[28px] text-cobalt"></i>
+<h3 class="mb-2 text-lg font-bold">업무 적용까지 생각하기</h3>
+<p class="text-[14px] leading-relaxed text-mut">좋은 기술인지 설명하는 데서 멈추지 않고, 누가 어떤 프로세스에 적용할지와 리스크·책임까지 남깁니다.</p>
+</div>
+</div>
+</section>
+<section class="my-20" id="about">
+<h2 class="mb-2 text-[30px] font-medium tracking-tight md:text-4xl">
         About / Portfolio
         <span class="text-base font-normal text-hint">실무와 연구의 기반</span>
-      </h2>
-      <p class="mb-8 max-w-[76ch] text-mut">
-        정보보호, IT기획, DX와 미션 크리티컬 시스템 운영 경험을 바탕으로
-        기술을 조직의 의사결정, 운영체계와 비즈니스 가치로 연결하는 일을 연구하고 있습니다.
-      </p>
-
-      <div class="grid gap-4 md:grid-cols-2">
-        <article class="rounded-feat border border-hair bg-soft p-7">
-          <div class="mb-2 text-[13px] font-bold text-cobalt">2024.03 ~ 2027.02 예정</div>
-          <h3 class="text-lg font-bold">서강대학교 기술경영전문대학원</h3>
-          <p class="mt-3 text-[14px] leading-relaxed text-mut">
-            기술기획·데이터 기반 전략 분석과 정보보호 R&amp;D 투자·기업 내부역량 연구
-          </p>
-        </article>
-
-        <article class="rounded-feat border border-hair bg-soft p-7">
-          <div class="mb-2 text-[13px] font-bold text-cobalt">2023.08 ~ 2026.04</div>
-          <h3 class="text-lg font-bold">KT 지니뮤직 · 정보보호 기술영역 PM</h3>
-          <p class="mt-3 text-[14px] leading-relaxed text-mut">
-            보안솔루션 도입·고도화, 기술통제, 취약점 관리, 엔드포인트 보안과 내부통제 운영
-          </p>
-        </article>
-
-        <article class="rounded-feat border border-hair bg-soft p-7">
-          <div class="mb-2 text-[13px] font-bold text-cobalt">2019.01 ~ 2023.07</div>
-          <h3 class="text-lg font-bold">KT 지니뮤직 · IT기획 / DX Center</h3>
-          <p class="mt-3 text-[14px] leading-relaxed text-mut">
-            플랫폼 인프라 구조개선, 무중단 운영전환, 전사 프로세스 분석과 DX 과제 관리
-          </p>
-        </article>
-
-        <article class="rounded-feat border border-hair bg-soft p-7">
-          <div class="mb-2 text-[13px] font-bold text-cobalt">2011.04 ~ 2017.07</div>
-          <h3 class="text-lg font-bold">대한민국 공군 · 방공 C4I 운영</h3>
-          <p class="mt-3 text-[14px] leading-relaxed text-mut">
-            미션 크리티컬 통신체계의 무중단 운영, 장애 대응, 이중화 전환과 운영 표준화
-          </p>
-        </article>
-      </div>
-
-      <div class="mt-5 rounded-feat border border-[rgba(255,255,255,.14)] bg-[rgba(255,255,255,.035)] p-7">
-        <div class="mb-3 flex items-center gap-2 text-[16px] font-bold">
-          <i class="ti ti-award text-cobalt" aria-hidden="true"></i>
-          주요 성과
+</h2>
+<p class="mb-8 max-w-[76ch] text-mut">정보보호, IT기획, DX와 미션 크리티컬 시스템 운영 경험을 바탕으로 기술을 조직의 의사결정, 운영체계와 비즈니스 가치로 연결하는 일을 연구하고 있습니다.</p>
+<div class="grid gap-4 md:grid-cols-2">
+<article class="rounded-feat border border-hair bg-soft p-7">
+<div class="mb-2 text-[13px] font-bold text-cobalt">2024.04 ~ 2026.08 졸업예정</div>
+<h3 class="text-lg font-bold">서강대학교 기술경영전문대학원</h3>
+<p class="mt-3 text-[14px] leading-relaxed text-mut">기술기획·데이터 기반 전략 분석과 정보보호 R&amp;D 투자·기업 내부역량 연구</p>
+</article>
+<article class="rounded-feat border border-hair bg-soft p-7">
+<div class="mb-2 text-[13px] font-bold text-cobalt">2023.08 ~ 2026.04</div>
+<h3 class="text-lg font-bold">KT 지니뮤직 · 정보보호 기술영역 PM</h3>
+<p class="mt-3 text-[14px] leading-relaxed text-mut">보안솔루션 도입·고도화, 기술통제, 취약점 관리, 엔드포인트 보안과 내부통제 운영</p>
+</article>
+<article class="rounded-feat border border-hair bg-soft p-7">
+<div class="mb-2 text-[13px] font-bold text-cobalt">2019.01 ~ 2023.07</div>
+<h3 class="text-lg font-bold">KT 지니뮤직 · IT기획</h3>
+<p class="mt-3 text-[14px] leading-relaxed text-mut">플랫폼 인프라 구조개선과 서비스 운영기획. 2021.01~2021.12 DX Center를 겸무하며 전사 1,103개 업무 프로세스 분석과 DX 과제를 수행</p>
+</article>
+<article class="rounded-feat border border-hair bg-soft p-7">
+<div class="mb-2 text-[13px] font-bold text-cobalt">2011.04 ~ 2017.07</div>
+<h3 class="text-lg font-bold">대한민국 공군 · 방공 C4I 운영</h3>
+<p class="mt-3 text-[14px] leading-relaxed text-mut">미션 크리티컬 통신체계의 무중단 운영, 장애 대응, 이중화 전환과 운영 표준화</p>
+</article>
+</div>
+<div class="mt-5 rounded-feat border border-[rgba(255,255,255,.14)] bg-[rgba(255,255,255,.035)] p-7">
+<div class="mb-3 flex items-center gap-2 text-[16px] font-bold">
+<i aria-hidden="true" class="ti ti-award text-cobalt"></i>
+          주요 성과·연구
         </div>
-        <div class="grid gap-3 text-[14px] leading-relaxed text-mut md:grid-cols-2">
-          <div class="rounded-2xl border border-hair p-4">서강MOT 창업경진대회 최우수상 · 2024</div>
-          <div class="rounded-2xl border border-hair p-4">정보보호 산업발전 유공 표창 · 2023</div>
-          <div class="rounded-2xl border border-hair p-4">서비스 안정화 지니스타상 · 2019</div>
-          <div class="rounded-2xl border border-hair p-4">공군 로그분석 경연대회 최우수 등 개인표창</div>
-        </div>
-      </div>
-    </section>
-
-    <footer class="mt-20 border-t border-hair pt-7 text-[14px] leading-relaxed text-mut">
-      <p>
-        Human Tech Note는 기업이 AI·데이터·보안 기술을 도입하고 운영할 때
-        권한, 책임, 통제와 성과가 실제로 작동하는 조건을 분석합니다.
-      </p>
-      <p class="mt-2">
-        공개 글은 실무 사례를 비식별·일반화하고 논문, 공식 문서와 산업 자료를 바탕으로 작성합니다.
-        · © 2026 최한람
-      </p>
-    </footer>
-  </main>
+<div class="grid gap-3 text-[14px] leading-relaxed text-mut md:grid-cols-2"><div class="rounded-2xl border border-hair p-4">서강MOT 창업경진대회 최우수상 · 2024</div><div class="rounded-2xl border border-hair p-4">서비스 안정화 지니스타상 · 2019</div><div class="rounded-2xl border border-hair p-4">공군 로그분석 경연대회 최우수 등 3건 · 2013~2014</div><div class="rounded-2xl border border-hair p-4">정보보호 R&amp;D 투자·기업 내부역량 산학 프로젝트 · 2026</div></div>
+</div>
+</section>
+<footer class="mt-20 border-t border-hair pt-7 text-[14px] leading-relaxed text-mut">
+<p>Human Tech Note는 제가 현장에서 겪은 문제를 다시 꺼내 보고, AI·데이터·보안 기술을 실제 업무 프로세스에 어떻게 적용할 수 있을지 검토하는 기록입니다.</p>
+<p class="mt-2">실무 사례는 공개 가능한 범위에서 일반화하고, 논문·공식 문서·산업 자료로 다시 확인합니다. · © 2026 최한람</p>
+</footer>
+</main>
 </body>
 </html>

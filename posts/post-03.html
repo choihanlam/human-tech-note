@@ -1,59 +1,630 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ISMS-P 인증, 실무자의 눈으로 다시 보기 · Human Tech Note</title><meta name="description" content="ISMS 운영 경험"/>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<style type="text/tailwindcss">
-@theme{
---color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,0.05);
---color-hair:rgba(255,255,255,0.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
---radius-pill:100px;--radius-feat:32px;
---font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
-}
-</style>
-<style>
-body{background:#08090a}
-.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
-radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
-radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
-radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
-radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
-#07080a}
-</style>
-<style>
-.pb h3{font-size:24px;font-weight:500;letter-spacing:-.4px;margin:36px 0 10px;color:#f1f3ef}
-.pb p{font-size:18px;line-height:1.75;margin:0 0 18px;letter-spacing:-.2px}
-.pb ul{font-size:18px;line-height:1.7;padding-left:22px;margin:0 0 20px}
-.pb li{margin-bottom:7px}
-.pb strong{color:#fff;font-weight:700}
-.callout{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:32px;padding:26px 30px;margin:30px 0;font-size:16px;line-height:1.65;color:#e7e9e4}
-.callout .l{color:#ff8256;font-weight:700;font-size:13px;margin-bottom:8px;display:flex;gap:7px;align-items:center}
-</style>
-</head><body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em"><div class="bgfx"></div>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>정보보호 정책은 왜 문서로 끝나면 안 되는가 · Human Tech Note</title>
+  <meta name="description" content="Information Security Policy: A Management Practice Perspective 논문을 바탕으로 정보보호 정책을 개발·운영·평가의 관리 생애주기로 살펴봅니다."/>
+
+  <meta property="og:title" content="정보보호 정책은 왜 문서로 끝나면 안 되는가"/>
+  <meta property="og:description" content="정보보호 정책을 문서 작성이 아니라 개발·운영·평가가 반복되는 관리체계로 다시 봅니다."/>
+  <meta property="og:type" content="article"/>
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style type="text/tailwindcss">
+    @theme{
+      --color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;
+      --color-soft:rgba(255,255,255,0.05);--color-hair:rgba(255,255,255,0.11);
+      --color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
+      --radius-pill:100px;--radius-feat:32px;
+      --font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
+    }
+  </style>
+
+  <style>
+    body{background:#08090a}
+    .bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+      radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
+      radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
+      radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
+      radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),#07080a}
+
+    .pb h2{font-size:29px;font-weight:650;line-height:1.4;letter-spacing:-.65px;margin:52px 0 16px;color:#f1f3ef}
+    .pb h3{font-size:23px;font-weight:620;line-height:1.45;letter-spacing:-.4px;margin:38px 0 12px;color:#f1f3ef}
+    .pb p{font-size:18px;line-height:1.82;margin:0 0 20px;letter-spacing:-.2px}
+    .pb ul,.pb ol{font-size:18px;line-height:1.78;padding-left:24px;margin:4px 0 26px}
+    .pb li{margin-bottom:8px}
+    .pb strong{color:#fff;font-weight:700}
+    .pb blockquote{margin:34px 0;padding:22px 26px;border-left:3px solid #ff8256;border-radius:0 18px 18px 0;background:rgba(255,255,255,.045);color:#f1f3ef;font-size:20px;font-weight:550;line-height:1.72;letter-spacing:-.3px}
+
+    .lead{margin:0 0 28px;color:#d9ddd7;font-size:20px;line-height:1.76;letter-spacing:-.3px}
+
+    .notice{margin:28px 0 34px;padding:22px 24px;border:1px solid rgba(232,180,90,.22);border-radius:22px;background:rgba(232,180,90,.07);color:#e9e3d7;font-size:15px;line-height:1.72}
+    .notice strong{color:#f4cd84}
+
+    .callout{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:32px;padding:26px 30px;margin:34px 0;font-size:16px;line-height:1.7;color:#e7e9e4}
+    .callout .l{color:#ff8256;font-weight:700;font-size:13px;margin-bottom:10px;display:flex;gap:7px;align-items:center}
+
+    .viz-wrap{margin:30px 0 38px}
+    .viz-title{display:flex;align-items:center;gap:8px;margin-bottom:15px;color:#ff8f65;font-size:14px;font-weight:780;letter-spacing:-.2px}
+    .viz-title::before{width:8px;height:8px;border-radius:999px;background:#ff8256;content:"";box-shadow:0 0 18px rgba(255,130,86,.55)}
+    .viz-note{margin-top:12px;color:#92988f;font-size:13px;line-height:1.65}
+
+    .def-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .def-card{min-height:180px;padding:19px 17px;border:1px solid rgba(255,255,255,.1);border-radius:21px;background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.025))}
+    .def-card .k{color:#ff8f65;font-size:11px;font-weight:820;letter-spacing:.07em;margin-bottom:10px}
+    .def-card .v{color:#f1f3ef;font-size:16px;font-weight:690;line-height:1.45}
+    .def-card .d{color:#c5cbc3;font-size:13px;line-height:1.65;margin-top:9px}
+
+    .lifecycle{display:grid;grid-template-columns:1fr 54px 1fr 54px 1fr;gap:10px;align-items:stretch}
+    .life-card{padding:21px 18px;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:rgba(255,255,255,.04)}
+    .life-card .n{color:#ff9169;font-size:11px;font-weight:820;letter-spacing:.07em;margin-bottom:9px}
+    .life-card .t{color:#f1f3ef;font-size:19px;font-weight:700;line-height:1.45}
+    .life-card .s{color:#c6ccc4;font-size:13px;line-height:1.7;margin-top:10px}
+    .life-arrow{display:flex;align-items:center;justify-content:center;color:#ff8256;font-size:26px;font-weight:800}
+
+    .practice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .practice-card{padding:20px 19px;border:1px solid rgba(255,255,255,.1);border-radius:21px;background:rgba(255,255,255,.04)}
+    .practice-card .h{color:#ff9169;font-size:12px;font-weight:820;letter-spacing:.035em;margin-bottom:10px}
+    .practice-card .title{color:#f1f3ef;font-size:17px;font-weight:690;line-height:1.45;margin-bottom:10px}
+    .practice-card ul{margin:0;padding-left:18px;color:#ccd1ca;font-size:13px;line-height:1.7}
+
+    .table-wrap{overflow-x:auto;margin:26px 0 34px;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:rgba(255,255,255,.035)}
+    .table-wrap table{width:100%;min-width:660px;border-collapse:collapse}
+    .table-wrap th,.table-wrap td{padding:15px 17px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top;font-size:15px;line-height:1.65}
+    .table-wrap th{color:#ff9a72;font-weight:750;background:rgba(255,255,255,.035)}
+    .table-wrap td{color:#dde1db}
+    .table-wrap tr:last-child td{border-bottom:0}
+
+    .loop{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+    .loop-card{padding:18px 15px;border:1px solid rgba(255,255,255,.1);border-radius:19px;background:rgba(255,255,255,.04)}
+    .loop-card .k{color:#ff9169;font-size:11px;font-weight:820;letter-spacing:.07em;margin-bottom:9px}
+    .loop-card .t{color:#f1f3ef;font-size:15px;font-weight:690;line-height:1.45}
+    .loop-card .s{color:#c2c8c0;font-size:12px;line-height:1.62;margin-top:8px}
+
+    .decision-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .decision-card{min-height:190px;padding:20px 19px;border:1px solid rgba(255,255,255,.1);border-radius:21px;background:rgba(255,255,255,.04)}
+    .decision-card .h{color:#ff9169;font-size:12px;font-weight:820;letter-spacing:.035em;margin-bottom:10px}
+    .decision-card .title{color:#f1f3ef;font-size:17px;font-weight:690;line-height:1.45;margin-bottom:10px}
+    .decision-card p{color:#ccd1ca;font-size:13px;line-height:1.7;margin:0}
+
+    .limit-box{margin:30px 0;padding:22px 24px;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:rgba(255,255,255,.035)}
+    .limit-box .title{color:#f1f3ef;font-size:16px;font-weight:700;margin-bottom:10px}
+    .limit-box ul{margin:0;padding-left:20px;color:#c6ccc4;font-size:14px;line-height:1.72}
+
+    @media(max-width:920px){
+      .def-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .lifecycle{grid-template-columns:1fr}
+      .life-arrow{transform:rotate(90deg);min-height:22px}
+      .loop{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+
+    @media(max-width:680px){
+      .def-grid,.practice-grid,.decision-grid,.loop{grid-template-columns:1fr}
+      .pb h2{font-size:25px}.pb h3{font-size:21px}
+      .pb p,.pb ul,.pb ol{font-size:17px}
+      .lead{font-size:18px}
+      .pb blockquote{font-size:18px;padding:20px 21px}
+    }
+  </style>
+</head>
+
+<body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em">
+<div class="bgfx"></div>
+
 <nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair">
-<div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
-<a class="font-bold text-lg flex items-center gap-2" href="../index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a>
-<span class="ml-auto"></span>
-<a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive"><i class="ti ti-arrow-left"></i> 포트폴리오</a>
-</div></nav>
-<article class="max-w-[760px] mx-auto px-6 pt-14 pb-28">
-<span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6"><i class="ti ti-flask"></i> 포트폴리오 데모용 더미 콘텐츠</span>
-<div><span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#E7F0FF;color:#0047B3"><i class="ti ti-shield-lock"></i> 정보보호 기본</span></div>
-<h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">ISMS-P 인증, 실무자의 눈으로 다시 보기</h1>
-<div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
-<span><i class="ti ti-calendar align-[-2px]"></i> 2026년 7월 17일 (금)</span><span><i class="ti ti-clock align-[-2px]"></i> 약 11분</span><span>#3 / 75</span></div>
-<div class="pb">
-<h3>들어가며</h3>
-<p>정보보호 실무에서 자주 마주치는 개념을 현장의 언어로 다시 정리한다. 이번 글은 <strong>ISMS 운영 경험</strong>을(를) 중심으로, 개념 설명에 그치지 않고 실제 판단의 맥락을 함께 담으려 했다.</p>
-<p>많은 조직이 같은 문제를 겪지만, 정답은 조직의 규모·문화·서비스 특성에 따라 달라진다. 그래서 '무엇을 했는가'보다 '왜 그렇게 판단했는가'에 무게를 두었다.</p>
-<h3>문제 정의</h3><p>먼저 상황을 명확히 규정하는 것이 중요하다. 문제를 좁게 정의할수록 해결책은 선명해지고, 이해관계자 사이의 합의도 빨라진다.</p>
-<h3>접근 방법</h3><p>실무에서는 이상적인 방법론보다 '지속 가능한 운영'이 우선한다. 한 번의 조치로 끝나는 일은 거의 없고, 대부분은 정책·프로세스·사람이 맞물려야 유지된다.</p>
-<h3>정리하며</h3><p>결국 남는 것은 기록과 반복 가능한 체계다. ISMS 운영 경험에서 얻은 교훈은 다른 영역에도 그대로 적용된다.</p>
-</div>
-<div class="callout"><div class="l"><i class="ti ti-link"></i> 이 글과 연결된 실무 역량</div>ISMS 운영 경험 — 이력서·경력기술서의 실제 수행 경험과 직접 연결되는 주제입니다.</div>
-<div class="flex flex-wrap gap-2.5 my-8"><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#정보보호 기본</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#ISMS 운영 경험</span></div>
-<div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7"><a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[#e9edf2] transition" href="post-02.html"><div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 글</div><div class="font-bold mt-1 text-[15px]">정보보호란 무엇인가 — 실무자가 정의하는 우선순위</div></a><a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[#e9edf2] transition" href="post-04.html"><div class="text-[13px] text-mut font-medium">다음 글 <i class="ti ti-arrow-right"></i></div><div class="font-bold mt-1 text-[15px]">ITGC와 GITC, &#x27;운영의 언어&#x27;로 이해하기</div></a></div>
+  <div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
+    <a class="font-bold text-lg flex items-center gap-2" href="../index.html">
+      <i class="ti ti-book-2"></i>Human Tech Note
+      <span class="font-normal text-mut text-[13px]">by 최한람</span>
+    </a>
+    <span class="ml-auto"></span>
+    <a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive">
+      <i class="ti ti-arrow-left"></i> 아카이브
+    </a>
+  </div>
+</nav>
+
+<article class="max-w-[820px] mx-auto px-6 pt-14 pb-28">
+
+  <span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6">
+    <i class="ti ti-book-2"></i> Research Notes · Paper Review
+  </span>
+
+  <div>
+    <span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#E7F3EC;color:#1F6B3B">
+      <i class="ti ti-shield-check"></i> Security Governance
+    </span>
+  </div>
+
+  <h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">
+    정보보호 정책은 왜 문서로 끝나면 안 되는가
+  </h1>
+
+  <p class="text-[18px] leading-relaxed text-mut mb-6">
+    정책을 개발·운영·평가가 반복되는 관리 생애주기로 다시 보기
+  </p>
+
+  <div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
+    <span><i class="ti ti-calendar align-[-2px]"></i> 2026년 8월 27일 (목)</span>
+    <span><i class="ti ti-clock align-[-2px]"></i> 약 11분</span>
+    <span><i class="ti ti-file-text align-[-2px]"></i> #02</span>
+  </div>
+
+  <div class="pb">
+
+    <div class="notice">
+      <strong>읽은 논문</strong><br/>
+      Moneer Alshaikh, Sean B. Maynard, Atif Ahmad, Shanton Chang,
+      “Information Security Policy: A Management Practice Perspective,”
+      Australasian Conference on Information Systems, Adelaide, 2015.
+    </div>
+
+    <p class="lead">
+      정보보호 정책을 만든다고 하면 보통 문서부터 떠올린다.
+      어떤 항목을 넣을지, 어떤 표현을 쓸지, 누가 승인할지를 정하고
+      최종본을 배포하면 하나의 업무가 완료된 것처럼 보인다.
+    </p>
+
+    <p>
+      그런데 정책이 실제 조직에서 작동하려면 문서가 존재하는 것만으로는 부족하다.
+      누가 만들었는지, 어떤 위험을 반영했는지, 구성원이 내용을 이해하는지,
+      실제 행동으로 지켜지는지, 사고와 환경변화가 발생했을 때 다시 수정되는지까지 연결되어야 한다.
+    </p>
+
+    <p>
+      이 논문은 바로 그 지점을 다룬다.
+      정보보호 정책을 <strong>문서 작성 작업이 아니라 관리활동의 생애주기</strong>로 바라보고,
+      정책의 개발, 실행·유지, 평가를 하나의 구조로 정리한다.
+    </p>
+
+    <h2>기존 정보보호 정책 연구에는 무엇이 부족했을까</h2>
+
+    <p>
+      저자들은 기존 정보보호 정책 개발 연구를 검토하면서
+      네 가지 반복적인 한계를 확인했다.
+      논문의 Table 1은 여러 선행연구가 이 문제들을 어느 정도 다루고 있는지를 비교한다.
+    </p>
+
+    <div class="viz-wrap">
+      <div class="viz-title">기존 정책 생애주기 연구에서 확인된 4가지 한계</div>
+
+      <div class="def-grid">
+        <div class="def-card">
+          <div class="k">DEFICIENCY 01</div>
+          <div class="v">전체 생애주기를 보지 못함</div>
+          <div class="d">
+            정책 개발의 일부 단계만 다루고,
+            개발부터 평가까지 연결된 전체 흐름을 충분히 설명하지 못했다.
+          </div>
+        </div>
+
+        <div class="def-card">
+          <div class="k">DEFICIENCY 02</div>
+          <div class="v">용어와 의미가 일관되지 않음</div>
+          <div class="d">
+            같은 활동을 서로 다른 용어로 표현하거나,
+            서로 다른 활동을 하나의 개념처럼 다루는 문제가 있었다.
+          </div>
+        </div>
+
+        <div class="def-card">
+          <div class="k">DEFICIENCY 03</div>
+          <div class="v">활동의 세분화 수준이 제각각</div>
+          <div class="d">
+            어떤 연구는 세부 활동을 매우 구체적으로,
+            다른 연구는 지나치게 큰 단계로만 설명했다.
+          </div>
+        </div>
+
+        <div class="def-card">
+          <div class="k">DEFICIENCY 04</div>
+          <div class="v">실무 지침으로 전환하기 어려움</div>
+          <div class="d">
+            위험관리·SETA 등 다른 관리활동의 내용을
+            정책 운영에 바로 적용하기 어려운 경우가 많았다.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      이 문제들은 단순한 학술적 용어의 차이처럼 보일 수 있다.
+      하지만 조직에서는 “정책을 누가 만들고, 누구에게 전달하고,
+      누가 지키게 하며, 언제 다시 검토하는가”가 명확하지 않으면
+      정책이 실제 통제로 이어지기 어렵다.
+    </p>
+
+    <blockquote>
+      좋은 정보보호 정책은 잘 쓰인 문서가 아니라,
+      조직 안에서 반복적으로 운영되는 관리 프로세스에 가깝다.
+    </blockquote>
+
+    <h2>정책은 세 단계로 운영된다</h2>
+
+    <p>
+      논문이 제안한 Information Security Policy Management Practices Model은
+      크게 <strong>Development → Implementation &amp; Maintenance → Evaluation</strong>
+      세 단계로 구성된다.
+    </p>
+
+    <div class="viz-wrap">
+      <div class="viz-title">Information Security Policy Management Practices Model</div>
+
+      <div class="lifecycle">
+        <div class="life-card">
+          <div class="n">STAGE 01</div>
+          <div class="t">Development</div>
+          <div class="s">
+            정책 개발팀을 구성하고, 조직의 보안 요구사항을 파악하며,
+            정책 문서를 작성하고 검토한다.
+          </div>
+        </div>
+
+        <div class="life-arrow">→</div>
+
+        <div class="life-card">
+          <div class="n">STAGE 02</div>
+          <div class="t">Implementation &amp; Maintenance</div>
+          <div class="s">
+            정책을 배포하고 구성원에게 알리며,
+            실제 준수 여부를 관리하고 집행한다.
+          </div>
+        </div>
+
+        <div class="life-arrow">→</div>
+
+        <div class="life-card">
+          <div class="n">STAGE 03</div>
+          <div class="t">Evaluation</div>
+          <div class="s">
+            정책의 효과를 정기적으로 검토하고,
+            사고·위험변화·피드백을 반영해 다시 수정한다.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3>1. Development — 정책을 쓰기 전에 먼저 조직을 이해한다</h3>
+
+    <p>
+      개발 단계의 첫 번째 활동은 정책 문구를 작성하는 것이 아니다.
+      논문은 먼저 <strong>정책 개발팀을 구성</strong>하고
+      필요한 이해관계자와 역할·책임을 식별하도록 제안한다.
+    </p>
+
+    <p>
+      정보보호 정책은 보안부서만의 문서가 아니기 때문이다.
+      정책의 내용에 따라 경영진, 인사, 법무, IT, 현업과 여러 업무조직이 영향을 받을 수 있다.
+      따라서 필요한 이해관계자를 개발 단계부터 참여시키고,
+      누가 어떤 책임을 갖는지 명확하게 해야 한다.
+    </p>
+
+    <p>
+      다음은 조직의 보안 요구사항을 파악하는 과정이다.
+      현재 존재하는 정책과 절차를 검토하고,
+      조직이 직면한 위험과 보안 요구사항을 분석한 뒤
+      새로운 정책이 해결해야 할 범위를 정한다.
+    </p>
+
+    <p>
+      마지막으로 필요한 정책 구성요소를 선정하고 초안을 작성한 뒤
+      관련 이해관계자의 검토를 거친다.
+      즉 정책 작성은 개발 단계의 시작이 아니라
+      앞선 요구분석을 거친 결과에 가깝다.
+    </p>
+
+    <h3>2. Implementation &amp; Maintenance — 배포와 전달은 다르다</h3>
+
+    <p>
+      논문은 정책을 실제 조직에 적용하는 단계에서
+      <strong>Distribute, Communicate, Enforce</strong>를 구분한다.
+    </p>
+
+    <div class="viz-wrap">
+      <div class="viz-title">정책 실행·유지 단계의 핵심 관리활동</div>
+
+      <div class="practice-grid">
+        <div class="practice-card">
+          <div class="h">DISTRIBUTE</div>
+          <div class="title">정책이 필요한 사람에게 전달되는가</div>
+          <ul>
+            <li>전달 방식을 선택한다.</li>
+            <li>대상자가 실제 정책에 접근할 수 있게 한다.</li>
+            <li>조직 환경에 맞는 배포 수단을 사용한다.</li>
+          </ul>
+        </div>
+
+        <div class="practice-card">
+          <div class="h">COMMUNICATE</div>
+          <div class="title">구성원이 정책을 이해하는가</div>
+          <ul>
+            <li>설명회, 교육, 캠페인 등 다양한 방식을 활용한다.</li>
+            <li>정책의 존재뿐 아니라 목적과 이유를 알린다.</li>
+            <li>업무와 정책의 연결점을 이해시키는 과정이 필요하다.</li>
+          </ul>
+        </div>
+
+        <div class="practice-card">
+          <div class="h">ENFORCE</div>
+          <div class="title">정책이 실제 행동으로 이어지는가</div>
+          <ul>
+            <li>위반 여부를 모니터링한다.</li>
+            <li>기술적 통제와 절차를 통해 준수를 지원한다.</li>
+            <li>필요한 경우 제재와 책임체계를 적용한다.</li>
+          </ul>
+        </div>
+
+        <div class="practice-card">
+          <div class="h">MAINTAIN</div>
+          <div class="title">정책이 조직 변화에 맞게 유지되는가</div>
+          <ul>
+            <li>변경된 시스템과 업무환경을 반영한다.</li>
+            <li>실행 과정의 문제와 예외를 관리한다.</li>
+            <li>구성원의 피드백을 다음 개정에 연결한다.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      특히 배포와 커뮤니케이션을 분리한 점이 중요하다.
+      전사 포털이나 이메일에 정책을 게시했다고 해서
+      구성원이 내용을 이해하고 업무에 적용할 수 있다는 뜻은 아니다.
+    </p>
+
+    <p>
+      정책의 효과는 “읽었습니까?”라는 확인보다
+      실제 업무에서 어떤 행동이 요구되는지 구성원이 이해하고,
+      시스템과 절차가 그 행동을 지원하는지에 달려 있다.
+    </p>
+
+    <h3>3. Evaluation — 정책은 정기적으로 다시 질문되어야 한다</h3>
+
+    <p>
+      평가 단계에서는 정보보호 정책을 주기적으로 검토하고
+      정책의 효과성과 조직 환경의 변화를 확인한다.
+    </p>
+
+    <p>
+      논문의 Table 2에서 제시하는 핵심 입력은 두 가지다.
+      하나는 관리자와 사용자 등 관련 이해관계자의 피드백이고,
+      다른 하나는 <strong>보안사고 보고서와 새로운 위험평가 결과</strong>다.
+    </p>
+
+    <p>
+      이 부분은 정책을 정적인 문서가 아니라
+      실제 사고와 환경 변화에 따라 계속 수정되는 동적인 통제로 만든다.
+    </p>
+
+    <div class="viz-wrap">
+      <div class="viz-title">정책이 살아있는 관리체계가 되는 순환 구조</div>
+
+      <div class="loop">
+        <div class="loop-card">
+          <div class="k">01</div>
+          <div class="t">Risk &amp; Need</div>
+          <div class="s">조직의 위험과 요구사항을 식별한다.</div>
+        </div>
+        <div class="loop-card">
+          <div class="k">02</div>
+          <div class="t">Policy Design</div>
+          <div class="s">정책 내용과 책임, 절차를 정의한다.</div>
+        </div>
+        <div class="loop-card">
+          <div class="k">03</div>
+          <div class="t">Communication</div>
+          <div class="s">정책을 전달하고 업무에서 이해할 수 있게 한다.</div>
+        </div>
+        <div class="loop-card">
+          <div class="k">04</div>
+          <div class="t">Enforcement</div>
+          <div class="s">기술·절차·책임체계로 실제 준수를 지원한다.</div>
+        </div>
+        <div class="loop-card">
+          <div class="k">05</div>
+          <div class="t">Review &amp; Update</div>
+          <div class="s">사고·피드백·위험변화를 반영해 다시 수정한다.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>정책은 컴플라이언스 문서가 아니라 운영 인터페이스다</h2>
+
+    <p>
+      이 논문을 기업의 정보보호 거버넌스 관점에서 읽으면
+      정책의 역할을 조금 다르게 볼 수 있다.
+    </p>
+
+    <p>
+      정책은 법령이나 표준을 그대로 옮겨 적는 문서가 아니다.
+      외부의 요구사항과 조직의 위험을
+      <strong>구성원이 실제 업무에서 따라야 할 행동으로 번역하는 인터페이스</strong>에 가깝다.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>외부 또는 관리 요구</th>
+            <th>정책이 해야 하는 번역</th>
+            <th>실제 운영으로 연결되는 형태</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>접근권한을 최소화해야 한다</td>
+            <td>누가 어떤 권한을 신청·승인·회수하는가</td>
+            <td>권한관리 프로세스, 승인, 정기검토</td>
+          </tr>
+          <tr>
+            <td>개인정보를 안전하게 처리해야 한다</td>
+            <td>업무 단계별 처리기준과 금지행위는 무엇인가</td>
+            <td>처리절차, 시스템 통제, 교육과 점검</td>
+          </tr>
+          <tr>
+            <td>사고에 대응해야 한다</td>
+            <td>누가 언제 보고하고 어떤 권한으로 조치하는가</td>
+            <td>보고체계, 비상연락망, 사고대응 절차</td>
+          </tr>
+          <tr>
+            <td>정책을 주기적으로 검토해야 한다</td>
+            <td>무엇을 Trigger로 누가 개정할 것인가</td>
+            <td>정기검토, 사고 피드백, 위험평가 연계</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      이 관점에서는 정책의 품질을 문장 표현만으로 평가하기 어렵다.
+      실제 조직의 역할과 시스템, 업무 프로세스에 연결되지 않는다면
+      정책은 존재해도 작동하지 않을 수 있기 때문이다.
+    </p>
+
+    <h2>정보보호 PM이라면 정책을 어떻게 관리할까</h2>
+
+    <p>
+      이 논문을 실제 정책관리 의사결정으로 옮기면
+      다음과 같은 기준이 중요해진다.
+    </p>
+
+    <div class="viz-wrap">
+      <div class="viz-title">정보보호 정책관리 의사결정 포인트</div>
+
+      <div class="decision-grid">
+        <div class="decision-card">
+          <div class="h">01 · OWNER</div>
+          <div class="title">문서 작성자와 정책 책임자를 구분한다</div>
+          <p>
+            정책을 누가 썼는지보다 누가 운영과 개정의 책임을 지는지 명확히 한다.
+          </p>
+        </div>
+
+        <div class="decision-card">
+          <div class="h">02 · REQUIREMENT</div>
+          <div class="title">정책 전에 위험과 요구사항을 확인한다</div>
+          <p>
+            법령·표준뿐 아니라 실제 시스템, 업무와 사고이력을 기준으로 정책 범위를 정한다.
+          </p>
+        </div>
+
+        <div class="decision-card">
+          <div class="h">03 · COMMUNICATION</div>
+          <div class="title">배포보다 이해 가능성을 본다</div>
+          <p>
+            구성원이 왜 지켜야 하는지와 업무에서 무엇을 해야 하는지를 이해할 수 있게 설계한다.
+          </p>
+        </div>
+
+        <div class="decision-card">
+          <div class="h">04 · ENFORCEMENT</div>
+          <div class="title">정책을 시스템과 절차에 연결한다</div>
+          <p>
+            접근통제, 승인, 로그, 모니터링과 같은 실제 통제가 정책을 뒷받침하도록 한다.
+          </p>
+        </div>
+
+        <div class="decision-card">
+          <div class="h">05 · FEEDBACK</div>
+          <div class="title">사고와 예외를 정책 개선의 입력으로 본다</div>
+          <p>
+            위반과 사고를 단순 제재로 끝내지 않고 정책이 현실과 맞지 않는 지점을 찾는 데이터로 활용한다.
+          </p>
+        </div>
+
+        <div class="decision-card">
+          <div class="h">06 · REVIEW</div>
+          <div class="title">정기검토와 Trigger 기반 검토를 함께 운영한다</div>
+          <p>
+            정해진 주기뿐 아니라 시스템 변경, 사고, 새로운 위험이 발생했을 때도 정책을 재평가한다.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <h2>정책의 완성은 승인일이 아니라 다음 개정에서 확인된다</h2>
+
+    <p>
+      정보보호 정책은 한 번 잘 만들어 놓으면 오래 유지되는 문서가 아니다.
+      시스템도 변하고, 조직도 변하고, 공격기법과 규제도 계속 바뀐다.
+    </p>
+
+    <p>
+      그래서 정책의 진짜 완성도는 최초 승인 시점보다
+      운영 과정에서 발견된 문제를 얼마나 빠르게 다시 반영할 수 있는지에서 드러난다.
+    </p>
+
+    <blockquote>
+      정책은 조직의 현재 위험을 설명하는 문서이면서,
+      실제 운영에서 얻은 피드백을 다시 다음 통제로 바꾸는 관리 시스템이어야 한다.
+    </blockquote>
+
+    <p>
+      이 논문이 제시한 세 단계 구조는 단순하지만 실무적으로 중요한 질문을 남긴다.
+      정책을 만들었는가가 아니라,
+      <strong>정책이 조직에서 전달되고, 지켜지고, 평가되고, 다시 고쳐지고 있는가?</strong>
+    </p>
+
+    <p>
+      결국 정보보호 거버넌스의 수준은 정책 문서의 수보다
+      정책이 실제 업무와 기술 통제 안에서 얼마나 살아 움직이는지에 더 가깝다.
+    </p>
+
+    <div class="limit-box">
+      <div class="title">이 논문을 읽을 때 함께 기억할 점</div>
+      <ul>
+        <li>이 연구는 실증적으로 특정 조직의 정책 성과를 검증한 연구가 아니라 문헌검토를 통해 관리실무 모델을 제안한 논문이다.</li>
+        <li>저자들도 제안 모델을 향후 사례연구와 인터뷰 등을 통해 실증적으로 검증할 필요가 있다고 밝힌다.</li>
+        <li>정책의 세부 내용은 조직 규모, 산업, 규제와 위험환경에 따라 달라질 수 있다.</li>
+        <li>따라서 이 모델은 정책 내용을 표준화하기보다 정책관리의 공통적인 운영과정을 이해하는 틀로 보는 것이 적절하다.</li>
+      </ul>
+    </div>
+
+    <h2>참고 논문</h2>
+
+    <p>
+      Moneer Alshaikh, Sean B. Maynard, Atif Ahmad, Shanton Chang,
+      “Information Security Policy: A Management Practice Perspective,”
+      Australasian Conference on Information Systems, Adelaide, 2015.
+    </p>
+
+  </div>
+
+  <div class="callout">
+    <div class="l"><i class="ti ti-bulb"></i> 이 글에서 남긴 판단</div>
+    정보보호 정책의 품질은 문서의 완성도만으로 판단하기 어렵습니다.
+    정책 개발에 필요한 이해관계자와 요구사항을 식별하고,
+    배포·커뮤니케이션·집행을 통해 실제 업무에 적용한 뒤,
+    사고와 위험변화를 다시 다음 정책에 반영하는 순환 구조가 필요합니다.
+  </div>
+
+  <div class="flex flex-wrap gap-2.5 my-8">
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#ResearchNotes</span>
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#SecurityPolicy</span>
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#SecurityGovernance</span>
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#ISMS</span>
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#PolicyManagement</span>
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#정보보호거버넌스</span>
+  </div>
+
+  <div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7">
+    <a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[rgba(255,255,255,.09)] transition" href="post-01.html">
+      <div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 글</div>
+      <div class="font-bold mt-1 text-[15px]">Human Tech Note를 시작하며</div>
+    </a>
+
+    <a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[rgba(255,255,255,.09)] transition" href="post-03.html">
+      <div class="text-[13px] text-mut font-medium">다음 Research Note <i class="ti ti-arrow-right"></i></div>
+      <div class="font-bold mt-1 text-[15px]">다음 논문 노트에서 이어집니다</div>
+    </a>
+  </div>
+
 </article>
-</body></html>
+</body>
+</html>

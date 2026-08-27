@@ -1,59 +1,677 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>정보보호란 무엇인가 — 실무자가 정의하는 우선순위 · Human Tech Note</title><meta name="description" content="보안 철학·관점"/>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<style type="text/tailwindcss">
-@theme{
---color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,0.05);
---color-hair:rgba(255,255,255,0.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
---radius-pill:100px;--radius-feat:32px;
---font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
-}
-</style>
-<style>
-body{background:#08090a}
-.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
-radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
-radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
-radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
-radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
-#07080a}
-</style>
-<style>
-.pb h3{font-size:24px;font-weight:500;letter-spacing:-.4px;margin:36px 0 10px;color:#f1f3ef}
-.pb p{font-size:18px;line-height:1.75;margin:0 0 18px;letter-spacing:-.2px}
-.pb ul{font-size:18px;line-height:1.7;padding-left:22px;margin:0 0 20px}
-.pb li{margin-bottom:7px}
-.pb strong{color:#fff;font-weight:700}
-.callout{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:32px;padding:26px 30px;margin:30px 0;font-size:16px;line-height:1.65;color:#e7e9e4}
-.callout .l{color:#ff8256;font-weight:700;font-size:13px;margin-bottom:8px;display:flex;gap:7px;align-items:center}
-</style>
-</head><body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em"><div class="bgfx"></div>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>AI가 키운 사이버 그림자, 기술만으로 막을 수 있을까 · Human Tech Note</title>
+  <meta name="description" content="Cyber Shadows 논문을 바탕으로 생성형 AI가 확대하는 사이버 위협과 AI 기반 방어, 정책, Human-AI Collaboration의 통합 필요성을 살펴봅니다."/>
+
+  <meta property="og:title" content="AI가 키운 사이버 그림자, 기술만으로 막을 수 있을까"/>
+  <meta property="og:description" content="생성형 AI가 확대하는 사이버 위협을 기술적 방어와 정책, 인간의 판단을 연결하는 관점에서 분석합니다."/>
+  <meta property="og:type" content="article"/>
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style type="text/tailwindcss">
+    @theme{
+      --color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;
+      --color-soft:rgba(255,255,255,0.05);--color-hair:rgba(255,255,255,0.11);
+      --color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
+      --radius-pill:100px;--radius-feat:32px;
+      --font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
+    }
+  </style>
+
+  <style>
+    body{background:#08090a}
+    .bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+      radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
+      radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
+      radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
+      radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),#07080a}
+
+    .pb h2{font-size:29px;font-weight:650;line-height:1.4;letter-spacing:-.65px;margin:52px 0 16px;color:#f1f3ef}
+    .pb h3{font-size:23px;font-weight:620;line-height:1.45;letter-spacing:-.4px;margin:38px 0 12px;color:#f1f3ef}
+    .pb p{font-size:18px;line-height:1.82;margin:0 0 20px;letter-spacing:-.2px}
+    .pb ul,.pb ol{font-size:18px;line-height:1.78;padding-left:24px;margin:4px 0 26px}
+    .pb li{margin-bottom:8px}
+    .pb strong{color:#fff;font-weight:700}
+    .pb blockquote{margin:34px 0;padding:22px 26px;border-left:3px solid #ff8256;border-radius:0 18px 18px 0;background:rgba(255,255,255,.045);color:#f1f3ef;font-size:20px;font-weight:550;line-height:1.72;letter-spacing:-.3px}
+
+    .lead{margin:0 0 28px;color:#d9ddd7;font-size:20px;line-height:1.76;letter-spacing:-.3px}
+    .stage-label{display:inline-flex;align-items:center;gap:7px;margin-bottom:4px;padding:7px 12px;border:1px solid rgba(255,130,86,.22);border-radius:999px;background:rgba(255,130,86,.09);color:#ff9a72;font-size:12px;font-weight:800;letter-spacing:.04em}
+
+    .notice{margin:28px 0 34px;padding:22px 24px;border:1px solid rgba(232,180,90,.22);border-radius:22px;background:rgba(232,180,90,.07);color:#e9e3d7;font-size:15px;line-height:1.72}
+    .notice strong{color:#f4cd84}
+
+    .callout{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:32px;padding:26px 30px;margin:34px 0;font-size:16px;line-height:1.7;color:#e7e9e4}
+    .callout .l{color:#ff8256;font-weight:700;font-size:13px;margin-bottom:10px;display:flex;gap:7px;align-items:center}
+
+    .table-wrap{overflow-x:auto;margin:26px 0 34px;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:rgba(255,255,255,.035)}
+    .table-wrap table{width:100%;min-width:650px;border-collapse:collapse}
+    .table-wrap th,.table-wrap td{padding:15px 17px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top;font-size:15px;line-height:1.65}
+    .table-wrap th{color:#ff9a72;font-weight:750;background:rgba(255,255,255,.035)}
+    .table-wrap td{color:#dde1db}
+    .table-wrap tr:last-child td{border-bottom:0}
+
+    .viz-wrap{margin:30px 0 38px}
+    .viz-title{display:flex;align-items:center;gap:8px;margin-bottom:15px;color:#ff8f65;font-size:14px;font-weight:780;letter-spacing:-.2px}
+    .viz-title::before{width:8px;height:8px;border-radius:999px;background:#ff8256;content:"";box-shadow:0 0 18px rgba(255,130,86,.55)}
+    .viz-note{margin-top:12px;color:#92988f;font-size:13px;line-height:1.65}
+
+    .shadow-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .shadow-card{min-height:180px;padding:19px 17px;border:1px solid rgba(255,255,255,.1);border-radius:21px;background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.025))}
+    .shadow-card .k{color:#ff8f65;font-size:11px;font-weight:820;letter-spacing:.07em;margin-bottom:10px}
+    .shadow-card .v{color:#f1f3ef;font-size:17px;font-weight:690;line-height:1.45}
+    .shadow-card .d{color:#c5cbc3;font-size:13px;line-height:1.65;margin-top:9px}
+
+    .social-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .social-card{padding:20px 18px;border:1px solid rgba(255,255,255,.1);border-radius:21px;background:rgba(255,255,255,.04)}
+    .social-card .n{color:#ff9169;font-size:11px;font-weight:820;letter-spacing:.07em;margin-bottom:9px}
+    .social-card .t{color:#f1f3ef;font-size:17px;font-weight:690;line-height:1.45}
+    .social-card .s{color:#c4cac2;font-size:13px;line-height:1.67;margin-top:8px}
+
+    .externality-map{display:grid;grid-template-columns:1fr 54px 1fr;gap:12px;align-items:stretch}
+    .externality-card{padding:21px 19px;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:rgba(255,255,255,.04)}
+    .externality-card .label{color:#ff9169;font-size:11px;font-weight:820;letter-spacing:.07em;margin-bottom:9px}
+    .externality-card .title{color:#f1f3ef;font-size:19px;font-weight:690;line-height:1.45}
+    .externality-card .body{color:#c7cdc5;font-size:14px;line-height:1.7;margin-top:10px}
+    .externality-arrow{display:flex;align-items:center;justify-content:center;color:#ff8256;font-size:28px}
+
+    .triple-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .triple-card{padding:20px 18px;border:1px solid rgba(255,255,255,.1);border-radius:21px;background:rgba(255,255,255,.04)}
+    .triple-card .k{color:#ff9169;font-size:11px;font-weight:820;letter-spacing:.07em;margin-bottom:10px}
+    .triple-card .v{color:#f1f3ef;font-size:18px;font-weight:690;line-height:1.45}
+    .triple-card .d{color:#c5cbc3;font-size:13px;line-height:1.65;margin-top:9px}
+
+    .architecture{display:grid;grid-template-columns:1fr 56px 1fr;gap:12px;align-items:center}
+    .arch-block{padding:22px 19px;border:1px solid rgba(255,255,255,.1);border-radius:23px;background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.025))}
+    .arch-block .label{color:#ff9169;font-size:11px;font-weight:820;letter-spacing:.07em;margin-bottom:10px}
+    .arch-block .title{color:#f1f3ef;font-size:19px;font-weight:700;line-height:1.45}
+    .arch-block ul{margin:12px 0 0;padding-left:18px;color:#c9cec7;font-size:13px;line-height:1.7}
+    .arch-plus{display:flex;align-items:center;justify-content:center;color:#ff8256;font-size:30px;font-weight:800}
+    .arch-result{grid-column:1/-1;margin-top:2px;padding:17px 18px;border:1px solid rgba(255,130,86,.2);border-radius:18px;background:rgba(255,130,86,.07);text-align:center;color:#fff1eb;font-size:15px;font-weight:700;line-height:1.65}
+
+    .decision-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .decision-card{min-height:190px;padding:20px 19px;border:1px solid rgba(255,255,255,.1);border-radius:21px;background:rgba(255,255,255,.04)}
+    .decision-card .h{color:#ff9169;font-size:12px;font-weight:820;letter-spacing:.035em;margin-bottom:10px}
+    .decision-card .title{color:#f1f3ef;font-size:17px;font-weight:690;line-height:1.45;margin-bottom:10px}
+    .decision-card p{color:#ccd1ca;font-size:13px;line-height:1.7;margin:0}
+
+    .limit-box{margin:30px 0;padding:22px 24px;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:rgba(255,255,255,.035)}
+    .limit-box .title{color:#f1f3ef;font-size:16px;font-weight:700;margin-bottom:10px}
+    .limit-box ul{margin:0;padding-left:20px;color:#c6ccc4;font-size:14px;line-height:1.72}
+
+    @media(max-width:900px){
+      .shadow-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .architecture{grid-template-columns:1fr}
+      .arch-plus{transform:rotate(90deg);min-height:24px}
+    }
+
+    @media(max-width:760px){
+      .social-flow,.triple-grid{grid-template-columns:1fr}
+      .externality-map{grid-template-columns:1fr}
+      .externality-arrow{transform:rotate(90deg);min-height:26px}
+    }
+
+    @media(max-width:680px){
+      .shadow-grid,.decision-grid{grid-template-columns:1fr}
+      .pb h2{font-size:25px}.pb h3{font-size:21px}
+      .pb p,.pb ul,.pb ol{font-size:17px}
+      .lead{font-size:18px}
+      .pb blockquote{font-size:18px;padding:20px 21px}
+    }
+  </style>
+</head>
+
+<body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em">
+<div class="bgfx"></div>
+
 <nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair">
-<div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
-<a class="font-bold text-lg flex items-center gap-2" href="../index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a>
-<span class="ml-auto"></span>
-<a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive"><i class="ti ti-arrow-left"></i> 포트폴리오</a>
-</div></nav>
-<article class="max-w-[760px] mx-auto px-6 pt-14 pb-28">
-<span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6"><i class="ti ti-flask"></i> 포트폴리오 데모용 더미 콘텐츠</span>
-<div><span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#E7F0FF;color:#0047B3"><i class="ti ti-shield-lock"></i> 정보보호 기본</span></div>
-<h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">정보보호란 무엇인가 — 실무자가 정의하는 우선순위</h1>
-<div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
-<span><i class="ti ti-calendar align-[-2px]"></i> 2026년 7월 15일 (수)</span><span><i class="ti ti-clock align-[-2px]"></i> 약 8분</span><span>#2 / 75</span></div>
-<div class="pb">
-<h3>들어가며</h3>
-<p>정보보호 실무에서 자주 마주치는 개념을 현장의 언어로 다시 정리한다. 이번 글은 <strong>보안 철학·관점</strong>을(를) 중심으로, 개념 설명에 그치지 않고 실제 판단의 맥락을 함께 담으려 했다.</p>
-<p>많은 조직이 같은 문제를 겪지만, 정답은 조직의 규모·문화·서비스 특성에 따라 달라진다. 그래서 '무엇을 했는가'보다 '왜 그렇게 판단했는가'에 무게를 두었다.</p>
-<h3>문제 정의</h3><p>먼저 상황을 명확히 규정하는 것이 중요하다. 문제를 좁게 정의할수록 해결책은 선명해지고, 이해관계자 사이의 합의도 빨라진다.</p>
-<h3>접근 방법</h3><p>실무에서는 이상적인 방법론보다 '지속 가능한 운영'이 우선한다. 한 번의 조치로 끝나는 일은 거의 없고, 대부분은 정책·프로세스·사람이 맞물려야 유지된다.</p>
-<h3>정리하며</h3><p>결국 남는 것은 기록과 반복 가능한 체계다. 보안 철학·관점에서 얻은 교훈은 다른 영역에도 그대로 적용된다.</p>
-</div>
-<div class="callout"><div class="l"><i class="ti ti-link"></i> 이 글과 연결된 실무 역량</div>보안 철학·관점 — 이력서·경력기술서의 실제 수행 경험과 직접 연결되는 주제입니다.</div>
-<div class="flex flex-wrap gap-2.5 my-8"><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#정보보호 기본</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#보안 철학·관점</span></div>
-<div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7"><a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[#e9edf2] transition" href="post-01.html"><div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 글</div><div class="font-bold mt-1 text-[15px]">[오프닝] Human Tech Note를 시작하며</div></a><a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[#e9edf2] transition" href="post-03.html"><div class="text-[13px] text-mut font-medium">다음 글 <i class="ti ti-arrow-right"></i></div><div class="font-bold mt-1 text-[15px]">ISMS-P 인증, 실무자의 눈으로 다시 보기</div></a></div>
+  <div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
+    <a class="font-bold text-lg flex items-center gap-2" href="../index.html">
+      <i class="ti ti-book-2"></i>Human Tech Note
+      <span class="font-normal text-mut text-[13px]">by 최한람</span>
+    </a>
+    <span class="ml-auto"></span>
+    <a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive">
+      <i class="ti ti-arrow-left"></i> 아카이브
+    </a>
+  </div>
+</nav>
+
+<article class="max-w-[820px] mx-auto px-6 pt-14 pb-28">
+
+  <span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6">
+    <i class="ti ti-book-2"></i> Research Notes · Paper Review
+  </span>
+
+  <div>
+    <span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#EDEBFB;color:#3E2FA6">
+      <i class="ti ti-robot"></i> AI Security · Governance
+    </span>
+  </div>
+
+  <h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">
+    AI가 키운 사이버 그림자, 기술만으로 막을 수 있을까
+  </h1>
+
+  <p class="text-[18px] leading-relaxed text-mut mb-6">
+    Cyber Shadows가 말하는 생성형 AI 위협과 기술·정책의 통합 대응
+  </p>
+
+  <div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
+    <span><i class="ti ti-calendar align-[-2px]"></i> 2026년 8월 27일 (목)</span>
+    <span><i class="ti ti-clock align-[-2px]"></i> 약 12분</span>
+    <span><i class="ti ti-file-text align-[-2px]"></i> #12</span>
+  </div>
+
+
+  <div class="pb">
+
+    <div class="notice">
+      <strong>읽은 논문</strong><br/>
+      Marc Schmitt, Pantelis Koutroumpis,
+      “Cyber Shadows: Neutralizing Security Threats with AI and Targeted Policy Measures,”
+      forthcoming in <em>IEEE Transactions on Artificial Intelligence</em>, 2025.
+    </div>
+
+    <p class="lead">
+      생성형 AI가 보안에 미치는 영향은 “새로운 공격기법이 하나 더 생겼다” 정도로 설명하기 어렵다.
+      더 자연스러운 피싱 문구를 만들고, 공격 대상을 정밀하게 분석하고,
+      악성코드를 반복적으로 변형하며, 공격 과정 자체를 자동화할 수 있기 때문이다.
+    </p>
+
+    <p>
+      이 논문은 이러한 현상을 <strong>Cyber Shadows</strong>라는 표현으로 설명한다.
+      AI가 직접 만들어내거나 증폭시키는 위협뿐 아니라,
+      그 결과가 기업과 산업, 사회의 디지털 신뢰에까지 번지는 간접적인 위험을 함께 보자는 개념이다.
+    </p>
+
+    <p>
+      논문을 읽으며 가장 눈에 들어온 부분은
+      “AI가 위험하다”는 결론 자체보다 <strong>어떻게 대응해야 하는가</strong>에 대한 접근이었다.
+      저자들은 AI 기반 보안기술만으로도, 규제와 정책만으로도 충분하지 않다고 본다.
+      기술이 탐지와 대응을 담당한다면, 정책은 그 기술이 어디까지 작동해야 하는지
+      기준과 책임을 정해야 한다는 것이다.
+    </p>
+
+    <h2>AI는 새로운 공격을 만드는가, 기존 공격을 증폭시키는가</h2>
+
+    <p>
+      논문은 생성형 AI가 기존의 사이버 위협을 훨씬 더 강하게 만드는 현상에 주목한다.
+      특히 사회공학과 피싱, Hallucination 악용, Data Poisoning,
+      Polymorphic·Metamorphic Malware가 주요 Cyber Shadow로 제시된다.
+    </p>
+
+    <div class="viz-wrap">
+      <div class="viz-title">논문 Figure 1을 재구성한 주요 Cyber Shadow</div>
+
+      <div class="shadow-grid">
+        <div class="shadow-card">
+          <div class="k">SHADOW 01</div>
+          <div class="v">Social Engineering &amp; Phishing</div>
+          <div class="d">
+            자연스러운 문장·이미지·음성·딥페이크를 이용해
+            공격 메시지의 신뢰성과 설득력을 높인다.
+          </div>
+        </div>
+
+        <div class="shadow-card">
+          <div class="k">SHADOW 02</div>
+          <div class="v">Hallucination Exploitation</div>
+          <div class="d">
+            존재하지 않는 URL이나 패키지 등 AI의 잘못된 출력을
+            공격자가 실제 악성 경로로 선점할 수 있다.
+          </div>
+        </div>
+
+        <div class="shadow-card">
+          <div class="k">SHADOW 03</div>
+          <div class="v">Data Poisoning</div>
+          <div class="d">
+            학습데이터를 오염시켜 모델의 판단과 출력 자체를
+            공격자가 원하는 방향으로 왜곡한다.
+          </div>
+        </div>
+
+        <div class="shadow-card">
+          <div class="k">SHADOW 04</div>
+          <div class="v">Polymorphic Malware</div>
+          <div class="d">
+            악성코드의 형태와 시그니처를 반복적으로 바꾸어
+            전통적인 탐지방식을 우회하기 쉽게 만든다.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      여기서 중요한 것은 생성형 AI가 반드시 완전히 새로운 공격유형을 만들어야만 위험해지는 것이 아니라는 점이다.
+      기존 공격을 더 빠르고, 더 개인화하고, 더 대규모로 수행할 수 있게 만드는 것만으로도
+      공격자의 비용 구조가 크게 달라질 수 있다.
+    </p>
+
+    <h3>사회공학이 ‘대량 생산’될 수 있는 세 가지 조건</h3>
+
+    <p>
+      이 논문의 Figure 2는 생성형 AI가 사회공학 공격을 강화하는 이유를
+      세 가지로 나누어 보여준다.
+    </p>
+
+    <div class="viz-wrap">
+      <div class="viz-title">논문 Figure 2를 재구성한 사회공학 위협 증폭 구조</div>
+
+      <div class="social-flow">
+        <div class="social-card">
+          <div class="n">01 · CONTENT</div>
+          <div class="t">Realistic Content Generation</div>
+          <div class="s">
+            자연스러운 문장과 이미지, 음성, 영상이
+            공격 메시지를 정상적인 커뮤니케이션처럼 보이게 만든다.
+          </div>
+        </div>
+
+        <div class="social-card">
+          <div class="n">02 · TARGETING</div>
+          <div class="t">Advanced Personalization</div>
+          <div class="s">
+            공개정보와 행동패턴을 조합해 특정 개인에게 맞춘
+            공격 시나리오를 더 쉽게 구성할 수 있다.
+          </div>
+        </div>
+
+        <div class="social-card">
+          <div class="n">03 · SCALE</div>
+          <div class="t">Automated Attack Infrastructure</div>
+          <div class="s">
+            생성과 응답을 자동화해 공격자가 적은 비용으로
+            더 많은 대상을 반복적으로 공격할 수 있다.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      결국 생성형 AI는 사회공학의 성공률만 높이는 것이 아니라
+      <strong>공격 준비에 필요한 시간과 인력을 줄이고 규모를 키우는 도구</strong>가 될 수 있다.
+      공격이 정교해지는 것과 공격이 산업화되는 것은 서로 다른 문제인데,
+      이 논문은 두 문제를 함께 보여준다.
+    </p>
+
+    <h2>피해는 공격받은 조직에서 끝나지 않는다</h2>
+
+    <p>
+      Cyber Shadows에서 두 번째로 중요한 개념은
+      <strong>Negative Externalities</strong>다.
+      AI 기술을 직접 사용하는 개인이나 기업이 아닌 제3자도
+      그 위험의 비용을 부담할 수 있다는 의미다.
+    </p>
+
+    <div class="viz-wrap">
+      <div class="viz-title">직접 위험이 디지털 생태계의 외부효과로 번지는 과정</div>
+
+      <div class="externality-map">
+        <div class="externality-card">
+          <div class="label">DIRECT RISK</div>
+          <div class="title">AI를 사용하는 개인과 기업</div>
+          <div class="body">
+            피싱, 악성코드, 데이터 오염, AI 오판과 같은
+            직접적인 공격과 대응 비용을 부담한다.
+          </div>
+        </div>
+
+        <div class="externality-arrow">→</div>
+
+        <div class="externality-card">
+          <div class="label">NEGATIVE EXTERNALITY</div>
+          <div class="title">고객·파트너·산업·사회로 확산</div>
+          <div class="body">
+            데이터 유출, 공급망 피해, 규제비용 증가,
+            디지털 서비스와 콘텐츠에 대한 신뢰 저하로 이어질 수 있다.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      저자들은 특히 <strong>디지털 신뢰의 훼손</strong>,
+      <strong>기업의 데이터 침해비용 증가</strong>,
+      <strong>금융·의료·에너지와 같은 중요산업의 시스템 위험</strong>을 강조한다.
+    </p>
+
+    <p>
+      이 관점에서 보면 AI 보안은 한 조직의 보안팀만 잘한다고 해결되는 문제가 아니다.
+      기업의 AI 사용 방식이 고객의 개인정보와 파트너 시스템,
+      공급망과 사회적 신뢰까지 연결되어 있다면
+      위험관리의 범위도 그만큼 넓어질 수밖에 없다.
+    </p>
+
+    <blockquote>
+      AI 시대의 사이버 위험은 한 기업의 기술적 취약점에서 시작해
+      디지털 생태계 전체의 신뢰와 연속성 문제로 확장될 수 있다.
+    </blockquote>
+
+    <h2>탐지만 잘하면 안전한 시스템일까</h2>
+
+    <p>
+      논문은 “Silver Bullet은 없다”고 전제한다.
+      AI 기반 IDS와 머신러닝 탐지기술은 방어에 중요하지만
+      위협을 발견하는 것만으로는 실제 피해를 중화할 수 없기 때문이다.
+    </p>
+
+    <p>
+      저자들이 제시하는 AI 기반 사이버 방어는
+      <strong>Robustness, Response, Resilience</strong>의 세 축으로 이해할 수 있다.
+    </p>
+
+    <div class="viz-wrap">
+      <div class="viz-title">AI 기반 사이버 방어의 세 축</div>
+
+      <div class="triple-grid">
+        <div class="triple-card">
+          <div class="k">ROBUSTNESS</div>
+          <div class="v">공격을 받아도 버틴다</div>
+          <div class="d">
+            적대적 공격 속에서도 핵심 기능과 시스템 안정성을 유지하는 능력이다.
+          </div>
+        </div>
+
+        <div class="triple-card">
+          <div class="k">RESPONSE</div>
+          <div class="v">탐지를 실제 대응으로 연결한다</div>
+          <div class="d">
+            탐지 후 차단, Countermeasure, Decoy와 같은
+            실제 행동까지 이어져야 한다.
+          </div>
+        </div>
+
+        <div class="triple-card">
+          <div class="k">RESILIENCE</div>
+          <div class="v">회복하고 다음 공격에 대비한다</div>
+          <div class="d">
+            사고 이후 기능을 복구하고 과거 공격에서 학습해
+            방어능력을 지속적으로 높이는 과정이다.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      이 세 개념을 기업 운영으로 옮기면 의미가 더 선명해진다.
+      보안의 목표가 “침해사고 0건”만은 아니라는 것이다.
+      모든 공격을 완벽하게 예방하기 어렵다면,
+      공격이 발생해도 핵심 서비스를 유지하고 빠르게 복구하며
+      같은 공격을 다시 당하지 않는 역량도 중요해진다.
+    </p>
+
+    <h2>기술과 정책이 따로 움직이면 생기는 문제</h2>
+
+    <p>
+      이 논문의 가장 중요한 주장은
+      <strong>AI-driven Security와 Targeted Policy Measures의 결합</strong>이다.
+    </p>
+
+    <p>
+      기술은 대량의 데이터를 빠르게 분석하고
+      이상행위를 탐지하며 실시간으로 대응하는 데 강하다.
+      하지만 어떤 데이터를 수집해도 되는지,
+      어떤 조치를 자동으로 수행해도 되는지,
+      오탐으로 정상 사용자를 차단했을 때 누가 책임질지는
+      기술이 스스로 결정할 수 있는 문제가 아니다.
+    </p>
+
+    <p>
+      반대로 정책이 “AI를 안전하게 사용해야 한다”는 원칙만 제시하고
+      접근통제와 로그, 자동 차단과 승인절차 같은 실제 집행수단으로 연결되지 않는다면
+      현실에서는 작동하기 어렵다.
+    </p>
+
+    <div class="viz-wrap">
+      <div class="viz-title">Cyber Shadows 대응을 위한 이중 구조</div>
+
+      <div class="architecture">
+        <div class="arch-block">
+          <div class="label">TECHNOLOGY</div>
+          <div class="title">AI-driven Security</div>
+          <ul>
+            <li>이상행위·침입 탐지</li>
+            <li>악성코드 분석</li>
+            <li>실시간 Threat Hunting</li>
+            <li>자동 대응과 Countermeasure</li>
+            <li>새로운 공격패턴 학습</li>
+          </ul>
+        </div>
+
+        <div class="arch-plus">+</div>
+
+        <div class="arch-block">
+          <div class="label">POLICY</div>
+          <div class="title">Targeted Policy Measures</div>
+          <ul>
+            <li>위험기반 규제와 내부 기준</li>
+            <li>개인정보·보안 요구사항</li>
+            <li>책임과 권한의 명확화</li>
+            <li>Human Oversight</li>
+            <li>기술변화에 따른 지속적 개정</li>
+          </ul>
+        </div>
+
+        <div class="arch-result">
+          정책은 기술이 작동해야 할 경계와 책임을 정의하고,
+          기술은 정책을 실제 운영환경에서 집행하고 검증한다.
+        </div>
+      </div>
+    </div>
+
+    <h2>자동화와 사람의 판단은 어디에서 나눌까</h2>
+
+    <p>
+      Cyber Shadows에서 흥미로운 부분 중 하나는
+      AI 기반 대응을 강조하면서도 인간의 역할을 제거하지 않는다는 점이다.
+    </p>
+
+    <p>
+      반복적인 탐지와 초기 차단처럼 속도가 중요한 업무는 자동화의 효과가 크다.
+      반면 복잡한 공격의 맥락을 해석하거나,
+      고객 서비스에 영향을 주는 고위험 조치를 승인하거나,
+      윤리·법적 책임이 걸린 판단은 사람에게 남길 필요가 있다.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>업무 성격</th>
+            <th>AI가 맡기 좋은 영역</th>
+            <th>사람의 판단이 필요한 영역</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>대량 이벤트 처리</td>
+            <td>로그 분석, 이상패턴 탐지, 우선순위 추천</td>
+            <td>중요 사고의 최종 판단과 영향평가</td>
+          </tr>
+          <tr>
+            <td>초기 대응</td>
+            <td>알려진 위협 차단, 반복 조치 자동화</td>
+            <td>서비스 중단 가능성이 있는 고위험 조치 승인</td>
+          </tr>
+          <tr>
+            <td>복잡한 사고 분석</td>
+            <td>관련 이벤트 연결, 데이터 요약</td>
+            <td>공격 맥락 해석, 예외 판단, 대응전략 결정</td>
+          </tr>
+          <tr>
+            <td>정책·거버넌스</td>
+            <td>위험 정보 제공, 정책 위반 탐지</td>
+            <td>위험수용 수준, 책임, 개인정보·윤리 판단</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      결국 Human-AI Collaboration은
+      “AI가 사람을 대체하는가”의 문제가 아니라
+      <strong>속도와 반복성이 필요한 판단과 책임이 필요한 판단을 어떻게 나눌 것인가</strong>의 문제에 가깝다.
+    </p>
+
+    <h2>기업에서 적용한다면 무엇부터 결정해야 할까</h2>
+
+    <p>
+      이 논문을 기업의 AI 보안 의사결정으로 옮기면,
+      가장 먼저 해야 할 일은 보안제품을 고르는 것이 아니라
+      <strong>AI 사용 시나리오와 위험의 경계를 정하는 것</strong>이라고 생각한다.
+    </p>
+
+    <div class="viz-wrap">
+      <div class="viz-title">기업의 AI 보안 의사결정 포인트</div>
+
+      <div class="decision-grid">
+        <div class="decision-card">
+          <div class="h">01 · USE CASE</div>
+          <div class="title">AI를 어디에 사용할 것인가</div>
+          <p>
+            코드 생성, 고객응대, 내부문서 분석, 보안탐지 등
+            사용 목적에 따라 위험과 통제 수준을 다르게 정한다.
+          </p>
+        </div>
+
+        <div class="decision-card">
+          <div class="h">02 · IMPACT</div>
+          <div class="title">직접 피해 밖의 영향을 본다</div>
+          <p>
+            사고가 고객, 파트너, 공급망과 산업의 신뢰까지
+            확산될 수 있는지를 함께 평가한다.
+          </p>
+        </div>
+
+        <div class="decision-card">
+          <div class="h">03 · AUTOMATION</div>
+          <div class="title">자동 대응의 한계를 정한다</div>
+          <p>
+            알려진 위협은 자동화하되 서비스·고객에 큰 영향을 주는
+            조치는 Human Approval을 남긴다.
+          </p>
+        </div>
+
+        <div class="decision-card">
+          <div class="h">04 · ENFORCEMENT</div>
+          <div class="title">정책을 시스템 통제로 구현한다</div>
+          <p>
+            원칙을 문서에만 두지 않고 접근통제, 로그,
+            데이터 처리와 승인절차로 실제 서비스에 반영한다.
+          </p>
+        </div>
+
+        <div class="decision-card">
+          <div class="h">05 · METRICS</div>
+          <div class="title">탐지율보다 운영성과를 본다</div>
+          <p>
+            Robustness, Response, Resilience를 기준으로
+            서비스 유지, 대응시간, 복구와 재발방지를 함께 측정한다.
+          </p>
+        </div>
+
+        <div class="decision-card">
+          <div class="h">06 · ADAPTATION</div>
+          <div class="title">정책과 통제를 계속 수정한다</div>
+          <p>
+            AI 기술과 공격 자동화 수준이 변하면
+            기존 보안정책과 운영기준도 함께 다시 검토한다.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <h2>AI 보안의 경쟁력은 ‘도구’보다 조정 능력에 가깝다</h2>
+
+    <p>
+      Cyber Shadows가 보여주는 것은 AI의 양면성이다.
+      생성형 AI는 기존 공격의 정교함과 규모를 높일 수 있지만,
+      동시에 탐지와 분석, 대응을 자동화하는 강력한 방어수단도 제공한다.
+    </p>
+
+    <p>
+      그래서 AI 보안을 “AI를 허용할 것인가 차단할 것인가”의 문제로만 보면
+      실제 기업의 의사결정과는 거리가 생긴다.
+      중요한 것은 어떤 업무에서 AI를 사용할지,
+      어떤 위험을 기술로 통제할지,
+      어떤 판단을 사람에게 남길지를 함께 설계하는 것이다.
+    </p>
+
+    <blockquote>
+      기술은 위협을 탐지하고 대응할 수 있지만,
+      무엇을 보호하고 어디까지 자동화할 것인지는
+      정책과 사람이 결정해야 한다.
+    </blockquote>
+
+    <p>
+      앞으로 자율적인 AI Agent가 공격을 계획하고 실행하고 학습하는 수준으로 발전한다면
+      기업의 방어체계도 단순한 사후대응에서 더 능동적인 구조로 변화해야 할 것이다.
+    </p>
+
+    <p>
+      결국 AI 시대의 정보보호 경쟁력은
+      가장 많은 AI 보안기술을 보유하는 데 있기보다,
+      <strong>기술·정책·사람을 하나의 운영체계로 연결하고
+      새로운 위협에 맞춰 계속 조정할 수 있는가</strong>에 더 가깝다.
+    </p>
+
+    <div class="limit-box">
+      <div class="title">이 논문을 읽을 때 함께 기억할 점</div>
+      <ul>
+        <li>특정 AI 보안기술 하나의 성능을 검증한 실험연구라기보다 위협과 대응을 통합적으로 정리한 개념·정책 중심 논문이다.</li>
+        <li>일부 위협 사례와 수치는 선행연구와 외부 보고서에 근거하므로 개별 기업에 그대로 일반화해서는 안 된다.</li>
+        <li>저자들도 AI 기반 사이버 위험의 실제 규모와 장기적 영향은 아직 충분히 알려지지 않았다고 명시한다.</li>
+        <li>기업 적용 시에는 산업, 업무, 데이터, 규제환경에 따라 위험등급과 자동화 수준을 별도로 설계해야 한다.</li>
+      </ul>
+    </div>
+
+    <h2>참고 논문</h2>
+    <p>
+      Marc Schmitt, Pantelis Koutroumpis,
+      “Cyber Shadows: Neutralizing Security Threats with AI and Targeted Policy Measures,”
+      forthcoming in <em>IEEE Transactions on Artificial Intelligence</em>, 2025.
+    </p>
+
+  </div>
+
+  <div class="callout">
+    <div class="l"><i class="ti ti-bulb"></i> 이 글에서 남긴 판단</div>
+    생성형 AI가 만드는 위험의 핵심은 새로운 공격기법의 수보다
+    기존 공격을 더 정교하고 대규모로 수행할 수 있다는 데 있습니다.
+    이에 대응하려면 AI 기반 탐지·대응, 위험기반 정책,
+    그리고 사람이 개입해야 할 판단 지점을 하나의 운영체계로 설계해야 합니다.
+  </div>
+
+  <div class="flex flex-wrap gap-2.5 my-8">
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#ResearchNotes</span>
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#AISecurity</span>
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#CyberShadows</span>
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#AIGovernance</span>
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#CyberResilience</span>
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#HumanAI</span>
+  </div>
+
+  <div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7">
+    <a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[rgba(255,255,255,.09)] transition" href="post-11.html">
+      <div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 Research Note</div>
+      <div class="font-bold mt-1 text-[15px]">보안사고는 왜 경쟁사에게 기회가 되는가</div>
+    </a>
+
+    <a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[rgba(255,255,255,.09)] transition" href="post-13.html">
+      <div class="text-[13px] text-mut font-medium">다음 Research Note <i class="ti ti-arrow-right"></i></div>
+      <div class="font-bold mt-1 text-[15px]">다음 논문 노트에서 이어집니다</div>
+    </a>
+  </div>
+
 </article>
-</body></html>
+</body>
+</html>

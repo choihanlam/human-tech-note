@@ -1,59 +1,581 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>접근통제의 3원칙 — 최소권한이 무너지는 순간 · Human Tech Note</title><meta name="description" content="접근통제 운영"/>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<style type="text/tailwindcss">
-@theme{
---color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,0.05);
---color-hair:rgba(255,255,255,0.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
---radius-pill:100px;--radius-feat:32px;
---font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
-}
-</style>
-<style>
-body{background:#08090a}
-.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
-radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
-radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
-radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
-radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
-#07080a}
-</style>
-<style>
-.pb h3{font-size:24px;font-weight:500;letter-spacing:-.4px;margin:36px 0 10px;color:#f1f3ef}
-.pb p{font-size:18px;line-height:1.75;margin:0 0 18px;letter-spacing:-.2px}
-.pb ul{font-size:18px;line-height:1.7;padding-left:22px;margin:0 0 20px}
-.pb li{margin-bottom:7px}
-.pb strong{color:#fff;font-weight:700}
-.callout{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:32px;padding:26px 30px;margin:30px 0;font-size:16px;line-height:1.65;color:#e7e9e4}
-.callout .l{color:#ff8256;font-weight:700;font-size:13px;margin-bottom:8px;display:flex;gap:7px;align-items:center}
-</style>
-</head><body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em"><div class="bgfx"></div>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>보안사고는 왜 경쟁사에게 기회가 되는가 · Human Tech Note</title>
+  <meta name="description" content="정보보호 침해사고와 IT 보안투자가 기업가치와 경쟁사에 미치는 영향을 이벤트 스터디 연구를 통해 살펴봅니다."/>
+  <meta property="og:title" content="보안사고는 왜 경쟁사에게 기회가 되는가"/>
+  <meta property="og:description" content="정보보호 침해와 보안투자의 시장효과를 경쟁효과, 외부효과, 투자 타이밍 관점에서 분석합니다."/>
+  <meta property="og:type" content="article"/>
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style type="text/tailwindcss">
+    @theme{
+      --color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;
+      --color-soft:rgba(255,255,255,0.05);--color-hair:rgba(255,255,255,0.11);
+      --color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
+      --radius-pill:100px;--radius-feat:32px;
+      --font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
+    }
+  </style>
+
+  <style>
+    body{background:#08090a}
+    .bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+      radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
+      radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
+      radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
+      radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),#07080a}
+
+    .pb h2{font-size:29px;font-weight:650;line-height:1.4;letter-spacing:-.65px;margin:52px 0 16px;color:#f1f3ef}
+    .pb h3{font-size:23px;font-weight:620;line-height:1.45;letter-spacing:-.4px;margin:38px 0 12px;color:#f1f3ef}
+    .pb p{font-size:18px;line-height:1.82;margin:0 0 20px;letter-spacing:-.2px}
+    .pb ul,.pb ol{font-size:18px;line-height:1.78;padding-left:24px;margin:4px 0 26px}
+    .pb li{margin-bottom:8px}
+    .pb strong{color:#fff;font-weight:700}
+    .pb blockquote{margin:34px 0;padding:22px 26px;border-left:3px solid #ff8256;border-radius:0 18px 18px 0;background:rgba(255,255,255,.045);color:#f1f3ef;font-size:20px;font-weight:550;line-height:1.72;letter-spacing:-.3px}
+
+    .lead{margin:0 0 28px;color:#d9ddd7;font-size:20px;line-height:1.76;letter-spacing:-.3px}
+    .stage-label{display:inline-flex;align-items:center;gap:7px;margin-bottom:4px;padding:7px 12px;border:1px solid rgba(255,130,86,.22);border-radius:999px;background:rgba(255,130,86,.09);color:#ff9a72;font-size:12px;font-weight:800;letter-spacing:.04em}
+    .notice{margin:28px 0 34px;padding:22px 24px;border:1px solid rgba(232,180,90,.22);border-radius:22px;background:rgba(232,180,90,.07);color:#e9e3d7;font-size:15px;line-height:1.72}
+    .notice strong{color:#f4cd84}
+    .callout{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:32px;padding:26px 30px;margin:34px 0;font-size:16px;line-height:1.7;color:#e7e9e4}
+    .callout .l{color:#ff8256;font-weight:700;font-size:13px;margin-bottom:10px;display:flex;gap:7px;align-items:center}
+    .table-wrap{overflow-x:auto;margin:26px 0 34px;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:rgba(255,255,255,.035)}
+    .table-wrap table{width:100%;min-width:640px;border-collapse:collapse}
+    .table-wrap th,.table-wrap td{padding:15px 17px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top;font-size:15px;line-height:1.65}
+    .table-wrap th{color:#ff9a72;font-weight:750;background:rgba(255,255,255,.035)}
+    .table-wrap td{color:#dde1db}
+    .table-wrap tr:last-child td{border-bottom:0}
+
+    .viz-wrap{margin:30px 0 38px}
+    .viz-title{display:flex;align-items:center;gap:8px;margin-bottom:15px;color:#ff8f65;font-size:14px;font-weight:780;letter-spacing:-.2px}
+    .viz-title::before{width:8px;height:8px;border-radius:999px;background:#ff8256;content:"";box-shadow:0 0 18px rgba(255,130,86,.55)}
+
+    .research-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .research-card{padding:18px 17px;border:1px solid rgba(255,255,255,.1);border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.025))}
+    .research-card .n{color:#ff8f65;font-size:11px;font-weight:800;letter-spacing:.08em;margin-bottom:9px}
+    .research-card .v{color:#f1f3ef;font-size:18px;font-weight:680;line-height:1.45}
+    .research-card .d{color:#c5cbc3;font-size:13px;line-height:1.65;margin-top:8px}
+
+    .effect-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .effect-card{min-height:180px;padding:20px 19px;border:1px solid rgba(255,255,255,.1);border-radius:21px;background:rgba(255,255,255,.04)}
+    .effect-card .tag{display:inline-flex;padding:5px 9px;border-radius:999px;background:rgba(255,130,86,.11);color:#ff9a72;font-size:11px;font-weight:800;margin-bottom:12px}
+    .effect-card .title{color:#f1f3ef;font-size:18px;font-weight:690;line-height:1.45}
+    .effect-card .num{margin-top:12px;color:#fff;font-size:27px;font-weight:720;letter-spacing:-.5px}
+    .effect-card .desc{margin-top:7px;color:#c4cac2;font-size:13px;line-height:1.65}
+
+    .market-map{display:grid;grid-template-columns:1fr 48px 1fr;gap:12px;align-items:stretch}
+    .market-event{padding:20px;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:rgba(255,255,255,.04)}
+    .market-event .label{color:#ff9169;font-size:11px;font-weight:820;letter-spacing:.07em;margin-bottom:9px}
+    .market-event .title{color:#f1f3ef;font-size:19px;font-weight:690;line-height:1.45}
+    .market-event .body{color:#c7cdc5;font-size:14px;line-height:1.7;margin-top:10px}
+    .market-arrow{display:flex;align-items:center;justify-content:center;color:#ff8256;font-size:26px}
+
+    .timing-flow{display:grid;grid-template-columns:1fr 44px 1fr 44px 1fr;gap:10px;align-items:stretch}
+    .timing-node{padding:18px 16px;border:1px solid rgba(255,255,255,.1);border-radius:20px;background:rgba(255,255,255,.04)}
+    .timing-node .k{color:#ff9169;font-size:11px;font-weight:800;letter-spacing:.07em;margin-bottom:9px}
+    .timing-node .t{color:#f1f3ef;font-size:16px;font-weight:680;line-height:1.5}
+    .timing-node .s{color:#c2c8c0;font-size:12px;line-height:1.62;margin-top:8px}
+    .timing-arrow{display:flex;align-items:center;justify-content:center;color:#777e76;font-size:22px;font-weight:800}
+
+    .decision-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .decision-card{min-height:188px;padding:20px 19px;border:1px solid rgba(255,255,255,.1);border-radius:21px;background:rgba(255,255,255,.04)}
+    .decision-card .h{color:#ff9169;font-size:12px;font-weight:820;letter-spacing:.035em;margin-bottom:10px}
+    .decision-card .title{color:#f1f3ef;font-size:17px;font-weight:690;line-height:1.45;margin-bottom:10px}
+    .decision-card p{color:#ccd1ca;font-size:13px;line-height:1.7;margin:0}
+
+    .limit-box{margin:30px 0;padding:22px 24px;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:rgba(255,255,255,.035)}
+    .limit-box .title{color:#f1f3ef;font-size:16px;font-weight:700;margin-bottom:10px}
+    .limit-box ul{margin:0;padding-left:20px;color:#c6ccc4;font-size:14px;line-height:1.72}
+
+    @media(max-width:820px){
+      .research-grid{grid-template-columns:1fr}
+      .market-map{grid-template-columns:1fr}
+      .market-arrow{transform:rotate(90deg);min-height:24px}
+      .timing-flow{grid-template-columns:1fr}
+      .timing-arrow{transform:rotate(90deg);min-height:22px}
+    }
+    @media(max-width:680px){
+      .effect-grid,.decision-grid{grid-template-columns:1fr}
+      .pb h2{font-size:25px}.pb h3{font-size:21px}
+      .pb p,.pb ul,.pb ol{font-size:17px}.lead{font-size:18px}
+      .pb blockquote{font-size:18px;padding:20px 21px}
+    }
+  </style>
+</head>
+
+<body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em">
+<div class="bgfx"></div>
+
 <nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair">
-<div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
-<a class="font-bold text-lg flex items-center gap-2" href="../index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a>
-<span class="ml-auto"></span>
-<a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive"><i class="ti ti-arrow-left"></i> 포트폴리오</a>
-</div></nav>
-<article class="max-w-[760px] mx-auto px-6 pt-14 pb-28">
-<span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6"><i class="ti ti-flask"></i> 포트폴리오 데모용 더미 콘텐츠</span>
-<div><span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#E7F0FF;color:#0047B3"><i class="ti ti-shield-lock"></i> 정보보호 기본</span></div>
-<h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">접근통제의 3원칙 — 최소권한이 무너지는 순간</h1>
-<div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
-<span><i class="ti ti-calendar align-[-2px]"></i> 2026년 7월 22일 (수)</span><span><i class="ti ti-clock align-[-2px]"></i> 약 10분</span><span>#5 / 75</span></div>
-<div class="pb">
-<h3>들어가며</h3>
-<p>정보보호 실무에서 자주 마주치는 개념을 현장의 언어로 다시 정리한다. 이번 글은 <strong>접근통제 운영</strong>을(를) 중심으로, 개념 설명에 그치지 않고 실제 판단의 맥락을 함께 담으려 했다.</p>
-<p>많은 조직이 같은 문제를 겪지만, 정답은 조직의 규모·문화·서비스 특성에 따라 달라진다. 그래서 '무엇을 했는가'보다 '왜 그렇게 판단했는가'에 무게를 두었다.</p>
-<h3>문제 정의</h3><p>먼저 상황을 명확히 규정하는 것이 중요하다. 문제를 좁게 정의할수록 해결책은 선명해지고, 이해관계자 사이의 합의도 빨라진다.</p>
-<h3>접근 방법</h3><p>실무에서는 이상적인 방법론보다 '지속 가능한 운영'이 우선한다. 한 번의 조치로 끝나는 일은 거의 없고, 대부분은 정책·프로세스·사람이 맞물려야 유지된다.</p>
-<h3>정리하며</h3><p>결국 남는 것은 기록과 반복 가능한 체계다. 접근통제 운영에서 얻은 교훈은 다른 영역에도 그대로 적용된다.</p>
-</div>
-<div class="callout"><div class="l"><i class="ti ti-link"></i> 이 글과 연결된 실무 역량</div>접근통제 운영 — 이력서·경력기술서의 실제 수행 경험과 직접 연결되는 주제입니다.</div>
-<div class="flex flex-wrap gap-2.5 my-8"><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#정보보호 기본</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#접근통제 운영</span></div>
-<div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7"><a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[#e9edf2] transition" href="post-04.html"><div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 글</div><div class="font-bold mt-1 text-[15px]">ITGC와 GITC, &#x27;운영의 언어&#x27;로 이해하기</div></a><a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[#e9edf2] transition" href="post-06.html"><div class="text-[13px] text-mut font-medium">다음 글 <i class="ti ti-arrow-right"></i></div><div class="font-bold mt-1 text-[15px]">계정 생명주기(Lifecycle) 관리의 딜레마</div></a></div>
+  <div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
+    <a class="font-bold text-lg flex items-center gap-2" href="../index.html">
+      <i class="ti ti-book-2"></i>Human Tech Note
+      <span class="font-normal text-mut text-[13px]">by 최한람</span>
+    </a>
+    <span class="ml-auto"></span>
+    <a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive">
+      <i class="ti ti-arrow-left"></i> 아카이브
+    </a>
+  </div>
+</nav>
+
+<article class="max-w-[820px] mx-auto px-6 pt-14 pb-28">
+
+  <span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6">
+    <i class="ti ti-book-2"></i> Research Notes · Paper Review
+  </span>
+
+  <div>
+    <span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#E7F3EC;color:#1F6B3B">
+      <i class="ti ti-shield-dollar"></i> Security Economics
+    </span>
+  </div>
+
+  <h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">
+    보안사고는 왜 경쟁사에게 기회가 되는가
+  </h1>
+
+  <p class="text-[18px] leading-relaxed text-mut mb-6">
+    정보보호 침해·투자 발표가 기업가치와 경쟁구도에 미치는 영향
+  </p>
+
+  <div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
+    <span><i class="ti ti-calendar align-[-2px]"></i> 2026년 8월 27일 (목)</span>
+    <span><i class="ti ti-clock align-[-2px]"></i> 약 11분</span>
+    <span><i class="ti ti-file-text align-[-2px]"></i> #05</span>
+  </div>
+
+  <div class="pb">
+
+    <div class="notice">
+      <strong>읽은 논문</strong><br/>
+      Christina Y. Jeong, Sang-Yong Tom Lee, Jee-Hae Lim,
+      “Information security breaches and IT security investments:
+      Impacts on competitors,” <em>Information &amp; Management</em>,
+      Vol. 56, 2019, pp. 681–695.
+    </div>
+
+    <p class="lead">
+      정보보호 사고가 발생하면 피해 기업의 손실을 먼저 떠올린다.
+      고객정보 유출, 서비스 중단, 사고 대응 비용, 평판 하락이 대표적이다.
+      그런데 시장에는 피해 기업만 존재하지 않는다. 같은 고객을 두고 경쟁하는 기업,
+      유사한 기술을 사용하는 기업, 하나의 네트워크 생태계 안에서 연결된 기업도 함께 영향을 받는다.
+    </p>
+
+    <p>
+      정보보호 R&amp;D 투자 흐름과 기업 내부의 정보보호 역량을 함께 살펴보는
+      산학연계프로젝트를 진행하면서 한 가지 질문이 계속 남았다.
+      <strong>기업이 보안에 더 많이 투자하면 실제로 더 안전해지고,
+      시장도 그 투자를 같은 방식으로 평가할까?</strong>
+    </p>
+
+    <p>
+      이 논문은 그 질문을 기업 내부에서 한 단계 더 확장해 보게 했다.
+      보안사고와 보안투자가 해당 기업에만 영향을 주는 것이 아니라,
+      경쟁기업의 가치와 산업 전체의 보안환경에도 영향을 줄 수 있다는 점을
+      자본시장 데이터를 통해 확인하려 했기 때문이다.
+    </p>
+
+    <p>
+      이 논문은 이 지점에서 질문을 시작한다.
+      <strong>한 기업의 보안사고와 보안투자는 경쟁기업의 가치에도 영향을 줄까?</strong>
+      그리고 영향을 준다면, 사고와 투자는 같은 방향으로 작동할까?
+    </p>
+
+    <p>
+      연구 결과는 정보보호를 개별 기업 내부의 비용 문제로만 보기 어렵다는 점을 보여준다.
+      침해사고는 경쟁구도를 바꿀 수 있고, 한 기업의 보안투자는 다른 기업에도 영향을 줄 수 있다.
+      특히 이미 보안투자를 했던 기업에서 다시 사고가 발생하면 시장은 이를 더 강한 실패 신호로 해석할 수 있다.
+    </p>
+
+    <p>
+      이번 글은 논문의 핵심을
+      <strong>Learn → Analyze → Structure → Connect → Decide</strong>
+      순서로 정리한다.
+    </p>
+
+    <span class="stage-label">01 · LEARN</span>
+    <h2>이 연구는 무엇을 확인하려 했는가</h2>
+
+    <p>
+      Jeong, Lee, Lim의 연구는 2010년부터 2017년까지 공개된
+      <strong>118건의 정보보호 침해사고</strong>와
+      <strong>98건의 IT 보안투자 발표</strong>를 수집하고,
+      이벤트 스터디(Event Study)를 이용해 발표 전후 기업의 비정상 수익률을 분석했다.
+    </p>
+
+    <div class="viz-wrap">
+      <div class="viz-title">연구 설계의 핵심</div>
+      <div class="research-grid">
+        <div class="research-card">
+          <div class="n">DATA 01</div>
+          <div class="v">118건</div>
+          <div class="d">2010~2017년 공개된 정보보호 침해사고</div>
+        </div>
+        <div class="research-card">
+          <div class="n">DATA 02</div>
+          <div class="v">98건</div>
+          <div class="d">동일 기간에 공개된 IT 보안투자 발표</div>
+        </div>
+        <div class="research-card">
+          <div class="n">METHOD</div>
+          <div class="v">Event Study</div>
+          <div class="d">발표 전후 주가의 비정상 수익률을 통해 시장 반응 분석</div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      기존 연구는 주로 “사고를 당한 기업의 가치가 얼마나 떨어지는가” 또는
+      “보안투자가 투자 기업의 가치에 어떤 영향을 주는가”에 집중했다.
+      이 논문은 분석 범위를 <strong>경쟁기업</strong>까지 확장했다는 점이 중요하다.
+    </p>
+
+    <h3>정보이전효과: 한 기업의 사건이 산업 전체에 정보를 준다</h3>
+    <p>
+      자본시장에서 한 기업의 공개 정보는 그 기업만을 설명하지 않는다.
+      같은 산업의 경쟁기업이 비슷한 기술환경과 고객, 규제를 공유한다면
+      투자자는 한 기업에서 발생한 사건을 통해 다른 기업의 미래 수익성과 위험도 함께 추정한다.
+    </p>
+
+    <p>
+      이때 경쟁기업의 가치가 피해 기업과 같은 방향으로 움직이면
+      <strong>Contagion Effect</strong>,
+      반대로 움직이면 <strong>Competition Effect</strong>로 볼 수 있다.
+    </p>
+
+    <h3>보안 외부효과: 다른 기업의 투자도 내 위험에 영향을 준다</h3>
+    <p>
+      정보보호는 기업별로 완전히 독립된 문제가 아니다.
+      계정과 네트워크, 소프트웨어와 공급망이 서로 연결되어 있기 때문이다.
+      한 기업이 보안을 강화하면 전체 네트워크의 감염 가능성을 낮출 수 있지만,
+      반대로 공격자가 상대적으로 취약한 다른 기업으로 이동하는 효과도 발생할 수 있다.
+    </p>
+
+    <span class="stage-label">02 · ANALYZE</span>
+    <h2>논문에서 가장 중요한 결과는 무엇이었을까</h2>
+
+    <h3>1. 침해사고는 피해 기업의 가치를 낮췄다</h3>
+    <p>
+      침해사고를 공개한 기업은 발표 전후 5일의 이벤트 윈도우(-2, +2)에서
+      <strong>-0.423%</strong>의 누적평균비정상수익률(CAAR)을 기록했고,
+      통계적으로 유의했다.
+    </p>
+
+    <h3>2. 보안투자 발표는 투자 기업의 가치를 유의하게 높이지 못했다</h3>
+    <p>
+      연구진은 보안투자가 기업가치를 높일 것으로 예상했지만,
+      주 분석에서는 보안투자 발표 이후 투자 기업의 비정상 수익률이
+      통계적으로 유의하지 않았다.
+    </p>
+
+    <blockquote>
+      보안투자는 중요하지만, 시장이 더 이상 그것을 특별한 선택으로 평가하지 않을 수 있다.
+    </blockquote>
+
+    <p>
+      연구진은 그 이유 중 하나로 정보보호 투자가 선택적 전략이라기보다
+      기업이 당연히 수행해야 하는 <strong>“must-do” 활동</strong>으로 인식되기 시작했다는 점을 제시한다.
+    </p>
+
+    <div class="viz-wrap">
+      <div class="viz-title">침해사고와 보안투자의 비대칭적 시장 반응</div>
+      <div class="effect-grid">
+        <div class="effect-card">
+          <div class="tag">BREACH · OWN FIRM</div>
+          <div class="title">침해사고 발표</div>
+          <div class="num">-0.423%</div>
+          <div class="desc">(-2,+2) 이벤트 윈도우 기준. 피해 기업의 시장가치는 유의하게 하락했다.</div>
+        </div>
+        <div class="effect-card">
+          <div class="tag">INVESTMENT · OWN FIRM</div>
+          <div class="title">IT 보안투자 발표</div>
+          <div class="num">유의하지 않음</div>
+          <div class="desc">보안투자 자체가 투자 기업의 시장가치를 즉시 높인다는 증거는 주 분석에서 확인되지 않았다.</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>3. 경쟁기업은 다른 기업의 침해사고에서 오히려 이익을 얻었다</h3>
+    <p>
+      침해사고가 발생한 기업과 달리, 사고를 당하지 않은 경쟁기업의 시장가치는
+      발표 이후 3일(0,+2) 기준으로 <strong>+0.207%</strong> 상승했고 통계적으로 유의했다.
+      균형 표본에서도 <strong>+0.250%</strong>로 같은 방향의 결과가 나타났다.
+    </p>
+
+    <p>
+      연구진은 이를 <strong>Competition Effect</strong>로 해석한다.
+      피해 기업의 시장지위 일부가 상대적으로 안전하다고 평가되는 경쟁사로 이동할 수 있다는 기대가
+      시장가치에 반영됐다는 것이다.
+    </p>
+
+    <div class="viz-wrap">
+      <div class="viz-title">보안사고가 경쟁구도에 전달되는 방식</div>
+      <div class="market-map">
+        <div class="market-event">
+          <div class="label">BREACHED FIRM</div>
+          <div class="title">침해사고 발생</div>
+          <div class="body">신뢰 저하 · 운영 불확실성 · 향후 비용 증가 가능성이 시장에 반영</div>
+        </div>
+        <div class="market-arrow">→</div>
+        <div class="market-event">
+          <div class="label">COMPETITORS</div>
+          <div class="title">상대적 경쟁력 상승 기대</div>
+          <div class="body">일부 시장지위가 경쟁사로 이동할 가능성이 평가되며 Competition Effect 발생</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>4. 보안투자는 경쟁사에도 긍정적인 외부효과를 만들 수 있다</h3>
+    <p>
+      보안투자 발표가 경쟁기업에 미치는 효과는 침해사고만큼 강하지 않았다.
+      기본 시장모형에서는 유의하지 않았지만,
+      추가적인 Market-adjusted Model에서는 경쟁기업의 가치에
+      <strong>긍정적 효과</strong>가 관찰됐다.
+    </p>
+
+    <p>
+      연구진은 이를 보안투자의 <strong>Positive Externality</strong>로 해석한다.
+      하나의 기업이 보안수준을 높이면 연결된 전체 네트워크의 위험을 낮추는 데 기여할 수 있고,
+      경쟁기업 역시 그 효과의 일부를 받을 수 있다는 것이다.
+    </p>
+
+    <p>
+      다만 이 결과는 주 분석에서 강하게 지지된 것은 아니기 때문에,
+      “보안투자를 하면 경쟁사의 기업가치가 반드시 상승한다”고 단정하는 것은 적절하지 않다.
+    </p>
+
+    <h3>5. 이미 투자했는데 사고가 발생하면 시장은 더 나쁘게 본다</h3>
+    <p>
+      연구진은 침해사고 이전에 보안투자를 발표했던 기업과 그렇지 않은 기업을 구분해 비교했다.
+      그 결과 <strong>보안투자 이후 침해사고가 발생했을 때 경쟁기업의 시장가치가 더 크게 상승</strong>했다.
+    </p>
+
+    <p>
+      (0,+2) 이벤트 윈도우에서 사전 보안투자가 없었던 기업의 사고 이후 경쟁기업 CAAR는
+      <strong>+0.131%</strong>였지만,
+      사전 보안투자가 있었던 기업에서 사고가 발생했을 때는
+      <strong>+0.603%</strong>였다.
+    </p>
+
+    <div class="viz-wrap">
+      <div class="viz-title">보안투자 이후 사고가 더 강한 실패 신호가 되는 이유</div>
+      <div class="timing-flow">
+        <div class="timing-node">
+          <div class="k">STEP 01</div>
+          <div class="t">보안투자 발표</div>
+          <div class="s">기업은 위험을 인지하고 예방조치를 취했다는 신호를 시장에 전달</div>
+        </div>
+        <div class="timing-arrow">→</div>
+        <div class="timing-node">
+          <div class="k">STEP 02</div>
+          <div class="t">이후 침해사고 발생</div>
+          <div class="s">투자의 실효성, 운영 역량 또는 통제 수준에 대한 의문이 커짐</div>
+        </div>
+        <div class="timing-arrow">→</div>
+        <div class="timing-node">
+          <div class="k">STEP 03</div>
+          <div class="t">경쟁사 상대가치 상승</div>
+          <div class="s">시장은 피해 기업의 경쟁력이 더 약화됐다고 해석할 가능성이 커짐</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>6. IT 집약 산업에서는 경쟁효과가 더 강했다</h3>
+    <p>
+      추가 분석에서는 IT 집약 산업의 경쟁기업이 비IT 집약 산업보다
+      다른 기업의 침해사고 이후 더 큰 Competition Effect를 보였다.
+      (0,+2) 기준 IT 집약 산업 경쟁기업의 CAAR는
+      <strong>+0.888%</strong>였고,
+      비IT 집약 산업은 <strong>-0.039%</strong>였다.
+    </p>
+
+    <span class="stage-label">03 · STRUCTURE</span>
+    <h2>정보보호를 기업 내부의 비용만으로 보면 놓치는 것</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>분석 수준</th>
+            <th>핵심 질문</th>
+            <th>논문에서 확인한 의미</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>기업 내부</td>
+            <td>사고와 투자가 우리 기업가치에 어떤 영향을 주는가?</td>
+            <td>사고는 부정적이지만, 투자 발표 자체는 즉각적인 프리미엄을 보장하지 않았다.</td>
+          </tr>
+          <tr>
+            <td>경쟁 관계</td>
+            <td>우리의 사고가 경쟁사의 위치를 바꾸는가?</td>
+            <td>침해사고 이후 경쟁기업에는 Competition Effect가 나타났다.</td>
+          </tr>
+          <tr>
+            <td>산업·네트워크</td>
+            <td>한 기업의 보안투자가 다른 기업에도 영향을 주는가?</td>
+            <td>보안투자의 Positive Externality가 제한적으로 관찰됐다.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <blockquote>
+      정보보호는 기업 내부의 통제인 동시에 시장 경쟁력과 산업 신뢰를 구성하는 인프라다.
+    </blockquote>
+
+    <span class="stage-label">04 · CONNECT</span>
+    <h2>기업의 정보보호 운영과 어떻게 연결할 수 있을까</h2>
+
+    <p>
+      이 연구는 보안투자 금액이나 개별 솔루션의 성능을 비교한 논문은 아니다.
+      대신 보안사고와 보안투자가 외부 시장에서 어떤 정보로 해석되는지를 보여준다.
+    </p>
+
+    <p>
+      산학연계프로젝트에서는 정보보호 투자와 내부 역량을 함께 바라봤다면,
+      이 논문은 같은 문제를 <strong>시장과 경쟁관계라는 외부 관점</strong>에서 다시 생각하게 한다.
+      투자 규모만 보는 것보다, 그 투자가 실제 통제로 이어졌는지,
+      사고 이후에도 경쟁력과 신뢰를 유지할 수 있는지가 더 중요하다는 점에서 두 관점이 연결된다.
+    </p>
+
+    <ul>
+      <li>보안투자는 실제 위험을 줄이는 방향으로 설계되어 있는가?</li>
+      <li>투자 이후 통제의 적용률과 운영상태를 측정하고 있는가?</li>
+      <li>경쟁사나 동종업계의 사고를 우리 조직의 위험 신호로 활용하고 있는가?</li>
+      <li>침해사고 이후 추가투자가 단순한 사후 대응으로 끝나지 않는가?</li>
+      <li>보안투자 성과를 “예산을 집행했다”가 아니라 위험 감소와 복원력으로 설명할 수 있는가?</li>
+    </ul>
+
+    <p>
+      결국 정보보호 투자는
+      <strong>예산 → 솔루션 도입 → 완료</strong>가 아니라
+      <strong>위험 식별 → 우선순위 결정 → 투자 → 적용 → 검증 → 개선</strong>의 순환 구조로 관리될 필요가 있다.
+    </p>
+
+    <span class="stage-label">05 · DECIDE</span>
+    <h2>내가 정보보호 PM이라면 무엇을 결정할 것인가</h2>
+
+    <div class="viz-wrap">
+      <div class="viz-title">정보보호 투자 의사결정에서 확인할 여섯 가지</div>
+      <div class="decision-grid">
+        <div class="decision-card">
+          <div class="h">DECISION 01</div>
+          <div class="title">투자 목적을 먼저 정의한다</div>
+          <p>규제 대응인지, 공격경로 차단인지, 탐지시간 단축인지, 복원력 강화인지 목적을 구분한다.</p>
+        </div>
+        <div class="decision-card">
+          <div class="h">DECISION 02</div>
+          <div class="title">예방투자와 사고대응 투자를 구분한다</div>
+          <p>사고 후 긴급투자와 사전 위험기반 투자는 효과와 평가기준이 다르다.</p>
+        </div>
+        <div class="decision-card">
+          <div class="h">DECISION 03</div>
+          <div class="title">투자 금액보다 통제 효과를 측정한다</div>
+          <p>설치율, 패치율, 탐지·대응시간, 예외자산과 통제 공백 등 실제 위험 감소를 본다.</p>
+        </div>
+        <div class="decision-card">
+          <div class="h">DECISION 04</div>
+          <div class="title">경쟁사 사고를 외부 위험 신호로 본다</div>
+          <p>유사한 기술과 공급망, 공격표면을 공유한다면 동종업계 사고를 내부 점검의 Trigger로 활용한다.</p>
+        </div>
+        <div class="decision-card">
+          <div class="h">DECISION 05</div>
+          <div class="title">투자 후 사고에는 더 강한 검증을 적용한다</div>
+          <p>제품 교체보다 정책·적용범위·운영절차·책임구조 중 무엇이 실패했는지 먼저 확인한다.</p>
+        </div>
+        <div class="decision-card">
+          <div class="h">DECISION 06</div>
+          <div class="title">보안을 경쟁력의 일부로 설명한다</div>
+          <p>보안투자를 단순 비용이 아니라 고객 신뢰, 서비스 연속성, 시장위험과 연결해 판단한다.</p>
+        </div>
+      </div>
+    </div>
+
+    <h2>보안은 투자했다고 끝나는 활동이 아니다</h2>
+
+    <p>
+      이 논문에서 가장 인상적인 부분은
+      “보안사고는 손실이고 보안투자는 이익”이라는 단순한 대칭 구조가 성립하지 않았다는 점이다.
+    </p>
+
+    <p>
+      침해사고는 피해 기업의 시장가치를 낮췄고,
+      경쟁기업에는 상대적인 기회를 제공했다.
+      반면 보안투자 발표 자체가 투자 기업의 시장가치를 유의하게 높이지는 않았다.
+    </p>
+
+    <p>
+      더 중요한 것은 투자 이후다.
+      이미 보안에 투자했다고 시장에 알린 기업에서 다시 사고가 발생하면
+      그것은 단순한 사고 하나가 아니라 투자와 운영의 실효성에 대한 의문으로 이어질 수 있다.
+    </p>
+
+    <blockquote>
+      정보보호 투자의 가치는 “얼마를 썼는가”가 아니라,
+      투자 이후 실제 위험과 통제 공백이 얼마나 줄었는가에서 확인되어야 한다.
+    </blockquote>
+
+    <div class="limit-box">
+      <div class="title">이 연구를 읽을 때 함께 기억할 한계</div>
+      <ul>
+        <li>2010~2017년 미국 시장의 공개 발표와 주가 반응을 중심으로 분석한 연구다.</li>
+        <li>보안투자의 구체적인 금액과 기술적 품질까지 측정한 것은 아니다.</li>
+        <li>장기 고객 신뢰와 장기 기업가치를 직접 분석하지 않는다.</li>
+        <li>미국 증시에 상장되지 않은 해외 경쟁기업은 분석에 포함되지 않았다.</li>
+        <li>따라서 개별 기업의 보안투자 ROI를 이 수치만으로 직접 계산해서는 안 된다.</li>
+      </ul>
+    </div>
+
+    <h2>참고 논문</h2>
+    <p>
+      Christina Y. Jeong, Sang-Yong Tom Lee, Jee-Hae Lim,
+      “Information security breaches and IT security investments:
+      Impacts on competitors,”
+      <em>Information &amp; Management</em>,
+      56 (2019), 681–695.
+      DOI: 10.1016/j.im.2018.11.003.
+    </p>
+
+  </div>
+
+  <div class="callout">
+    <div class="l"><i class="ti ti-bulb"></i> 이 글에서 남긴 판단</div>
+    보안사고는 한 기업 내부의 손실로 끝나지 않고 경쟁구도를 바꿀 수 있습니다.
+    반대로 보안투자는 투자 사실 자체보다 실제 통제의 실효성과 사고 이후의 결과로 평가받습니다.
+    따라서 정보보호 투자 의사결정은 예산 집행이 아니라 위험 감소와 운영 검증까지 포함해야 합니다.
+  </div>
+
+  <div class="flex flex-wrap gap-2.5 my-8">
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#ResearchNotes</span>
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#정보보호투자</span>
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#SecurityEconomics</span>
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#CyberRisk</span>
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#ITGovernance</span>
+    <span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#기술경영</span>
+  </div>
+
+  <div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7">
+    <a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[rgba(255,255,255,.09)] transition" href="post-04.html">
+      <div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 Research Note</div>
+      <div class="font-bold mt-1 text-[15px]">기술은 갑자기 등장하지 않는다</div>
+    </a>
+
+    <a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[rgba(255,255,255,.09)] transition" href="../index.html#research-notes">
+      <div class="text-[13px] text-mut font-medium">Research Notes <i class="ti ti-arrow-right"></i></div>
+      <div class="font-bold mt-1 text-[15px]">Research Notes 목록으로</div>
+    </a>
+  </div>
+
 </article>
-</body></html>
+</body>
+</html>

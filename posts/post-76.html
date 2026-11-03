@@ -58,7 +58,22 @@
     .disclosure .l { color:#efc16f; }
     .source-list { border-top:1px solid rgba(255,255,255,.11); margin-top:42px; padding-top:28px; }
     .source-list li { font-size:15px; color:#aeb4ac; line-height:1.65; }
-    @media (max-width:720px) { .pb h2 { font-size:25px; } .pb h3 { font-size:20px; } .pb p,.pb ul,.pb ol { font-size:17px; } }
+    .incident-timeline-figure { margin:32px 0 38px; padding:24px 0; border-top:1px solid rgba(255,255,255,.11); border-bottom:1px solid rgba(255,255,255,.11); }
+    .visual-heading { display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:8px 16px; margin-bottom:16px; }
+    .visual-heading strong { color:#f1f3ef; font-size:18px; font-weight:700; }
+    .visual-heading span,.visual-note { color:#a6aca4; font-size:13px; line-height:1.6; }
+    .incident-timeline { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; list-style:none; padding:0; margin:0 0 12px; }
+    .incident-timeline li { min-height:122px; padding:16px; border:1px solid rgba(255,255,255,.10); border-radius:18px; background:rgba(255,255,255,.035); }
+    .incident-timeline time { display:block; color:#ff9a75; font-size:12px; font-weight:700; font-variant-numeric:tabular-nums; }
+    .incident-timeline strong { display:block; margin:9px 0 5px; color:#f1f3ef; font-size:15px; line-height:1.4; }
+    .incident-timeline li span { display:block; color:#a6aca4; font-size:13px; line-height:1.55; }
+    .boundary-figure { margin:36px 0 42px; padding:24px 0; border-top:1px solid rgba(255,255,255,.11); border-bottom:1px solid rgba(255,255,255,.11); }
+    .boundary-map { display:block; width:100%; height:auto; }
+    .boundary-map-mobile { display:none; }
+    .figure-note { margin:12px 0 0 !important; color:#a6aca4; font-size:13px !important; line-height:1.6 !important; }
+    .incident-timeline-figure .visual-note { margin:0; }
+    @media (max-width:720px) { .pb h2 { font-size:25px; } .pb h3 { font-size:20px; } .pb p,.pb ul,.pb ol { font-size:17px; } .incident-timeline { grid-template-columns:repeat(2,minmax(0,1fr)); } .boundary-map-desktop { display:none; } .boundary-map-mobile { display:block; } }
+    @media (max-width:420px) { .incident-timeline { grid-template-columns:1fr; } .incident-timeline li { min-height:0; } }
   </style>
 </head>
 <body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em">
@@ -81,12 +96,76 @@
       <p>2026년 10월 공개된 빗썸 사고는 이 차이를 생각하게 한다. 회사의 설명에 따르면 외부 비인가자가 사내 모바일 그룹웨어에 접근해 저장된 개인정보와 파일을 반출했다. 거래소 서비스시스템이나 고객 데이터베이스가 직접 침해된 정황은 확인되지 않았다고 밝혔지만, 일부 고객과 임직원 개인정보의 유출 사실도 공개했다.</p>
       <h2>공개된 내용과 아직 확인되지 않은 내용</h2>
       <p>빗썸의 10월 29일 안내에 따르면 외부 비인가자의 사내 모바일 그룹웨어 접근은 10월 27일 오전 11시 28분부터 오후 12시 27분까지 이어졌다. 회사는 같은 날 오후 12시 14분 비정상 접근을 인지했고, 접근 경로를 차단하고 그룹웨어 사용을 중단하는 등 긴급 조치에 착수했다고 밝혔다. 사고 신고는 27일 밤 한국인터넷진흥원(KISA)에, 28일 새벽 개인정보보호위원회에 이뤄졌다.</p>
+      <figure class="incident-timeline-figure" aria-labelledby="incident-timeline-title">
+        <figcaption class="visual-heading"><strong id="incident-timeline-title">사고 타임라인</strong><span>회사 공개자료 기준 · 2026년 10월 27~29일</span></figcaption>
+        <ol class="incident-timeline">
+          <li><time datetime="2026-10-27T11:28">10.27 · 11:28</time><strong>접근 시작</strong><span>사내 모바일 그룹웨어에 외부 비인가 접근</span></li>
+          <li><time datetime="2026-10-27T12:14">10.27 · 12:14</time><strong>이상 접근 인지</strong><span>회사 공지상 비정상 접근을 확인</span></li>
+          <li><time datetime="2026-10-27T12:27">10.27 · 12:27</time><strong>접근 종료 시각</strong><span>공지된 접근 시간 범위의 종료</span></li>
+          <li><time datetime="2026-10-27T23:39">10.27 · 23:39</time><strong>KISA 사고 신고</strong><span>한국인터넷진흥원에 신고</span></li>
+          <li><time datetime="2026-10-28T00:48">10.28 · 00:48</time><strong>개인정보위 신고</strong><span>개인정보보호위원회에 신고</span></li>
+          <li><time datetime="2026-10-29">10.29</time><strong>고객정보 범위 추가 공지</strong><span>추가 조사 결과를 회사가 공개</span></li>
+        </ol>
+        <p class="visual-note">인지 시각, 접근 종료 시각과 신고 시각은 서로 다른 사건 단계입니다. 공개된 타임라인만으로 최초 침투 원인을 추정할 수는 없습니다.</p>
+      </figure>
       <div class="callout"><div class="l"><i class="ti ti-clipboard-check"></i> 회사가 공개한 유출 규모</div><ul class="mb-0"><li>고객 6,444명 정보가 반출된 것으로 공지됨</li><li>이 중 5,600명은 암호화된 상태로 반출돼 내용 확인이 불가능하다고 회사가 설명</li><li>844명은 개인정보가 직접 노출된 것으로 안내됨</li><li>별도로 임직원 개인정보 715명 유출도 공지됨</li></ul><p class="mb-0">정보 항목은 대상자별로 다를 수 있으며, 공지에는 연락처·식별정보·계좌정보 등 다양한 항목이 포함될 수 있다고 기재돼 있습니다.</p></div>
       <p>사고 범위는 처음부터 한 번에 확정되지 않았다. 금융위원회의 10월 28일 공개자료에는 당시 이용자 정보 유출 여부를 확인 중이라고 되어 있고, 다음 날 회사는 추가 조사 결과 일부 고객 정보가 포함됐다고 공지했다. 침해사고에서는 초기 공지와 후속 조사 결과를 구분해 읽어야 하는 이유다.</p>
       <p>반면 최초 침투 경로와 구체적인 원인은 회사가 계속 조사 중이라고 밝혔다. 따라서 계정 탈취, 특정 취약점 악용, 협력사 경유 등 어느 하나를 원인으로 단정할 근거는 현재 공개된 자료만으로 확인되지 않는다. 이 글도 확인된 사실과 해석을 구분한다.</p>
       <h2>핵심 시스템과 업무시스템은 다른 위험을 가진다</h2>
       <p>거래·자산 처리 시스템과 사내 그룹웨어가 분리돼 있다는 점은 침해 범위를 제한하는 데 중요한 경계가 될 수 있다. 다만 그 경계가 개인정보 위험까지 자동으로 없애 주는 것은 아니다. 업무 도구에는 고객 문의, 계약·정산 자료, 화면 캡처나 첨부파일처럼 민감 정보가 업무 과정에서 섞여 들어갈 수 있다.</p>
       <p>이번 사고에서 확인된 핵심은 ‘거래소 핵심 시스템이 침해됐다’는 것이 아니다. 회사는 직접 침해 정황을 확인하지 못했다고 밝혔다. 동시에 그룹웨어에 저장된 개인정보와 파일이 반출됐고 고객·임직원 정보 유출을 공지했다. 서비스 연속성과 개인정보 보호는 서로 다른 위험 축이므로 각각 확인하고 설명해야 한다.</p>
+      <figure class="boundary-figure" aria-labelledby="boundary-title">
+        <figcaption class="visual-heading"><strong id="boundary-title">업무시스템과 핵심시스템의 데이터 경계</strong><span>사고 공지 기반 개념도</span></figcaption>
+        <svg class="boundary-map boundary-map-desktop" viewBox="0 0 920 390" role="img" aria-labelledby="boundary-desktop-title boundary-desktop-desc">
+          <title id="boundary-desktop-title">그룹웨어 접근과 정보 반출, 분리된 핵심 시스템</title>
+          <desc id="boundary-desktop-desc">외부 비인가 접근이 사내 모바일 그룹웨어에 이어졌고, 그룹웨어에 저장된 개인정보와 파일이 반출됐습니다. 거래소 핵심 서비스와 고객 데이터베이스는 별도 영역으로 표시했으며 회사는 직접 침해 정황을 확인하지 못했다고 밝혔습니다.</desc>
+          <defs><marker id="arrow-post76-desktop" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#ff8256"/></marker></defs>
+          <rect x="24" y="82" width="188" height="104" rx="18" fill="#111315" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
+          <text x="118" y="122" fill="#f1f3ef" font-size="18" font-weight="700" text-anchor="middle">외부 비인가자</text>
+          <text x="118" y="151" fill="#a6aca4" font-size="13" text-anchor="middle">신원·최초 경로 미확정</text>
+          <path d="M212 134 H281" stroke="#ff8256" stroke-width="2" marker-end="url(#arrow-post76-desktop)"/>
+          <text x="246" y="119" fill="#ff9a75" font-size="12" text-anchor="middle">비정상 접근</text>
+          <rect x="292" y="64" width="262" height="140" rx="20" fill="rgba(255,130,86,.09)" stroke="#ff8256" stroke-width="2"/>
+          <text x="423" y="108" fill="#f1f3ef" font-size="18" font-weight="700" text-anchor="middle">사내 모바일 그룹웨어</text>
+          <text x="423" y="139" fill="#c9cec8" font-size="13" text-anchor="middle">개인정보와 업무 파일 저장</text>
+          <text x="423" y="165" fill="#a6aca4" font-size="12" text-anchor="middle">회사 공지: 접근 경로 차단·서비스 중단</text>
+          <path d="M554 134 H628" stroke="#e8b45a" stroke-width="2" marker-end="url(#arrow-post76-desktop)"/>
+          <text x="591" y="119" fill="#efc16f" font-size="12" text-anchor="middle">자료 반출</text>
+          <rect x="640" y="82" width="250" height="104" rx="18" fill="rgba(232,180,90,.08)" stroke="#e8b45a" stroke-width="1.5"/>
+          <text x="765" y="122" fill="#f1f3ef" font-size="18" font-weight="700" text-anchor="middle">개인정보·파일</text>
+          <text x="765" y="151" fill="#a6aca4" font-size="13" text-anchor="middle">고객·임직원 정보 포함</text>
+          <path d="M70 244 H850" stroke="rgba(255,255,255,.13)" stroke-width="1" stroke-dasharray="4 7"/>
+          <rect x="198" y="270" width="524" height="94" rx="18" fill="#0d1011" stroke="#78a9a1" stroke-width="1.5" stroke-dasharray="7 6"/>
+          <text x="460" y="308" fill="#f1f3ef" font-size="17" font-weight="700" text-anchor="middle">거래소 핵심 서비스 · 고객 DB</text>
+          <text x="460" y="337" fill="#a6aca4" font-size="13" text-anchor="middle">별도 분리 영역 · 회사는 직접 침해 정황을 확인하지 못했다고 공지</text>
+        </svg>
+        <svg class="boundary-map boundary-map-mobile" viewBox="0 0 360 560" role="img" aria-labelledby="boundary-mobile-title boundary-mobile-desc">
+          <title id="boundary-mobile-title">그룹웨어 사고의 데이터 경계</title>
+          <desc id="boundary-mobile-desc">외부 비인가 접근, 사내 모바일 그룹웨어, 반출된 개인정보와 파일의 순서로 표시했습니다. 거래소 핵심 서비스와 고객 데이터베이스는 별도 영역으로 분리해 표시했습니다.</desc>
+          <defs><marker id="arrow-post76-mobile" markerWidth="9" markerHeight="9" refX="4.5" refY="7" orient="auto"><path d="M0,0 L9,0 L4.5,9 z" fill="#ff8256"/></marker></defs>
+          <rect x="35" y="18" width="290" height="72" rx="17" fill="#111315" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
+          <text x="180" y="48" fill="#f1f3ef" font-size="16" font-weight="700" text-anchor="middle">외부 비인가자</text>
+          <text x="180" y="70" fill="#a6aca4" font-size="12" text-anchor="middle">신원·최초 경로 미확정</text>
+          <path d="M180 92 V125" stroke="#ff8256" stroke-width="2" marker-end="url(#arrow-post76-mobile)"/>
+          <text x="194" y="113" fill="#ff9a75" font-size="11">비정상 접근</text>
+          <rect x="35" y="136" width="290" height="96" rx="18" fill="rgba(255,130,86,.09)" stroke="#ff8256" stroke-width="2"/>
+          <text x="180" y="174" fill="#f1f3ef" font-size="16" font-weight="700" text-anchor="middle">사내 모바일 그룹웨어</text>
+          <text x="180" y="198" fill="#c9cec8" font-size="12" text-anchor="middle">개인정보와 업무 파일 저장</text>
+          <text x="180" y="218" fill="#a6aca4" font-size="11" text-anchor="middle">접근 경로 차단·서비스 중단</text>
+          <path d="M180 234 V272" stroke="#e8b45a" stroke-width="2" marker-end="url(#arrow-post76-mobile)"/>
+          <text x="194" y="258" fill="#efc16f" font-size="11">자료 반출</text>
+          <rect x="35" y="284" width="290" height="78" rx="18" fill="rgba(232,180,90,.08)" stroke="#e8b45a" stroke-width="1.5"/>
+          <text x="180" y="317" fill="#f1f3ef" font-size="16" font-weight="700" text-anchor="middle">개인정보·파일</text>
+          <text x="180" y="341" fill="#a6aca4" font-size="12" text-anchor="middle">고객·임직원 정보 포함</text>
+          <path d="M28 395 H332" stroke="rgba(255,255,255,.2)" stroke-width="1" stroke-dasharray="4 6"/>
+          <text x="180" y="420" fill="#a6aca4" font-size="11" text-anchor="middle">별도 분리된 영역 · 직접 침해 정황 미확인</text>
+          <rect x="35" y="436" width="290" height="90" rx="18" fill="#0d1011" stroke="#78a9a1" stroke-width="1.5" stroke-dasharray="7 6"/>
+          <text x="180" y="474" fill="#f1f3ef" font-size="15" font-weight="700" text-anchor="middle">거래소 핵심 서비스</text>
+          <text x="180" y="499" fill="#a6aca4" font-size="12" text-anchor="middle">고객 DB · 회사는 직접 침해 정황을</text>
+          <text x="180" y="517" fill="#a6aca4" font-size="12" text-anchor="middle">확인하지 못했다고 공지</text>
+        </svg>
+        <p class="figure-note">핵심시스템 분리는 위험을 줄이는 경계이지, 업무도구에 저장된 개인정보 위험을 없애지는 않습니다. 다만 이 도식은 회사 공지에 나온 정보만으로 단순화했으며, 실제 네트워크 구성이나 최초 침투 경로를 나타내지는 않습니다.</p>
+      </figure>
       <p>이 구분은 기업의 다른 업무도구에도 적용된다. SaaS, 모바일 그룹웨어, 파일공유, 협업 메신저와 원격지원 도구는 서버 목록에만 보이지 않는 데이터 경로를 만들 수 있다. 관리 대상은 시스템 이름뿐 아니라 그 안에서 어떤 정보가 생성·공유·보관되는지까지 포함해야 한다.</p>
       <h2>조직이 점검할 세 가지</h2>
       <h3>1. 자산 목록에 데이터 흐름과 업무 도구를 포함한다</h3>

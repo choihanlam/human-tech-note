@@ -1,59 +1,29 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>DRM 문서보안 — 보안과 협업 생산성의 균형점 · Human Tech Note</title><meta name="description" content="DRM 운영·개선"/>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>정보보호 투자의 ROI는 측정할 수 있는가 · Human Tech Note</title><meta name="description" content="정보보호 투자 효과를 ROSI, Expected Loss, Gordon-Loeb Model, NIST CSF 관점에서 분석합니다."/><meta name="author" content="최한람"/><meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://choihanlam.github.io/human-tech-note/posts/post-12.html"/>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<style type="text/tailwindcss">
-@theme{
---color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,0.05);
---color-hair:rgba(255,255,255,0.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
---radius-pill:100px;--radius-feat:32px;
---font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
-}
-</style>
 <style>
-body{background:#08090a}
-.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
-radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
-radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
-radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
-radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
-#07080a}
-</style>
-<style>
-.pb h3{font-size:24px;font-weight:500;letter-spacing:-.4px;margin:36px 0 10px;color:#f1f3ef}
-.pb p{font-size:18px;line-height:1.75;margin:0 0 18px;letter-spacing:-.2px}
-.pb ul{font-size:18px;line-height:1.7;padding-left:22px;margin:0 0 20px}
-.pb li{margin-bottom:7px}
-.pb strong{color:#fff;font-weight:700}
-.callout{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:32px;padding:26px 30px;margin:30px 0;font-size:16px;line-height:1.65;color:#e7e9e4}
-.callout .l{color:#ff8256;font-weight:700;font-size:13px;margin-bottom:8px;display:flex;gap:7px;align-items:center}
-</style>
-</head><body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em"><div class="bgfx"></div>
-<nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair">
-<div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
-<a class="font-bold text-lg flex items-center gap-2" href="../index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a>
-<span class="ml-auto"></span>
-<a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive"><i class="ti ti-arrow-left"></i> 포트폴리오</a>
-</div></nav>
-<article class="max-w-[760px] mx-auto px-6 pt-14 pb-28">
-<span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6"><i class="ti ti-flask"></i> 포트폴리오 데모용 더미 콘텐츠</span>
-<div><span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#E7F3EC;color:#1F6B3B"><i class="ti ti-bug"></i> 실무보안/케이스</span></div>
-<h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">DRM 문서보안 — 보안과 협업 생산성의 균형점</h1>
-<div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
-<span><i class="ti ti-calendar align-[-2px]"></i> 2026년 8월 7일 (금)</span><span><i class="ti ti-clock align-[-2px]"></i> 약 10분</span><span>#12 / 75</span></div>
-<div class="pb">
-<h3>들어가며</h3>
-<p>실제 운영 현장에서 겪은 상황을 바탕으로 무엇을 어떻게 판단했는지 기록한다. 이번 글은 <strong>DRM 운영·개선</strong>을(를) 중심으로, 개념 설명에 그치지 않고 실제 판단의 맥락을 함께 담으려 했다.</p>
-<p>많은 조직이 같은 문제를 겪지만, 정답은 조직의 규모·문화·서비스 특성에 따라 달라진다. 그래서 '무엇을 했는가'보다 '왜 그렇게 판단했는가'에 무게를 두었다.</p>
-<h3>문제 정의</h3><p>먼저 상황을 명확히 규정하는 것이 중요하다. 문제를 좁게 정의할수록 해결책은 선명해지고, 이해관계자 사이의 합의도 빨라진다.</p>
-<h3>접근 방법</h3><p>실무에서는 이상적인 방법론보다 '지속 가능한 운영'이 우선한다. 한 번의 조치로 끝나는 일은 거의 없고, 대부분은 정책·프로세스·사람이 맞물려야 유지된다.</p>
-<h3>정리하며</h3><p>결국 남는 것은 기록과 반복 가능한 체계다. DRM 운영·개선에서 얻은 교훈은 다른 영역에도 그대로 적용된다.</p>
-</div>
-<div class="callout"><div class="l"><i class="ti ti-link"></i> 이 글과 연결된 실무 역량</div>DRM 운영·개선 — 이력서·경력기술서의 실제 수행 경험과 직접 연결되는 주제입니다.</div>
-<div class="flex flex-wrap gap-2.5 my-8"><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#실무보안/케이스</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#DRM 운영·개선</span></div>
-<div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7"><a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[#e9edf2] transition" href="post-11.html"><div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 글</div><div class="font-bold mt-1 text-[15px]">DLP 도입 — 정책 하나 잘못 짜면 업무가 멈춘다</div></a><a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[#e9edf2] transition" href="post-13.html"><div class="text-[13px] text-mut font-medium">다음 글 <i class="ti ti-arrow-right"></i></div><div class="font-bold mt-1 text-[15px]">NAC 운영기 — Windows와 Mac의 현실적 차이</div></a></div>
-</article>
-</body></html>
+:root{--a:#ff8256;--w:#e8b45a;--tx:#f1f3ef;--mut:#a6aca4;--hair:rgba(255,255,255,.11);--soft:rgba(255,255,255,.05)}
+*{box-sizing:border-box}body{margin:0;background:#08090a;color:var(--tx);font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Malgun Gothic",sans-serif;letter-spacing:-.01em}
+a{color:inherit}.bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.4),transparent 66%),radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.3),transparent 70%),#07080a}
+nav{position:sticky;top:0;z-index:10;background:#0a0c0bcc;backdrop-filter:blur(14px);border-bottom:1px solid var(--hair)}.nav{max-width:1080px;margin:auto;padding:14px 24px;display:flex;gap:18px;align-items:center}.brand{text-decoration:none;font-weight:800}.brand small{font-weight:400;color:var(--mut);font-size:13px}.home{margin-left:auto;border:1px solid rgba(255,255,255,.2);padding:8px 14px;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700}
+article{max-width:790px;margin:auto;padding:56px 24px 110px}.chip{display:inline-flex;padding:8px 14px;border-radius:999px;background:var(--soft);color:var(--mut);font-size:13px;font-weight:800;margin-bottom:20px}
+h1{font-size:clamp(38px,6vw,54px);line-height:1.12;letter-spacing:-1.2px;font-weight:560;margin:0 0 13px}.sub{font-size:19px;line-height:1.65;color:var(--mut);margin:0 0 24px}.meta{display:flex;gap:15px;flex-wrap:wrap;color:var(--mut);font-size:14px;padding-bottom:24px;border-bottom:1px solid var(--hair)}
+.lead{font-size:19px;line-height:1.82;margin:30px 0;color:#eef1ec}.rq{margin:30px 0;padding:24px 26px;border:1px solid rgba(255,130,86,.25);border-radius:24px;background:radial-gradient(90% 140% at 0 0,rgba(255,130,86,.12),transparent 62%),rgba(255,255,255,.035)}.rq .l,.box .l{font-size:12px;font-weight:850;letter-spacing:.06em;color:#ff9a72;margin-bottom:9px}.rq .q{font-size:21px;font-weight:730;line-height:1.58}
+section{margin:50px 0}h2{font-size:29px;line-height:1.42;font-weight:650;letter-spacing:-.6px;margin:0 0 17px}p{font-size:18px;line-height:1.82;margin:0 0 20px;color:#e6eae4}strong{color:#fff}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:24px 0}.card{padding:19px;border-radius:20px;border:1px solid var(--hair);background:var(--soft)}.card .k{font-size:11px;font-weight:850;color:#ff9a72;margin-bottom:7px}.card .t{font-size:16px;font-weight:750;margin-bottom:7px}.card .d{font-size:13px;line-height:1.65;color:#c3cac2}
+.box{margin:34px 0;padding:24px 26px;border-radius:24px;border:1px solid rgba(61,180,120,.25);background:radial-gradient(90% 130% at 0 0,rgba(61,180,120,.12),transparent 62%),rgba(255,255,255,.035)}.box .h{font-size:21px;font-weight:740;line-height:1.55;margin-bottom:9px}.box p{font-size:15px;line-height:1.72;color:#ccd2ca;margin:0}
+blockquote{margin:28px 0;padding:21px 24px;border-left:3px solid var(--a);background:rgba(255,255,255,.045);border-radius:0 18px 18px 0;font-size:19px;line-height:1.72}
+.refs{padding:24px;border:1px solid var(--hair);border-radius:22px;background:rgba(255,255,255,.035)}.refs li{font-size:14px;line-height:1.7;margin-bottom:11px;color:#d0d6cf}.refs a{color:#ff9a72;text-decoration:none}.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px}.tag{font-size:13px;color:var(--mut);background:var(--soft);padding:7px 12px;border-radius:999px}
+.pnav{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:44px;padding-top:25px;border-top:1px solid var(--hair)}.pnav a{padding:16px 18px;border-radius:18px;background:var(--soft);text-decoration:none}.pnav small{display:block;color:var(--mut);font-size:12px;margin-bottom:5px}.pnav b{font-size:14px;line-height:1.45}
+@media(max-width:650px){.cards,.pnav{grid-template-columns:1fr}h1{font-size:38px}p{font-size:17px}}
+</style></head><body><div class="bg"></div><nav><div class="nav"><a class="brand" href="../index.html"><i class="ti ti-book-2"></i> Human Tech Note <small>by 최한람</small></a><a class="home" href="../index.html">Archive</a></div></nav><article>
+<div class="chip"><i class="ti ti-chart-donut"></i>&nbsp; Research Note · Security Economics</div><h1>정보보호 투자의 ROI는 측정할 수 있는가</h1><p class="sub">사고가 일어나지 않은 성과를 Expected Loss와 Portfolio 언어로 설명하기</p><div class="meta"><span><i class="ti ti-calendar"></i> 2026년 11월 4일</span><span><i class="ti ti-clock"></i> 약 10분</span><span>#12 / 75</span></div>
+<p class="lead">보안예산을 설명할 때 가장 어려운 질문은 ‘이 투자를 하면 매출이 얼마나 늘어나는가’다. 보안통제의 많은 성과는 사고가 발생하지 않은 형태로 나타나고, 특정 통제가 어떤 사고를 막았는지 반사실적으로 증명하기 어렵다. 그래서 보안투자를 일반적인 매출형 ROI 공식에 그대로 넣으면 가치가 과소평가되기 쉽다.</p><div class="rq"><div class="l">RESEARCH QUESTION</div><div class="q">직접 매출을 만들지 않는 정보보호 투자도 경제적 의사결정 모델로 비교하고 우선순위를 설명할 수 있는가?</div></div><section><h2>1. 보안투자의 성과는 손실분포를 바꾸는 데 있다</h2><p>보안통제는 미래의 사고확률 또는 사고발생 시 피해규모를 낮추는 방향으로 작동한다. 따라서 기대손실(Expected Loss)을 사고확률 × 영향으로 보고 통제 도입 전후의 변화량과 비용을 비교할 수 있다.</p><p>이 접근은 정확한 미래예측을 약속하지 않는다. 대신 동일한 가정과 범위 안에서 투자대안을 비교하는 공통언어를 제공한다.</p></section><section><h2>2. Gordon–Loeb Model이 주는 중요한 메시지</h2><p>Gordon과 Loeb의 2002년 연구는 보안투자 수준을 정보자산의 손실가치와 취약성, 투자효과의 함수로 모델링했다. 중요한 시사점은 가장 취약한 자산에 무조건 가장 많은 돈을 쓰는 전략이 경제적으로 최적이라고 볼 수 없다는 점이다.</p><p>극도로 취약한 자산은 보호비용이 지나치게 높을 수 있으므로 위험감소의 한계효과를 함께 봐야 한다.</p></section><section><h2>3. ROI에 운영가치를 포함한다</h2><p>기업 보안투자는 사고손실 회피 외에도 감사대응시간, 장애복구속도, 수작업 감소, 고객요구 충족, 계약수주 가능성, 보험·규제비용 등에 영향을 줄 수 있다.</p><div class="cards"><div class="card"><div class="k">01</div><div class="t">Risk Reduction</div><div class="d">사고 가능성과 피해규모 감소</div></div><div class="card"><div class="k">02</div><div class="t">Operational Value</div><div class="d">탐지·조치·증적 업무시간 감소</div></div><div class="card"><div class="k">03</div><div class="t">Trust Value</div><div class="d">고객·파트너의 보안요구 대응력</div></div><div class="card"><div class="k">04</div><div class="t">Option Value</div><div class="d">미래 규제·기술변화에 빠르게 대응할 수 있는 선택권</div></div></div></section><section><h2>4. 숫자 하나보다 Portfolio로 의사결정한다</h2><p>보안투자안마다 재무효과를 완벽하게 추정하기는 어렵다. 대신 Risk Reduction, Regulatory Need, Service Criticality, Strategic Fit, Delivery Cost를 동일한 기준으로 평가해 포트폴리오를 만들 수 있다.</p><p>NIST CSF도 기업이 미션과 위험허용수준, 자원을 기준으로 보안활동을 우선순위화하고 투자영향을 고려하도록 안내한다.</p></section>
+<div class="box"><div class="l">SECURITY INVESTMENT</div><div class="h">Expected Loss Reduction + Operational Value + Trust + Future Option</div><p>보안 ROI는 하나의 정확한 숫자를 찾는 작업보다 여러 투자대안의 위험감소와 비용·운영효과를 같은 틀로 비교하는 과정에 가깝다. 가정과 불확실성을 함께 공개할수록 경영진과의 대화가 좋아진다.</p></div>
+<section><h2>마치며</h2><p>보안투자도 경제적으로 설명할 수 있다. 다만 일반적인 매출 ROI보다 위험의 변화와 조직 운영가치를 함께 봐야 한다. 중요한 것은 ‘사고가 날 수 있다’는 공포보다 어떤 투자안이 어떤 위험을 얼마나 줄이고 어떤 조직역량을 남기는지 비교할 수 있게 만드는 것이다.</p><blockquote>보안예산의 설득력은 위험을 크게 말하는 데서 나오지 않는다. 투자 전후의 의사결정 차이를 설명할 수 있을 때 생긴다.</blockquote></section>
+<section><h2>참고자료</h2><div class="refs"><ol><li>Gordon & Loeb (2002) · <a href="https://doi.org/10.1145/581271.581274" target="_blank" rel="noreferrer">The Economics of Information Security Investment</a></li><li>NIST · <a href="https://www.nist.gov/cyberframework/faqs" target="_blank" rel="noreferrer">Cybersecurity Framework FAQs — cost-effectiveness and prioritization</a></li><li>NIST · <a href="https://www.nist.gov/publications/nist-cybersecurity-framework-20-enterprise-risk-management-quick-start-guide" target="_blank" rel="noreferrer">CSF 2.0 Enterprise Risk Management Quick-Start Guide</a></li></ol></div></section>
+<div class="tags"><span class="tag">#SecurityEconomics</span><span class="tag">#ROSI</span><span class="tag">#Risk</span><span class="tag">#Budget</span><span class="tag">#Portfolio</span></div>
+<div class="pnav"><a href="post-11.html"><small><i class="ti ti-arrow-left"></i> 이전 글</small><b>post-11</b></a><a href="post-13.html" style="text-align:right"><small>다음 글 <i class="ti ti-arrow-right"></i></small><b>post-13</b></a></div>
+</article></body></html>

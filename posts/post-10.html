@@ -1,59 +1,29 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>엔드포인트 보안 전체 그림 한눈에 정리 · Human Tech Note</title><meta name="description" content="엔드포인트 통합 운영"/>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>PQC 전환은 암호 알고리즘 교체 프로젝트인가 · Human Tech Note</title><meta name="description" content="PQC 전환을 암호 알고리즘 변경이 아니라 자산·의존성·변경관리와 장기 로드맵의 문제로 분석합니다."/><meta name="author" content="최한람"/><meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://choihanlam.github.io/human-tech-note/posts/post-10.html"/>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<style type="text/tailwindcss">
-@theme{
---color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,0.05);
---color-hair:rgba(255,255,255,0.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
---radius-pill:100px;--radius-feat:32px;
---font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
-}
-</style>
 <style>
-body{background:#08090a}
-.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
-radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
-radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
-radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
-radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
-#07080a}
-</style>
-<style>
-.pb h3{font-size:24px;font-weight:500;letter-spacing:-.4px;margin:36px 0 10px;color:#f1f3ef}
-.pb p{font-size:18px;line-height:1.75;margin:0 0 18px;letter-spacing:-.2px}
-.pb ul{font-size:18px;line-height:1.7;padding-left:22px;margin:0 0 20px}
-.pb li{margin-bottom:7px}
-.pb strong{color:#fff;font-weight:700}
-.callout{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:32px;padding:26px 30px;margin:30px 0;font-size:16px;line-height:1.65;color:#e7e9e4}
-.callout .l{color:#ff8256;font-weight:700;font-size:13px;margin-bottom:8px;display:flex;gap:7px;align-items:center}
-</style>
-</head><body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em"><div class="bgfx"></div>
-<nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair">
-<div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
-<a class="font-bold text-lg flex items-center gap-2" href="../index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a>
-<span class="ml-auto"></span>
-<a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive"><i class="ti ti-arrow-left"></i> 포트폴리오</a>
-</div></nav>
-<article class="max-w-[760px] mx-auto px-6 pt-14 pb-28">
-<span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6"><i class="ti ti-flask"></i> 포트폴리오 데모용 더미 콘텐츠</span>
-<div><span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#E7F3EC;color:#1F6B3B"><i class="ti ti-bug"></i> 실무보안/케이스</span></div>
-<h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">엔드포인트 보안 전체 그림 한눈에 정리</h1>
-<div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
-<span><i class="ti ti-calendar align-[-2px]"></i> 2026년 8월 3일 (월)</span><span><i class="ti ti-clock align-[-2px]"></i> 약 11분</span><span>#10 / 75</span></div>
-<div class="pb">
-<h3>들어가며</h3>
-<p>실제 운영 현장에서 겪은 상황을 바탕으로 무엇을 어떻게 판단했는지 기록한다. 이번 글은 <strong>엔드포인트 통합 운영</strong>을(를) 중심으로, 개념 설명에 그치지 않고 실제 판단의 맥락을 함께 담으려 했다.</p>
-<p>많은 조직이 같은 문제를 겪지만, 정답은 조직의 규모·문화·서비스 특성에 따라 달라진다. 그래서 '무엇을 했는가'보다 '왜 그렇게 판단했는가'에 무게를 두었다.</p>
-<h3>문제 정의</h3><p>먼저 상황을 명확히 규정하는 것이 중요하다. 문제를 좁게 정의할수록 해결책은 선명해지고, 이해관계자 사이의 합의도 빨라진다.</p>
-<h3>접근 방법</h3><p>실무에서는 이상적인 방법론보다 '지속 가능한 운영'이 우선한다. 한 번의 조치로 끝나는 일은 거의 없고, 대부분은 정책·프로세스·사람이 맞물려야 유지된다.</p>
-<h3>정리하며</h3><p>결국 남는 것은 기록과 반복 가능한 체계다. 엔드포인트 통합 운영에서 얻은 교훈은 다른 영역에도 그대로 적용된다.</p>
-</div>
-<div class="callout"><div class="l"><i class="ti ti-link"></i> 이 글과 연결된 실무 역량</div>엔드포인트 통합 운영 — 이력서·경력기술서의 실제 수행 경험과 직접 연결되는 주제입니다.</div>
-<div class="flex flex-wrap gap-2.5 my-8"><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#실무보안/케이스</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#엔드포인트 통합 운영</span></div>
-<div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7"><a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[#e9edf2] transition" href="post-09.html"><div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 글</div><div class="font-bold mt-1 text-[15px]">정보보호위원회는 왜 형식적으로 흐르는가</div></a><a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[#e9edf2] transition" href="post-11.html"><div class="text-[13px] text-mut font-medium">다음 글 <i class="ti ti-arrow-right"></i></div><div class="font-bold mt-1 text-[15px]">DLP 도입 — 정책 하나 잘못 짜면 업무가 멈춘다</div></a></div>
-</article>
-</body></html>
+:root{--a:#ff8256;--w:#e8b45a;--tx:#f1f3ef;--mut:#a6aca4;--hair:rgba(255,255,255,.11);--soft:rgba(255,255,255,.05)}
+*{box-sizing:border-box}body{margin:0;background:#08090a;color:var(--tx);font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Malgun Gothic",sans-serif;letter-spacing:-.01em}
+a{color:inherit}.bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.4),transparent 66%),radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.3),transparent 70%),#07080a}
+nav{position:sticky;top:0;z-index:10;background:#0a0c0bcc;backdrop-filter:blur(14px);border-bottom:1px solid var(--hair)}.nav{max-width:1080px;margin:auto;padding:14px 24px;display:flex;gap:18px;align-items:center}.brand{text-decoration:none;font-weight:800}.brand small{font-weight:400;color:var(--mut);font-size:13px}.home{margin-left:auto;border:1px solid rgba(255,255,255,.2);padding:8px 14px;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700}
+article{max-width:790px;margin:auto;padding:56px 24px 110px}.chip{display:inline-flex;padding:8px 14px;border-radius:999px;background:var(--soft);color:var(--mut);font-size:13px;font-weight:800;margin-bottom:20px}
+h1{font-size:clamp(38px,6vw,54px);line-height:1.12;letter-spacing:-1.2px;font-weight:560;margin:0 0 13px}.sub{font-size:19px;line-height:1.65;color:var(--mut);margin:0 0 24px}.meta{display:flex;gap:15px;flex-wrap:wrap;color:var(--mut);font-size:14px;padding-bottom:24px;border-bottom:1px solid var(--hair)}
+.lead{font-size:19px;line-height:1.82;margin:30px 0;color:#eef1ec}.rq{margin:30px 0;padding:24px 26px;border:1px solid rgba(255,130,86,.25);border-radius:24px;background:radial-gradient(90% 140% at 0 0,rgba(255,130,86,.12),transparent 62%),rgba(255,255,255,.035)}.rq .l,.box .l{font-size:12px;font-weight:850;letter-spacing:.06em;color:#ff9a72;margin-bottom:9px}.rq .q{font-size:21px;font-weight:730;line-height:1.58}
+section{margin:50px 0}h2{font-size:29px;line-height:1.42;font-weight:650;letter-spacing:-.6px;margin:0 0 17px}p{font-size:18px;line-height:1.82;margin:0 0 20px;color:#e6eae4}strong{color:#fff}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:24px 0}.card{padding:19px;border-radius:20px;border:1px solid var(--hair);background:var(--soft)}.card .k{font-size:11px;font-weight:850;color:#ff9a72;margin-bottom:7px}.card .t{font-size:16px;font-weight:750;margin-bottom:7px}.card .d{font-size:13px;line-height:1.65;color:#c3cac2}
+.box{margin:34px 0;padding:24px 26px;border-radius:24px;border:1px solid rgba(61,180,120,.25);background:radial-gradient(90% 130% at 0 0,rgba(61,180,120,.12),transparent 62%),rgba(255,255,255,.035)}.box .h{font-size:21px;font-weight:740;line-height:1.55;margin-bottom:9px}.box p{font-size:15px;line-height:1.72;color:#ccd2ca;margin:0}
+blockquote{margin:28px 0;padding:21px 24px;border-left:3px solid var(--a);background:rgba(255,255,255,.045);border-radius:0 18px 18px 0;font-size:19px;line-height:1.72}
+.refs{padding:24px;border:1px solid var(--hair);border-radius:22px;background:rgba(255,255,255,.035)}.refs li{font-size:14px;line-height:1.7;margin-bottom:11px;color:#d0d6cf}.refs a{color:#ff9a72;text-decoration:none}.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px}.tag{font-size:13px;color:var(--mut);background:var(--soft);padding:7px 12px;border-radius:999px}
+.pnav{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:44px;padding-top:25px;border-top:1px solid var(--hair)}.pnav a{padding:16px 18px;border-radius:18px;background:var(--soft);text-decoration:none}.pnav small{display:block;color:var(--mut);font-size:12px;margin-bottom:5px}.pnav b{font-size:14px;line-height:1.45}
+@media(max-width:650px){.cards,.pnav{grid-template-columns:1fr}h1{font-size:38px}p{font-size:17px}}
+</style></head><body><div class="bg"></div><nav><div class="nav"><a class="brand" href="../index.html"><i class="ti ti-book-2"></i> Human Tech Note <small>by 최한람</small></a><a class="home" href="../index.html">Archive</a></div></nav><article>
+<div class="chip"><i class="ti ti-key"></i>&nbsp; Research Note · Security Technology Management</div><h1>PQC 전환은 암호 알고리즘 교체 프로젝트인가</h1><p class="sub">Crypto Inventory, Crypto Agility와 기술부채 관점에서 보는 Post-Quantum Migration</p><div class="meta"><span><i class="ti ti-calendar"></i> 2026년 11월 4일</span><span><i class="ti ti-clock"></i> 약 10분</span><span>#10 / 75</span></div>
+<p class="lead">PQC를 공부하면 가장 먼저 알고리즘 이름과 수학적 원리를 만나게 된다. 하지만 기업 입장에서 더 어려운 문제는 ‘새 알고리즘이 무엇인가’보다 ‘우리 시스템의 어디에서 기존 공개키 암호를 쓰고 있는가’를 찾는 일이다. 인증서, VPN, TLS, 코드서명, HSM, SaaS, 외부 API까지 암호는 인프라 깊숙이 숨어 있다.</p><div class="rq"><div class="l">RESEARCH QUESTION</div><div class="q">PQC Migration의 핵심 역량을 암호학 지식보다 Crypto Inventory와 Crypto Agility, 그리고 변화관리 능력으로 볼 수 있는가?</div></div><section><h2>1. 2026년, 표준화에서 전환 로드맵으로 중심이 이동했다</h2><p>NIST는 2024년 주요 PQC 표준을 발표한 뒤 2026년 10월 NISTIR 8547을 최종화해 양자취약 알고리즘에서 양자내성 표준으로의 전환방향과 일정을 제시했다. 관심이 알고리즘 선정에서 실제 Migration으로 이동한 것이다.</p><p>조직마다 시스템 수명, 데이터 보존기간, 벤더 의존성, 규제환경이 다르기 때문에 전환도 동일한 순서로 진행되지 않는다.</p></section><section><h2>2. Crypto Inventory가 출발점이다</h2><p>PQC Roadmap을 만들려면 어떤 시스템이 어떤 암호를 어떤 목적으로 쓰는지 알아야 한다. 단순 서버목록보다 인증서, 라이브러리, 프로토콜, Key, 데이터 보존기간, 외부연계까지 연결해야 한다.</p><div class="cards"><div class="card"><div class="k">01</div><div class="t">Where</div><div class="d">어떤 애플리케이션·장비·SaaS에서 공개키 암호를 사용하는가</div></div><div class="card"><div class="k">02</div><div class="t">What</div><div class="d">RSA/ECC 등 어떤 알고리즘과 Key 길이를 사용하는가</div></div><div class="card"><div class="k">03</div><div class="t">Why</div><div class="d">인증·키교환·전자서명·데이터보호 중 어떤 목적에 쓰는가</div></div><div class="card"><div class="k">04</div><div class="t">Dependency</div><div class="d">벤더·클라우드·PKI·HSM·API 등 외부 의존성은 무엇인가</div></div></div></section><section><h2>3. 우선순위는 데이터 수명과 교체난이도로 정한다</h2><p>‘Harvest now, decrypt later’ 위협을 고려하면 장기간 비밀성을 유지해야 하는 데이터는 현재부터 우선순위를 높일 수 있다. 동시에 교체가 어려운 Embedded/Legacy 시스템, 장기계약 장비, 외부 인증체계는 기술변경 리드타임이 길다.</p><p>따라서 PQC 우선순위는 위협의 시급성뿐 아니라 데이터수명 × 시스템수명 × 변경복잡도를 함께 보아야 한다.</p></section><section><h2>4. Crypto Agility가 장기적인 목표다</h2><p>PQC 전환을 한 번의 교체 프로젝트로 끝내면 다음 알고리즘 변경 때 같은 비용을 반복한다. 알고리즘과 Key를 애플리케이션 코드에 고정하지 않고 설정·라이브러리·서비스 계층에서 교체할 수 있도록 설계하면 향후 변화비용을 줄일 수 있다.</p><p>이런 관점에서 PQC는 암호 알고리즘 프로젝트이면서 동시에 Architecture Modernization과 Technical Debt 관리 프로젝트다.</p></section>
+<div class="box"><div class="l">PQC ROADMAP</div><div class="h">Inventory → Exposure → Priority → Pilot → Migration → Agility</div><p>PQC 대응수준은 ‘새 알고리즘을 아는가’보다 암호자산을 식별하고 의존성을 관리하며 서비스 중단 없이 교체할 수 있는가로 평가하는 편이 실무적이다.</p></div>
+<section><h2>마치며</h2><p>PQC 전환은 보안팀만의 암호 프로젝트로 닫히기 어렵다. 애플리케이션, 네트워크, PKI, 벤더, 조달, 데이터 거버넌스가 함께 움직여야 한다. 그래서 미래 암호위협에 대한 준비는 기술의 선택보다 조직의 변경능력을 먼저 드러낸다.</p><blockquote>PQC 준비의 첫 질문은 ‘어떤 알고리즘으로 바꿀까’보다 ‘우리 조직의 암호가 어디에 숨어 있는가’다.</blockquote></section>
+<section><h2>참고자료</h2><div class="refs"><ol><li>NIST (2026) · <a href="https://www.nist.gov/publications/transition-post-quantum-cryptography-standards" target="_blank" rel="noreferrer">NISTIR 8547 — Transition to Post-Quantum Cryptography Standards</a></li><li>NIST (2026) · <a href="https://www.nist.gov/news-events/news/2026/10/nist-report-provides-guidelines-transition-post-quantum-cryptography" target="_blank" rel="noreferrer">Guidelines for Transition to PQC Standards</a></li><li>NIST · <a href="https://csrc.nist.gov/projects/post-quantum-cryptography" target="_blank" rel="noreferrer">Post-Quantum Cryptography Project</a></li></ol></div></section>
+<div class="tags"><span class="tag">#PQC</span><span class="tag">#CryptoAgility</span><span class="tag">#CryptoInventory</span><span class="tag">#TechnicalDebt</span><span class="tag">#SecurityRoadmap</span></div>
+<div class="pnav"><a href="post-09.html"><small><i class="ti ti-arrow-left"></i> 이전 글</small><b>post-09</b></a><a href="post-11.html" style="text-align:right"><small>다음 글 <i class="ti ti-arrow-right"></i></small><b>post-11</b></a></div>
+</article></body></html>

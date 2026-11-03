@@ -1,59 +1,29 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Mac 보안은 왜 늘 뒷전이 되는가 · Human Tech Note</title><meta name="description" content="CVE·공급망 대응"/>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>컴플라이언스는 언제 보안을 강화하고, 언제 경직시키는가 · Human Tech Note</title><meta name="description" content="컴플라이언스 중심 보안체계가 실제 운영역량과 미래대응력으로 연결되기 위한 조건을 거버넌스 관점에서 분석합니다."/><meta name="author" content="최한람"/><meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://choihanlam.github.io/human-tech-note/posts/post-15.html"/>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<style type="text/tailwindcss">
-@theme{
---color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,0.05);
---color-hair:rgba(255,255,255,0.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
---radius-pill:100px;--radius-feat:32px;
---font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
-}
-</style>
 <style>
-body{background:#08090a}
-.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
-radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
-radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
-radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
-radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
-#07080a}
-</style>
-<style>
-.pb h3{font-size:24px;font-weight:500;letter-spacing:-.4px;margin:36px 0 10px;color:#f1f3ef}
-.pb p{font-size:18px;line-height:1.75;margin:0 0 18px;letter-spacing:-.2px}
-.pb ul{font-size:18px;line-height:1.7;padding-left:22px;margin:0 0 20px}
-.pb li{margin-bottom:7px}
-.pb strong{color:#fff;font-weight:700}
-.callout{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:32px;padding:26px 30px;margin:30px 0;font-size:16px;line-height:1.65;color:#e7e9e4}
-.callout .l{color:#ff8256;font-weight:700;font-size:13px;margin-bottom:8px;display:flex;gap:7px;align-items:center}
-</style>
-</head><body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em"><div class="bgfx"></div>
-<nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair">
-<div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
-<a class="font-bold text-lg flex items-center gap-2" href="../index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a>
-<span class="ml-auto"></span>
-<a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive"><i class="ti ti-arrow-left"></i> 포트폴리오</a>
-</div></nav>
-<article class="max-w-[760px] mx-auto px-6 pt-14 pb-28">
-<span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6"><i class="ti ti-flask"></i> 포트폴리오 데모용 더미 콘텐츠</span>
-<div><span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#E7F3EC;color:#1F6B3B"><i class="ti ti-bug"></i> 실무보안/케이스</span></div>
-<h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">Mac 보안은 왜 늘 뒷전이 되는가</h1>
-<div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
-<span><i class="ti ti-calendar align-[-2px]"></i> 2026년 8월 14일 (금)</span><span><i class="ti ti-clock align-[-2px]"></i> 약 5분</span><span>#15 / 75</span></div>
-<div class="pb">
-<h3>들어가며</h3>
-<p>실제 운영 현장에서 겪은 상황을 바탕으로 무엇을 어떻게 판단했는지 기록한다. 이번 글은 <strong>CVE·공급망 대응</strong>을(를) 중심으로, 개념 설명에 그치지 않고 실제 판단의 맥락을 함께 담으려 했다.</p>
-<p>많은 조직이 같은 문제를 겪지만, 정답은 조직의 규모·문화·서비스 특성에 따라 달라진다. 그래서 '무엇을 했는가'보다 '왜 그렇게 판단했는가'에 무게를 두었다.</p>
-<h3>문제 정의</h3><p>먼저 상황을 명확히 규정하는 것이 중요하다. 문제를 좁게 정의할수록 해결책은 선명해지고, 이해관계자 사이의 합의도 빨라진다.</p>
-<h3>접근 방법</h3><p>실무에서는 이상적인 방법론보다 '지속 가능한 운영'이 우선한다. 한 번의 조치로 끝나는 일은 거의 없고, 대부분은 정책·프로세스·사람이 맞물려야 유지된다.</p>
-<h3>정리하며</h3><p>결국 남는 것은 기록과 반복 가능한 체계다. CVE·공급망 대응에서 얻은 교훈은 다른 영역에도 그대로 적용된다.</p>
-</div>
-<div class="callout"><div class="l"><i class="ti ti-link"></i> 이 글과 연결된 실무 역량</div>CVE·공급망 대응 — 이력서·경력기술서의 실제 수행 경험과 직접 연결되는 주제입니다.</div>
-<div class="flex flex-wrap gap-2.5 my-8"><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#실무보안/케이스</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#CVE·공급망 대응</span></div>
-<div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7"><a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[#e9edf2] transition" href="post-14.html"><div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 글</div><div class="font-bold mt-1 text-[15px]">협업툴(Slack·M365) 시대의 유출 방지 전략</div></a><a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[#e9edf2] transition" href="post-16.html"><div class="text-[13px] text-mut font-medium">다음 글 <i class="ti ti-arrow-right"></i></div><div class="font-bold mt-1 text-[15px]">[케이스] 실제 악성코드 감염 대응기</div></a></div>
-</article>
-</body></html>
+:root{--a:#ff8256;--w:#e8b45a;--tx:#f1f3ef;--mut:#a6aca4;--hair:rgba(255,255,255,.11);--soft:rgba(255,255,255,.05)}
+*{box-sizing:border-box}body{margin:0;background:#08090a;color:var(--tx);font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Malgun Gothic",sans-serif;letter-spacing:-.01em}
+a{color:inherit}.bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.4),transparent 66%),radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.3),transparent 70%),#07080a}
+nav{position:sticky;top:0;z-index:10;background:#0a0c0bcc;backdrop-filter:blur(14px);border-bottom:1px solid var(--hair)}.nav{max-width:1080px;margin:auto;padding:14px 24px;display:flex;gap:18px;align-items:center}.brand{text-decoration:none;font-weight:800}.brand small{font-weight:400;color:var(--mut);font-size:13px}.home{margin-left:auto;border:1px solid rgba(255,255,255,.2);padding:8px 14px;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700}
+article{max-width:790px;margin:auto;padding:56px 24px 110px}.chip{display:inline-flex;padding:8px 14px;border-radius:999px;background:var(--soft);color:var(--mut);font-size:13px;font-weight:800;margin-bottom:20px}
+h1{font-size:clamp(38px,6vw,54px);line-height:1.12;letter-spacing:-1.2px;font-weight:560;margin:0 0 13px}.sub{font-size:19px;line-height:1.65;color:var(--mut);margin:0 0 24px}.meta{display:flex;gap:15px;flex-wrap:wrap;color:var(--mut);font-size:14px;padding-bottom:24px;border-bottom:1px solid var(--hair)}
+.lead{font-size:19px;line-height:1.82;margin:30px 0;color:#eef1ec}.rq{margin:30px 0;padding:24px 26px;border:1px solid rgba(255,130,86,.25);border-radius:24px;background:radial-gradient(90% 140% at 0 0,rgba(255,130,86,.12),transparent 62%),rgba(255,255,255,.035)}.rq .l,.box .l{font-size:12px;font-weight:850;letter-spacing:.06em;color:#ff9a72;margin-bottom:9px}.rq .q{font-size:21px;font-weight:730;line-height:1.58}
+section{margin:50px 0}h2{font-size:29px;line-height:1.42;font-weight:650;letter-spacing:-.6px;margin:0 0 17px}p{font-size:18px;line-height:1.82;margin:0 0 20px;color:#e6eae4}strong{color:#fff}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:24px 0}.card{padding:19px;border-radius:20px;border:1px solid var(--hair);background:var(--soft)}.card .k{font-size:11px;font-weight:850;color:#ff9a72;margin-bottom:7px}.card .t{font-size:16px;font-weight:750;margin-bottom:7px}.card .d{font-size:13px;line-height:1.65;color:#c3cac2}
+.box{margin:34px 0;padding:24px 26px;border-radius:24px;border:1px solid rgba(61,180,120,.25);background:radial-gradient(90% 130% at 0 0,rgba(61,180,120,.12),transparent 62%),rgba(255,255,255,.035)}.box .h{font-size:21px;font-weight:740;line-height:1.55;margin-bottom:9px}.box p{font-size:15px;line-height:1.72;color:#ccd2ca;margin:0}
+blockquote{margin:28px 0;padding:21px 24px;border-left:3px solid var(--a);background:rgba(255,255,255,.045);border-radius:0 18px 18px 0;font-size:19px;line-height:1.72}
+.refs{padding:24px;border:1px solid var(--hair);border-radius:22px;background:rgba(255,255,255,.035)}.refs li{font-size:14px;line-height:1.7;margin-bottom:11px;color:#d0d6cf}.refs a{color:#ff9a72;text-decoration:none}.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px}.tag{font-size:13px;color:var(--mut);background:var(--soft);padding:7px 12px;border-radius:999px}
+.pnav{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:44px;padding-top:25px;border-top:1px solid var(--hair)}.pnav a{padding:16px 18px;border-radius:18px;background:var(--soft);text-decoration:none}.pnav small{display:block;color:var(--mut);font-size:12px;margin-bottom:5px}.pnav b{font-size:14px;line-height:1.45}
+@media(max-width:650px){.cards,.pnav{grid-template-columns:1fr}h1{font-size:38px}p{font-size:17px}}
+</style></head><body><div class="bg"></div><nav><div class="nav"><a class="brand" href="../index.html"><i class="ti ti-book-2"></i> Human Tech Note <small>by 최한람</small></a><a class="home" href="../index.html">Archive</a></div></nav><article>
+<div class="chip"><i class="ti ti-certificate"></i>&nbsp; Research Note · Security Governance</div><h1>컴플라이언스는 언제 보안을 강화하고, 언제 경직시키는가</h1><p class="sub">인증·규제·감사가 실제 Security Capability로 전환되는 조건</p><div class="meta"><span><i class="ti ti-calendar"></i> 2026년 11월 4일</span><span><i class="ti ti-clock"></i> 약 10분</span><span>#15 / 75</span></div>
+<p class="lead">규제와 인증은 조직이 최소한의 보안기준을 갖추게 하고 경영진의 책임을 명확하게 만드는 강력한 제도적 장치다. 동시에 평가항목이 자원배분의 사실상 우선순위가 되면 조직은 ‘측정되는 영역’에 역량을 집중하게 된다. 이때 인증 수준과 실제 위협대응역량 사이에 간극이 생길 수 있다.</p><div class="rq"><div class="l">RESEARCH QUESTION</div><div class="q">컴플라이언스를 인증 획득 활동에서 실제 운영효과와 미래위협 대응력을 높이는 Security Capability로 전환하려면 어떤 거버넌스가 필요한가?</div></div><section><h2>1. 규제는 조직의 최소선을 만든다</h2><p>NIST CSF 2.0의 Govern Function은 법적·규제·계약 요구사항을 이해하고 관리하는 것을 사이버보안 거버넌스의 일부로 둔다. 컴플라이언스는 보안조직이 최소통제와 책임을 조직 전체에 확산시키는 중요한 기반이다.</p><p>특히 접근통제, 자산관리, 로그, 개인정보보호처럼 일상 운영에서 쉽게 누락될 수 있는 활동을 표준화하는 효과가 있다.</p></section><section><h2>2. 측정항목은 자원배분을 유도한다</h2><p>감사와 인증에서 반복적으로 확인되는 통제는 예산·인력·관리자의 관심을 확보하기 쉽다. 반대로 아직 평가항목에 충분히 반영되지 않은 PQC, AI Agent Security 같은 미래기술은 단기 우선순위에서 밀릴 수 있다.</p><p>이 현상은 컴플라이언스의 실패보다 <strong>조직의 제한된 자원이 측정가능한 목표를 따라가는 자연스러운 결과</strong>로 볼 수 있다.</p></section><section><h2>3. 인증 Evidence를 운영 Evidence로 바꾼다</h2><p>문서 존재 여부를 확인하는 수준에서 실제 통제효과를 측정하는 방향으로 확장할 수 있다.</p><div class="cards"><div class="card"><div class="k">01</div><div class="t">Access</div><div class="d">정책 보유 → 실제 과다권한·미사용계정 추세</div></div><div class="card"><div class="k">02</div><div class="t">Patch</div><div class="d">절차 보유 → 취약점 노출기간과 예외잔존량</div></div><div class="card"><div class="k">03</div><div class="t">Logging</div><div class="d">로그 수집 → 탐지·조사에 실제 사용된 Evidence</div></div><div class="card"><div class="k">04</div><div class="t">Training</div><div class="d">교육 이수율 → 신고율·피싱반응·행동변화</div></div></div></section><section><h2>4. Current Compliance와 Future Readiness를 함께 본다</h2><p>연간 보안계획에서 인증 대응과 미래기술 준비를 별도 포트폴리오 축으로 둘 수 있다. 현재 통제의 안정성을 유지하면서 외부 기술변화와 위협신호를 모니터링해 재평가 시점을 미리 정하는 것이다.</p><p>이 방식은 컴플라이언스와 혁신을 경쟁관계로 두기보다 현재의 신뢰기반과 미래의 대응역량을 함께 관리하게 한다.</p></section>
+<div class="box"><div class="l">SECURITY GOVERNANCE</div><div class="h">Compliance Baseline + Operational Effectiveness + Future Readiness</div><p>인증은 최소선을 만들고 운영지표는 통제가 실제로 작동하는지 보여주며 기술로드맵은 미래위협에 대한 준비도를 관리한다. 세 축을 함께 볼 때 컴플라이언스가 조직역량으로 전환된다.</p></div>
+<section><h2>마치며</h2><p>컴플라이언스는 보안을 강화하는 중요한 기반이다. 다음 단계는 인증 항목을 통과하는 것에서 끝나지 않고 실제 통제효과와 미래대응력을 같은 거버넌스 안에서 관리하는 것이다. 이때 인증은 목적지가 아니라 Security Capability를 반복적으로 점검하는 기준점이 된다.</p><blockquote>좋은 컴플라이언스는 문서를 늘리는 것이 아니라, 조직이 위험을 더 잘 보고 더 일관되게 행동하도록 만든다.</blockquote></section>
+<section><h2>참고자료</h2><div class="refs"><ol><li>NIST (2024) · <a href="https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20" target="_blank" rel="noreferrer">Cybersecurity Framework 2.0</a></li><li>NIST · <a href="https://www.nist.gov/cyberframework/faqs" target="_blank" rel="noreferrer">CSF 2.0 Frequently Asked Questions</a></li><li>ISO · <a href="https://www.iso.org/standard/81684.html" target="_blank" rel="noreferrer">ISO/IEC 38500:2024 — Governance of IT</a></li></ol></div></section>
+<div class="tags"><span class="tag">#Compliance</span><span class="tag">#SecurityGovernance</span><span class="tag">#ISMS</span><span class="tag">#OperationalEffectiveness</span><span class="tag">#MOT</span></div>
+<div class="pnav"><a href="post-14.html"><small><i class="ti ti-arrow-left"></i> 이전 글</small><b>post-14</b></a><a href="post-16.html" style="text-align:right"><small>다음 글 <i class="ti ti-arrow-right"></i></small><b>post-16</b></a></div>
+</article></body></html>

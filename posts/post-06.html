@@ -1,59 +1,348 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>계정 생명주기(Lifecycle) 관리의 딜레마 · Human Tech Note</title><meta name="description" content="AD/AM 계정관리"/>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<style type="text/tailwindcss">
-@theme{
---color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,0.05);
---color-hair:rgba(255,255,255,0.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
---radius-pill:100px;--radius-feat:32px;
---font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
-}
-</style>
-<style>
-body{background:#08090a}
-.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
-radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
-radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
-radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
-radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
-#07080a}
-</style>
-<style>
-.pb h3{font-size:24px;font-weight:500;letter-spacing:-.4px;margin:36px 0 10px;color:#f1f3ef}
-.pb p{font-size:18px;line-height:1.75;margin:0 0 18px;letter-spacing:-.2px}
-.pb ul{font-size:18px;line-height:1.7;padding-left:22px;margin:0 0 20px}
-.pb li{margin-bottom:7px}
-.pb strong{color:#fff;font-weight:700}
-.callout{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:32px;padding:26px 30px;margin:30px 0;font-size:16px;line-height:1.65;color:#e7e9e4}
-.callout .l{color:#ff8256;font-weight:700;font-size:13px;margin-bottom:8px;display:flex;gap:7px;align-items:center}
-</style>
-</head><body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em"><div class="bgfx"></div>
-<nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair">
-<div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
-<a class="font-bold text-lg flex items-center gap-2" href="../index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a>
-<span class="ml-auto"></span>
-<a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive"><i class="ti ti-arrow-left"></i> 포트폴리오</a>
-</div></nav>
-<article class="max-w-[760px] mx-auto px-6 pt-14 pb-28">
-<span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6"><i class="ti ti-flask"></i> 포트폴리오 데모용 더미 콘텐츠</span>
-<div><span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#E7F0FF;color:#0047B3"><i class="ti ti-shield-lock"></i> 정보보호 기본</span></div>
-<h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">계정 생명주기(Lifecycle) 관리의 딜레마</h1>
-<div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
-<span><i class="ti ti-calendar align-[-2px]"></i> 2026년 7월 24일 (금)</span><span><i class="ti ti-clock align-[-2px]"></i> 약 6분</span><span>#6 / 75</span></div>
-<div class="pb">
-<h3>들어가며</h3>
-<p>정보보호 실무에서 자주 마주치는 개념을 현장의 언어로 다시 정리한다. 이번 글은 <strong>AD/AM 계정관리</strong>을(를) 중심으로, 개념 설명에 그치지 않고 실제 판단의 맥락을 함께 담으려 했다.</p>
-<p>많은 조직이 같은 문제를 겪지만, 정답은 조직의 규모·문화·서비스 특성에 따라 달라진다. 그래서 '무엇을 했는가'보다 '왜 그렇게 판단했는가'에 무게를 두었다.</p>
-<h3>문제 정의</h3><p>먼저 상황을 명확히 규정하는 것이 중요하다. 문제를 좁게 정의할수록 해결책은 선명해지고, 이해관계자 사이의 합의도 빨라진다.</p>
-<h3>접근 방법</h3><p>실무에서는 이상적인 방법론보다 '지속 가능한 운영'이 우선한다. 한 번의 조치로 끝나는 일은 거의 없고, 대부분은 정책·프로세스·사람이 맞물려야 유지된다.</p>
-<h3>정리하며</h3><p>결국 남는 것은 기록과 반복 가능한 체계다. AD/AM 계정관리에서 얻은 교훈은 다른 영역에도 그대로 적용된다.</p>
-</div>
-<div class="callout"><div class="l"><i class="ti ti-link"></i> 이 글과 연결된 실무 역량</div>AD/AM 계정관리 — 이력서·경력기술서의 실제 수행 경험과 직접 연결되는 주제입니다.</div>
-<div class="flex flex-wrap gap-2.5 my-8"><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#정보보호 기본</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#AD/AM 계정관리</span></div>
-<div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7"><a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[#e9edf2] transition" href="post-05.html"><div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 글</div><div class="font-bold mt-1 text-[15px]">접근통제의 3원칙 — 최소권한이 무너지는 순간</div></a><a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[#e9edf2] transition" href="post-07.html"><div class="text-[13px] text-mut font-medium">다음 글 <i class="ti ti-arrow-right"></i></div><div class="font-bold mt-1 text-[15px]">취약점 관리 — &#x27;진단&#x27;보다 &#x27;조치&#x27;가 어려운 이유</div></a></div>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI 에이전트에게 권한을 어디까지 줄 것인가 · Human Tech Note</title>
+  <meta name="description" content="Agentic AI 환경에서 Identity, Delegation, Approval, Accountability를 어떻게 설계할 것인지 NIST·OAuth·Zero Trust 관점에서 살펴봅니다."/>
+  <meta name="author" content="최한람"/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://choihanlam.github.io/human-tech-note/posts/post-06.html"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:locale" content="ko_KR"/>
+  <meta property="og:title" content="AI 에이전트에게 권한을 어디까지 줄 것인가"/>
+  <meta property="og:description" content="Identity, Delegation, Approval 그리고 Accountability — Agentic AI 시대의 접근통제를 기업 거버넌스 관점에서 다시 봅니다."/>
+  <meta property="og:url" content="https://choihanlam.github.io/human-tech-note/posts/post-06.html"/>
+  <meta property="og:site_name" content="Human Tech Note"/>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
+  <style>
+    :root{
+      --ink:#ff4e1c; --accent:#ff8256; --warn:#e8b45a;
+      --soft:rgba(255,255,255,.05); --hair:rgba(255,255,255,.11);
+      --tx:#f1f3ef; --mut:#a6aca4; --hint:#767b73;
+      --green:#3db478; --blue:#5692ff; --violet:#a78bfa;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;background:#08090a;color:var(--tx);
+      font-family:"Pretendard",-apple-system,BlinkMacSystemFont,"Malgun Gothic",sans-serif;
+      letter-spacing:-.01em
+    }
+    a{color:inherit}
+    .bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+      radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
+      radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
+      radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
+      radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),#07080a}
+    nav{position:sticky;top:0;z-index:20;background:rgba(10,12,11,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--hair)}
+    .nav-inner{max-width:1080px;margin:auto;padding:14px 24px;display:flex;align-items:center;gap:20px}
+    .brand{font-weight:750;text-decoration:none;font-size:18px;display:flex;align-items:center;gap:8px}
+    .brand small{font-weight:400;color:var(--mut);font-size:13px}
+    .nav-spacer{margin-left:auto}
+    .back{border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:9px 15px;text-decoration:none;font-size:13px;font-weight:700}
+    article{max-width:800px;margin:auto;padding:56px 24px 112px}
+    .chip{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:999px;background:var(--soft);color:var(--mut);font-size:13px;font-weight:750;margin-bottom:20px}
+    h1{font-size:clamp(38px,6vw,54px);line-height:1.12;letter-spacing:-1.2px;font-weight:560;margin:0 0 12px}
+    .subtitle{font-size:19px;line-height:1.65;color:var(--mut);margin:0 0 24px}
+    .meta{display:flex;flex-wrap:wrap;gap:16px;color:var(--mut);font-size:14px;padding-bottom:24px;border-bottom:1px solid var(--hair);margin-bottom:30px}
+    section{margin:50px 0}
+    h2{font-size:29px;line-height:1.42;font-weight:650;letter-spacing:-.65px;margin:0 0 16px}
+    h3{font-size:21px;line-height:1.5;font-weight:650;margin:26px 0 12px}
+    p{font-size:18px;line-height:1.82;margin:0 0 20px;color:#e8ebe6}
+    ul{font-size:17px;line-height:1.78;padding-left:24px}
+    li{margin-bottom:8px}
+    strong{color:#fff}
+    blockquote{margin:26px 0;padding:21px 24px;border-left:3px solid var(--accent);background:rgba(255,255,255,.045);border-radius:0 18px 18px 0;font-size:19px;line-height:1.72}
+    .notice{padding:22px 24px;border-radius:22px;border:1px solid rgba(232,180,90,.22);background:rgba(232,180,90,.07);font-size:15px;line-height:1.72;color:#e9e3d7;margin:0 0 34px}
+    .notice strong{color:#f4cd84}
+    .research-q{padding:24px 26px;border-radius:24px;border:1px solid rgba(255,130,86,.24);background:
+      radial-gradient(90% 140% at 0 0,rgba(255,130,86,.12),transparent 62%),rgba(255,255,255,.035);margin:28px 0}
+    .research-q .label{font-size:12px;font-weight:800;color:#ff9a72;letter-spacing:.06em;margin-bottom:9px}
+    .research-q .q{font-size:21px;font-weight:700;line-height:1.58;color:#fff}
+    .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:26px 0}
+    .identity-card{padding:17px 15px;border-radius:18px;border:1px solid var(--hair);background:var(--soft)}
+    .identity-card .n{font-size:11px;font-weight:800;color:#ff9a72;margin-bottom:7px}
+    .identity-card .t{font-size:15px;font-weight:750;margin-bottom:7px}
+    .identity-card .d{font-size:12px;line-height:1.55;color:var(--mut)}
+    .section-accent{margin:26px 0 32px;padding:22px 24px;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.02))}
+    .section-accent.green{border-color:rgba(61,180,120,.24);background:rgba(39,132,89,.08)}
+    .section-accent.blue{border-color:rgba(86,146,255,.24);background:rgba(70,115,190,.08)}
+    .section-accent.orange{border-color:rgba(255,130,86,.24);background:rgba(255,130,86,.07)}
+    .section-accent.violet{border-color:rgba(167,139,250,.24);background:rgba(127,92,200,.08)}
+    .section-accent .eyebrow{font-size:12px;font-weight:820;letter-spacing:.05em;color:#ff9a72;margin-bottom:9px}
+    .section-accent .big{font-size:19px;font-weight:720;color:#fff;line-height:1.5;margin-bottom:8px}
+    .section-accent p{font-size:15px;line-height:1.72;color:#cbd1c9;margin:0}
+    .chain{margin:28px 0;padding:24px;border:1px solid var(--hair);border-radius:24px;background:rgba(255,255,255,.035)}
+    .chain-title{font-size:12px;color:#ff9a72;font-weight:800;letter-spacing:.05em;margin-bottom:16px}
+    .chain-row{display:grid;grid-template-columns:1fr 34px 1fr 34px 1fr 34px 1fr;align-items:center;gap:5px}
+    .node{padding:16px 10px;border-radius:16px;border:1px solid var(--hair);background:rgba(255,255,255,.05);text-align:center}
+    .node b{display:block;font-size:14px;margin-bottom:5px}.node span{font-size:11px;color:var(--mut);line-height:1.45}
+    .arrow{text-align:center;color:#ff9a72;font-size:18px}
+    .policy-list{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:26px 0}
+    .policy{padding:18px 19px;border-radius:20px;border:1px solid var(--hair);background:rgba(255,255,255,.04)}
+    .policy .k{font-size:11px;font-weight:820;color:#ff9a72;letter-spacing:.05em;margin-bottom:7px}
+    .policy .t{font-size:16px;font-weight:740;margin-bottom:8px}
+    .policy .d{font-size:13px;line-height:1.65;color:#c3cac2}
+    table{width:100%;border-collapse:collapse;margin:22px 0;border:1px solid var(--hair);border-radius:20px;overflow:hidden;background:rgba(255,255,255,.03)}
+    th,td{padding:14px 15px;text-align:left;vertical-align:top;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px;line-height:1.62}
+    th{color:#ff9a72;background:rgba(255,255,255,.035)}
+    tr:last-child td{border-bottom:0}
+    .evidence{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:25px 0}
+    .evidence-card{padding:18px;border:1px solid var(--hair);border-radius:20px;background:var(--soft)}
+    .evidence-card .icon{font-size:21px;color:#ff9a72;margin-bottom:9px}.evidence-card b{display:block;font-size:15px;margin-bottom:6px}.evidence-card span{font-size:12px;color:var(--mut);line-height:1.55}
+    .decision{padding:25px 26px;border-radius:24px;border:1px solid rgba(61,180,120,.25);background:
+      radial-gradient(90% 130% at 0 0,rgba(61,180,120,.12),transparent 62%),rgba(255,255,255,.035);margin:28px 0}
+    .decision .label{font-size:12px;font-weight:820;color:#75d4a3;letter-spacing:.05em;margin-bottom:9px}
+    .decision .headline{font-size:21px;font-weight:730;line-height:1.55;color:#fff;margin-bottom:9px}
+    .decision p{font-size:15px;line-height:1.72;color:#ccd2ca;margin:0}
+    .refs{padding:24px;border:1px solid var(--hair);border-radius:22px;background:rgba(255,255,255,.035)}
+    .refs ol{margin:0;padding-left:22px}.refs li{font-size:14px;line-height:1.7;margin-bottom:11px;color:#d2d7d0}
+    .refs a{color:#ff9a72;text-decoration:none}.refs a:hover{text-decoration:underline}
+    .tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:32px}.tag{font-size:13px;color:var(--mut);background:var(--soft);padding:7px 12px;border-radius:999px}
+    .post-nav{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:44px;padding-top:26px;border-top:1px solid var(--hair)}
+    .post-nav a,.post-nav .disabled{padding:16px 18px;border-radius:18px;background:var(--soft);text-decoration:none}
+    .post-nav .disabled{opacity:.48}
+    .post-nav small{display:block;color:var(--mut);font-size:12px;margin-bottom:5px}
+    .post-nav b{font-size:14px;line-height:1.45}
+    @media(max-width:760px){
+      h1{font-size:38px} p{font-size:17px}
+      .grid4,.evidence{grid-template-columns:1fr 1fr}
+      .policy-list{grid-template-columns:1fr}
+      .chain-row{grid-template-columns:1fr}
+      .arrow{transform:rotate(90deg)}
+    }
+    @media(max-width:520px){
+      .grid4,.evidence,.post-nav{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+<div class="bgfx"></div>
+<nav>
+  <div class="nav-inner">
+    <a class="brand" href="../index.html"><i class="ti ti-book-2"></i> Human Tech Note <small>by 최한람</small></a>
+    <div class="nav-spacer"></div>
+    <a class="back" href="../index.html#research-notes"><i class="ti ti-arrow-left"></i> Research Notes</a>
+  </div>
+</nav>
+
+<article>
+  <div class="chip"><i class="ti ti-shield-lock"></i> Research Note · AI Security / IT Governance</div>
+  <h1>AI 에이전트에게 권한을 어디까지 줄 것인가</h1>
+  <p class="subtitle">Identity, Delegation, Approval 그리고 Accountability — Agentic AI 시대의 접근통제를 기업 거버넌스 관점에서 다시 보기</p>
+
+  <div class="meta">
+    <span><i class="ti ti-calendar"></i> 2026년 11월 4일</span>
+    <span><i class="ti ti-clock"></i> 약 10분</span>
+    <span><i class="ti ti-user"></i> 최한람</span>
+  </div>
+
+  <div class="notice">
+    <strong>Research Note</strong><br/>
+    이 글은 2026년 NIST의 AI Agent Standards Initiative와 NCCoE의 Software and AI Agent Identity and Authorization 자료,
+    OAuth 2.0 Token Exchange, Zero Trust와 Continuous Access Evaluation 개념을 바탕으로 기업 환경의 Agent 권한통제를 재구성한 글입니다.
+    Agent Identity 관련 표준은 현재도 빠르게 발전하고 있으므로, 아래의 통제모델은 특정 제품의 구현방법보다 의사결정 원칙에 초점을 둡니다.
+  </div>
+
+  <p>생성형 AI가 문서를 요약하거나 답변을 만들어주는 단계에서는 사용자가 결과를 확인한 뒤 직접 행동할 수 있었다. Agentic AI는 이 경계를 바꾼다. 에이전트가 이메일을 보내고, 캘린더를 수정하고, 코드를 배포하고, 보안 이벤트를 분석해 실제 조치까지 수행하기 시작하면 질문의 중심은 모델의 정확도에서 <strong>행동할 권한을 누구에게, 어떤 조건으로 위임할 것인가</strong>로 이동한다.</p>
+
+  <p>NIST는 2026년 AI Agent Standards Initiative를 시작하면서 AI 에이전트가 사용자를 대신해 외부 시스템과 내부 데이터에 접근하는 환경에서 보안성과 상호운용성을 주요 과제로 제시했다. 같은 해 NCCoE는 Agent Identity와 Authorization을 별도 프로젝트 주제로 다루기 시작했고, 600건이 넘는 의견을 수렴한 뒤 위임과 책임추적을 핵심 쟁점으로 정리했다.</p>
+
+  <div class="research-q">
+    <div class="label">RESEARCH QUESTION</div>
+    <div class="q">AI Agent가 사용자를 대신해 Tool·API·Data에 접근하고 실제 변경을 수행할 때, 조직은 “누가 누구에게 어떤 권한을 왜, 언제까지 위임했는가”를 어떻게 통제하고 증명할 것인가?</div>
+  </div>
+
+  <section>
+    <h2>1. Agent Identity는 하나의 계정으로 설명하기 어렵다</h2>
+    <p>기존 IAM에서는 사람의 계정과 서비스 계정을 구분하고 각각 Role이나 Permission을 부여하는 방식이 일반적이었다. Agentic AI에서는 여기에 <strong>위임된 권한과 실행 맥락</strong>이 추가된다. 같은 에이전트라도 어떤 사용자를 대신하는지, 어떤 업무를 수행하는지, 어떤 Tool과 Data에 접근하는지에 따라 허용 범위가 달라질 수 있기 때문이다.</p>
+
+    <div class="grid4">
+      <div class="identity-card"><div class="n">01 · PRINCIPAL</div><div class="t">Human / Organization</div><div class="d">업무를 요청하고 최종 책임을 갖는 사람 또는 조직</div></div>
+      <div class="identity-card"><div class="n">02 · WORKLOAD</div><div class="t">Agent Identity</div><div class="d">실제로 실행되는 에이전트·서비스·런타임의 식별자</div></div>
+      <div class="identity-card"><div class="n">03 · AUTHORITY</div><div class="t">Delegated Authority</div><div class="d">누구를 대신해 어느 범위까지 행동할 수 있는지 나타내는 권한</div></div>
+      <div class="identity-card"><div class="n">04 · CONTEXT</div><div class="t">Task Context</div><div class="d">목적·대상·시간·데이터 민감도·위험수준 등 실행 조건</div></div>
+    </div>
+
+    <p>NIST NCCoE가 2026년 제시한 질문도 이 구조와 맞닿아 있다. 에이전트의 식별정보를 어떻게 정의할지, 에이전트의 Identity를 특정 런타임이나 조직 경계에 묶을지, 사람의 Identity와 Agent Identity를 어떻게 연결해 Human-in-the-loop 승인을 지원할지 등이 주요 검토대상이다.</p>
+
+    <div class="section-accent blue">
+      <div class="eyebrow">KEY POINT</div>
+      <div class="big">“이 에이전트가 누구인가”와 “이 에이전트가 지금 무엇을 할 수 있는가”를 분리해 관리한다.</div>
+      <p>Identity는 실행 주체를 식별하고, Authorization은 특정 자원·행동·맥락에 대한 허용범위를 결정한다. Agentic AI에서는 두 정보를 연결하되 동일한 개념으로 취급하지 않는 것이 중요하다.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. 인증에 성공했다고 행동할 권한이 생기는 것은 아니다</h2>
+    <p>에이전트가 인증서를 제시하거나 OAuth Client로 인증에 성공하면 시스템은 해당 실행주체를 식별할 수 있다. 그러나 인증 결과만으로 메일 발송, 파일 삭제, 운영 배포, 계정 잠금 같은 행동까지 허용하면 권한의 범위가 지나치게 넓어진다.</p>
+
+    <p>예를 들어 개발 지원 에이전트가 Repository를 읽을 수 있는 권한과 Production 배포를 실행할 수 있는 권한은 별개의 판단이어야 한다. 보안운영 에이전트 역시 SIEM 이벤트 조회와 EDR 단말 격리 사이에는 다른 승인기준이 필요하다. <strong>읽기·추천·변경·파괴적 조치가 하나의 Role 안에 섞이면 Agent의 편의성은 높아지지만 통제가능성은 급격히 낮아진다.</strong></p>
+
+    <table>
+      <thead><tr><th>행동 수준</th><th>예시</th><th>권장 통제</th></tr></thead>
+      <tbody>
+        <tr><td>조회 / 분석</td><td>로그 조회, 문서 검색, 코드 읽기</td><td>Scoped Read + 짧은 세션 + 사용기록</td></tr>
+        <tr><td>추천 / 초안</td><td>정책 초안, 패치 권고, 메일 초안</td><td>자동 수행 가능 + 사람의 최종 선택</td></tr>
+        <tr><td>가역적 변경</td><td>티켓 상태변경, 임시 정책 적용</td><td>정책기반 승인 + 자동 Rollback 조건</td></tr>
+        <tr><td>고위험 변경</td><td>Production 배포, 외부 발송, 사용자 차단</td><td>Step-up Approval + 제한된 권한 + 증적</td></tr>
+        <tr><td>특권 / 파괴적 조치</td><td>권한상승, Key 변경, 대량 삭제</td><td>명시적 승인·이중통제·JIT 권한·사후검토</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>3. 핵심은 ‘권한 복제’보다 ‘위임’을 설계하는 데 있다</h2>
+    <p>Agent가 사용자를 대신해 행동하는 가장 단순한 방법은 사용자의 기존 Credential이나 넓은 Access Token을 그대로 사용하는 것이다. 하지만 이 방식에서는 사용자의 전체 권한과 Agent가 특정 업무에 필요한 권한 사이의 경계가 흐려진다.</p>
+
+    <p>OAuth 2.0 Token Exchange(RFC 8693)는 <strong>subject</strong>와 <strong>actor</strong>를 구분해 위임관계를 표현할 수 있는 기반을 제공한다. 사용자 또는 원래 권한주체를 subject로, 실제 행동하는 시스템을 actor로 기록하고, 필요한 대상(resource/audience)과 범위(scope)에 맞는 새로운 Token을 발급하는 방식이다. JWT의 <code>act</code> claim은 현재 Actor와 위임체인을 표현할 수 있다.</p>
+
+    <div class="chain">
+      <div class="chain-title">DELEGATION CHAIN · 권한을 복사하지 않고 필요한 범위만 전달</div>
+      <div class="chain-row">
+        <div class="node"><b>Human / Org</b><span>원래 권한주체<br/>업무 목적 제시</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><b>AI Agent</b><span>고유 Workload Identity<br/>요청을 실행</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><b>Delegated Token</b><span>Scope · Audience · TTL<br/>Purpose · Constraint</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><b>Tool / API</b><span>정책 확인 후<br/>허용된 행동만 수행</span></div>
+      </div>
+    </div>
+
+    <div class="section-accent orange">
+      <div class="eyebrow">DESIGN PRINCIPLE</div>
+      <div class="big">Agent에게 “사용자의 권한”을 주기보다 “이번 업무에 필요한 권한”을 발급한다.</div>
+      <p>대상 시스템, 허용 Action, 데이터 범위, 사용 목적과 유효시간을 좁게 정의하면 Agent의 자율성과 최소권한을 함께 관리할 수 있다. 장기 Credential보다 짧은 수명의 위임 Credential을 우선하는 이유도 여기에 있다.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>4. Human-in-the-loop는 모든 행동을 사람이 승인하는 구조가 아니다</h2>
+    <p>Agent의 모든 Tool 호출을 사람이 확인한다면 통제는 쉬워 보이지만 자동화의 가치가 크게 줄어든다. 반대로 한 번 승인한 뒤 모든 후속행동을 자동으로 허용하면 Agent가 경로를 바꾸거나 새로운 Tool을 선택했을 때 처음의 의도와 실제 실행 사이에 간극이 생길 수 있다.</p>
+
+    <p>따라서 Human-in-the-loop는 <strong>위험수준에 따라 승인경계를 설계하는 문제</strong>로 보는 편이 적절하다. 낮은 위험의 조회는 정책으로 자동 승인하고, 외부 전송·운영 변경·권한상승처럼 영향이 큰 행동에서만 사람이 개입하는 방식이다.</p>
+
+    <div class="policy-list">
+      <div class="policy"><div class="k">LOW RISK</div><div class="t">Policy-based Auto Approval</div><div class="d">정해진 Data와 Tool 안에서의 조회·분석. 허용범위와 TTL을 사전에 제한하고 자동 수행한다.</div></div>
+      <div class="policy"><div class="k">MEDIUM RISK</div><div class="t">Conditional Approval</div><div class="d">대상·시간·업무상태·사용자 Context가 정책조건을 충족할 때 수행한다.</div></div>
+      <div class="policy"><div class="k">HIGH RISK</div><div class="t">Step-up Human Approval</div><div class="d">외부 발송, 운영 변경, 사용자 차단처럼 영향이 큰 행동은 실행 직전 승인을 받는다.</div></div>
+      <div class="policy"><div class="k">PRIVILEGED</div><div class="t">Dual Control / JIT</div><div class="d">권한상승·Credential·대량삭제 등은 이중통제와 Just-in-Time 권한, 사후검토를 결합한다.</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>5. 권한은 한 번 평가하고 끝나는 값이 아니다</h2>
+    <p>Agentic Workflow는 실행 도중 새로운 데이터를 읽고, 다른 Tool을 선택하고, 다른 Agent에게 작업을 넘길 수 있다. 시작 시점에는 허용된 업무라도 중간 Context가 바뀌면 동일한 권한판정이 계속 유효하다고 보기 어렵다.</p>
+
+    <p>NIST SP 800-207의 Zero Trust는 접근을 고정된 신뢰가 아니라 지속적으로 평가되는 정책결정으로 본다. OpenID의 Continuous Access Evaluation Profile(CAEP)도 사용자·디바이스·세션·애플리케이션 상태 변화에 따라 접근을 축소하거나 재평가할 수 있는 이벤트 기반 구조를 제시한다.</p>
+
+    <div class="section-accent violet">
+      <div class="eyebrow">CONTINUOUS AUTHORIZATION</div>
+      <div class="big">“시작할 때 허용되었는가?”에서 “지금도 이 행동이 허용되는가?”로 질문을 바꾼다.</div>
+      <p>Tool 변경, 대상 자원 변경, 데이터 민감도 상승, 비정상 행동, 사용자 상태변경, 세션 위험도 상승 같은 이벤트를 정책결정에 반영하면 Agent의 실행경로가 바뀌어도 권한을 다시 평가할 수 있다.</p>
+    </div>
+
+    <p>기업 환경에서는 모든 Tool 호출마다 복잡한 정책엔진을 두는 방식보다, <strong>보안경계와 고위험 Action을 중심으로 재평가 지점을 설계</strong>하는 것이 현실적이다. 예를 들어 읽기에서 쓰기로 전환되는 순간, 내부 데이터가 외부 API로 이동하는 순간, 다른 Agent에게 권한을 다시 위임하는 순간을 Policy Enforcement Point로 볼 수 있다.</p>
+  </section>
+
+  <section>
+    <h2>6. 로그에는 ‘무엇을 했는가’와 함께 ‘왜 할 수 있었는가’가 남아야 한다</h2>
+    <p>기존 감사로그는 누가 언제 어떤 API를 호출했는지 기록하는 데 집중해왔다. Agentic AI에서는 여기에 <strong>요청의 의도와 위임근거, 정책판정, 승인상태</strong>까지 연결해야 책임성을 설명할 수 있다.</p>
+
+    <p>NIST가 2026년 수렴한 이해관계자 의견에서도 단순 Action Log를 넘어 어떤 요청이 평가되었는지, 어떤 Identity와 Delegation이 관련되었는지, 어떤 Policy Decision과 Human Approval이 있었는지를 함께 남겨야 한다는 요구가 반복적으로 나타났다.</p>
+
+    <div class="evidence">
+      <div class="evidence-card"><div class="icon"><i class="ti ti-user-check"></i></div><b>Authority Evidence</b><span>누가 업무를 요청했고 어떤 Agent에게 어떤 Scope를 위임했는가</span></div>
+      <div class="evidence-card"><div class="icon"><i class="ti ti-git-branch"></i></div><b>Decision Evidence</b><span>어떤 Policy와 Context를 기준으로 허용·거부·승인이 결정되었는가</span></div>
+      <div class="evidence-card"><div class="icon"><i class="ti ti-history"></i></div><b>Execution Evidence</b><span>어떤 Tool·Data·API에 어떤 Action을 수행했고 결과는 무엇이었는가</span></div>
+    </div>
+
+    <table>
+      <thead><tr><th>감사 필드</th><th>남겨야 할 질문</th></tr></thead>
+      <tbody>
+        <tr><td>Principal / Agent ID</td><td>누가 요청했고 실제 실행한 Agent는 누구인가?</td></tr>
+        <tr><td>Delegation</td><td>어떤 Scope·Audience·TTL로 권한이 위임되었는가?</td></tr>
+        <tr><td>Intent / Purpose</td><td>어떤 업무 목적과 사용자 요청을 근거로 행동했는가?</td></tr>
+        <tr><td>Policy Decision</td><td>어떤 정책과 Context가 Allow·Deny·Step-up을 결정했는가?</td></tr>
+        <tr><td>Approval</td><td>사람의 승인이 필요했다면 누가 언제 승인했는가?</td></tr>
+        <tr><td>Action / Result</td><td>어떤 Tool에서 어떤 변경을 했고 결과·Rollback 상태는 무엇인가?</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>7. 기업이 가져갈 수 있는 Agent 접근통제 원칙</h2>
+    <p>Agentic AI의 IAM을 새로운 제품군으로만 접근하면 기존의 계정관리·접근통제·Zero Trust와 단절될 수 있다. 오히려 기존 통제원칙을 Agent의 특성에 맞게 확장하는 편이 구조적으로 안정적이다.</p>
+
+    <div class="policy-list">
+      <div class="policy"><div class="k">01 · IDENTITY</div><div class="t">Agent를 별도 실행주체로 식별한다</div><div class="d">공용 계정이나 사용자의 Credential을 공유하지 않고 Agent·Workload별 Identity와 Lifecycle을 관리한다.</div></div>
+      <div class="policy"><div class="k">02 · DELEGATION</div><div class="t">권한은 복제보다 위임으로 전달한다</div><div class="d">Scope·Audience·TTL·Purpose를 제한한 Delegated Credential을 사용하고 위임체인을 추적한다.</div></div>
+      <div class="policy"><div class="k">03 · APPROVAL</div><div class="t">위험기반 승인경계를 둔다</div><div class="d">조회·추천·변경·특권행동을 구분하고 영향이 큰 Action에 Step-up Approval을 적용한다.</div></div>
+      <div class="policy"><div class="k">04 · CONTEXT</div><div class="t">실행 중에도 권한을 재평가한다</div><div class="d">Tool·Data·대상·위험도가 바뀌면 정책을 다시 평가하고 필요 시 Scope를 축소하거나 세션을 중단한다.</div></div>
+      <div class="policy"><div class="k">05 · ACCOUNTABILITY</div><div class="t">행동과 권한근거를 하나의 증적체인으로 남긴다</div><div class="d">요청자·Agent·위임·정책판정·승인·Action·결과를 연결해 사후 설명가능성을 확보한다.</div></div>
+      <div class="policy"><div class="k">06 · REVOCATION</div><div class="t">권한회수도 설계의 일부로 본다</div><div class="d">사용자 상태변경, 위험 이벤트, 업무 종료 시 Token·Session·Agent Entitlement를 즉시 회수할 수 있어야 한다.</div></div>
+    </div>
+
+    <div class="decision">
+      <div class="label">DECISION FRAME</div>
+      <div class="headline">Agent 접근통제의 단위는 ‘계정’이 아니라 ‘주체 × 행동 × 목적 × 맥락 × 시간’이다.</div>
+      <p>기업이 Agent에게 권한을 줄 때는 “이 Agent를 신뢰할 수 있는가”만 확인하기보다, 특정 Principal을 대신해 특정 목적의 특정 Action을 어느 자원에 언제까지 수행하도록 허용할 것인지 구조화하는 편이 적절하다.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>마치며: 자율성을 키울수록 권한의 경계는 더 구체적이어야 한다</h2>
+    <p>Agentic AI의 가치는 사람이 하던 여러 단계를 연결하고 실제 행동까지 수행하는 데 있다. 자율성이 높아질수록 조직은 더 많은 작업을 자동화할 수 있지만, 동시에 한 번의 잘못된 권한판정이 여러 시스템과 데이터로 연쇄될 가능성도 커진다.</p>
+
+    <p>따라서 Agent 보안의 핵심은 모든 행동을 막거나 모든 판단을 사람에게 되돌리는 데 있지 않다. <strong>자율적으로 수행해도 되는 영역을 명확히 정의하고, 그 경계를 넘는 순간 다시 권한과 책임을 확인하는 구조</strong>를 만드는 데 있다.</p>
+
+    <blockquote>
+      AI Agent에게 줄 수 있는 가장 좋은 권한은 ‘많은 권한’도 ‘적은 권한’도 아니다.<br/>
+      누구를 대신해, 어떤 목적과 조건으로, 어디까지 행동할 수 있는지가 설명되는 권한이다.
+    </blockquote>
+
+    <p>이 관점에서 Agent Identity는 IAM의 새로운 객체이고, Delegation은 권한 전달의 핵심 메커니즘이며, Approval은 위험기반 의사결정 지점이고, Accountability는 전체 실행을 조직의 책임체계와 연결하는 마지막 고리다. 결국 Agentic AI의 접근통제는 보안설정의 문제가 아니라 <strong>조직이 자동화된 의사결정권을 어떻게 배분할 것인가라는 IT Governance의 문제</strong>로 이어진다.</p>
+  </section>
+
+  <section>
+    <h2>참고자료</h2>
+    <div class="refs">
+      <ol>
+        <li>NIST, <a href="https://www.nist.gov/news-events/news/2026/02/announcing-ai-agent-standards-initiative-interoperable-and-secure" target="_blank" rel="noreferrer">AI Agent Standards Initiative for Interoperable and Secure Innovation</a>, 2026.02.17.</li>
+        <li>NIST NCCoE, <a href="https://www.nccoe.nist.gov/publications/other/accelerating-adoption-software-and-ai-agent-identity-and-authorization-concept" target="_blank" rel="noreferrer">Accelerating the Adoption of Software and AI Agent Identity and Authorization</a>, Initial Public Draft, 2026.02.</li>
+        <li>NIST NCCoE, <a href="https://pages.nist.gov/nccoe-ai-identity/summary-of-comments.html" target="_blank" rel="noreferrer">Summary of Comments on the Concept Paper</a>, 2026.09.</li>
+        <li>IETF, <a href="https://www.rfc-editor.org/rfc/rfc8693.html" target="_blank" rel="noreferrer">RFC 8693 — OAuth 2.0 Token Exchange</a>, 2020.</li>
+        <li>NIST, <a href="https://www.nist.gov/publications/zero-trust-architecture" target="_blank" rel="noreferrer">SP 800-207 — Zero Trust Architecture</a>, 2020.</li>
+        <li>OpenID Foundation, <a href="https://openid.net/specs/openid-caep-1_0.html" target="_blank" rel="noreferrer">Continuous Access Evaluation Profile 1.0</a>, 2025.08.</li>
+        <li>NIST, <a href="https://www.nist.gov/publications/protecting-tokens-and-assertions-forgery-theft-and-misuse-implementation" target="_blank" rel="noreferrer">NISTIR 8587 — Protecting Tokens and Assertions from Forgery, Theft, and Misuse</a>, 2026.09.</li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="tags">
+    <span class="tag">#AgenticAI</span>
+    <span class="tag">#AIIdentity</span>
+    <span class="tag">#IAM</span>
+    <span class="tag">#Delegation</span>
+    <span class="tag">#ZeroTrust</span>
+    <span class="tag">#ITGovernance</span>
+    <span class="tag">#HumanOversight</span>
+  </div>
+
+  <div class="post-nav">
+    <a href="post-05.html">
+      <small><i class="ti ti-arrow-left"></i> 이전 글</small>
+      <b>보안사고는 왜 경쟁사에게 기회가 되는가</b>
+    </a>
+    <div class="disabled">
+      <small>다음 연구 주제</small>
+      <b>post-07 · AI를 도입했는데 왜 생산성은 바로 오르지 않는가</b>
+    </div>
+  </div>
 </article>
-</body></html>
+</body>
+</html>

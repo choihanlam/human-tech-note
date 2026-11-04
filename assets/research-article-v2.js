@@ -1,0 +1,1 @@
+window.addEventListener('scroll',()=>{const d=document.documentElement;const max=d.scrollHeight-d.clientHeight;const p=max>0?(d.scrollTop/max)*100:0;const el=document.querySelector('.reading-progress');if(el)el.style.width=p+'%';});

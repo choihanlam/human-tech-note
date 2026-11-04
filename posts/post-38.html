@@ -1,59 +1,21 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>전사 프로세스 1,100건 분석기 — 어디부터 손대나 · Human Tech Note</title><meta name="description" content="프로세스 전수분석"/>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<style type="text/tailwindcss">
-@theme{
---color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,0.05);
---color-hair:rgba(255,255,255,0.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
---radius-pill:100px;--radius-feat:32px;
---font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
-}
-</style>
-<style>
-body{background:#08090a}
-.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
-radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
-radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
-radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
-radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
-#07080a}
-</style>
-<style>
-.pb h3{font-size:24px;font-weight:500;letter-spacing:-.4px;margin:36px 0 10px;color:#f1f3ef}
-.pb p{font-size:18px;line-height:1.75;margin:0 0 18px;letter-spacing:-.2px}
-.pb ul{font-size:18px;line-height:1.7;padding-left:22px;margin:0 0 20px}
-.pb li{margin-bottom:7px}
-.pb strong{color:#fff;font-weight:700}
-.callout{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:32px;padding:26px 30px;margin:30px 0;font-size:16px;line-height:1.65;color:#e7e9e4}
-.callout .l{color:#ff8256;font-weight:700;font-size:13px;margin-bottom:8px;display:flex;gap:7px;align-items:center}
-</style>
-</head><body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em"><div class="bgfx"></div>
-<nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair">
-<div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
-<a class="font-bold text-lg flex items-center gap-2" href="../index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a>
-<span class="ml-auto"></span>
-<a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive"><i class="ti ti-arrow-left"></i> 포트폴리오</a>
-</div></nav>
-<article class="max-w-[760px] mx-auto px-6 pt-14 pb-28">
-<span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6"><i class="ti ti-flask"></i> 포트폴리오 데모용 더미 콘텐츠</span>
-<div><span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#FDF1DA;color:#8A5A00"><i class="ti ti-chart-arrows-vertical"></i> DX/기술경영</span></div>
-<h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">전사 프로세스 1,100건 분석기 — 어디부터 손대나</h1>
-<div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
-<span><i class="ti ti-calendar align-[-2px]"></i> 2026년 10월 7일 (수)</span><span><i class="ti ti-clock align-[-2px]"></i> 약 11분</span><span>#38 / 75</span></div>
-<div class="pb">
-<h3>들어가며</h3>
-<p>데이터와 프로세스 관점에서 업무를 어떻게 개선하고 성과로 연결했는지 다룬다. 이번 글은 <strong>프로세스 전수분석</strong>을(를) 중심으로, 개념 설명에 그치지 않고 실제 판단의 맥락을 함께 담으려 했다.</p>
-<p>많은 조직이 같은 문제를 겪지만, 정답은 조직의 규모·문화·서비스 특성에 따라 달라진다. 그래서 '무엇을 했는가'보다 '왜 그렇게 판단했는가'에 무게를 두었다.</p>
-<h3>문제 정의</h3><p>먼저 상황을 명확히 규정하는 것이 중요하다. 문제를 좁게 정의할수록 해결책은 선명해지고, 이해관계자 사이의 합의도 빨라진다.</p>
-<h3>접근 방법</h3><p>실무에서는 이상적인 방법론보다 '지속 가능한 운영'이 우선한다. 한 번의 조치로 끝나는 일은 거의 없고, 대부분은 정책·프로세스·사람이 맞물려야 유지된다.</p>
-<h3>정리하며</h3><p>결국 남는 것은 기록과 반복 가능한 체계다. 프로세스 전수분석에서 얻은 교훈은 다른 영역에도 그대로 적용된다.</p>
-</div>
-<div class="callout"><div class="l"><i class="ti ti-link"></i> 이 글과 연결된 실무 역량</div>프로세스 전수분석 — 이력서·경력기술서의 실제 수행 경험과 직접 연결되는 주제입니다.</div>
-<div class="flex flex-wrap gap-2.5 my-8"><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#DX/기술경영</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#프로세스 전수분석</span></div>
-<div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7"><a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[#e9edf2] transition" href="post-37.html"><div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 글</div><div class="font-bold mt-1 text-[15px]">DX, 유행어를 넘어 실행 로드맵으로</div></a><a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[#e9edf2] transition" href="post-39.html"><div class="text-[13px] text-mut font-medium">다음 글 <i class="ti ti-arrow-right"></i></div><div class="font-bold mt-1 text-[15px]">업무 자동화의 ROI — 월 50건→1,000건 검수 자동화</div></a></div>
-</article>
-</body></html>
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+ <meta name="description" content="전사 1,103개 업무 프로세스 분석 경험을 Process Mining과 BPM 관점에서 재구성합니다."/><meta name="author" content="최한람"/><meta name="keywords" content="BPM, ProcessMining, DX, ProcessAnalysis, Workflow"/>
+ <meta property="og:type" content="article"/><meta property="og:site_name" content="Human Tech Note"/><meta property="og:title" content="전사 1,103개 프로세스를 어떻게 분석했나"/><meta property="og:description" content="업무를 ‘시스템 목록’이 아니라 흐름·대기·예외·데이터 이동으로 보는 방법"/>
+ <title>전사 1,103개 프로세스를 어떻게 분석했나 · Human Tech Note</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/><link rel="stylesheet" href="../assets/research-article-v2.css"/></head>
+ <body><div class="reading-progress"></div><div class="bgfx"></div><nav class="nav"><div class="nav-inner"><a class="brand" href="../index.html"><i class="ti ti-book-2"></i> Human Tech Note <small>by 최한람</small></a><div class="nav-links"><a href="../index.html#published">Archive</a><a class="portfolio-btn" href="../index.html"><i class="ti ti-arrow-left"></i> Home</a></div></div></nav>
+ <main class="page"><header class="hero"><div class="chips"><span class="chip chip-primary">Process Analysis</span><span class="chip chip-secondary">Practice Case · 1,103 Processes</span></div><h1>전사 1,103개 프로세스를 어떻게 분석했나</h1><p class="subtitle">업무를 ‘시스템 목록’이 아니라 흐름·대기·예외·데이터 이동으로 보는 방법</p><div class="meta"><span><i class="ti ti-calendar"></i> Research Archive · 2026년 5월 28일</span><span><i class="ti ti-clock"></i> 약 14분</span><span>#38 / 75</span></div></header>
+ <article><section class="section"><p class="lead">전사 프로세스 1,103건을 처음 마주하면 가장 먼저 드는 생각은 “이걸 어떻게 다 볼 것인가”였다. 모든 업무를 인터뷰로 깊게 파고들 수는 없고, 시스템 화면만 봐서는 실제 사람이 어떤 우회와 예외를 쓰는지 알기 어렵다.</p>
+<div class="field-note"><div class="field-label">CASE CONTEXT</div><h3>사업 842건 · 관리 261건</h3><p>목표는 모든 업무를 완벽히 문서화하는 것이 아니라 개선·자동화 가능성이 높은 영역을 찾고, 이후 개발·배포까지 이어질 수 있는 후보군을 만드는 것이었다.</p></div></section>
+<section class="section"><h2>1단계 — 먼저 공통 질문을 만들어야 했다</h2>
+<div class="signal-board"><div class="signal"><div class="signal-no">INPUT</div><h4>무엇이 들어오는가</h4><p>문서, 메일, 파일, 시스템 데이터, 외부 요청 등 업무 시작점을 본다.</p></div><div class="signal"><div class="signal-no">DECISION</div><h4>사람이 무엇을 판단하는가</h4><p>규칙으로 바꿀 수 있는 판단과 경험에 의존하는 판단을 구분한다.</p></div><div class="signal"><div class="signal-no">OUTPUT</div><h4>어디로 전달되는가</h4><p>다른 부서·시스템·외부 파트너로 데이터가 어떻게 넘어가는지 본다.</p></div></div>
+<p>이 질문이 있어야 부서마다 다른 업무명을 비교할 수 있었다. 이름은 달라도 “파일을 받아 검수하고 다른 시스템에 재입력한다”는 구조가 반복될 수 있기 때문이다.</p></section>
+<section class="section"><h2>2단계 — 업무를 ‘시간’과 ‘예외’로 분해한다</h2>
+<div class="journey"><div class="journey-step"><b>요청</b><span>누가 무엇을 시작하는가</span></div><div class="journey-step"><b>대기</b><span>사람·시스템 응답을 기다리는 시간</span></div><div class="journey-step"><b>처리</b><span>실제 가치가 만들어지는 단계</span></div><div class="journey-step"><b>검수</b><span>오류·정합성·승인을 확인</span></div><div class="journey-step"><b>예외</b><span>반려·수정·재작업이 발생</span></div></div>
+<p>자동화는 처리시간만 줄이는 것이 아니다. 대기와 재작업, 여러 시스템을 오가는 Hand-off를 줄일 때 더 큰 효과가 난다.</p></section>
+<section class="section"><h2>3단계 — 개선 가능성을 네 부류로 나눴다</h2><div class="table-wrap"><table class="research-table"><thead><tr><th>유형</th><th>특징</th><th>접근</th></tr></thead><tbody><tr><td>삭제/통합</td><td>중복보고·중복입력</td><td>프로세스 자체를 제거하거나 합친다</td></tr><tr><td>표준화</td><td>사람마다 방식이 다름</td><td>입력·판단·Output 기준을 먼저 통일</td></tr><tr><td>자동화</td><td>반복적이고 규칙이 명확</td><td>RPA/API/Workflow 후보</td></tr><tr><td>데이터 연결</td><td>시스템 사이 복사·재입력</td><td>Interface·Master Data·표준 정의</td></tr></tbody></table></div>
+<p>이 분류의 장점은 ‘모든 문제를 개발로 해결하려는 오류’를 줄여준다는 점이다. 프로세스가 잘못되어 있으면 자동화는 잘못된 흐름을 더 빠르게 반복할 뿐이다.</p></section>
+<section class="section"><h2>Process Mining이 이 경험을 다시 설명해준 이유</h2><p>당시에는 인터뷰와 업무자료를 중심으로 분석했지만, 이후 Process Mining을 공부하면서 같은 질문을 Event Log로 더 정교하게 검증할 수 있다는 점을 알게 됐다. Van der Aalst는 Process Mining을 Process Model과 Event Data의 교차영역으로 설명하며 Discovery, Conformance Checking, Enhancement를 주요 기능으로 본다.</p>
+<figure class="figure v1"><div class="figure-label">FIGURE</div><div class="figure-title">Figure 1. 인터뷰 기반 업무분석과 Process Mining은 서로 보완적이다</div><svg viewBox="0 0 820 360"><rect x="70" y="80" width="270" height="190" rx="28" fill="rgba(121,169,255,.08)" stroke="rgba(121,169,255,.28)"/><rect x="480" y="80" width="270" height="190" rx="28" fill="rgba(100,211,167,.08)" stroke="rgba(100,211,167,.28)"/><circle cx="410" cy="175" r="75" fill="rgba(255,130,86,.10)" stroke="rgba(255,130,86,.3)"/><text x="205" y="125" text-anchor="middle" fill="#79a9ff" font-size="17" font-weight="800">Interview / Workshop</text><text x="205" y="165" text-anchor="middle" fill="#fff" font-size="14">업무 목적 · 예외의 이유</text><text x="205" y="192" text-anchor="middle" fill="#fff" font-size="14">암묵지 · 책임구조</text><text x="615" y="125" text-anchor="middle" fill="#8be2bd" font-size="17" font-weight="800">Event Data</text><text x="615" y="165" text-anchor="middle" fill="#fff" font-size="14">실제 흐름 · 빈도 · 대기</text><text x="615" y="192" text-anchor="middle" fill="#fff" font-size="14">병목 · 변형경로</text><text x="410" y="168" text-anchor="middle" fill="#ff9a72" font-size="16" font-weight="800">PROCESS</text><text x="410" y="193" text-anchor="middle" fill="#fff" font-size="13">왜 + 실제로</text></svg><figcaption class="figure-caption">사람의 설명은 ‘왜’를, Event Log는 ‘실제로 얼마나 자주 어떻게’를 보여준다. 둘을 결합하면 자동화 우선순위를 더 객관적으로 만들 수 있다.</figcaption></figure></section>
+<section class="section"><h2>숫자 1,103보다 중요했던 것</h2><p>대규모 프로세스 분석의 가치는 많은 업무를 조사했다는 사실보다 부서별 문제를 <strong>같은 분석 언어로 바꿨다는 점</strong>에 있었다. 이후 발굴된 10개 DX·자동화 과제도 이 공통 언어가 있었기 때문에 사업·기획·개발 조직이 우선순위와 진행상태를 함께 볼 수 있었다.</p></section><section class="section" id="sources"><h2>참고한 연구와 자료</h2><div class="refs"><ol><li>van der Aalst (2022) · <a href="https://doi.org/10.1007/978-3-031-08848-3_1" target="_blank" rel="noreferrer">Process Mining: A 360 Degree Overview</a></li><li>Bharadwaj et al. (2013) · <a href="https://doi.org/10.25300/MISQ/2013/37:2.3" target="_blank" rel="noreferrer">Digital Business Strategy</a></li></ol></div></section><div class="tags"><span class="tag">#BPM</span><span class="tag">#ProcessMining</span><span class="tag">#DX</span><span class="tag">#ProcessAnalysis</span><span class="tag">#Workflow</span></div>
+ <div class="post-nav"><a href="post-37.html"><small>이전 글 · #37</small><b>← 이전 글</b></a><a href="post-39.html" style="text-align:right"><small>다음 글 · #39</small><b>다음 글 →</b></a></div></article><footer>Human Tech Note · Research & Practice Archive<br/>© 2026 최한람</footer></main><script src="../assets/research-article-v2.js"></script></body></html>

@@ -1,59 +1,16 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>KPI·Compliance·Risk를 요구사항에 녹이는 법 · Human Tech Note</title><meta name="description" content="관리체계 고도화"/>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<style type="text/tailwindcss">
-@theme{
---color-ink:#ff4e1c;--color-cobalt:#ff8256;--color-warn:#e8b45a;--color-soft:rgba(255,255,255,0.05);
---color-hair:rgba(255,255,255,0.11);--color-tx:#f1f3ef;--color-mut:#a6aca4;--color-hint:#767b73;
---radius-pill:100px;--radius-feat:32px;
---font-sans:"Pretendard","-apple-system","BlinkMacSystemFont","Malgun Gothic",sans-serif;
-}
-</style>
-<style>
-body{background:#08090a}
-.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
-radial-gradient(55% 45% at 16% 20%,rgba(24,150,96,.42),transparent 66%),
-radial-gradient(48% 52% at 84% 52%,rgba(15,120,84,.34),transparent 70%),
-radial-gradient(42% 40% at 60% 8%,rgba(80,180,120,.20),transparent 70%),
-radial-gradient(70% 60% at 50% 108%,rgba(10,70,52,.30),transparent 72%),
-#07080a}
-</style>
-<style>
-.pb h3{font-size:24px;font-weight:500;letter-spacing:-.4px;margin:36px 0 10px;color:#f1f3ef}
-.pb p{font-size:18px;line-height:1.75;margin:0 0 18px;letter-spacing:-.2px}
-.pb ul{font-size:18px;line-height:1.7;padding-left:22px;margin:0 0 20px}
-.pb li{margin-bottom:7px}
-.pb strong{color:#fff;font-weight:700}
-.callout{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:32px;padding:26px 30px;margin:30px 0;font-size:16px;line-height:1.65;color:#e7e9e4}
-.callout .l{color:#ff8256;font-weight:700;font-size:13px;margin-bottom:8px;display:flex;gap:7px;align-items:center}
-</style>
-</head><body class="font-sans text-tx antialiased" style="letter-spacing:-0.01em"><div class="bgfx"></div>
-<nav class="sticky top-0 z-20 bg-[#0a0c0bcc] backdrop-blur border-b border-hair">
-<div class="max-w-[1080px] mx-auto px-6 py-3.5 flex items-center gap-5">
-<a class="font-bold text-lg flex items-center gap-2" href="../index.html"><i class="ti ti-book-2"></i>Human Tech Note <span class="font-normal text-mut text-[13px]">by 최한람</span></a>
-<span class="ml-auto"></span>
-<a class="inline-flex items-center gap-1.5 border border-[rgba(255,255,255,.22)] text-tx rounded-pill text-[13px] font-bold px-4 py-2 hover:bg-soft transition" href="../index.html#archive"><i class="ti ti-arrow-left"></i> 포트폴리오</a>
-</div></nav>
-<article class="max-w-[760px] mx-auto px-6 pt-14 pb-28">
-<span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-pill bg-soft text-mut mb-6"><i class="ti ti-flask"></i> 포트폴리오 데모용 더미 콘텐츠</span>
-<div><span class="inline-flex items-center gap-1.5 text-[13px] font-bold px-4 py-1.5 rounded-pill" style="background:#FDF1DA;color:#8A5A00"><i class="ti ti-chart-arrows-vertical"></i> DX/기술경영</span></div>
-<h1 class="text-[36px] md:text-[52px] font-medium tracking-tight leading-tight mt-4 mb-3">KPI·Compliance·Risk를 요구사항에 녹이는 법</h1>
-<div class="flex flex-wrap gap-4 text-[14px] text-mut border-b border-hair pb-6 mb-8">
-<span><i class="ti ti-calendar align-[-2px]"></i> 2026년 10월 16일 (금)</span><span><i class="ti ti-clock align-[-2px]"></i> 약 9분</span><span>#42 / 75</span></div>
-<div class="pb">
-<h3>들어가며</h3>
-<p>데이터와 프로세스 관점에서 업무를 어떻게 개선하고 성과로 연결했는지 다룬다. 이번 글은 <strong>관리체계 고도화</strong>을(를) 중심으로, 개념 설명에 그치지 않고 실제 판단의 맥락을 함께 담으려 했다.</p>
-<p>많은 조직이 같은 문제를 겪지만, 정답은 조직의 규모·문화·서비스 특성에 따라 달라진다. 그래서 '무엇을 했는가'보다 '왜 그렇게 판단했는가'에 무게를 두었다.</p>
-<h3>문제 정의</h3><p>먼저 상황을 명확히 규정하는 것이 중요하다. 문제를 좁게 정의할수록 해결책은 선명해지고, 이해관계자 사이의 합의도 빨라진다.</p>
-<h3>접근 방법</h3><p>실무에서는 이상적인 방법론보다 '지속 가능한 운영'이 우선한다. 한 번의 조치로 끝나는 일은 거의 없고, 대부분은 정책·프로세스·사람이 맞물려야 유지된다.</p>
-<h3>정리하며</h3><p>결국 남는 것은 기록과 반복 가능한 체계다. 관리체계 고도화에서 얻은 교훈은 다른 영역에도 그대로 적용된다.</p>
-</div>
-<div class="callout"><div class="l"><i class="ti ti-link"></i> 이 글과 연결된 실무 역량</div>관리체계 고도화 — 이력서·경력기술서의 실제 수행 경험과 직접 연결되는 주제입니다.</div>
-<div class="flex flex-wrap gap-2.5 my-8"><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#DX/기술경영</span><span class="text-[13px] font-medium text-mut bg-soft px-3.5 py-1.5 rounded-pill">#관리체계 고도화</span></div>
-<div class="flex justify-between gap-4 mt-12 border-t border-hair pt-7"><a class="flex-1 bg-soft rounded-2xl px-5 py-4 hover:bg-[#e9edf2] transition" href="post-41.html"><div class="text-[13px] text-mut font-medium"><i class="ti ti-arrow-left"></i> 이전 글</div><div class="font-bold mt-1 text-[15px]">데이터 흐름도로 업무를 다시 그리기</div></a><a class="flex-1 bg-soft rounded-2xl px-5 py-4 text-right hover:bg-[#e9edf2] transition" href="post-43.html"><div class="text-[13px] text-mut font-medium">다음 글 <i class="ti ti-arrow-right"></i></div><div class="font-bold mt-1 text-[15px]">고객경험(CX) 기반 서비스 분석 — 오디오 플랫폼</div></a></div>
-</article>
-</body></html>
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+ <meta name="description" content="KPI, Compliance, Risk를 비기능 요구사항과 검증 가능한 Acceptance Criteria로 변환하는 방법을 분석합니다."/><meta name="author" content="최한람"/><meta name="keywords" content="Requirements, KPI, Compliance, Risk, AcceptanceCriteria, Governance"/>
+ <meta property="og:type" content="article"/><meta property="og:site_name" content="Human Tech Note"/><meta property="og:title" content="KPI·Compliance·Risk를 요구사항으로 바꾸는 법"/><meta property="og:description" content="기능이 ‘동작한다’에서 끝나지 않고 운영·감사·복구까지 완료조건에 넣기"/>
+ <title>KPI·Compliance·Risk를 요구사항으로 바꾸는 법 · Human Tech Note</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"/><link rel="stylesheet" href="../assets/research-article-v2.css"/></head>
+ <body><div class="reading-progress"></div><div class="bgfx"></div><nav class="nav"><div class="nav-inner"><a class="brand" href="../index.html"><i class="ti ti-book-2"></i> Human Tech Note <small>by 최한람</small></a><div class="nav-links"><a href="../index.html#published">Archive</a><a class="portfolio-btn" href="../index.html"><i class="ti ti-arrow-left"></i> Home</a></div></div></nav>
+ <main class="page"><header class="hero"><div class="chips"><span class="chip chip-primary">Requirements Engineering</span><span class="chip chip-secondary">Practice Note · Governance by Design</span></div><h1>KPI·Compliance·Risk를 요구사항으로 바꾸는 법</h1><p class="subtitle">기능이 ‘동작한다’에서 끝나지 않고 운영·감사·복구까지 완료조건에 넣기</p><div class="meta"><span><i class="ti ti-calendar"></i> Research Archive · 2026년 7월 21일</span><span><i class="ti ti-clock"></i> 약 12분</span><span>#42 / 75</span></div></header>
+ <article><section class="section"><p class="lead">요구사항 문서는 기능을 잘 설명한다. 로그인, 조회, 등록, 승인 같은 기능은 화면과 API로 확인하기 쉽다. 그러나 서비스가 실제 운영에 들어가면 기능만큼 중요한 것이 있다. <strong>얼마나 빨라야 하는가, 누가 접근할 수 있는가, 로그는 남는가, 장애 시 어떻게 복구하는가</strong> 같은 조건이다.</p>
+<p>이 조건이 문서에서 빠지면 프로젝트 막판에 보안팀·운영팀·감사 요구가 갑자기 추가된 것처럼 보인다. 사실은 처음부터 서비스의 일부였어야 한다.</p></section>
+<section class="section"><h2>‘정책’이라는 문장을 시스템이 검증할 수 있는 조건으로 바꾼다</h2><div class="table-wrap"><table class="research-table"><thead><tr><th>추상적 요구</th><th>검증 가능한 요구로 변환</th><th>검증 방법</th></tr></thead><tbody><tr><td>접근통제를 강화한다</td><td>관리자 기능은 MFA+지정 Role만 허용</td><td>미인가 계정 403 / 권한변경 Log 확인</td></tr><tr><td>개인정보를 안전하게 처리한다</td><td>Export는 승인된 Role·건수 제한·감사로그</td><td>대량 Export Negative Test</td></tr><tr><td>가용성을 확보한다</td><td>핵심 API p95·오류율·RTO 기준 설정</td><td>부하·장애전환·복구시험</td></tr><tr><td>법규를 준수한다</td><td>보존·삭제·접근증적을 시스템 기능에 반영</td><td>Retention Job·Audit Evidence</td></tr></tbody></table></div></section>
+<section class="section"><h2>Acceptance Criteria는 ‘개발 완료’의 정의를 바꾼다</h2>
+<div class="decision-tree"><div class="decision-node">기능 요청: “신규 API로 잔고를 조회한다.”</div><div class="decision-branch"><div class="decision-node decision-yes"><b>정상 경로</b><br/>유효한 서비스가 기대한 데이터를 반환하는가?</div><div class="decision-node decision-no"><b>미인가 경로</b><br/>권한 없는 서비스가 403으로 차단되는가?</div></div><div class="decision-branch"><div class="decision-node decision-yes"><b>운영</b><br/>p95·오류율이 기준을 충족하는가?</div><div class="decision-node decision-no"><b>증적</b><br/>어떤 정책·버전·요청이 처리됐는지 남는가?</div></div></div>
+<p>이렇게 요구사항을 쓰면 보안은 ‘사후 검토’가 아니라 완료조건의 일부가 된다.</p></section>
+<section class="section"><h2>KPI와 Risk를 같은 문서에 놓는 이유</h2><figure class="figure v7"><div class="figure-label">FIGURE</div><div class="figure-title">Figure 1. 프로젝트 완료조건은 네 개의 축이 함께 충족되어야 한다</div><svg viewBox="0 0 820 420"><polygon points="410,60 690,205 410,350 130,205" fill="rgba(255,255,255,.025)" stroke="rgba(255,255,255,.15)"/><polygon points="410,105 605,205 410,305 215,205" fill="rgba(100,211,167,.08)" stroke="rgba(100,211,167,.3)"/><text x="410" y="42" text-anchor="middle" fill="#79a9ff" font-size="14" font-weight="800">FUNCTION</text><text x="720" y="210" fill="#ff9a72" font-size="14" font-weight="800">PERFORMANCE</text><text x="410" y="385" text-anchor="middle" fill="#8be2bd" font-size="14" font-weight="800">SECURITY / COMPLIANCE</text><text x="35" y="210" fill="#e8b45a" font-size="14" font-weight="800">OPERABILITY</text><text x="410" y="210" text-anchor="middle" fill="#fff" font-size="18" font-weight="800">DONE</text></svg><figcaption class="figure-caption">기능만 충족해도 배포할 수 있는 조직과 운영·보안·성능 조건까지 완료정의에 포함한 조직은 변경 후 리스크가 다르게 나타난다.</figcaption></figure></section>
+<section class="section"><h2>PM에게 요구사항은 통제의 언어이기도 하다</h2><div class="note-box"><div class="label">PROJECT NOTE</div><p>보안과 운영 경험을 거친 뒤 요구사항을 볼 때 가장 달라진 점은 “무엇을 만들 것인가”와 함께 “어떤 조건을 만족해야 안전하게 바꿀 수 있는가”를 보게 된 것이다. KPI와 Risk를 Acceptance Criteria에 넣으면 부서 간 책임도 선명해진다.</p></div></section><section class="section" id="sources"><h2>참고한 연구와 자료</h2><div class="refs"><ol><li>NIST CSF 2.0 · <a href="https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20" target="_blank" rel="noreferrer">Cybersecurity Framework 2.0</a></li><li>NIST AI RMF · <a href="https://airc.nist.gov/airmf-resources/playbook/manage/" target="_blank" rel="noreferrer">Manage — risk and deployment decision</a></li></ol></div></section><div class="tags"><span class="tag">#Requirements</span><span class="tag">#KPI</span><span class="tag">#Compliance</span><span class="tag">#Risk</span><span class="tag">#AcceptanceCriteria</span><span class="tag">#Governance</span></div>
+ <div class="post-nav"><a href="post-41.html"><small>이전 글 · #41</small><b>← 이전 글</b></a><a href="post-43.html" style="text-align:right"><small>다음 글 · #43</small><b>다음 글 →</b></a></div></article><footer>Human Tech Note · Research & Practice Archive<br/>© 2026 최한람</footer></main><script src="../assets/research-article-v2.js"></script></body></html>

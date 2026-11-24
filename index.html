@@ -206,6 +206,35 @@ main{width:min(1180px,calc(100% - 40px));margin:auto;padding:48px 0 100px}.hero{
 @media(max-width:900px){.expertise-head{grid-template-columns:1fr}.expertise-grid{grid-template-columns:1fr}}
 @media(max-width:620px){.expertise-section{margin:58px 0}.expertise-columns{grid-template-columns:1fr}.expertise-filter{padding:8px 11px;font-size:11px}.expertise-card{padding:20px}}
 
+
+/* Capability map & continuous learning */
+.capability-map{margin:24px 0 22px}
+.capability-label{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px}
+.capability-label span:first-child{color:#d9c38e;font-size:11px;font-weight:850;letter-spacing:.08em;text-transform:uppercase}
+.capability-label span:last-child{color:var(--hint);font-size:10.5px}
+.capability-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.capability-card{padding:18px;border:1px solid var(--line);border-radius:19px;background:rgba(255,255,255,.032);min-height:170px}
+.capability-step{display:block;color:var(--accent);font-size:10.5px;font-weight:850;letter-spacing:.075em;margin-bottom:12px}
+.capability-card h3{font-size:17px;line-height:1.35;letter-spacing:-.025em;margin:0 0 9px}
+.capability-card p{margin:0;color:var(--mut);font-size:11.5px;line-height:1.67}
+.learning-panel{margin:20px 0 24px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,rgba(100,211,167,.045),rgba(255,255,255,.025));overflow:hidden}
+.learning-panel summary{list-style:none;cursor:pointer;padding:20px 22px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
+.learning-panel summary::-webkit-details-marker{display:none}
+.learning-title small{display:block;color:#8be2bd;font-size:10.5px;font-weight:850;letter-spacing:.08em;margin-bottom:6px}
+.learning-title strong{display:block;font-size:18px;letter-spacing:-.025em}
+.learning-toggle{display:flex;align-items:center;gap:10px;color:var(--mut);font-size:11px;font-weight:750}
+.learning-plus{display:grid;place-items:center;width:30px;height:30px;border:1px solid rgba(255,255,255,.11);border-radius:50%;font-size:18px;transition:.18s}
+.learning-panel[open] .learning-plus{transform:rotate(45deg);color:var(--accent);border-color:rgba(255,130,86,.32)}
+.learning-body{padding:0 22px 22px;border-top:1px solid rgba(255,255,255,.07)}
+.learning-list{display:grid;gap:0}
+.learning-row{display:grid;grid-template-columns:110px 1fr;gap:18px;padding:17px 0;border-bottom:1px solid rgba(255,255,255,.065)}
+.learning-row:last-child{border-bottom:0}
+.learning-date{color:var(--accent);font-size:11px;font-weight:820;letter-spacing:.025em}
+.learning-main h4{font-size:14px;line-height:1.5;margin:0 0 4px}
+.learning-main p{font-size:11.5px;line-height:1.65;color:var(--mut);margin:0}
+@media(max-width:980px){.capability-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.capability-grid{grid-template-columns:1fr}.learning-row{grid-template-columns:1fr;gap:6px}.learning-panel summary{padding:18px}.learning-body{padding:0 18px 18px}}
+
 </style></head><body><div class="bgfx"></div><nav><div class="nav"><a class="brand" href="#top"><i class="ti ti-book-2"></i> Human Tech Note <small>by 최한람</small></a><div class="nav-links"><a href="#about">About</a><a href="#expertise">Expertise</a><a href="#projects">Projects</a><a href="#research">Research</a><a href="#published">Archive</a><a href="#contact">Contact</a></div></div></nav><main id="top"><header class="hero"><div class="eyebrow">Research & Practice Archive · 2026.05–11</div><h1>AI·AX, Technology Management,<br/>Security &amp; IT Governance</h1><p>AI·AX와 기술경영, 정보보호, IT 운영에서 생긴 질문을 연구와 실무의 언어로 다시 정리합니다.</p><p class="sub">기술을 소개하는 데서 멈추지 않고 왜 필요한지, 어떤 한계가 있는지, 기업에서는 무엇을 기준으로 판단해야 하는지를 논문·산업자료·운영경험과 연결해 살펴봅니다.</p></header>
 <section class="top-profile" id="about" aria-label="Experience and Awards">
   <div class="profile-block">
@@ -293,6 +322,68 @@ main{width:min(1180px,calc(100% - 40px));margin:auto;padding:48px 0 100px}.hero{
     </div>
     <p>각 직무에서 실제로 맡았던 문제를 기준으로 학습·연구 주제를 연결했습니다. 경력과 공부를 별도로 나열하기보다, 실무 질문이 어떤 기술·연구 주제로 이어졌는지를 보여줍니다.</p>
   </div>
+
+  <div class="capability-map" aria-label="Capability Map">
+    <div class="capability-label"><span>Capability Map</span><span>Practice → Governance → Transformation</span></div>
+    <div class="capability-grid">
+      <div class="capability-card">
+        <span class="capability-step">01 / PLAN</span>
+        <h3>IT Planning &amp; Governance</h3>
+        <p>운영정책 · RFP/ROI 검토 · 벤더 관리 · 내부통제 · IT 투자 타당성</p>
+      </div>
+      <div class="capability-card">
+        <span class="capability-step">02 / SECURE</span>
+        <h3>Information Security</h3>
+        <p>ISMS · ITGC/GITC · 접근권한 · DLP/DRM · 취약점 · 감사 대응</p>
+      </div>
+      <div class="capability-card">
+        <span class="capability-step">03 / OPERATE</span>
+        <h3>Reliability &amp; Infrastructure</h3>
+        <p>서버·DB·네트워크 · IDC 이원화 · Failover · 장애·변경관리</p>
+      </div>
+      <div class="capability-card">
+        <span class="capability-step">04 / TRANSFORM</span>
+        <h3>DX &amp; Data Strategy</h3>
+        <p>업무 프로세스 분석 · 자동화 과제 · KPI · 데이터 기반 의사결정</p>
+      </div>
+    </div>
+  </div>
+
+  <details class="learning-panel">
+    <summary>
+      <div class="learning-title"><small>CONTINUOUS LEARNING</small><strong>주요 교육·연수와 학습 기록</strong></div>
+      <div class="learning-toggle"><span>펼쳐보기</span><span class="learning-plus">+</span></div>
+    </summary>
+    <div class="learning-body">
+      <div class="learning-list">
+        <div class="learning-row">
+          <div class="learning-date">2026.07</div>
+          <div class="learning-main"><h4>PM101 Online — Learn by Doing</h4><p>패스트캠퍼스 The Red · 문제정의, 우선순위 설정 및 기획·개발·운영 조직 협업</p></div>
+        </div>
+        <div class="learning-row">
+          <div class="learning-date">2025.04</div>
+          <div class="learning-main"><h4>정보보호 공시 실무교육</h4><p>KISA · 공시제도, 필수 항목 및 기업 실무 대응 절차</p></div>
+        </div>
+        <div class="learning-row">
+          <div class="learning-date">2018.08–12</div>
+          <div class="learning-main"><h4>클라우드 에센셜 및 아키텍처 설계 과정</h4><p>한국클라우드산업협회 · AWS 기반 서비스 아키텍처 및 가용성·보안 요구사항 설계</p></div>
+        </div>
+        <div class="learning-row">
+          <div class="learning-date">2018.06–08</div>
+          <div class="learning-main"><h4>경기 빅데이터 전문가 과정</h4><p>삼성SDS 멀티캠퍼스 · SQL·R, 머신러닝 기초와 데이터 기반 소비패턴 분석</p></div>
+        </div>
+        <div class="learning-row">
+          <div class="learning-date">2016.04</div>
+          <div class="learning-main"><h4>운영 장애 예방을 위한 머신러닝 적용 연구주제 발표</h4><p>대한민국 공군 · 반복 장애 패턴 분석 및 예측 가능성 검토</p></div>
+        </div>
+        <div class="learning-row">
+          <div class="learning-date">2024–26</div>
+          <div class="learning-main"><h4>보안·개인정보보호 전문 세미나 참여</h4><p>G-Privacy, PIS FAIR, PASCON, AIS 등 · AI 보안, 개인정보보호 및 침해사고 대응 동향</p></div>
+        </div>
+      </div>
+    </div>
+  </details>
+
   <div class="expertise-filters" role="group" aria-label="전문영역 필터">
     <button class="expertise-filter active" type="button" data-expertise="all" aria-pressed="true">전체보기</button>
     <button class="expertise-filter" type="button" data-expertise="infra" aria-pressed="false">인프라운영</button>

@@ -699,7 +699,7 @@ main{width:min(1180px,calc(100% - 40px));margin:auto;padding:48px 0 100px}.hero{
     name:name.value.trim(),
     email:reply.value.trim(),
     topic:topic.value,
-    message:message.value.trim(),
+    message:message.value.trim().replace(/\r?\n+/g,' '),
     _subject:'[Human Tech Note] '+topic.value+' 문의 - '+name.value.trim(),
     _template:'table'
   });

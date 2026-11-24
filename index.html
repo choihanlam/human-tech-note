@@ -172,7 +172,41 @@ main{width:min(1180px,calc(100% - 40px));margin:auto;padding:48px 0 100px}.hero{
 @media(max-width:900px){.contact-layout{grid-template-columns:1fr}.contact-intro{min-height:360px}}
 @media(max-width:620px){.contact-section{margin-top:64px;padding-top:46px}.contact-intro,.contact-card{padding:24px 20px}.contact-pair{grid-template-columns:1fr}.contact-form-meta{display:block}.contact-form-meta span:last-child{display:block;margin-top:4px}}
 
-</style></head><body><div class="bgfx"></div><nav><div class="nav"><a class="brand" href="#top"><i class="ti ti-book-2"></i> Human Tech Note <small>by 최한람</small></a><div class="nav-links"><a href="#about">About</a><a href="#projects">Projects</a><a href="#research">Research</a><a href="#published">Archive</a><a href="#contact">Contact</a></div></div></nav><main id="top"><header class="hero"><div class="eyebrow">Research & Practice Archive · 2026.05–11</div><h1>AI·AX, Technology Management,<br/>Security &amp; IT Governance</h1><p>AI·AX와 기술경영, 정보보호, IT 운영에서 생긴 질문을 연구와 실무의 언어로 다시 정리합니다.</p><p class="sub">기술을 소개하는 데서 멈추지 않고 왜 필요한지, 어떤 한계가 있는지, 기업에서는 무엇을 기준으로 판단해야 하는지를 논문·산업자료·운영경험과 연결해 살펴봅니다.</p></header>
+
+/* Areas of Expertise */
+.expertise-section{margin:72px 0 82px;padding-top:6px}
+.expertise-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,.8fr);gap:36px;align-items:end;margin-bottom:22px}
+.expertise-head .kicker{color:var(--accent);font-size:12px;font-weight:850;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.expertise-head h2{font-size:clamp(30px,3.8vw,45px);line-height:1.16;letter-spacing:-.045em;margin:0}
+.expertise-head p{margin:0;color:var(--mut);font-size:14px;line-height:1.75}
+.expertise-filters{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 20px}
+.expertise-filter{border:1px solid rgba(255,255,255,.11);border-radius:999px;background:rgba(255,255,255,.035);color:var(--mut);padding:9px 13px;font-size:12px;font-weight:780;transition:.18s}
+.expertise-filter:hover,.expertise-filter.active{background:rgba(255,130,86,.10);border-color:rgba(255,130,86,.32);color:#fff}
+.expertise-filter.active{box-shadow:0 0 0 3px rgba(255,130,86,.05)}
+.expertise-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.expertise-card{position:relative;padding:23px;border:1px solid var(--line);border-radius:23px;background:linear-gradient(145deg,rgba(255,255,255,.048),rgba(255,255,255,.022));transition:.18s}
+.expertise-card:hover{transform:translateY(-2px);border-color:rgba(255,130,86,.28)}
+.expertise-card[hidden]{display:none}
+.expertise-top{display:flex;justify-content:space-between;gap:18px;align-items:flex-start}
+.expertise-domain{display:inline-flex;align-items:center;gap:7px;color:var(--accent);font-size:11px;font-weight:850;letter-spacing:.055em;text-transform:uppercase}
+.expertise-domain i{font-size:15px}
+.expertise-period{color:var(--hint);font-size:10.5px;font-weight:720;text-align:right}
+.expertise-card h3{font-size:22px;letter-spacing:-.03em;margin:13px 0 8px}
+.expertise-summary{color:var(--mut);font-size:13px;line-height:1.72;margin:0}
+.expertise-columns{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,.08)}
+.expertise-col h4{font-size:10.5px;letter-spacing:.065em;color:#d9c38e;margin:0 0 9px}
+.expertise-col ul{margin:0;padding-left:16px}
+.expertise-col li{color:var(--mut);font-size:12px;line-height:1.68;margin:4px 0}
+.expertise-research{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.expertise-research span{padding:6px 8px;border-radius:999px;background:rgba(100,211,167,.07);border:1px solid rgba(100,211,167,.13);color:#bdebd7;font-size:10.5px}
+.expertise-notes{margin-top:16px;display:flex;flex-wrap:wrap;gap:7px}
+.expertise-notes a{display:inline-flex;align-items:center;gap:5px;color:#c8cec7;font-size:10.5px;border-bottom:1px solid rgba(255,255,255,.15);padding-bottom:2px}
+.expertise-notes a:hover{color:var(--accent);border-color:rgba(255,130,86,.4)}
+.expertise-count{margin-left:auto;color:var(--hint);font-size:11px;font-weight:750}
+@media(max-width:900px){.expertise-head{grid-template-columns:1fr}.expertise-grid{grid-template-columns:1fr}}
+@media(max-width:620px){.expertise-section{margin:58px 0}.expertise-columns{grid-template-columns:1fr}.expertise-filter{padding:8px 11px;font-size:11px}.expertise-card{padding:20px}}
+
+</style></head><body><div class="bgfx"></div><nav><div class="nav"><a class="brand" href="#top"><i class="ti ti-book-2"></i> Human Tech Note <small>by 최한람</small></a><div class="nav-links"><a href="#about">About</a><a href="#expertise">Expertise</a><a href="#projects">Projects</a><a href="#research">Research</a><a href="#published">Archive</a><a href="#contact">Contact</a></div></div></nav><main id="top"><header class="hero"><div class="eyebrow">Research & Practice Archive · 2026.05–11</div><h1>AI·AX, Technology Management,<br/>Security &amp; IT Governance</h1><p>AI·AX와 기술경영, 정보보호, IT 운영에서 생긴 질문을 연구와 실무의 언어로 다시 정리합니다.</p><p class="sub">기술을 소개하는 데서 멈추지 않고 왜 필요한지, 어떤 한계가 있는지, 기업에서는 무엇을 기준으로 판단해야 하는지를 논문·산업자료·운영경험과 연결해 살펴봅니다.</p></header>
 <section class="top-profile" id="about" aria-label="Experience and Awards">
   <div class="profile-block">
     <div class="profile-head"><h2>Experience Base</h2><span>Career Timeline</span></div>
@@ -250,6 +284,88 @@ main{width:min(1180px,calc(100% - 40px));margin:auto;padding:48px 0 100px}.hero{
     </div>
   </div>
 </section>
+
+<section class="expertise-section" id="expertise" aria-labelledby="expertiseTitle">
+  <div class="expertise-head">
+    <div>
+      <div class="kicker">Areas of Expertise</div>
+      <h2 id="expertiseTitle">경력에서 시작해,<br/>Study &amp; Research로 확장한 영역</h2>
+    </div>
+    <p>각 직무에서 실제로 맡았던 문제를 기준으로 학습·연구 주제를 연결했습니다. 경력과 공부를 별도로 나열하기보다, 실무 질문이 어떤 기술·연구 주제로 이어졌는지를 보여줍니다.</p>
+  </div>
+  <div class="expertise-filters" role="group" aria-label="전문영역 필터">
+    <button class="expertise-filter active" type="button" data-expertise="all" aria-pressed="true">전체보기</button>
+    <button class="expertise-filter" type="button" data-expertise="infra" aria-pressed="false">인프라운영</button>
+    <button class="expertise-filter" type="button" data-expertise="planning" aria-pressed="false">IT기획</button>
+    <button class="expertise-filter" type="button" data-expertise="dx" aria-pressed="false">DX</button>
+    <button class="expertise-filter" type="button" data-expertise="security" aria-pressed="false">정보보호</button>
+    <button class="expertise-filter" type="button" data-expertise="mot" aria-pressed="false">기술경영</button>
+    <span class="expertise-count" id="expertiseCount">5 / 5 Areas</span>
+  </div>
+
+  <div class="expertise-grid" id="expertiseGrid">
+    <article class="expertise-card" data-expertise-card="infra">
+      <div class="expertise-top"><span class="expertise-domain"><i class="ti ti-server"></i> Infrastructure Operations</span><span class="expertise-period">공군 2011–2017 · 지니뮤직 2019–2023</span></div>
+      <h3>인프라운영 · Reliability</h3>
+      <p class="expertise-summary">미션 크리티컬 C4I와 대규모 음원 플랫폼에서 가용성, 장애대응, 이중화, 변경·복구를 운영 관점에서 다뤘습니다.</p>
+      <div class="expertise-columns">
+        <div class="expertise-col"><h4>CAREER / PRACTICE</h4><ul><li>공군 방공 C4I 서버·네트워크·콘솔 운영 및 장애대응</li><li>Failover·백업·복구·전환 점검과 Runbook 기반 운영</li><li>IDC 이원화, GSLB 자동절체, DB 처리용량 확대</li><li>CDN 발매 Preloading·Cache Purge·장애 모니터링</li></ul></div>
+        <div class="expertise-col"><h4>STUDY & RESEARCH</h4><ul><li>High Availability, Fault Tolerance, RTO/RPO, Cyber Resilience</li><li>Server / Network / DB 장애 시나리오와 원인분석</li><li>WAS Thread Pool, Full GC, DB Deadlock, Redis Session, DNS 장애 학습</li><li>Cloud·AWS Architecture와 서비스 연속성 학습</li></ul></div>
+      </div>
+      <div class="expertise-research"><span>Reliability</span><span>Failover</span><span>Cyber Resilience</span><span>Cloud Architecture</span></div>
+      <div class="expertise-notes"><a href="posts/post-29.html">#29 장애와 보안사고</a><a href="posts/post-30.html">#30 무중단 의사결정</a><a href="posts/post-36.html">#36 인프라 개선</a><a href="posts/post-70.html">#70 C4I 회고</a></div>
+    </article>
+
+    <article class="expertise-card" data-expertise-card="planning">
+      <div class="expertise-top"><span class="expertise-domain"><i class="ti ti-sitemap"></i> IT Planning & Governance</span><span class="expertise-period">KT 지니뮤직 2019–2023</span></div>
+      <h3>IT기획 · Architecture &amp; Governance</h3>
+      <p class="expertise-summary">인프라 구조개선과 ITO/IMO 운영, Vendor·변경·투자 의사결정을 연결하며 기술과 운영을 하나의 Governance 문제로 다뤘습니다.</p>
+      <div class="expertise-columns">
+        <div class="expertise-col"><h4>CAREER / PRACTICE</h4><ul><li>Monolithic → MSA 구조 전환 및 인프라 확장 지원</li><li>ITO/IMO 운영체계, 장애·변경관리, Vendor 협업 표준화</li><li>RFI/RFP·예산·투자·기술요구사항 검토</li><li>서비스 안정화와 Architecture 변경 영향·리스크 관리</li></ul></div>
+        <div class="expertise-col"><h4>STUDY & RESEARCH</h4><ul><li>PMO 6개 언어: Scope·Schedule·Cost·Risk·Vendor·Decision</li><li>IT Governance, Decision Rights, SLA/OLA/SLO 학습</li><li>Cloud·M365·Entra ID·Tenant·Identity Architecture 학습</li><li>IT 투자 Portfolio와 기술전략·운영 연계 연구</li></ul></div>
+      </div>
+      <div class="expertise-research"><span>IT Governance</span><span>PMO</span><span>Architecture</span><span>Investment Portfolio</span></div>
+      <div class="expertise-notes"><a href="posts/post-27.html">#27 SaaS Governance</a><a href="posts/post-32.html">#32 Outsourcing</a><a href="posts/post-33.html">#33 IT 투자</a><a href="posts/post-35.html">#35 기술전략과 운영</a></div>
+    </article>
+
+    <article class="expertise-card" data-expertise-card="dx">
+      <div class="expertise-top"><span class="expertise-domain"><i class="ti ti-arrows-exchange"></i> Digital Transformation</span><span class="expertise-period">DX Center 2021 · IT기획 연계</span></div>
+      <h3>DX · Process &amp; Data</h3>
+      <p class="expertise-summary">1,103개 업무 프로세스를 분석해 반복·수작업·데이터 단절을 구조화하고, 10개의 DX·자동화 실행과제로 연결했습니다.</p>
+      <div class="expertise-columns">
+        <div class="expertise-col"><h4>CAREER / PRACTICE</h4><ul><li>사업 842건·관리 261건, 총 1,103개 프로세스 분석</li><li>10개 DX·자동화 과제 발굴 및 협업 관리</li><li>DDEX·메타데이터·권리검수·정산 흐름 분석</li><li>요구사항·테스트·배포·KPI·고객경험 개선 연결</li></ul></div>
+        <div class="expertise-col"><h4>STUDY & RESEARCH</h4><ul><li>BPM·Process Mining·Data Flow·Automation ROI</li><li>Customer Journey와 Product KPI·운영 KPI 연결</li><li>Data-driven Decision Making과 Process Redesign</li><li>AI 생산성, 조직의 보완자산과 Technology Diffusion 연구</li></ul></div>
+      </div>
+      <div class="expertise-research"><span>Process Mining</span><span>Automation ROI</span><span>Customer Journey</span><span>Data-driven Management</span></div>
+      <div class="expertise-notes"><a href="posts/post-37.html">#37 DX 재설계</a><a href="posts/post-38.html">#38 1,103 프로세스</a><a href="posts/post-40.html">#40 콘텐츠 유통</a><a href="posts/post-44.html">#44 데이터 의사결정</a></div>
+    </article>
+
+    <article class="expertise-card" data-expertise-card="security">
+      <div class="expertise-top"><span class="expertise-domain"><i class="ti ti-shield-lock"></i> Information Security</span><span class="expertise-period">KT 지니뮤직 2023–2026</span></div>
+      <h3>정보보호 · Security Governance</h3>
+      <p class="expertise-summary">ISMS·내부통제 요구사항을 실제 서버·네트워크·Endpoint·협업환경의 기술통제로 연결하고, 개선이행과 Evidence까지 관리했습니다.</p>
+      <div class="expertise-columns">
+        <div class="expertise-col"><h4>CAREER / PRACTICE</h4><ul><li>ISMS, 정보보호위원회, ITGC/GITC, 인증·감사 대응</li><li>DLP·DRM·NAC·백신·EDR·M365·Slack 보안성 검토</li><li>WEB/WAS/DB·시큐어코딩·모의해킹·CVE 조치관리</li><li>개인정보 파일서버 점검·클렌징·증적과 권한관리</li></ul></div>
+        <div class="expertise-col"><h4>STUDY & RESEARCH</h4><ul><li>Zero Trust, IAM, Least Privilege, Continuous Authorization</li><li>Agentic AI Security, Agent Identity·Delegation·Tool Risk</li><li>PQC·Crypto Agility, Supply Chain, SASE/ZTNA, Cloud Security</li><li>NIST AI RMF·CSF 2.0, EU AI Act, AI Governance·Responsible AI</li></ul></div>
+      </div>
+      <div class="expertise-research"><span>ISMS / Privacy</span><span>Zero Trust</span><span>Agentic AI Security</span><span>PQC</span><span>AI Governance</span></div>
+      <div class="expertise-notes"><a href="posts/post-17.html">#17 Zero Trust</a><a href="posts/post-22.html">#22 취약점 관리</a><a href="posts/post-57.html">#57 Agent 접근통제</a><a href="posts/post-63.html">#63 CISO/CPO</a></div>
+    </article>
+
+    <article class="expertise-card" data-expertise-card="mot">
+      <div class="expertise-top"><span class="expertise-domain"><i class="ti ti-chart-dots-3"></i> Technology Management</span><span class="expertise-period">서강 MOT 2024–2026</span></div>
+      <h3>기술경영 · Research &amp; Strategy</h3>
+      <p class="expertise-summary">기술을 단순 도입대상이 아니라 R&amp;D 투자, 산업구조, 조직역량, 정책과 자원배분을 함께 고려하는 전략적 선택으로 연구했습니다.</p>
+      <div class="expertise-columns">
+        <div class="expertise-col"><h4>STUDY / COURSEWORK</h4><ul><li>기술전략·글로벌 혁신전략·AI 응용·데이터엔지니어링</li><li>네트워크 과학, HITS/PageRank/Centrality</li><li>고급연구방법론과 데이터 기반 의사결정</li><li>AI/ML 기본모형, 예측·분류·군집·Transformer 개념 학습</li></ul></div>
+        <div class="expertise-col"><h4>RESEARCH / OUTPUT</h4><ul><li>NTIS 2015–2025 원천 1,867건 → 정제 1,015건</li><li>BERTopic 7개 기술영역과 국가 R&amp;D 투자 흐름 분석</li><li>외부 중요도 × 내부 보안역량 4분면 Portfolio</li><li>기술예측, 보안투자·공시, 산업별 AI 확산과 조직역량 연구</li></ul></div>
+      </div>
+      <div class="expertise-research"><span>Technology Strategy</span><span>BERTopic</span><span>R&amp;D Investment</span><span>Technology Forecasting</span><span>AI Diffusion</span></div>
+      <div class="expertise-notes"><a href="posts/post-45.html">#45 기술경영</a><a href="posts/post-64.html">#64 R&amp;D 연구</a><a href="posts/post-66.html">#66 정보보호 투자</a><a href="posts/post-71.html">#71 기술예측</a></div>
+    </article>
+  </div>
+</section>
+
 <section class="stats" aria-label="핵심 경험과 아카이브 지표">
   <div class="stat"><small>DX / PROCESS</small><b>1,103</b><span>전사 업무 프로세스 분석 · 사업 842건 / 관리 261건</span></div>
   <div class="stat"><small>DX / INITIATIVES</small><b>10건</b><span>업무 분석을 기반으로 발굴한 DX·자동화 실행과제</span></div>
@@ -515,6 +631,31 @@ main{width:min(1180px,calc(100% - 40px));margin:auto;padding:48px 0 100px}.hero{
       status.hidden=false;
     }
   });
+})();
+</script>
+
+
+<script>
+(() => {
+  const filters=[...document.querySelectorAll('.expertise-filter')];
+  const cards=[...document.querySelectorAll('[data-expertise-card]')];
+  const count=document.getElementById('expertiseCount');
+  if(!filters.length || !cards.length) return;
+  const apply=(key)=>{
+    let visible=0;
+    cards.forEach(card=>{
+      const show=key==='all'||card.dataset.expertiseCard===key;
+      card.hidden=!show;
+      if(show) visible++;
+    });
+    filters.forEach(btn=>{
+      const active=btn.dataset.expertise===key;
+      btn.classList.toggle('active',active);
+      btn.setAttribute('aria-pressed',active?'true':'false');
+    });
+    if(count) count.textContent=visible+' / '+cards.length+' Areas';
+  };
+  filters.forEach(btn=>btn.addEventListener('click',()=>apply(btn.dataset.expertise)));
 })();
 </script>
 

@@ -166,7 +166,7 @@ main{width:min(1180px,calc(100% - 40px));margin:auto;padding:48px 0 100px}.hero{
 .contact-send,.contact-copy{border:1px solid rgba(255,255,255,.12);border-radius:999px;min-height:44px;font-weight:800}
 .contact-send{padding:0 18px;background:var(--accent);color:#17100d;border-color:transparent}
 .contact-copy{width:44px;background:rgba(255,255,255,.04);color:var(--text)}
-.contact-send:hover,.contact-copy:hover{transform:translateY(-1px)}
+.contact-send:hover,.contact-copy:hover{transform:translateY(-1px)}\n.contact-send:disabled{opacity:.55;cursor:wait;transform:none}
 .contact-status{padding:11px 13px;border-radius:12px;background:rgba(100,211,167,.07);border:1px solid rgba(100,211,167,.16);color:#b9eed5;font-size:11px;line-height:1.55}
 .contact-foot{color:var(--hint);font-size:10.5px;line-height:1.6}
 @media(max-width:900px){.contact-layout{grid-template-columns:1fr}.contact-intro{min-height:360px}}
@@ -590,13 +590,13 @@ main{width:min(1180px,calc(100% - 40px));margin:auto;padding:48px 0 100px}.hero{
         <i class="ti ti-send"></i>
       </div>
       <p class="contact-card-sub">간단한 질문도 좋습니다. 입력한 내용은 메일 형식으로 정리되어 기본 메일 앱에서 열립니다.</p>
-      <form id="contactForm" class="contact-form" novalidate>
+      <form id="contactForm" class="contact-form" action="https://formsubmit.co/hwasinzero@gmail.com" method="POST" novalidate>\n        <input type="hidden" name="_subject" value="[Human Tech Note] 새 문의"/>\n        <input type="hidden" name="_template" value="table"/>\n        <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true"/>
         <div class="contact-pair">
-          <label class="contact-field"><span>이름 <em>*</em></span><input type="text" id="contactName" required minlength="2" maxlength="80" autocomplete="name" placeholder="이름을 입력하세요"/></label>
-          <label class="contact-field"><span>회신 이메일 <em>*</em></span><input type="email" id="contactReply" required maxlength="150" autocomplete="email" placeholder="name@example.com"/></label>
+          <label class="contact-field"><span>이름 <em>*</em></span><input type="text" name="name" id="contactName" required minlength="2" maxlength="80" autocomplete="name" placeholder="이름을 입력하세요"/></label>
+          <label class="contact-field"><span>회신 이메일 <em>*</em></span><input type="email" name="email" id="contactReply" required maxlength="150" autocomplete="email" placeholder="name@example.com"/></label>
         </div>
         <label class="contact-field"><span>문의 분야 <em>*</em></span>
-          <select id="contactTopic" required>
+          <select name="topic" id="contactTopic" required>
             <option value="프로젝트·실무 경험">프로젝트 · 실무 경험</option>
             <option value="연구·협업">연구 · 협업</option>
             <option value="정보보호·DX">정보보호 · DX</option>
@@ -604,15 +604,15 @@ main{width:min(1180px,calc(100% - 40px));margin:auto;padding:48px 0 100px}.hero{
             <option value="기타 문의">기타 문의</option>
           </select>
         </label>
-        <label class="contact-field"><span>문의 내용 <em>*</em></span><textarea id="contactMessage" required minlength="10" maxlength="2000" rows="6" placeholder="궁금한 내용이나 함께 이야기하고 싶은 주제를 남겨주세요."></textarea></label>
+        <label class="contact-field"><span>문의 내용 <em>*</em></span><textarea name="message" id="contactMessage" required minlength="10" maxlength="2000" rows="6" placeholder="궁금한 내용이나 함께 이야기하고 싶은 주제를 남겨주세요."></textarea></label>
         <div class="contact-form-meta"><span>답변을 위해 이름·회신 이메일·문의 내용을 메일에 포함합니다.</span><span id="contactCharCount">0 / 2,000</span></div>
         <label class="contact-consent"><input type="checkbox" id="contactConsent" required/><span>문의 및 답변을 위한 개인정보 전달에 동의합니다. <em>*</em></span></label>
         <div class="contact-actions">
-          <button type="submit" class="contact-send">이메일 작성 및 보내기</button>
+          <button type="submit" class="contact-send" id="contactSubmit">문의 보내기</button>
           <button type="button" class="contact-copy" id="contactCopy" aria-label="문의 내용 복사" title="문의 내용 복사"><i class="ti ti-copy"></i></button>
         </div>
         <div class="contact-status" id="contactStatus" role="status" aria-live="polite" hidden></div>
-        <div class="contact-foot">버튼을 누르면 기본 메일 앱이 열립니다. 실제 전송은 메일 앱에서 ‘보내기’를 눌러야 완료됩니다.</div>
+        <div class="contact-foot">문의는 FormSubmit을 통해 이메일로 전달됩니다. 첫 사용 시 수신 메일에서 FormSubmit 활성화 링크를 한 번 확인해야 합니다.</div>
       </form>
     </div>
   </div>
@@ -692,9 +692,19 @@ main{width:min(1180px,calc(100% - 40px));margin:auto;padding:48px 0 100px}.hero{
   const count=document.getElementById('contactCharCount');
   const status=document.getElementById('contactStatus');
   const copy=document.getElementById('contactCopy');
-  const target='hwasinzero@gmail.com';
+  const submit=document.getElementById('contactSubmit');
+  const endpoint='https://formsubmit.co/ajax/hwasinzero@gmail.com';
 
-  const payload=()=>[
+  const payload=()=>({
+    name:name.value.trim(),
+    email:reply.value.trim(),
+    topic:topic.value,
+    message:message.value.trim(),
+    _subject:'[Human Tech Note] '+topic.value+' 문의 - '+name.value.trim(),
+    _template:'table'
+  });
+
+  const textPayload=()=>[
     '안녕하세요, Human Tech Note를 보고 연락드립니다.',
     '',
     '[문의 분야] '+topic.value,
@@ -707,9 +717,10 @@ main{width:min(1180px,calc(100% - 40px));margin:auto;padding:48px 0 100px}.hero{
 
   message.addEventListener('input',()=>{ count.textContent=message.value.length.toLocaleString()+' / 2,000'; });
 
-  form.addEventListener('submit',(e)=>{
+  form.addEventListener('submit',async(e)=>{
     e.preventDefault();
     status.hidden=true;
+
     if(!form.checkValidity()){
       form.reportValidity();
       return;
@@ -719,8 +730,37 @@ main{width:min(1180px,calc(100% - 40px));margin:auto;padding:48px 0 100px}.hero{
       status.hidden=false;
       return;
     }
-    const subject='[Human Tech Note] '+topic.value+' 문의 - '+name.value.trim();
-    window.location.href='mailto:'+target+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(payload());
+
+    const originalLabel=submit.textContent;
+    submit.disabled=true;
+    submit.textContent='전송 중...';
+
+    try{
+      const response=await fetch(endpoint,{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'Accept':'application/json'
+        },
+        body:JSON.stringify(payload())
+      });
+      const data=await response.json().catch(()=>({}));
+      if(!response.ok || data.success===false){
+        throw new Error(data.message || '문의 전송에 실패했습니다.');
+      }
+
+      status.textContent='문의가 접수되었습니다. 첫 사용이라면 수신 메일에서 FormSubmit 활성화 링크를 확인해주세요.';
+      status.hidden=false;
+      form.reset();
+      count.textContent='0 / 2,000';
+    }catch(err){
+      status.textContent='전송하지 못했습니다. 잠시 후 다시 시도하거나 왼쪽의 Direct Email을 이용해주세요.';
+      status.hidden=false;
+      console.error('FormSubmit error:',err);
+    }finally{
+      submit.disabled=false;
+      submit.textContent=originalLabel;
+    }
   });
 
   copy.addEventListener('click',async()=>{
@@ -730,7 +770,7 @@ main{width:min(1180px,calc(100% - 40px));margin:auto;padding:48px 0 100px}.hero{
       return;
     }
     try{
-      await navigator.clipboard.writeText(payload());
+      await navigator.clipboard.writeText(textPayload());
       status.textContent='문의 내용을 클립보드에 복사했습니다.';
       status.hidden=false;
     }catch(_){
